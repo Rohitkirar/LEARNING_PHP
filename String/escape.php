@@ -1,19 +1,24 @@
 <?php 
+
 //to insert character that are illegal in a string use escape charater i.e backlash \
+
 $str = "This is a string which is having length greater than 30. This is a string which is having length greater than 30";
 
 // \n - newline 
+
 echo("This is a string which is having length greater than 30.\nThis is a string which is having length greater than 30");
 echo("\n$str");
 
 echo("<br>\n");
 
 // \r - carriage return 
+
 echo("This is a string\rwhich is having length greater than 30. This is a string which is having length greater than 30");
 
 echo("<br>\n");
 
 // \" - double quote
+
 echo("This is a \"string\" which is having length greater than \"30\". This is a \"string\" which is having length greater than \"30\"");
 
 echo("<br>\n");

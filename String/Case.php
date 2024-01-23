@@ -1,25 +1,23 @@
 <?php
-//strtoupper() , strtolower() , ucfirst() , ucwords() , strrev() , str_replace() , trim();
+//strtoupper() , strtolower() , ucfirst() , ucwords() , lcfirst();
 
 $str = "This is a string which is having length greater than 30. This is a string which is having length greater than 30 dfj er reoda  erojawp alvfal woreio alfla0 woprjioed lvncla owe";
 
 //strtoupper();
 $strupper = strtoupper($str);
+
 print("\nUpper case string  : \n" . $strupper );
 
 echo("<br>\n");
 
-//strtolower();
-$strlower = strtolower($str);
-print("\nLower Case sting  : \n" . $strlower);
-
-"<br>";
-
 echo("\n\n ucfirst() and ucwords() ");
+
 $str1 = "the world heritage site : sanchi Stupa";
-"<br>";
+
+echo "<br>\n";
 
 echo("\n $str1 \n");
+
 //ucfirst()
 $str1 = ucfirst($str1);
 print("\n" . $str1);
@@ -29,5 +27,17 @@ $str1 = ucwords($str1);
 print("\n" . $str1);
 
 echo("<br>\n");
+
+//strtolower();
+
+$strlower = strtolower($str);
+print("\nLower Case sting  : \n" . $strlower);
+
+echo "<br>\n";
+
+//lcfirst() 
+print(lcfirst("Hello World!"));
+
+echo("<br>\n"); 
 
 ?>

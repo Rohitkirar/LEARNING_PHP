@@ -1,7 +1,6 @@
 <?php 
 /*
 explode("separator" , $var) : this function splits string into array
-implode("separator" , $str) : this function join array element to generate string
 join is also similar as implode
 str_split();
 */
@@ -29,13 +28,5 @@ echo(sizeof($strarr) . " "  . count($strarr));
 
 echo "<br>\n";
 
-//implode function
-echo("Regenerating string from array using implode function : ");
-echo("<br>\n");
-$res = implode(" " , $strarr);
-echo($res);
-echo("<br>\n");
 
-// join function
-echo(join(" -> " , $strarr));
 ?>
