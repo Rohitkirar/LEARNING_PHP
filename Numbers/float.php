@@ -8,8 +8,7 @@ PHP_FLOAT_DIG
 PHP_FLOAT_EPSILON
 
 function to check that the variable is of float or not
-is_float();
-is_double();
+is_float(); || is_double();
 */
 
 $m = 549.2303482;

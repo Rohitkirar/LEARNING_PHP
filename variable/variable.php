@@ -58,27 +58,4 @@ echo "The scope of variable is part of script where the variable is used/referen
     "php store all global variable in an array GLOBAL[index] ; so to access it inside a function with out using global keyword we can use global array parse the name of variable as an index\n" 
     ;
 
-//local varaible 
-function myname(){
-    $name = "Thanos" ;
-    echo $name . "\n";
-}
-myname();
-// echo $name; this line generating error as undefined varaible;
 
-//global variable
-$name = "ROHIT KIRAR" ;
-echo $name . "\n" ;
-function myname1(){
-    global $name ;
-    echo $name . "\n";
-}
-myname1();
-
-function cars(){
-    $car_name = "Scorpio" ; 
-    echo  $car_name . "\n" ;
-}
-cars();
-// echo cars($car_name) . "\n" ;
-?>

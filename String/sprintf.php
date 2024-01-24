@@ -1,6 +1,7 @@
 <?php 
 /* 
 The sprintf() function writes a formatted string to a variable.
+sprintf() returns the string while printf() return length of string
 */
 
 $txt = sprintf("The boy name is %s and his age is %u" , "Arun" , 22);

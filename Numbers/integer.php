@@ -15,9 +15,7 @@ PHP_INT_MIN : return minimum integer value
 PHP_INT_SIZE : return the size of int in byte
 
 function to check the variable is of integer or not
-is_int()
-is_integer()
-is_long()
+is_int() || is_integer() || is_long()
 */
 $max = PHP_INT_MAX;
 $min = PHP_INT_MIN;
@@ -34,4 +32,5 @@ var_dump(is_int(4343.48390));
 echo("<br>\n");
 var_dump(is_int("4343"));
 
+echo("45"+5);
 ?>

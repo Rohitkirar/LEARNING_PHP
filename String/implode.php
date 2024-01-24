@@ -7,7 +7,7 @@
 echo("Regenerating string from array using implode function : ");
 
 echo("<br>\n");
-
+$strarr = array("This" , "is" , "a" , "string" , "generating" , "using" , "implode" , "function");
 $res = implode(" " , $strarr);
 
 echo($res);

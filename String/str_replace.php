@@ -1,6 +1,7 @@
 <?php 
 
-//str_replace("word" , "replace" , stringvar) (case sensitive)  and str_ireplace("word" , "replace" , stringvar) (case insensitive);
+//str_replace("word" , "replace" , stringvar) (case sensitive)  and 
+// str_ireplace("word" , "replace" , stringvar) (case insensitive);
 
 $str = "Don't judge a book by its cover";
 

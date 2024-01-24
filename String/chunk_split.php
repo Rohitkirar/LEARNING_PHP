@@ -15,4 +15,7 @@ echo("<br>\n");
 
 echo(chunk_split($str ,2 ));
 
+
+// $arr = chunk_split("Hello World",6," >>>");
+// var_dump($arr);
 ?>
