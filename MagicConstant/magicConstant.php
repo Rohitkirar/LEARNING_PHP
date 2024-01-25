@@ -18,25 +18,7 @@ ClassName::class	Returns the name of the specified class and the name of the nam
 */
 //__LINE__
 namespace MyNameSpace;
-echo("The line num is  : " .__Line__);
 
-"<br>";
-
-// __FILE__
-echo("\nThe file name is : " . __FILE__);
-
-"<br>";
-
-// __DIR__
-echo("\nThe directory name : " . __DIR__);
-
-"<br>";
-
-// __FUNCTION__
-function magicConstFun(){
-    return __FUNCTION__;
-}
-echo("\n" . magicConstFun());
 
 "<br>";
 
@@ -54,13 +36,6 @@ $obj->magicConstFun();
 
 "<br>";
 
-//__TRAIT__
-trait MyTrait{
-    function traitFunction(){
-        echo("\nI am a traitFuntion");
-        echo("\n" . __TRAIT__);
-    }
-}
 
 //__NAMESPACE__
 class Main{

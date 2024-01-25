@@ -23,5 +23,11 @@ echo(strtr("Hello World" , $arr));
 echo("<br>\n");
 
 $user = array("_name" => "Arun" ,  "_age" => 25);
-echo(strtr("The boy name is _name and his age is _age" , $user));
+echo(strtr("The boy name is _name and his age is _age" , $user) . "<br>\n");
+
+$name = "RoHit kiRaR";
+$x = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+$y = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+echo($name . "<br>\n");
+echo(strtr($name , $x , $y));
 ?>
