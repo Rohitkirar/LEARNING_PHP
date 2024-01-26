@@ -17,14 +17,14 @@ echo("<br>\n");
 function defineConstant($name , $value){
     echo(greeting);
     echo("<br>\n");
-    define($name , $value);
-    echo(str);
+    define("name" , "ROHIT KIRAR");
+    echo($name);
 }
 defineConstant("str" , "defining constant through function");
 
 echo("<br>\n");
 
-echo(str);
+echo name;
 
 echo("<br>\n");
 
