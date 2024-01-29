@@ -37,9 +37,8 @@ function toUpperCase($v){
 }
 $a3 = ["Animal"=>"horse" , "Type"=>"mammal"];
 print_r(array_map("toUpperCase" , $a3));
-
 //assign null as the function name 
 $a4 = ["Dog" , "Cat"];
 $a5 = ["Puppy" , "Kitten"];
-print_r(array_map(null , $a4  , $a5));
+print_r(array_map(null , $a4  , $a5)); // create a MD array
 ?>

@@ -7,9 +7,19 @@ if(5>3){
 
 echo("<br>\n");
 
-$t = 14 ;
-if($t<20){
-    echo("GOOD MORNING");
+//example 1 ;
+
+$age = 20 ;
+
+if($age> 18){
+    echo("You are eligible to vote");
+}
+else {
+    echo("you are not eligible for voting");
+}
+
+for($x = 0  ; $x<10 ; $x++){
+    echo($x . "<br>\n");
 }
 
 
