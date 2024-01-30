@@ -20,4 +20,29 @@ $a1 = array("0"=>"red" , "1" =>"green");
 $a2 = array("0"=>"purple" , "1"=>"orange");
 print_r(array_splice($a1 , 1 , 0 , $a2));
 print_r($a1);
+
+//EXAMPLE
+
+$employeedetails = [
+    "Ben" , 40 , "Calfornia" ,
+    "Ash" , 20 , "Planttown" ,
+    "Tyson", 16 , "Coulombia",
+    "Kai" , 23 , "New York"
+];
+
+//remove old employee and replace by new one
+$newemployee = ["Oak" , 60 , "Argentina"];
+
+array_splice($employeedetails , 0 , 3 , $newemployee);
+
+$count = 1;
+for($x=0 ; $x<count($employeedetails) ; $x++){
+
+    echo($employeedetails[$x] . " ");
+
+    if($count%3==0)
+        echo("<br>\n");
+    $count++;
+}
+
 ?>

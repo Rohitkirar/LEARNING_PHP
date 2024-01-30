@@ -17,4 +17,18 @@ $a5 = ["a" => "red" , "b" => "black" , "h" => "yellow"];
 
 $result1 = array_intersect($a3 , $a4 , $a5);
 print_r($result1);
+
+//EXAMPLE 
+$movies = [
+    "fighter" => "2024" , 
+    "Main hoon Atal" => "2024" , 
+    "Tiger3" => "2023",
+    "Pushpa" => "2022" , 
+    "Jailer" => "2023"
+];
+$year = ["2024" , "2022"];
+
+$resultarray = array_intersect($movies , $year);
+print_r($resultarray);
+
 ?>

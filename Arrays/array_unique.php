@@ -16,7 +16,7 @@ SORT_LOCALE_STRING - Compare items as strings, based on current locale
 Return Value:	Returns the filtered array
 */
 
-$a = ["a"=>"red" ,  "b"=>"green" , "c"=>"red"];
+$a = ["a"=>"red" , "d"=>"red",  "b"=>"green" , "c"=>"red"];
 print_r(array_unique($a));
 
 ?>

@@ -46,4 +46,16 @@ do{
     $i++;
     if($i==21) break;
 }while($i);
+
+echo("<br>\n");
+
+//example taking input from user until the password matched with input
+
+$password = "password" ; 
+do{
+    $input = readline("enter your correct password : ");
+}
+while($password != $input);
+
+echo("correct password" . "<br>\n");
 ?>

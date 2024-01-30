@@ -11,5 +11,9 @@ $city = ["gj" => "Ahemdabaad" , "mp" => "Bhopal" ,   "rj" => "jaipur"];
 unset($city['rj']);
 print_r($city);
 
-
+// $obj = new stdClass();
+// $obj->name = "Rohit Kirar";
+// $obj->city = "Sanchi";
+// $obj->contact = 39439;
+// var_dump($obj);
 ?>

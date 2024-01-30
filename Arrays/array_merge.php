@@ -18,4 +18,27 @@ print_r(array_merge($a1 , $a2));
 //one array parameter with integer keys;
 $a = [3 => "red" , 4 => "green"];
 print_r(array_merge($a));
+
+//EXAMPLE 
+$storedcredential = [
+    "name" => "Ben Jimmy",
+    "email" => "benjimmy32@gmail.com",
+    "address" => "Mysore"
+];
+$userinput = [
+    "name" => "Jimmy Ben",
+    "email" => "jimmyben32@gmail.com"
+];
+
+$updatedcredential = array_merge($storedcredential , $userinput);
+
+Echo("Stored Credential : <br>\n");
+
+foreach($storedcredential as $key=>$value){
+    echo("$key : $value<br>\n");
+}
+Echo("Updated Credential : <br>\n");
+foreach($updatedcredential as $key=>$value){
+    echo("$key : $value<br>\n");
+}
 ?>

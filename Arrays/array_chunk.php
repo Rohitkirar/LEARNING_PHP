@@ -35,4 +35,26 @@ $age = [
 ];
 print_r(array_chunk($age, 2 , true));
 
+echo("<br>\n");
+
+//EXAMPLE 2 
+
+$employeedetails = [
+    "Ben" , 40 , "Calfornia" ,
+    "Ash" , 20 , "Planttown" ,
+    "Tyson", 16 , "Coulombia",
+    "Kai" , 23 , "New York"
+];
+$resultarray = array_chunk($employeedetails , 3 );
+
+// print_r($resultarray);
+
+for($i=0 ; $i < count($resultarray) ; $i++ ){
+    for($j=0 ; $j < count($resultarray[$i]) ; $j++){
+        echo($resultarray[$i][$j] ." ");
+    }
+    echo("<br>\n");
+}
+
+echo "<br>\n";
 ?>

@@ -38,10 +38,23 @@ while($i<6):
 endwhile;
 echo("<br>\n");
 
+//Example 1 : printing 1 to 100 number with difference 10 each
+
 $i = 0 ; 
 while($i < 100){
     $i += 10;
     echo($i . " ");
 }
 echo("<br>\n");
+
+//Example 2 : Enter a number in range 1 to 10 only
+
+$x = 0;
+while($x == 0 ){
+    $a = readline("enter a number 1 to 10 : ");
+    if($a>=1 && $a<=10){
+        echo("Valid number : $a" . "<br>\n");
+        break;
+    }
+}
 ?>

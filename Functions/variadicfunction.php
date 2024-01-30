@@ -7,6 +7,8 @@ IMP : * The variadic function argument becomes an array.
       * You can only have one argument with variable length, and it has to be the last argument.
       * If the variadic argument is not the last argument, you will get an error.
 */
+
+Echo("EXAMPLE 1 : <BR>\n");
 function sumMyNumbers(...$x){
     $n = 0 ;
     foreach($x as $i){
@@ -15,8 +17,11 @@ function sumMyNumbers(...$x){
     return $n;
 }
 $n = sumMyNumbers(5, 2, 6, 2, 7, 7);
+
 echo($n . "<br>\n");
 
+//Example 2 : to print family member name 
+Echo("EXAMPLE 2 : <BR>\n");
 function myFamily($lastname, ...$firstname){
     $txt = "" ;
     foreach($firstname as $fname){

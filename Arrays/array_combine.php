@@ -6,13 +6,24 @@ Note : Both arrays mush have equal number of elements;
 
 Syntax : array_combine(array $keys, array $values): array
 */
-
+//Example 1
+ECHO("EXAMPLE 1 <BR>\n");
 $fname = ["Peter" , "Ben" , "Joe"] ;
 $age = [35 , 37, 43];
 
-$c = array_combine($fname , $age);
-print_r($c);
+$combinedarray = array_combine($fname , $age);
 
-print_r(array_combine(array("A" , "B" ,"C") , array(65,66,67)));
+foreach($combinedarray as $key => $value){
+    echo("$key $value <br>\n");
+}
 
+echo("<br>\n");
+
+//Example 2 
+echo("EXAMPLE 2 : <BR>\n");
+$newarray = array_combine(array("A" , "B" ,"C") , array(65,66,67));
+
+foreach($newarray as $key => $value){
+    echo("$key $value <br>\n");
+}
 ?>

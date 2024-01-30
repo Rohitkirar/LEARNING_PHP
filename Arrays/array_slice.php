@@ -21,4 +21,25 @@ print_r(array_slice($d, 1, 3));
 $e = ["0"=>"red" , "1"=>"green" , "2"=>"blue" , "3"=>"yellow" , "4"=>"brown"];
 print_r(array_slice($e , 1 , 2));
 
+// EXAMPLE 
+
+$employeedetails = [
+    "Ben" , 40 , "Calfornia" ,
+    "Ash" , 20 , "Planttown" ,
+    "Tyson", 16 , "Coulombia",
+    "Kai" , 23 , "New York"
+];
+
+for($i=0 ; $i<count($employeedetails) ; $i+=3){
+
+    $resultarray = array_slice($employeedetails , $i , 3);
+
+    for($j=0 ; $j<count($resultarray) ; $j++){
+
+        echo($resultarray[$j] . " ");
+        
+    }
+    echo("<br>\n");
+}
+
 ?>

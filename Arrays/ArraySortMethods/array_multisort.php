@@ -21,18 +21,31 @@ SORT_FLAG_CASE - Can be combined (bitwise OR) with SORT_STRING or SORT_NATURAL t
 array2	Optional. Specifies an array
 array3	Optional. Specifies an array
 */
+Echo("EXAMPLE 1 : <BR>\n");
 
 $a = ["Dog" , "Cat" , "Horse" , "Bear" , "Zebra"];
 array_multisort($a);
 print_r($a);
 
-$a1 = ["Dog" , "Dog" , "Cat"];
-$a2 = ["Pluto" , "Fido" , "Missy"];
+//Example 2
+Echo("EXAMPLE 2 : <BR>\n");
 
-array_multisort($a1 , $a2);
-print_r($a1);
-print_r($a2);
+$employee_id = [532 , 234 , 632];
+$employee_name = ["Roman" , "John" , "Goldberg"];
 
+for($x=0 ; $x<3 ; $x++){
+    echo("Name : " . $employee_name[$x] . " Id : " . $employee_id[$x] . "<br>\n");
+}
+
+array_multisort($employee_name , $employee_id);
+
+Echo("After Multisorting  <BR>\n");
+for($x=0 ; $x<3 ; $x++){
+    echo("Name : " . $employee_name[$x] . " Id : " . $employee_id[$x] . "<br>\n");
+}
+
+//Example 3
+Echo("EXAMPLE 3 : <BR>\n");
 $a1 = ["Dog" , "Dog" , "Cat"];
 $a2 = ["Pluto" , "Fido" , "Missy"];
 array_multisort($a1,SORT_ASC , $a2 , SORT_DESC);
@@ -40,6 +53,8 @@ print_r($a1);
 print_r($a2);
 
 
+//Example 4
+Echo("EXAMPLE 4 : <BR>\n");
 $n1 = [1,30,15, 7, 25];
 $n2 = [4,30 , 20 , 41, 66];
 

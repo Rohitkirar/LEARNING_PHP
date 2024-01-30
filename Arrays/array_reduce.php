@@ -17,8 +17,9 @@ function myfunction($v1, $v2){
     return "$v1 -> $v2" ;
 }
 $arr = ["Hello" , "World" , "Good" , "Morning"];
-var_dump(array_reduce($arr , "myfunction", ));
+print_r(array_reduce($arr , "myfunction", ));
 
+echo("<br>\n");
 
 $a = ["Dog" , "Cat" , "Horse" , "Cow" , "Tiger"];
 
