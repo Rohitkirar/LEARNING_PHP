@@ -26,4 +26,34 @@ switch($favcolor){
     default : 
         echo "your favorite color is not mentioned here";
 }
+
+echo("<br>\n");
+
+//EXAMPLE 2 Calculator using Switch case
+
+$number1 = (float) readline("Enter first number : ");
+$operator = readline("Choose Type of operator (+ , - , * , / , %)  : ");
+$number2 = (float) readline("Enter second number : ");
+$result ;
+switch($operator){
+    case '+':
+        $result = $number1 + $number2;
+        break;
+    case '-':
+        $result = $number1 - $number2;
+        break;
+    case '*':
+        $result = $number1 * $number2;
+        break;
+    case '/':
+        $result = $number1 / $number2;
+        break;
+    case '%':
+        $result = $number1 % $number2;
+        break;
+    default:
+        echo("Invalid operator ");
+}
+echo("$number1 $operator $number2 = $result");
+
 ?>
