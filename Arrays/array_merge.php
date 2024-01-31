@@ -37,7 +37,9 @@ Echo("Stored Credential : <br>\n");
 foreach($storedcredential as $key=>$value){
     echo("$key : $value<br>\n");
 }
+
 Echo("Updated Credential : <br>\n");
+
 foreach($updatedcredential as $key=>$value){
     echo("$key : $value<br>\n");
 }

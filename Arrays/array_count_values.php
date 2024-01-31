@@ -23,6 +23,7 @@ $nooftimes = array_count_values($bonusrecord);
 foreach($nooftimes as $key => $value){
 
     echo("$key gets bonus $value times<br>\n");
-    
+
 }
+//try with associative array
 ?>

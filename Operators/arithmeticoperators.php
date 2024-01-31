@@ -21,5 +21,5 @@ echo("Divison  : " . $x/$y ."<br>\n");
 echo("Modulus : " . $x%$y . "<br>\n");
 
 //Exponentiation
-echo("Modulus : " . 5**2 . "<br>\n");
+echo("exponention : " . 5**2 . "<br>\n");
 ?>

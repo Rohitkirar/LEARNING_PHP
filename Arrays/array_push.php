@@ -19,4 +19,6 @@ print_r($b);
 $c = ["a" => "red" , "b" => "green"];
 array_push($c, "blue" , "yellow");
 print_r($c);
+
+// try with multiDimensional
 ?>

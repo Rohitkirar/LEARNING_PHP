@@ -26,4 +26,7 @@ $newarray = array_combine(array("A" , "B" ,"C") , array(65,66,67));
 foreach($newarray as $key => $value){
     echo("$key $value <br>\n");
 }
+
+// try with associative array 
+
 ?>

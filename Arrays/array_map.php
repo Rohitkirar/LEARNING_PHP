@@ -36,8 +36,9 @@ $a1 = ["Horse" , "Dog" , "Cat"];
 $a2 = ["Cow" , "Dog" , "Rat"];
 print_r(array_map("equals" , $a1 , $a2));
 
-echo "Example ";
-print_r($a1);
+// echo "Example ";
+// print_r($a1);
+
 // Example :-4 
 
 //changing all value of array to uppercase

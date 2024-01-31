@@ -8,7 +8,7 @@ $y = 200;
 echo("$x $y <br>\n");
 
 // Addition assign
-$x += 10;
+$x += 10;   //$x = $x + 10;
 echo("$x <br>\n");
 
 // substract assign
