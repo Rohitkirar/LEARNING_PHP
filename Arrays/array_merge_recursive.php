@@ -10,4 +10,5 @@ array_merge_recursive(array1, array2, array3, ...)
 $a1 = ["a"=>"red" , "b"=>"green"];
 $a2 = ["c"=>"blue" , "b"=>"yellow"];
 print_r(array_merge_recursive($a1 , $a2));
+
 ?>

@@ -19,4 +19,8 @@ Return Value:	Returns the filtered array
 $a = ["a"=>"red" , "d"=>"red",  "b"=>"green" , "c"=>"red"];
 print_r(array_unique($a));
 
+
+$a = ["a"=>"red" , "d"=>["red" ],  "b"=>"green" , "c"=>"red"];
+print_r(array_unique($a));
+
 ?>

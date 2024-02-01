@@ -5,8 +5,9 @@ SYNTAX
 array_search(value, array, strict(true,false))
 
 */
-$a = ["a"=>"red" , "b"=>"green" , "c"=>"blue"];
+$a = ["a"=>"red" , "b"=>["purple","green"] , "c"=>"blue"];
 echo(array_search("red" , $a) . "<br>\n");
+echo(array_search("green" , $a) . "<br>\n");
 
 echo(array_search("blue" , $a ) . "<br>\n");
 
