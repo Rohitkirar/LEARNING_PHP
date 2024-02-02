@@ -53,7 +53,6 @@ $student = array (
             )
 );
 
-$totalmarks = [];
 foreach($student as $key=>$values){
 
     foreach($values as $k => $v){
@@ -97,6 +96,70 @@ foreach($student as $key => $values){
         else
             echo ("$k : $v <br>\n");
     }
+}
+
+echo "METHOD 2 : <BR>\n"; 
+
+//METHOD 2 
+
+$student = array (
+
+    array(
+        'firstname' => 'john',
+        'lastname'=> "deo",
+        'mark' => 
+            array(
+            'english' => 100,
+            'gujrati' => 220,
+            'hindi' => 30
+            )
+    ),
+
+    array(
+        'firstname' => 'David',
+        'lastname'=> "Miller",
+        'mark' =>
+            array(
+            'english' => 120,
+            'gujrati' => 310,
+            'hindi' => 20
+            )
+    ),
+
+    array(
+        'firstname' => 'Thomas',
+        'lastname'=> "wilson",
+        'mark' =>
+            array(
+            'english' => 200,
+            'gujrati' => 110,
+            'hindi' => 70
+            )
+    ),
+
+
+    array(
+        'firstname' => 'James',
+        'lastname'=> "Brown",
+        'mark' =>
+            array(
+            'english' => 240,
+            'gujrati' => 310,
+            'hindi' => 10
+            )
+    
+            )
+);
+
+for($i=0 ; $i<count($student) ; $i++){
+    arsort($student[$i]['mark']);
+    $student[$i]['totalmark'] = array_sum($student[$i]['mark']);
+}
+uasort($student , "sortfunction");
+
+print_r($student);
+function sortfunction($value1 , $value2){
+    return $value1["totalmark"] > $value2["totalmark"] ? 1 : -1 ;
 }
 
 ?>

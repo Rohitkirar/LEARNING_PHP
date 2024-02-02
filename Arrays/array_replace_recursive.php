@@ -7,6 +7,7 @@ array_replace_recursive(arr1 , arr2 ,...)
 
 $a1 = ["a" =>[ "red" ] , "b"=>["green" ,"blue"]];
 $a2 = ["a"=>["yellow"] , "b"=>["black"]];
+
 print_r(array_replace_recursive($a1 , $a2));
 
 $b1 = ["a"=>["red"] , "b"=>["green" , "blue"]];

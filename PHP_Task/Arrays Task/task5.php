@@ -16,6 +16,7 @@ foreach($orderDetails as $key=>$values){
             continue;
         else
             $totalcost *= $v;
+        
     }
     $resultarray[$key] = $totalcost;
 }
@@ -30,6 +31,40 @@ foreach($resultarray as $key => $value){
         echo("Order name : $key have highest cost : $value<br>\n");
         $highest = $value;
     }
+}
+
+echo "<BR>\n";
+
+//METHOD 2 : 
+
+$orderDetails = [
+    "Order1" => ["Product" => "Laptop" , "Quantity" => 2 , "Price" => 1200],
+    "Order2" => ["Product" => "Smartphone" , "Quantity" => 3 , "Price" => 800],
+    "Order3" => ["Product" => "Tablet" , "Quantity" => 1 , "Price" => 500]
+];
+
+foreach($orderDetails as $key => $values){
+
+    $values = array_slice($values , 1 );
+    $totalcost =  array_product($values);
+    $orderDetails[$key]["totalcost"] = $totalcost ;
+
+}
+
+uasort($orderDetails,"sortfunction");
+
+$totalcost = PHP_INT_MIN  ;
+
+foreach($orderDetails as $key => $values){
+        if($values["totalcost"] >= $totalcost){
+            $totalcost = $values["totalcost"];
+            echo("order : $key and totalcost : $totalcost" . "<Br>\n");
+        }
+}
+ 
+
+function sortfunction($value1 , $value2){
+    return $value1["totalcost"] < $value2["totalcost"] ? 1 : -1 ;
 }
 
 ?>

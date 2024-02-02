@@ -58,4 +58,14 @@ preg_match_all($pattern , $text , $matcharray );
 print_r($matcharray);
 
 
+echo "<br>\n";
+
+Echo "EXAMPLE 3 : <br>\n";
+
+$date = "128945-01-2029 or 31-23-3421 or 23-12-6543";
+
+$pattern = "/\d{2}\-\d{1,2}\-\d{4}/";
+preg_match_all($pattern , $date , $match);
+print_r($match);
+
 ?>

@@ -12,4 +12,22 @@ if(str_contains($str , "@") && (str_contains($str , ".in") || str_contains($str 
     echo("valid email");
 else
     echo("invalid email");
+
+echo "<br>\n";
+
+Echo "METHOD 2 : <BR>\n";
+
+$email = "arun34@gmail.com";
+
+$pattern = "/[A-Za-z]+[_\-\.]?[A-Za-z0-9]+[_\-\.]?[A-Za-z0-9]+@(gmail|yahoo|outlook|mail)\.(com|in)/" ;
+
+$result = preg_match($pattern , $email , $matcharray);
+
+if($result)
+    echo "$email is a Valid email";
+else
+    echo "Invalid email";
+
+echo("\n<br>\n");
+
 ?>

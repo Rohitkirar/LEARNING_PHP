@@ -11,4 +11,41 @@ $a1 = ["a"=>"red" , "b"=>"green"];
 $a2 = ["c"=>"blue" , "b"=>"yellow"];
 print_r(array_merge_recursive($a1 , $a2));
 
+Echo "<br>\n";
+
+Echo "EXAMPLE 2 :  merge by unique keys : <BR>\n";
+
+$student1 = [
+    "name" => [
+        "Rohit",
+        "Soham",
+        "Hritik",
+        "Akash"
+    ],
+    "winner" => [
+        "Akash",
+        "Soham",
+        "Hritik",
+        "Roshan",
+        "Ajay"
+    ]
+    ];
+$student2 = [
+    "name" => [
+        "Akash",
+        "Soham",
+        "Hritik",
+        "Roshan",
+        "Ajay"
+    ],
+    "winner" => [
+        "Rohit",
+        "Soham",
+        "Hritik",
+        "Akash"
+    ]
+    ];
+
+    print_r(array_merge_recursive($student1 , $student2));
+
 ?>

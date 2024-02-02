@@ -20,7 +20,27 @@ $a = ["a"=>"red" , "d"=>"red",  "b"=>"green" , "c"=>"red"];
 print_r(array_unique($a));
 
 
-$a = ["a"=>"red" , "d"=>["red" ],  "b"=>"green" , "c"=>"red"];
+$a = ["a"=>"red" , "d"=>"red",  "b"=>"green" , "c"=>"red"];
 print_r(array_unique($a));
 
+echo "<br>\n";
+
+ECHO "EXAMPLE 2 : <br>\n";
+
+$student = [
+    "name" => [
+        "Rohit",
+        "Soham",
+        "Hritik",
+        "Akash"
+    ],
+    "winner" => [
+        "Akash",
+        "Soham",
+        "Hritik",
+        "Roshan",
+        "Ajay"
+    ]
+    ];
+print_r( array_unique($student['winner']) ) ;
 ?>

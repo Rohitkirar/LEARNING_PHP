@@ -14,4 +14,27 @@ else if($t==16 || $t==20){
 else {
     echo("Good night");
 }
+
+echo "<br>\n";
+
+//EXAMPLE 2
+
+ECHO "EXAMPLE 2 : <BR>\n";
+
+echo calculator(15 , '+' , 34) . "\n<br>\n";
+
+function calculator($number1 , $operator , $number){
+    if($operator=='+')
+        return $number1 + $number;
+    elseif($operator=='-')
+        return $number1 - $number;
+    elseif($operator=='*')
+        return $number1 * $number;
+    elseif($operator=='/')
+        return $number1 / $number;
+    elseif($operator=='%')
+        return $number1 % $number;
+    else
+        return "Invalid arguments passed";
+}
 ?>
