@@ -9,22 +9,22 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         $nameErr = "Name is Required!";
     else{
         $name = test_data($_POST['name']);
-        $pattern = "/^[A-Za-z]+ ?[A-Za-z]+$/";
+        $pattern = "/^[A-Za-z-' ]*$/";
         if(preg_match($pattern , $name))
             $nameErr = "" ;
         else
-            $nameErr = "Invalid Name!";
+            $nameErr = "Onlt letters and whitespace allowed";
     }
 
     if(empty($_POST['email']))
         $emailErr = "Email is Required!";
     else{
         $email = test_data($_POST['email']);
-        $pattern = "/^[A-Za-z]+[_\-\.]?\w+[_\-\.]?[A-Za-z0-9]+@(gmail|yahoo|outlook|mail)\.(com|in)$/" ;
-        if(preg_match($pattern , $email))
+
+        if(filter_var($email , FILTER_VALIDATE_EMAIL))
             $emailErr = "";
         else{
-            $emailErr = "Invalid Email!";
+            $emailErr = "Invalid Email Format!";
         }
     }    
 
