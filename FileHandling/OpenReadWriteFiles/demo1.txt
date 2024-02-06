@@ -1,11 +1,4 @@
-Name : John Cena<br>
-Designation : Wrestler<br>
-Current : 16 times WWE Champion<br>
-Age :  55 years<br>
-country : California<br>
-
-<br>
-Name : People Champ Rock<br>
+Name : Rock<br>
 Designation : Wrestler/Actor<br>
 Salary : 200000<br>
 Country : Argentina<br>
