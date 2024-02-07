@@ -3,8 +3,7 @@
 $nameErr = $dobErr = $emailErr = $numberErr = $genderErr = "" ;
 $name = $email = $dob = $number = $gender = $address = $state = $city = $skills =  "";
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    
+if($_SERVER['REQUEST_METHOD'] == "POST"){    
     if(empty($_POST['name']))
         $nameErr = "Name is Required!";
     else{
@@ -75,7 +74,15 @@ function test_data($data){
     $data = htmlspecialchars($data);
     return $data;
 }
+if(($nameErr && $emailErr && $numberErr && $dobErr && $genderErr) == "" && ($name != "" && $email != "" && $dob != "" && $number != "" && $gender != "")){
 
+    $txt = "output.php?$name?$dob?$gender?$email?$number?$state?$city?$address";
+    foreach($skills as $values){
+        $txt .= "?$values";
+    }
+
+    header('location: '.$txt);
+}
 
 ?>
 
@@ -180,10 +187,10 @@ function test_data($data){
 
     </div>
 
-    <div class="main" style="background-color:white;">
-        <?php 
-
+    <div class="main" style="background-color:whitesmoke;">
+    <?php 
         if(($nameErr && $emailErr && $numberErr && $dobErr && $genderErr) == "" && $name != "" ){
+
             echo "<h2>" . "User Data Successfully Validated" . "</h2>" ;
             echo "Name : $name<br>";
             echo "Date Of Birth : $dob<br>";
@@ -195,8 +202,10 @@ function test_data($data){
             echo "address : $city<br>";
             print_r($skills);
         }
-        ?>
+    ?>
     </div>
 
 </body>
 </html>
+
+
