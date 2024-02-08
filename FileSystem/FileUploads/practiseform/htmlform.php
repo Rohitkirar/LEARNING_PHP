@@ -21,14 +21,13 @@ else{
     echo " failed to upload data!<br>" ;
 }
 
+
 if(multipleuploaddata()){
-    echo "all documents uploaded successfully<br>";
+    echo "documents uploaded successfully<br>";
 }
 else{
-    echo "Some documents failed to upload data!<br>" ;
+    echo " failed to upload data!<br>" ;
 }
-
-
 
 }
 ?>
@@ -92,8 +91,8 @@ else{
 </div>
 
 <div class="inputbox">
-    <label for="myfiles">Other files </label>
-    <input type="file" name="files[]" multiple id="myfile">
+    <label for="myfiles">Documents</label>
+    <input type="file" name="files[]" multiple id="myfiles">
 </div>
 
 <div class="inputbox">
@@ -106,6 +105,18 @@ else{
 </form>
 
 </div>
+
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "" ;?>" alt="">
+<br>
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "" ;?>" alt="">
+<br>
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "";?>" alt="">
+<br>
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "" ;?>" alt="">
+<br>
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "" ;?>" alt="">
+<br>
+<img height="100px" width="100px" src="<?php echo (count($GLOBALS['files']) > 0) ? array_shift($GLOBALS['files']) : "";?>" alt="">
 </body>
 </html>
 

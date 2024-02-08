@@ -12,18 +12,18 @@ if(isset($_POST['submit'])){
     $fileActualExt = strtolower(end($fileExt));
     
     $allowed = ["jpg" , "jpeg" , "pdg" , "png"] ;
-    if(file_exists("uploads/$fileName" )){
+    if(!file_exists("uploads/file/$fileName" )){
         if(in_array($fileActualExt , $allowed)){
             if($fileError === 0){
                 if($fileSize < 100000){
                     
-                    $fileNameNew = uniqid('' , true).".".$fileActualExt;
+                    // $fileNameNew = uniqid('' , true).".".$fileActualExt;
 
-                    $fileDestination = 'uploads/' . $fileNameNew;
+                    $fileDestination = 'uploads/file/' . $fileName;
 
                     move_uploaded_file($fileTmpName , $fileDestination);
                     echo "upload Successfully" ."<br>";
-                    header("location: upload.php?uploadsuccess");
+                    // header("location: upload.php?uploadsuccess");
                 }
                 else
                     echo "Your file is too big ! max size allowed 100KB" ;
@@ -40,3 +40,14 @@ if(isset($_POST['submit'])){
 
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="<?php echo $fileDestination ; ?>" height="1000px" width="1000px"; alt="">
+</body>
+</html>

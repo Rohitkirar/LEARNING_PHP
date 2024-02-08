@@ -1,4 +1,5 @@
 <?php 
+$files = [] ;
 function uploaddata(){
     if(isset($_POST['submit'])){
         $file = $_FILES['file'];
@@ -22,8 +23,10 @@ function uploaddata(){
 
                         $fileDestination = '../uploads/file/' . $fileName;
 
+                        array_push($GLOBALS['files'] , $fileDestination)  ; //for showing in output
+
                         move_uploaded_file($fileTmpName , $fileDestination);
-                        header("location: htmlform.php?uploadsuccess");
+                        // header("location: htmlform.php?uploadsuccess");
                         return true;
                     }
                     else
@@ -71,8 +74,11 @@ if($flag == true){
                     $fileDestination = '../uploads/file/' . $fileName;
 
                     move_uploaded_file($fileTmpName , $fileDestination);
+                    
+                    
                     // header("location: htmlform.php?uploadsuccess");
                      $flag = true;
+                     array_push($GLOBALS['files'] , $fileDestination);
                 }
                 else
                     $flag = false ;
