@@ -6,7 +6,7 @@
 
 //looping through the file to print data
 
-$myfile = fopen("OpenReadWriteFiles/webdictionary.txt" , "r");
+$myfile = fopen("../FileHandling/OpenReadWriteFiles/webdictionary.txt" , "r");
 
 var_dump(feof($myfile));
 

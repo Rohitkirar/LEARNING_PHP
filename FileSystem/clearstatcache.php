@@ -3,7 +3,7 @@
 
 Echo "EXAMPLE 1 Read/Write using a+ mode : <br><br>" ;
 
-$myfile = fopen("OpenReadWriteFiles/demo1.txt" , "a+") or die("Unable to open file") ;
+$myfile = fopen("../FileHandling/OpenReadWriteFiles/demo1.txt" , "a+") or die("Unable to open file") ;
 
 $text = "Name : Rock<br>
 Designation : Wrestler/Actor<br>
@@ -20,10 +20,10 @@ fseek($myfile , 0 );
 
 echo "current pointer of file after fseek()  : " . ftell($myfile) ."<br>" ; 
 
-echo clearstatcache(true ,"OpenReadWriteFiles/demo1.txt") . "<br>"; // used to clear cache memory
+echo clearstatcache(true ,"../FileHandling/OpenReadWriteFiles/demo1.txt") . "<br>"; // used to clear cache memory
 
-echo "size of file : " . filesize("OpenReadWriteFiles/demo1.txt"). "<br>" ;
-echo fread($myfile ,filesize("OpenReadWriteFiles/demo1.txt")) . "<br>";
+echo "size of file : " . filesize("../FileHandling/OpenReadWriteFiles/demo1.txt"). "<br>" ;
+echo fread($myfile ,filesize("../FileHandling/OpenReadWriteFiles/demo1.txt")) . "<br>";
 
 echo "current pointer of file after reading file : " . ftell($myfile) ."<br>" ; 
 

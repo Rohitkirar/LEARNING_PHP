@@ -1,4 +1,7 @@
 Name : Rock<br>
 Designation : Wrestler/Actor<br>
 Salary : 200000<br>
+Country : Argentina<br>Name : Rock<br>
+Designation : Wrestler/Actor<br>
+Salary : 200000<br>
 Country : Argentina<br>

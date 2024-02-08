@@ -6,5 +6,5 @@ Syntax
 file_exists(path)
 Return Value:	TRUE if the file or directory exists, FALSE on failure
 */
-var_dump(file_exists("source.txt"));
+var_dump(file_exists("txtfile/source.txt"));
 ?>
