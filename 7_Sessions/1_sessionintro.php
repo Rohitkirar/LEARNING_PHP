@@ -5,6 +5,9 @@ Session variables hold information about one single user, and are available to a
 
 imp note : It will be accessable to all pages in same domain url
 
+imp note : by default session exist for 24 minute
+NOTE : ini_set('session.gc_maxlifetime', 3600); 
+// Keep session data for at least 1 hour
 
 Tip: If you need a permanent storage, you may want to store the data in a database.]
 
