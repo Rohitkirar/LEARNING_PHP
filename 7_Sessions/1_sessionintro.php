@@ -3,6 +3,9 @@
 A session is a way to store information (in variables) to be used across multiple pages.
 Session variables hold information about one single user, and are available to all pages in one application.
 
+imp note : It will be accessable to all pages in same domain url
+
+
 Tip: If you need a permanent storage, you may want to store the data in a database.]
 
 Start a PHP Session
