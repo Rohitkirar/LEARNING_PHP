@@ -34,6 +34,7 @@ echo "<BR>After decoding the encoded data in PHP object : <BR>" ;
 print_r($obj);
 
 echo($obj->name->name) ;
+echo($obj->{102}->name) ; // to access numeric key in object we use {} braces;
 
 echo"<BR>AFTER decoding the data in PHP ASSOCIative array : <BR>" ;
 
