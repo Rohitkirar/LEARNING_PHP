@@ -1,6 +1,8 @@
 <?php 
 /*
-Exceptions : Exception is an object that describes an error and unexcept behaviour of php script;
+Exceptions : Exception handling is a powerful mechanism of PHP, which is used to handle runtime errors (runtime errors are called exceptions). So that the normal flow of the application can be maintained.
+
+*The main purpose of using exception handling is to maintain the normal execution of the application.
 
 Exception : An exception is a problem that is caused by the program or the user, such as passing an invalid argument to a method or trying to access a null reference.
 
