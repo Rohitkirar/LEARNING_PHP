@@ -25,5 +25,37 @@ getPrevious()	If this exception was triggered by another one, this method return
 getCode()	Returns the exception code
 getFile()	Returns the full path of the file in which the exception was thrown
 getLine()	Returns the line number of the line of code which threw the exception
+
+Lists of Throwable and Exception tree as of 7.2.0
+
+    Error
+      ArithmeticError
+        DivisionByZeroError
+      AssertionError
+      ParseError
+      TypeError
+        ArgumentCountError
+    Exception
+      ClosedGeneratorException
+      DOMException
+      ErrorException
+      IntlException
+      LogicException
+        BadFunctionCallException
+          BadMethodCallException
+        DomainException
+        InvalidArgumentException
+        LengthException
+        OutOfRangeException
+      PharException
+      ReflectionException
+      RuntimeException
+        OutOfBoundsException
+        OverflowException
+        PDOException
+        RangeException
+        UnderflowException
+        UnexpectedValueException
+      SodiumException 
 */
 ?>

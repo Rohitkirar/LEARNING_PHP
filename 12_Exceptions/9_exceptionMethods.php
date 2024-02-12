@@ -28,5 +28,4 @@ catch(Exception $e){
     echo ("Exception thrown in $file on line $line : [Code $code]
     $message");
 }
-
 ?>
