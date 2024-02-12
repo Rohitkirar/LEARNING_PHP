@@ -16,5 +16,9 @@ echo "<br>";
 echo $datastring . "<br>"; //output string "[containgdata]"
 
 
+$strdecode = json_decode($datastring);
 
+var_dump($strdecode) ;
+
+echo "<br>" ;
 ?>
