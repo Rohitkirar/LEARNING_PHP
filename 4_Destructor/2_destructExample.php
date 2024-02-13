@@ -22,7 +22,7 @@ echo "HELLO WORLD !<BR>";
 echo "HELLO WORLD !<BR>";
 echo "<hr>" ;
 
-$mainobj1 = new Main();
-$mainobj1->printDetails();
+// $mainobj1 = new Main();
+// $mainobj1->printDetails();
 
 ?>
