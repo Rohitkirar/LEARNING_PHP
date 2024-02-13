@@ -19,6 +19,7 @@ class Duck implements Walkable, Swimable{
 }
 
 $duck = new Duck;
+
 $duck->swim();
 echo "<BR>" ;
 $duck->walk();
