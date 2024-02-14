@@ -32,6 +32,6 @@ echo "<hr>";
 $vehicle->wheeler();
 echo "<hr>";
 $vehicle->speed1();
-echo "<hr>";
+echo "<hr>"; 
 $vehicle->wheeler1();
 ?>
