@@ -13,6 +13,7 @@ time, Tid (unique)
 }
 */
 class Bank{
+
     private $bankName = "STATE BANK OF INDIA" , $userName , $password , $bankAccountNumber ;
 
     public function setNewUser($bankAccountNumber , $userName , $password){
@@ -20,6 +21,7 @@ class Bank{
         $this->userName = $userName ;
         $this->password = $password ;
     }
+    
     public function getUserDetails(){
         return [$this->bankAccountNumber , $this->bankName , $this->userName ,  $this->password] ;
     }
