@@ -1,11 +1,19 @@
 <?php 
-
-class Bank{
-
+require_once('../Traits/Database.php');
+class Bank {
+    
+    use Database;
     private $bankName , $userName , $password , $bankAccountNumber ;
-    private $balance ;
+    private $balance , $managerId = 101 , $managerPassword = "bank123" ;
 
-    public function setNewUser($bankAccountNumber , $userName , $password){
+    public function verification($managerId , $managerPassword){
+        if($this->managerId == $managerId && $managerPassword == $this->managerPassword){
+            return true;
+        }
+        return false;
+    }
+
+    public function userRegistration($bankAccountNumber , $userName , $password){
 
         global $accountDetails;
 
@@ -19,46 +27,26 @@ class Bank{
             $transactionDetails = ['transactionType'=>'Account Created' ,'bankName'=>$this->bankName , 'bankAccountNumber'=>$this->bankAccountNumber , 'balance'=>$this->balance];
             $this->saveTransactionDetails($transactionDetails);
 
-            global $accountDetails ;
             $accountDetails[$bankAccountNumber] = ['bankName'=>$this->bankName , 'bankAccountNumber'=>$this->bankAccountNumber , 'userName'=>$this->userName , 'password'=>$this->password , 'balance'=>$this->balance];
+            $this->saveRecords();
         }
         else{
-            echo "User Already Registered in Bank!<BR>";
+            echo "User Already Registered in Bank!<BR>\n";
         }
     }
 
     public function getUserDetails(){
-        $result = [$this->bankName , $this->bankAccountNumber , $this->userName ,  $this->password , $this->balance] ; 
-        return $result ;
-    }
-    
-    function saveRecords(){
         global $accountDetails;
-        if(count($accountDetails) != 0){
-            $myfile = fopen('../Records/accountdetails.txt', 'w') or die("Unable to open file");
-            $text = json_encode($accountDetails) . "\n";
-            fwrite($myfile , $text);
-            fclose($myfile);
-            echo "Successfully save Data in file!<br>";
+        if(count($accountDetails) > 0){
+            echo "</pre>Account Registered With Bank : ";
+            print_r($accountDetails);
+            echo "</pre>\n" ;
         }
         else{
-            echo "No records Found!<BR>";
+            echo "No Account Found in Records\n";
         }
     }
 
-    function saveTransactionDetails($transactionDetails){
-        if(count($transactionDetails) != 0){
-            $myfile = fopen('../Records/'.$this->bankAccountNumber.".txt", 'w') or die("Unable to open file");
-            $text = json_encode($transactionDetails) . "\n";
-            fwrite($myfile , $text);
-            fclose($myfile);
-            echo "Successfully save Transaction in file!<br>";
-        }
-        else{
-            echo "Transaction Empty Found!<BR>";
-        }
-    }
-    
 }
 
 ?>

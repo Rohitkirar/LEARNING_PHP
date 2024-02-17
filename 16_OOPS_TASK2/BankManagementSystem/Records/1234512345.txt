@@ -1,0 +1,1 @@
+{"transactionType":"Account Created","bankName":"STATE BANK OF INDIA","bankAccountNumber":1234512345,"balance":0}

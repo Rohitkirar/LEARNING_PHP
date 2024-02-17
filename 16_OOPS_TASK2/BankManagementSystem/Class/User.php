@@ -1,11 +1,13 @@
 <?php 
-
+require_once("../Traits/Database.php");
 class User{
+
+    use Database;
 
     private $userName , $password , $balance ,$bankAccountNumber ;
 
     //checking user exist or not in db
-    public function __construct($bankAccountNumber , $userName , $password){
+    public function userLogin($bankAccountNumber , $userName , $password){
         global $accountDetails;
         if(array_key_exists($bankAccountNumber , $accountDetails)){
             if($accountDetails[$bankAccountNumber]['userName'] == $userName && $accountDetails[$bankAccountNumber]['password'] == $password ){
@@ -15,17 +17,20 @@ class User{
                 $this->balance = $accountDetails[$bankAccountNumber]['balance'];
             }
             else{
-                echo "Username / Password Wrong!<br>";
+                echo "Username / Password Wrong!<br>\n";
+                return false;
             }
         }
         else{
-            echo "User Not Found in Bank Please check your details<BR>";
+            echo "User Not Found in Bank Please check your details<BR>\n";
+            return false;
         }
+        return true;
     } 
     //balance check function
     public function checkBalance(){
         if(isset($this->userName)){
-            echo "Account Balance : " . $this->balance . "<BR>";
+            echo "Account Balance : " . $this->balance . "<BR>\n";
         }
     }
 
@@ -41,11 +46,11 @@ class User{
                 $this->saveTransactionDetails($transactionDetails);
             }
             else{
-                echo "Please Enter Valid amount!<BR>";
+                echo "Please Enter Valid amount!<BR>\n";
             }
         }
         else{
-            echo "No User Found, Contact Bank!<br>";
+            echo "No User Found, Contact Bank!<br>\n";
         }
     }
     // withdrawal amount function
@@ -61,15 +66,15 @@ class User{
                     $this->saveTransactionDetails($transactionDetails);
                 }
                 else{
-                    echo "Insufficient Fund in your account<BR>";
+                    echo "Insufficient Fund in your account<BR>\n";
                 }
             }
             else{
-                echo "Please Enter Valid amount!<BR>";
+                echo "Please Enter Valid amount!<BR>\n";
             }
         }
         else{
-            echo "No User Found, Contact Bank!<br>";
+            echo "No User Found, Contact Bank!<br>\n";
         }
     }
     //To check transaction history of a user 
@@ -83,23 +88,12 @@ class User{
             if(!is_null($decoded_data))
                 $historyarray[$x++] = $decoded_data;
         }
-        echo "<pre> <br> TRANSACTION HISTORY <BR>";
+        echo "<pre> <br> TRANSACTION HISTORY <BR>\n";
         print_r($historyarray);
         echo "</pre>" ;
     }
-    //private function to save the transaction perform by user
-    private function saveTransactionDetails($transactionDetails){
-        if(count($transactionDetails) != 0){
-            $myfile = fopen('../Records/'.$this->bankAccountNumber.".txt", 'a') or die("Unable to open file");
-            $text = json_encode($transactionDetails) . "\n";
-            fwrite($myfile , $text);
-            fclose($myfile);
-            echo "Successfully save Transaction in file!<br>";
-        }
-        else{
-            echo "Transaction Empty Found!<BR>";
-        }
-    }
+
+    
 }
 
 ?>

@@ -1,0 +1,3 @@
+{"transactionType":"Account Created","bankName":"STATE BANK OF INDIA","bankAccountNumber":22222222,"balance":0}
+{"transactionType":"Account Created","bankName":"STATE BANK OF INDIA","bankAccountNumber":22222222,"balance":0}
+{"transactionType":"Account Created","bankName":"STATE BANK OF INDIA","bankAccountNumber":22222222,"balance":0}

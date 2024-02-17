@@ -1,3 +1,3 @@
 {"transactionType":"Account Created","bankName":"STATE BANK OF INDIA","bankAccountNumber":12345678,"balance":0}
 {"transactionType":"Amount Credited","bankAccountNumber":12345678,"creditedAmount":10000,"balance":10000}
-{"transactionType":"Amount Withdrawal","bankAccountNumber":12345678,"withdrawalAmount":5000,"balance":5000}
+{"transactionType":"Amount Withdrawal","bankAccountNumber":12345678,"withdrawalAmount":4000,"balance":6000}
