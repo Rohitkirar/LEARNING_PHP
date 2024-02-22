@@ -3,6 +3,31 @@ USE classicmodels;
 
 SELECT * FROM customers;
 
+
+-- "<HR> TASK BY SAGAR SIR : state-not null, country = usa, germany, credit limit 50k to 2L, 
+-- (cus from first 10 and last 10) apply at end, print cus no., full name, country ,state ,limit :<BR>";
+
+-- "FIRST 10 RECORDS <BR>";
+
+SELECT customernumber, CONCAT(contactfirstName, ' ' , contactlastName) as fullName , state , country , creditlimit
+FROM customers
+WHERE country IN ('usa' , 'germany') 
+AND state IS NOT NULL 
+AND creditlimit BETWEEN 50000 AND 200000
+ORDER BY customerNumber
+LIMIT 10  ;
+
+-- "LAST 10 RECORDS <BR>";
+
+SELECT customernumber, CONCAT(contactfirstName, ' ' , contactlastName) as fullName , state , country , creditlimit
+FROM customers
+WHERE country IN ('usa' , 'germany') 
+AND state IS NOT NULL 
+AND creditlimit BETWEEN 50000 AND 200000
+ORDER BY customerNumber DESC
+LIMIT 10 ;
+
+
 -- GET customer details with full address and address is not null
 
 SELECT customernumber, customerName, phone , CONCAT(addressLine2 ,', ', state, ', ' , country) as fullAddress
@@ -89,7 +114,10 @@ SELECT DISTINCT jobTitle FROM employees;
 
 SELECT employeeNumber , 
 CONCAT(firstName , ' ' , lastName) as fullName,
-email , (SELECT CONCAT(firstName , ' ' , lastName) as Reports_To FROM employees WHERE employeeNumber = 1002) as reportsTo 
+email , 
+(SELECT CONCAT(firstName , ' ' , lastName) 
+FROM employees 
+WHERE employeeNumber = 1002) as reportsTo 
 FROM employees 
 WHERE officeCode = 1  AND reportsTo = 1002; 
 

@@ -1,6 +1,37 @@
 <?php 
 require_once("FILE/connection.php");
 
+ECHO "<HR> TASK BY SAGAR SIR : state-not null, country = usa, germany, 
+credit limit 50k to 2L, (cus from first 10 and last 10) apply at end, print cus no., full name, country ,state ,limit :<BR>";
+
+ECHO "FIRST 10 RECORDS <BR>";
+
+$sql = 
+"SELECT customernumber, CONCAT(contactfirstName, ' ' , contactlastName) as fullName , state , country , creditlimit
+FROM customers
+WHERE country IN ('usa' , 'germany') 
+AND state IS NOT NULL 
+AND creditlimit BETWEEN 50000 AND 200000
+ORDER BY customerNumber
+LIMIT 0,10  
+";
+
+require("FILE/printdata.php");
+
+ECHO "LAST 10 RECORDS <BR>";
+$sql = 
+"SELECT customernumber, CONCAT(contactfirstName, ' ' , contactlastName) as fullName , state , country , creditlimit
+FROM customers
+WHERE country IN ('usa' , 'germany') 
+AND state IS NOT NULL 
+AND creditlimit BETWEEN 50000 AND 200000
+ORDER BY customerNumber DESC
+LIMIT 10
+";
+
+require("FILE/printdata.php");
+
+
 ECHO "<HR>EXAMPLE 1 : customer details with full address :<BR>";
 
 $sql = 
