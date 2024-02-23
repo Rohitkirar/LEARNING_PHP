@@ -1,0 +1,1 @@
+{"102":{"physics":"90","chemistry":"80","Maths":"70"},"103":{"physics":"10","chemistry":"88","Maths":"16"}}
