@@ -1,6 +1,10 @@
-<?php 
-// A MySQL subquery is called an inner query whereas the query that contains the subquery is called an outer query.
-// A subquery can be used anywhere that expression is used and must be closed in parentheses.
+<?php
+/* 
+    A MySQL subquery is called an inner query whereas the query that contains the subquery is called an outer query.
+    A subquery can be used anywhere that expression is used and must be closed in parentheses.
+    A subquery is a query nested within another query (or outer query).
+    A correlated subquery depends on the outer query.
+*/
 require_once('FILE/connection.php');
 
 ECHO "<HR>EXAMPLE 1 : <BR>";
@@ -122,22 +126,74 @@ WHERE
 require('FILE/printdata.php');
 
 
-ECHO "<HR>EXAMPLE 7 : The following query finds sales orders whose total values are greater than 60K..<BR>";
 
-$sql =
+ECHO "<HR>EXAMPLE 7 : following query finds sales orders whose total values are greater than 60K..<BR>";
+
+$sql =  
 "SELECT 
-    productname,
-    buyprice
-FROM
-    products AS p1
-WHERE
-        buyprice > (
-            SELECT AVG(buyprice)
-            FROM products
-            WHERE  productline = p1.productline
-        )
+    orderNumber,
+    SUM(quantityOrdered * priceEach) AS total
+FROM 
+    orders
+JOIN 
+    orderdetails
+USING
+    (orderNumber)
+GROUP BY 
+    orderNumber
+HAVING 
+    total>60000;
 ";
 require('FILE/printdata.php');
+
+
+
+ECHO "<HR>EXAMPLE 8 : correlated subquery to find customers who placed at least one sales order with a total value greater than 60K by using the EXISTS operator: <BR>";
+
+$sql =  
+"SELECT 
+    customerNumber, 
+    customerName
+FROM
+    customers
+WHERE
+EXISTS( 
+    SELECT 
+        orderNumber, 
+        SUM(priceEach * quantityOrdered) AS total
+    FROM
+        orderdetails
+            JOIN
+        orders 
+    USING 
+        (orderNumber)
+    WHERE
+        customerNumber = customers.customerNumber
+    GROUP BY 
+        orderNumber
+    HAVING 
+        total > 60000);
+";
+require('FILE/printdata.php');
+
+ECHO "<HR>EXAMPLE 9 : fetch the first and last names of customers who have placed at least one order.<BR>";
+
+$sql =  
+"SELECT 
+    customerNumber ,
+    customerName
+FROM 
+    customers AS c
+WHERE EXISTS(
+    SELECT orderNumber
+    FROM orders AS o
+    WHERE c.customerNumber = o.customerNumber
+    AND o.customerNumber > 400  
+)
+";
+require('FILE/printdata.php');
+
+// When a subquery is used with the EXISTS or NOT EXISTS operator, a subquery returns a Boolean value of TRUE or FALSE
 
 $conn->close();
 ?>
