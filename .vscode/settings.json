@@ -1,0 +1,21 @@
+{
+    "workbench.activityBar.iconClickBehavior": "toggle",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 100,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "rk_classic",
+            "username": "root",
+            "database": "classicmodels",
+            "group": "rk",
+            "password": ""
+        }
+    ]
+    
+}

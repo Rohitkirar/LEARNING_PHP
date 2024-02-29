@@ -166,5 +166,5 @@ WHERE EXISTS(
     SELECT orderNumber
     FROM orders AS o
     WHERE c.customerNumber = o.customerNumber
-    AND o.customerNumber > 400  ;
+    AND o.customerNumber > 400 ) ;
     
