@@ -18,3 +18,5 @@ WHERE
 ORDER BY 
     users.id;
 
+
+-- using join / subquery / exists 

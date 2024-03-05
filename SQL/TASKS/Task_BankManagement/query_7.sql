@@ -1,5 +1,6 @@
 
 -- 7) sum of all pending transactions
+-- using joins  and make query as simple possible
 
     SELECT 
         (

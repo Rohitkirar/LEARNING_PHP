@@ -11,3 +11,5 @@ WHERE
     users.id = accounts.user_id
 GROUP BY 
     users.id;
+
+-- joins / subquery 

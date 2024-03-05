@@ -16,3 +16,5 @@ ON
 WHERE
     accounts.id IS NULL;
 
+
+-- subquery / EXISTS

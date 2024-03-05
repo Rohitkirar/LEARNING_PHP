@@ -19,6 +19,5 @@
         status = 'pending'
     GROUP BY 
         Years , months
-    HAVING 
-        totalcreditAmount > 0 OR totalDebitAmount > 0;
+;
 

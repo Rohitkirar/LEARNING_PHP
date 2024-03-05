@@ -1,3 +1,4 @@
+-- Active: 1709188058198@@127.0.0.1@3306@social_media
 USE Social_media;
 
 CREATE DATABASE IF NOT EXISTS Social_Media;
@@ -19,8 +20,8 @@ CREATE TABLE IF NOT EXISTS users (
     email varchar(50) NOT NULL UNIQUE,
     mobile varchar(20) NOT NULL UNIQUE,
     gender ENUM('male' , 'female' , 'other') NOT NULL,
-    created_at DATETIME DEFAULT NOW(),
-    updated_at DATETIME DEFAULT NOW()
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW()
 ) ;
 
@@ -31,8 +32,8 @@ CREATE TABLE IF NOT EXISTS posts (
     user_id INT NOT NULL,
     title varchar(255) NOT NULL ,
     description TEXT ,
-    created_at DATETIME DEFAULT NOW(),
-    updated_at DATETIME DEFAULT NOW()
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW(),
     CONSTRAINT fk_user
     FOREIGN KEY (user_id)
@@ -46,8 +47,8 @@ CREATE TABLE IF NOT EXISTS postComments(
     post_id INT NOT NULL,
     user_id INT NOT NULL,
     comment TEXT NOT NULL,
-    created_at DATETIME DEFAULT NOW(),
-    updated_at DATETIME DEFAULT NOW()
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW(),
     CONSTRAINT fk_postcomment
     FOREIGN KEY (post_id)
@@ -65,8 +66,8 @@ CREATE TABLE IF NOT EXISTS postImages(
     id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT NOT NULL,
     image BLOB NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT NOW(),
-    updated_at DATETIME NOT NULL DEFAULT NOW()
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW(),
     CONSTRAINT fk_postimage
     FOREIGN KEY (post_id)
@@ -80,8 +81,8 @@ CREATE TABLE IF NOT EXISTS postLikes(
     post_id INT NOT NULL,
     user_id INT NOT NULL,
     flag BOOLEAN NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT NOW(),
-    updated_at DATETIME NOT NULL DEFAULT NOW()
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW(),
     Constraint fk_postlike
     FOREIGN KEY (post_id)
@@ -98,8 +99,8 @@ CREATE TABLE IF NOT EXISTS postLikes(
 CREATE TABLE IF NOT EXISTS tracking(
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
-    from_time DATETIME GENERATED ALWAYS AS (NOW()),
-    to_time DATETIME NOT NULL DEFAULT NOW()
+    from_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    to_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     ON UPDATE NOW()
 );
 
@@ -136,11 +137,21 @@ INSERT INTO tracking
     (user_id , from_time , to_time)
 VALUES
     (1 , '2024-03-04 12:00:00', DEFAULT),
-    (3, '2024-03-04 11:00:00', '2024-03-04 01:50:50'),
+    (3, '2023-01-08 11:00:00', '2024-03-04 01:50:50'),
     (2 , '2024-03-04 15:00:00', DEFAULT),
     (4 , '2024-03-04 18:00:00', DEFAULT),
     (5, '2024-03-04 03:00:00', '2024-03-04 14:50:50'),
     (2 , '2024-03-04 16:00:00', DEFAULT);
+
+INSERT INTO tracking 
+    (user_id , from_time , to_time)
+VALUES
+    (1 , '2022-08-04 09:00:00','2022-08-04 11:57:00'),
+    (3, '2023-01-08 11:00:00', '2023-01-08 13:20:00'),
+    (2 , '2022-11-24 04:00:00', '2022-11-24 4:57:00'),
+    (4 , '2023-07-13 06:00:00','2023-07-13 09:57:27'),
+    (5, '2022-08-16 03:00:00', '2022-08-16 06:50:20'),
+    (2 , '2023-11-24 16:00:00', '2023-11-24 23:40:50');
 
 SELECT * FROM postLikes;
 
@@ -169,73 +180,4 @@ VALUES
 
 
 SELECT * FROM users;
-
-
--- 1) post details with user's id wise
-
-SELECT 
-    users.id , fullName , email , 
-    mobile, gender , posts.id as postId , 
-    title , description , posts.created_at , 
-    posts.updated_at  
-FROM 
-    users , posts 
-WHERE 
-    users.id = posts.user_id;
-
-
--- 2) user's details with total post counts
-
-SELECT users.id , fullname , gender , email , mobile , count(posts.id) as totalPosts
-FROM users
-JOIN 
-posts
-On users.id = posts.user_id
-GROUP BY users.id;
-
--- 3) like count comment count on posts;
-
--- 3.1) total likes
-SELECT posts.id , title  ,count(postlikes.id) as Totallikes
-FROM posts
-JOIN 
-    postlikes
-ON posts.id = postlikes.post_id
-WHERE flag = 1
-GROUP BY posts.id;
-
--- 3.2) total comments
-
-SELECT posts.id , title , count(postcomments.id) as totalcomments
-FROM postcomments, posts
-WHERE posts.id  = postcomments.post_id
-GROUP BY posts.id;
-
--- 4) user's who have liked on any post's
-
-SELECT users.id , fullName , count(postlikes.id) as totallikes
-FROM users , postlikes
-WHERE users.id = postlikes.user_id
-GROUP BY users.id; 
-
--- 5) user's who have liked or commented on any post/s
-
-SELECT  *
-FROM 
-    postlikes 
-JOIN 
-    postcomments
-ON postlikes.user_id = postcomments.user_id
-GROUP BY postlikes.post_id
-;
-
-SELECT * FROM users,postcomments
-WHERE users.id = postcomments.user_id;
-SELECT * FROM users,postlikes
-WHERE users.id = postlikes.user_id;
-
-
-
-
-
 
