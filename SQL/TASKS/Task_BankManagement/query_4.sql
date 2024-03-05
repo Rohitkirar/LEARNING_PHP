@@ -1,10 +1,10 @@
 
--- 4) weekly transaction details , 15 days and monthly transactions details
+-- 4) weekly transaction total amount as per week , monthly and yearly , 15 days and monthly transactions details
 
 -- weekly
 
 SELECT 
-    * , 
+    amount, 
     Year(created_at) as years ,  
     MONTH(created_at) as months, 
     WEEK(created_at) as weekly 
