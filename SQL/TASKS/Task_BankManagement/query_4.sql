@@ -1,93 +1,44 @@
 
--- 4) weekly transaction total amount as per week , monthly and yearly , 15 days and monthly transactions details
+-- 4) weekly transaction total amount as per week , monthly and yearly and monthly transactions details
 
 -- weekly
 
-SELECT 
-    amount, 
-    Year(created_at) as years ,  
-    MONTH(created_at) as months, 
-    WEEK(created_at) as weekly 
-FROM 
-    transactions
-GROUP BY 
-    years , 
-    months, 
-    id
-ORDER BY 
-    YEARS , 
-    months , 
-    weekly ;
+SELECT WEEK(created_at) as weekly, SUM(amount) as totalamount
+FROM transactions
+WHERE YEAR(created_at) = '2023'
+GROUP BY Weekly ;
 
 
 -- weekly count of transaction
 
-SELECT 
-    Year(created_at) as years ,  
-    MONTH(created_at) as months, 
-    WEEK(created_at) as weekly , 
-    count(id) as totaltransactions
-FROM 
-    transactions
-GROUP BY 
-    years , 
-    months,
-    weekly
-ORDER BY 
-    YEARS , 
-    months , 
-    weekly ;
+SELECT WEEK(created_at) as weekly , count(id) as totaltransactions
+FROM transactions
+WHERE YEAR(created_at) = '2023'
+GROUP BY weekly ;
 
 
 -- monthly
 
-SELECT 
-    * , 
-    Year(created_at) as Years ,  
-    MONTH(created_at) as monthly  
-FROM 
-    transactions
-GROUP BY 
-    years , 
-    monthly , 
-    id
-ORDER BY 
-    years , 
-    monthly , 
-    id;
+SELECT MONTH(created_at) as monthly  , sum(amount) as TotalAmount
+FROM transactions
+WHERE Year(created_at) = '2024'
+GROUP BY  monthly ;
 
 -- monthly total transaction count
 
-SELECT 
-    Year(created_at) as Years ,  
-    MONTH(created_at) as monthly  ,  
-    count(id) as totaltransaction
-FROM 
-    transactions
-GROUP BY 
-    years , 
-    monthly;
+SELECT MONTH(created_at) as monthly  ,  count(id) as totaltransaction
+FROM transactions
+WHERE year(created_at) = '2023'
+GROUP BY monthly;
 
 -- yearly 
 
-SELECT 
-    * , 
-    YEAR(created_at) as yearly 
-FROM 
-    transactions
-GROUP BY 
-    yearly , 
-    id 
-ORDER BY 
-    yearly , 
-    id;
+SELECT YEAR(created_at) as yearly , SUM(amount) as totalAmount 
+FROM transactions
+GROUP BY yearly  ;
 
 -- yearly total count of transaction
-SELECT 
-    YEAR(created_at) as yearly , 
-    count(id) as totaltransaction
-FROM 
-    transactions
-GROUP BY 
-    yearly;
+SELECT YEAR(created_at) as yearly , count(id) as totaltransaction
+FROM transactions
+GROUP BY yearly;
 
