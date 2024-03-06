@@ -2,41 +2,18 @@
 -- 7) sum of all pending transactions
 -- using joins  and make query as simple possible
 
-    SELECT 
-        (
-        SELECT 
-            SUM(amount) FROM transactions 
-        WHERE 
-            type = 'credit' AND
-            status = 'pending' 
-        ) as TotalCreditAmount,
-        
-        (
-        SELECT 
-            SUM(amount) FROM transactions 
-        WHERE 
-            type = 'debit' AND 
-            status = 'pending'
-        ) as TotaldebitAmount ,
-        status
-        FROM 
-            transactions
-        WHERE 
-            status = 'pending'
-        GROUP BY 
-            status;
+    SELECT status , type , SUM(amount) as TotalAmount 
+    FROM transactions
+    WHERE status = 'pending'
+    GROUP BY status , type;
 
 
-    SELECT 
-        count(id) as pendingtransaction
-    FROM 
-        transactions
-    WHERE 
-        status = 'pending';
+    SELECT status , type , count(id) as pendingtransaction
+    FROM transactions
+    WHERE status = 'pending'
+    GROUP BY type;
 
-    SELECT 
-        count(id) as successfulltransaction
-    FROM 
-        transactions
-    WHERE 
-        status = 'successfull';
+    SELECT status , type , count(id) as pendingtransaction
+    FROM transactions
+    WHERE status = 'successfull'
+    GROUP BY type;
