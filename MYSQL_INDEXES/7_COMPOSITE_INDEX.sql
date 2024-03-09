@@ -30,9 +30,18 @@ use classicmodels;
 -- EXAMPLE 
 SELECT * FROM customers;
 
-EXPLAIN SELECT * FROM customers WHERE country = 'usa'; -- search 98 row result 35
+EXPLAIN SELECT * FROM customers 
+WHERE city = 'San Jose' AND 
+state = 'CA' AND 
+country = 'usa';;
 
-EXPLAIN SELECT * FROM customers WHERE state = 'CA' AND country = 'usa'; -- search 98 row result 11
+
+-- not working only works in seq COL1 , col2 , col3
+
+EXPLAIN;SELECT * FROM customers WHERE country = 'usa'; -- search 98 row result 35
+
+EXPLAIN SELECT * FROM customers 
+WHERE state = 'CA' AND country = 'usa'; -- search 98 row result 11
 
 EXPLAIN SELECT * FROM customers WHERE city = 'San Jose';
 CREATE INDEX city_state_country 
