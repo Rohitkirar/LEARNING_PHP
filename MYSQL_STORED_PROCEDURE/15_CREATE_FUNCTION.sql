@@ -51,6 +51,48 @@ SELECT @level;
 
 
 
+-- example to use function inside a trigger before insert to concat the firstname and last NAMe
+
+use classicmodels;
+SELECT * FROM customers;
+
+DELIMITER //
+CREATE FUNCTION fullName(
+firstName varchar(50) , lastName varchar(50)
+)
+RETURNS varchar(100)
+BEGIN
+	DECLARE fullName VARCHAR(100);
+    SET fullName = CONCAT(firstName , ' ' , lastName);
+	RETURN  fullName;
+END; //
+
+DELIMITER //
+CREATE TRIGGER before_insertion
+BEFORE INSERT 
+ON new_customers
+FOR EACH ROW
+BEGIN
+	DECLARE full_name varchar(100);
+	SET full_name = fullName(new.firstName , new.lastName);
+    SET new.full_name = full_name;
+END; //
+
+CREATE TABLE new_customers(
+	id INT PRIMARY KEY,
+    firstName VARCHAR(50) NOT NULL,
+    lastName Varchar(50) ,
+    full_name Varchar(100)
+);
+
+INSERT INTO new_customers
+	(id , firstName , lastName)
+VALUES
+	(1 , 'rohit' , 'kirar');
+    
+SELECT * FROM new_customers;
+
+
 
 /*
 
