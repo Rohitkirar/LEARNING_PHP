@@ -1,0 +1,6 @@
+
+CREATE TABLE category(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Title VARCHAR(50) NOT NULL,
+    Image_name VARCHAR(50) NOT NULL
+);
