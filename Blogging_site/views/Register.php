@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-$role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $password = ''; 
+$role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
 $roleErr = $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = $passwordErr = ''; 
 
 if(isset($_POST['submit'])){
@@ -51,21 +51,26 @@ if(isset($_POST['submit'])){
         $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
 
 
-    $password = $_POST['password'];
-    if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $password))
+    $userpassword = $_POST['password'];
+    if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $userpassword)){
         $passwordErr = '';
+        $userpassword = md5($userpassword);
+    }
     else
         $passwordErr = 'password should contains only alphabets and number and of 8 in size';
 
-
+    
     if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' && $roleErr == ''){
+        
         require_once('../database/connection.php');
 
-        $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $password , $role];
+        $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
+        
         $resultstr = json_encode($resultarr);
         $resultstr = substr($resultstr , 1 , -1);
-        echo "password : $password <BR>";
-        print_r($resultstr);
+        
+        $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
+
         $sql = "INSERT INTO users
                     (first_name , last_name , age , gender , email , mobile , username , password , role)
                 VALUES($resultstr)";
@@ -76,6 +81,8 @@ if(isset($_POST['submit'])){
             echo "user data saved successfully <BR>";
         else
             echo "ERROR : " . mysqli_error($conn);
+
+        mysqli_close($conn);
     }
 }
 ?>
@@ -123,7 +130,7 @@ if(isset($_POST['submit'])){
             <input type="text" id="username" value="<?php echo $username; ?>" name="username"><br><br>
             
             <label for="pass">Password:  <span style="color:red;"><?php echo $passwordErr ?></span></label>
-            <input type="text" id="pass" value="<?php echo $password; ?>" name="password"><br><br>
+            <input type="text" id="pass" value="<?php echo $userpassword; ?>" name="password"><br><br>
             
             <input type="submit" name="submit"  class="registerbtn" />
         </div>

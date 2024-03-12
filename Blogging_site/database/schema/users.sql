@@ -12,7 +12,7 @@ CREATE TABLE users(
     email VARCHAR(50) UNIQUE NOT NULL,
     mobile VARCHAR(10) UNIQUE NOT NULL,
     username Varchar(20) UNIQUE NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     role ENUM('user'  , 'admin') NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -27,3 +27,5 @@ DROP TABLE users;
 SELECT * FROM users;
 iNSERT iNTO users( username, password )
 values('rohit12345' , 123453);
+
+SELECT role FROM users WHERE username = 'rohitkirar123' AND password = 'fe777d46a13efd25cff9';

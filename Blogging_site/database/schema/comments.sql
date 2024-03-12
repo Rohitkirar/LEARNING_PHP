@@ -22,3 +22,7 @@ CREATE TABLE comments(
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
+
+SELECT * FROM comments;
+
+SELECT * FROM story;
