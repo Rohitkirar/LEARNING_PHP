@@ -1,6 +1,13 @@
 /* Bordered form */
 form {
     border: 3px solid #f1f1f1;
+    width:50%;
+    margin : 5% auto;
+    background-color: lightblue;
+}
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 10px;
 }
 
 /* Full-width inputs */
@@ -50,13 +57,15 @@ img.avatar {
 
 /* Add padding to containers */
 .container {
-    padding: 16px;
+    padding: 20px;
+     
 }
 
 /* Style for the "Forgot password" text */
 span.psw {
     float: right;
-    padding-top: 16px;
+    /* padding-top: 16px; */
+    
 }
 
 /* Change styles for span and cancel button on extra small screens */

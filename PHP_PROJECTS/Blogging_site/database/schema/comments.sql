@@ -23,6 +23,18 @@ CREATE TABLE comments(
     ON DELETE CASCADE
 );
 
+
+
 SELECT * FROM comments;
 
+SELECT * FROM likes;
+
 SELECT * FROM story;
+
+
+TRUNCATE TABLE users ;
+TRUNCATE TABLE  story ;
+TRUNCATE TABLE  category ;
+TRUNCATE TABLE comments ;
+TRUNCATE TABLE  likes ;
+TRUNCATE TABLE  images ;

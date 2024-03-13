@@ -1,7 +1,11 @@
 
 body {
     font-family: Calibri, Helvetica, sans-serif;
-    background-color: pink;
+    background-color: whitesmoke;
+}
+form{
+    width:50%;
+    margin : 5% auto;
 }
 .container {
     padding: 50px;

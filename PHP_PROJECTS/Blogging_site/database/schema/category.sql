@@ -8,16 +8,16 @@ CREATE TABLE category(
 INSERT INTO category
     (Title , Image_type)
 VALUES
-    ('REALISTIC FICTION' , 'jpg'),
+    ('MOVIE STORY' , 'jpg'),
     ('HISTORICAL FICTION' , 'jpg'),
     ('SCIENCE FICTION' , 'jpg'),
     ('MYSTERY' , 'jpg'),
-    ('FANTASY' , 'jpg'),
+    ('HOLY' , 'jpg'),
     ('BIOGRAPHY' , 'jpg'),
     ('TRADITIONAL LITERATURE' , 'jpg'),
-    ('BIOGRAPHY' , 'jpg'),
-    ('INFORMATIONAL' , 'jpg'),
-    ('poetry' , 'jpg')
+    ('CURRENT ISSUE' , 'jpg'),
+    ('GOVERNMENT' , 'jpg'),
+    ('POETRY' , 'jpg')
     ;
 
 

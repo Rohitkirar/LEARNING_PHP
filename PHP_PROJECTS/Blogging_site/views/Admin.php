@@ -30,7 +30,7 @@ if(isset($_SESSION['user_id'])){
 
     $sql = "SELECT count(*) as like_count 
             FROM likes 
-            WHERE user_id = {$_SESSION['user_id']} AND deleted_at IS NULL";
+            WHERE deleted_at IS NULL";
     
     $result = mysqli_query($conn , $sql);
     
@@ -41,7 +41,7 @@ if(isset($_SESSION['user_id'])){
 
     $sql = "SELECT count(*) as comment_count 
             FROM comments 
-            WHERE user_id = {$_SESSION['user_id']} AND deleted_at IS NULL";
+            WHERE  deleted_at IS NULL";
     
     $result = mysqli_query($conn , $sql);
     
@@ -50,10 +50,13 @@ if(isset($_SESSION['user_id'])){
         $comment_count = $resultArray['comment_count'];
     }
 
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
+    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , image
             FROM category JOIN story 
             ON category.id = story.category_id 
-            AND story.user_id = {$_SESSION['user_id']} ";
+            LEFT JOIN images
+            ON story.id = images.story_id
+            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL 
+            ";
 
     $result = mysqli_query($conn , $sql);
     
@@ -89,11 +92,11 @@ else{
     <nav>
         <ul>
             <li>Dashboard</li>
-            <li><a href="home.php" style="text-decoration: none; color:white">Home</a></li>
-            <li>Products</li>
-            <li>Settings</li>
-            <li><a href="addstoryform.php" >Add Story</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="admin.php" style="text-decoration: none; color:white">Home</a></li>
+                    <!-- <li>Products</li>
+                    <li>Settings</li> -->
+            <li><a href="addstoryform.php" style="text-decoration: none; color:white">Add Story</a></li>
+            <li><a href="logout.php" style="text-decoration: none; color:white">Logout</a></li>
         </ul>
     </nav>
     <main>
@@ -104,31 +107,27 @@ else{
             <div class="card">Total Users: <?php echo $user_count ?></div>
         </div>
         <br>
-        <h2>Recent Stories</h2>
-        <div class="recent-articles">
-            <div class="story_inner_div">
-                <?php 
-                    foreach($storyArray as $key=>$values){
-                        echo "<div class='story_inner_div_items'>";
+        <div>
+            <span><strong style="font-size:x-large;">ALL Stories</strong></span>
+            <span style="float:right"><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
+        </div>
+        <div class="grid-container">
+                    
+                    <?php 
+                        foreach($storyArray as $key=>$values){
+                                echo "<div class='grid-item' >";
 
-                        echo "<h3 style='color:purple'>Title : " . $values['story_title'] . "</h3><BR>";
-                        echo "<h3 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
-                        
-                        echo $values['content'];
-                        echo "</div>";
-                    }        
-                ?>
-            </div>
-            <!-- Add more articles here -->
-            <!-- <div>
-                <?php 
-                $sql = "SELECT image FROM images WHERE id = 1";
-                $result = mysqli_query($conn , $sql);
-                $resultArray = mysqli_fetch_assoc($result);
-                $image_path = $resultArray['image'];
-                ?>
-                <img src="<?php echo $image_path ?>" alt="unable to fetch image from db <?php echo $image_path ?>">
-            </div> -->
+                                echo "<h6 style='color:purple'>Title : " . $values['story_title'] . "</h3><BR>";
+
+                                echo "<h6 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
+                                
+                                echo "<a href='adminstoryView.php'><button>View</button></a>"; 
+
+                                echo '</div>';
+
+
+                        }
+                    ?>    
         </div>
 
     </main>

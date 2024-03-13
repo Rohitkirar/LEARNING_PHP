@@ -77,7 +77,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>User Page</title>
-    <link rel="stylesheet" href="../public/css/admin.css">
+    <link rel="stylesheet" href="../public/css/user.css">
     <style>
         body { font-family: Arial, sans-serif; }
         .post, .comments, .story { border: 1px solid #ccc; margin: 10px; padding: 10px; }
@@ -98,64 +98,28 @@ else{
     <nav>
         <ul >
             <li><a href="user.php" style="text-decoration: none; color:white;">Dashboard</a></li>
+            <li><a href="user.php" style="text-decoration: none; color:white">Home</a></li>
             <li><a href="logout.php" style="text-decoration: none; color:white;" >Logout</a></li>
         </ul>
     </nav>
     <main>
-        <h2>Recent Stories</h2>
-        <div class="recent-articles">
-            <div class="story_inner_div">
+        <span><strong style="font-size:x-large;">ALL Stories</strong></span>
+        
+            <div class="grid-container">
                 
-                <?php 
-                    foreach($storyArray as $key=>$values){
-                        echo "<div class='story_inner_div_items'>";
+                            <?php 
+                                foreach($storyArray as $key=>$values){
+                                        echo '<div class="grid-item">';
 
-                            echo "<h3 style='color:purple'>Title : " . $values['story_title'] . "</h3><BR>";
+                                        echo "<h6 style='color:purple'>Title : " . $values['story_title'] . "</h3><BR>";
 
-                            echo "<h3 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
+                                        echo "<h6 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
+                                        
+                                        echo "<a href='storyView.php'><button>View</button></a>"; 
 
-                            echo $values['content'];
-
-                            echo "<BR><BR>";
-                            echo "<form action='{$_SERVER["PHP_SELF"]}' method='POST'>";
-                            echo "<button type='submit' name='like_btn' value='{$values['story_id']}'>Like</button>";
-                            echo "</form>" ;
-
-
-                            echo "<form action='{$_SERVER["PHP_SELF"]}' method='POST'>";
-                            echo "<span class='like-button'>";
-                            echo "<input type='text' name='comment'>";
-                            echo "<button type='submit' name='comment_btn' value='{$values['story_id']}'>comment</button></span>";
-                            
-                            echo "<span>$commentErr</span>";
-
-                            $sql = "SELECT count(*) as 'like_count' 
-                                    FROM likes 
-                                    WHERE story_id = {$values['story_id']}
-                                    AND deleted_at IS NULL";
-                            
-                            $result = mysqli_query($conn , $sql);
-
-                            $resultArray = mysqli_fetch_assoc($result);
-
-                            echo "<span> | Total like : {$resultArray['like_count']} | </span>";
-                            
-                            $sql = "SELECT count(*) as 'comment_count' 
-                                    FROM comments 
-                                    WHERE story_id = {$values['story_id']}
-                                    AND deleted_at IS NULL";
-                            
-                            $result = mysqli_query($conn , $sql);
-
-                            $resultArray = mysqli_fetch_assoc($result);
-
-                            echo "<span>Total comment : {$resultArray['comment_count']}</span>";
-                            echo "</form>" ;
-                            
-                        echo "</div>";  
-                    }        
-                ?>
-                
+                                        echo '</div>';
+                                }
+                            ?>    
             </div>
         </div>
         

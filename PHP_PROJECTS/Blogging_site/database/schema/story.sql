@@ -1,3 +1,4 @@
+-- Active: 1709188058198@@127.0.0.1@3306@blogging_site
 
 
 CREATE TABLE story(
@@ -21,5 +22,7 @@ CREATE TABLE story(
     ON UPDATE CASCADE
     ON DELETE CASCADE
 );
+UPDATE story SET deleted_at = CURRENT_TIMESTAMP WHERE id = 14;
+UPDATE story SET deleted_at = null;
 
 SELECT * FROM story;

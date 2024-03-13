@@ -24,8 +24,13 @@ DROP TABLE likes, images , comments , category ,users , story ;
 
 DROP TABLE users;
 
+
 SELECT * FROM users;
-iNSERT iNTO users( username, password )
-values('rohit12345' , 123453);
+iNSERT iNTO users(first_name , last_name , age , gender , email , mobile , username , password , role)
+values("Rohit" , "Kirar" , 22 , "male" , "rohitkirar123@gmail.com" , "9988776655" , "rohitkirar123" , "12345678" , 'admin' );
 
 SELECT role FROM users WHERE username = 'rohitkirar123' AND password = 'fe777d46a13efd25cff9';
+
+SELECT Title , content , image FROM story JOIN images ON story.id = images.story_id WHERE story.id = 27;
+
+SELECT * FROM category;

@@ -1,5 +1,9 @@
 <?php 
 session_start();
+if(isset($_SESSION['user_id'])){
+    session_unset();
+    session_destroy();
+}
 
 $username = $userpassword = ''; 
 $usernameErr = $passwordErr = ''; 
@@ -67,6 +71,7 @@ if(isset($_POST['submit'])){
             <!-- <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
             <h2>USER LOGIN</h2>
         </div>
+        <hr>
         <div class="container">
 
             <label for="uname"><b>Username</b><b style="color:red"><?php echo $usernameErr ?></b></label>
@@ -79,8 +84,11 @@ if(isset($_POST['submit'])){
 
         </div>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <span class="psw">New User <a href="Register.php">Register Here!</a></span>
+        <div class="container" >
+
+            <span style="text-decoration: none;" ><a href="home.php" style="text-decoration: none;">Home</a></span>   
+            <span class="psw">New User <a href="Register.php" style="text-decoration: none;">Register Here!</a></span>
+            
         </div>
     </form>
 

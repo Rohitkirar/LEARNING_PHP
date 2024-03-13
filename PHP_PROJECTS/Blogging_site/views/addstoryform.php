@@ -33,17 +33,17 @@ if(isset($_SESSION['user_id'])){
                 echo "ERROR " . mysqli_error($conn);
             }
             
-            // $file = $_FILES['image'];
-            // $file_name = $file['name'];
-            // $file_size = $file['size'];
-            // $file_error = $file['error'];
-            // $tmp_name = $file['tmp_name'];
+            $file = $_FILES['image'];
+            $file_name = $file['name'];
+            $file_size = $file['size'];
+            $file_error = $file['error'];
+            $tmp_name = $file['tmp_name'];
+            $fileDestination = '../uploads/'.$file_name;
+            move_uploaded_file($tmp_name , $fileDestination);
 
-            // $tmp_name = str_replace("\\" , "/" , $tmp_name );
+            $sql = "INSERT INTO images (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$fileDestination')";
 
-            // $sql = "INSERT INTO images (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '{$tmp_name}')";
-
-            // $result = mysqli_query($conn , $sql);
+            $result = mysqli_query($conn , $sql);
 
             if($result){
                 echo "successfully inserted data";
@@ -90,13 +90,13 @@ else{
             </select>
             <br><br>
             <label for="story_title">Story Title:</label>
-            <input type="text" name='story_title' id='story_title' />
+            <input type="text" name='story_title' id='story_title' required />
 
             <label for="content">Content:</label>
             <textarea id="content" name="content" rows="4" placeholder="Write your story here" required></textarea>
 
             <label for="image">Add Image</label>
-            <input type="file" id="image" name="image" >
+            <input type="file" id="image" name="image" required >
 
             <button type="submit" name='submit'>Submit</button>
         </form>
