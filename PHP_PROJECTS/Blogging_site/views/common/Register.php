@@ -74,7 +74,7 @@ if(isset($_POST['submit'])){
 
     if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
         
-        require_once('../database/connection.php');
+        require_once('../../database/connection.php');
 
         $role = 'user';
         $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
@@ -104,7 +104,7 @@ if(isset($_POST['submit'])){
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../public/css/register.css">
+    <link rel="stylesheet" href="../../public/css/register.css">
     
 </head>
 <body>
