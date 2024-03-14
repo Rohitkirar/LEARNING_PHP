@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
 
     if($usernameErr == '' && $passwordErr == '' ){
 
-        require_once('../database/connection.php');
+        require_once('../../database/connection.php');
 
         $userpassword = md5($userpassword);
 
@@ -43,9 +43,9 @@ if(isset($_POST['submit'])){
             $_SESSION['role'] = $resultArray['role'];
             
             if($_SESSION['role'] == 'user')
-                header('location: user.php');
+                header('location: ../user/user.php');
             else
-                header('location: admin.php');
+                header('location: ../admin/admin.php');
         }
         else{
             echo "ERROR :  " . mysqli_error($conn);
@@ -62,7 +62,7 @@ if(isset($_POST['submit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN</title>
-    <link rel="stylesheet" href="../public/css/login.css">
+    <link rel="stylesheet" href="../../public/css/login.css">
 </head>
 <body>
 

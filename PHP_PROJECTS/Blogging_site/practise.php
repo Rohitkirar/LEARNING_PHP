@@ -18,16 +18,17 @@ if(isset($_POST['submit'])){
         $story_title = addslashes($_POST['story_title']);
         $content = addslashes($_POST['content']);
 
-        $user_id = $_SESSION['user_id'];
-
+        $user_id = 9;
+        $story_id = $_POST['submit'];
         
-        
+        echo ($story_id);
+        echo ($_GET['story_id']);
         $file = $_FILES['image'];
         $file_name = $file['name'];
         $file_size = $file['size'];
         $file_error = $file['error'];
         $tmp_name = $file['tmp_name'];
-        $fileDestination = '../uploads/'.$file_name;
+        $fileDestination = '../../uploads/'.$file_name;
         move_uploaded_file($tmp_name , $fileDestination);
 
         $sql = "UPDATE story JOIN images ON story.id = images.story_id 
@@ -38,7 +39,7 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($conn , $sql);
         if($result){
             echo "successfully updated data";
-            header('location: adminstoryView.php');
+            header('location: views/admin/adminstoryView.php');
         }
         else{
             echo "ERROR " . mysqli_error($conn);
@@ -85,7 +86,7 @@ if(isset($_POST['submit'])){
             <label for="image">Add Image</label>
             <input type="file" id="image" name="image" value="<?php echo $resultArray['image'] ;?>" required >
 
-            <button type="submit" name='submit'>Submit</button>
+            <button type="submit" name='submit' value="<?php echo $_GET['story_id']?>">Submit</button>
         </form>
     </div>
 </body>
