@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
 
     $email = $_POST['email'];
 
-    if(preg_match("/^[a-zA-Z]+[\w]*@gmail.com$/" , $email))
+    if(preg_match("/^[a-zA-Z]+[.\_\-]*[\w]*@gmail.com$/" , $email))
         $emailErr = '';
     else
         $emailErr = 'Please enter valid email like .....@gmail.com!';
@@ -91,7 +91,7 @@ if(isset($_POST['submit'])){
         $result = mysqli_query($conn , $sql);
         
         if($result)
-            echo "user data saved successfully <BR>";
+            header('location: login.php');
         else
             echo "ERROR : " . mysqli_error($conn);
 
@@ -105,9 +105,12 @@ if(isset($_POST['submit'])){
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../public/css/register.css">
-    
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
 <body>
+    <!-- adding navbar file -->
+    <?php require_once('navbar.php') ?>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" >
 
         <div class="container">
@@ -123,7 +126,7 @@ if(isset($_POST['submit'])){
             <input type="text" name="last_name" value="<?php echo $last_name; ?>" >
             
             <label>Gender: <span style="color:red;"><?php echo $genderErr ?></span></label><br>
-            <input type="radio" name="gender" value="male"> Male<br>
+            <input type="radio" name="gender" value="male" checked> Male<br>
             <input type="radio" name="gender" value="female"> Female<br>
             <input type="radio" name="gender" value="other"> Other<br><br>
             
@@ -152,6 +155,8 @@ if(isset($_POST['submit'])){
         </div>
 
     </form>
+    <!-- adding footer file -->
+    <?php require_once('footer.php') ?>
 </body>
 </html>
 

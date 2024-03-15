@@ -19,16 +19,16 @@ header {
     font-size: 24px;
 }
 
-.search input {
+/* .search input {
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
+} */
 
 /* Navigation styles */
 nav {
     position: fixed;
-    top: 0;
+    top: 5rem;
     left: 0;
     width: 200px;
     height: 100%;
@@ -48,7 +48,7 @@ nav li {
 
 /* Main content styles */
 main {
-    margin-left: 200px;
+    /* margin-left: 200px; */
     padding: 20px;
 }
 

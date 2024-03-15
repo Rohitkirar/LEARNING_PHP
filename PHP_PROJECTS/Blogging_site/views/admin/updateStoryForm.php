@@ -1,8 +1,11 @@
 <?php 
 session_start();
-$user_id = $category_id = $content = $story_title = '';
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+    
+    $user_id = $category_id = $content = $story_title = '' ;
+    $flag = false;
+    
     require_once('../../database/connection.php');
 
     $sql = 'SELECT * FROM category';
@@ -12,20 +15,31 @@ if(isset($_SESSION['user_id'])){
 
     if(isset($_POST['submit'])){
 
-        if(isset($_FILES['image'])){
+        $category_id  = $_POST['category_id'];
+        $story_title = addslashes($_POST['story_title']);
+        $content = addslashes($_POST['content']);
 
-            $category_id  = $_POST['category_id'];
-            $story_title = addslashes($_POST['story_title']);
-            $content = addslashes($_POST['content']);
+        $user_id = $_SESSION['user_id'];
+        $story_id = $_POST['submit'];
 
-            $user_id = $_SESSION['user_id'];
-            $story_id = $_POST['submit'];
+        $sql = "UPDATE story 
+                SET category_id = $category_id , title = '$story_title' , content = '$content' 
+                WHERE story.id = $story_id AND user_id = $user_id" ;
 
-            echo ($story_id);
+        $result = mysqli_query($conn , $sql);
 
+        if($result){
+            echo "successfully updated story data";
+            $flag = true;
+        }
+        else{
+            echo "ERROR " . mysqli_error($conn);
+            $flag = false;
+        }
 
-        
-            $file = $_FILES['image'];
+        if(file_exists($_FILES['addimage']['tmp_name'][0])){
+
+            $file = $_FILES['addimage'];
 
             if(is_array($file['name'])){
             
@@ -40,19 +54,24 @@ if(isset($_SESSION['user_id'])){
                         $fileDestination = '../../uploads/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
-                        $sql = "UPDATE story JOIN images ON story.id = images.story_id 
-                            SET category_id = $category_id , title = '$story_title' , content = '$content' , image = '$fileDestination' 
-                            WHERE story.id = $story_id AND user_id = $user_id" ;
+                        $sql = "INSERT INTO images (story_id , image)
+                                VALUES ($story_id , '$file_name')"; 
 
                         $result = mysqli_query($conn , $sql);
 
-                        if($result)
+                        if($result){
                             echo "successfully inserted data";
-                        else
+                            $flag = true;
+                        }
+                        else{
                             echo "ERROR " . mysqli_error($conn);
+                            $flag = false;
+                        }
                     }
-                    else
+                    else{
                         echo "error in file ;";
+                        $flag = false;
+                    }
                 }
             }
             else{
@@ -65,27 +84,31 @@ if(isset($_SESSION['user_id'])){
                     $fileDestination = '../../uploads/'.$file_name;
                     move_uploaded_file($tmp_name , $fileDestination);
 
-                    $sql = "UPDATE story JOIN images ON story.id = images.story_id 
-                            SET category_id = $category_id , title = '$story_title' , content = '$content' , image = '$fileDestination' 
-                            WHERE story.id = $story_id AND user_id = $user_id" ;
+                    $sql = "INSERT INTO images (story_id , image)
+                    VALUES ($story_id , '$file_name')";
 
                     $result = mysqli_query($conn , $sql);
 
-                    if($result)
-                        echo "successfully inserted data";
-                    else
+                    if($result){
+                        echo "successfully image inserted data";
+                        $flag = true;
+                    }
+                    else{
                         echo "ERROR " . mysqli_error($conn);
+                        $flag = false;
+                    }
                 }
-                else
+                else{
                     echo "error in file ;";
+                    $flag = false;
+                }
             }
         }
-        else{
-            echo "error: FIle not uploaded";
-        }
-
-        header('location: admin.php');
     }
+    if($flag){
+        header("location: adminStoryView.php?story_id=$story_id");
+    }
+
 }
 else{
     session_unset();
@@ -103,6 +126,7 @@ else{
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
     <link rel="stylesheet" href="../../public/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <!-- navbar file -->
@@ -117,13 +141,12 @@ else{
             <?php 
                 $story_id = $_GET['story_id'];
                 
-                $sql = "SELECT story_id , Title , content , image 
-                        FROM story LEFT JOIN images 
-                        ON story.id = images.story_id 
-                        WHERE story_id = $story_id";
+                $sql = "SELECT id as story_id , Title , content 
+                        FROM story 
+                        WHERE story.id = $story_id";
                 
                 $result = mysqli_query($conn , $sql);
-                $resultArray = mysqli_fetch_assoc($result ); 
+                $resultArray = mysqli_fetch_assoc($result); 
             ?>
 
             <label for="title">Category Title:</label>
@@ -140,11 +163,27 @@ else{
 
             <label for="content">Content:</label>
             <textarea id="content" name="content" rows="4" required ><?php echo $resultArray['content'];?></textarea>
+            
+            <div>
+                <?php
+                    $sql = "SELECT id as image_id , image FROM images WHERE story_id = $story_id AND deleted_at IS NULL";
+                    $image = mysqli_query($conn , $sql);
+                    $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
+                    foreach($imageArray as $key=>$path){
+                        echo "{$path['image']}" . "
+
+                        <button id='deletebtn'>
+                            <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" style='text-decoration:none;color:black;'>Delete Image</a>
+                        </button>";
+
+                    }
+                ?>
+            </div>
 
             <label for="image">Add Image</label>
-            <input type="file" id="image" name="image[]" multiple required />
+            <input type="file" id="image" name="addimage[]" multiple value='' />
 
-            <button type="submit" name='submit' value="<?php echo $_GET['story_id']?>">Submit</button>
+            <button type="submit" name='submit' value="<?php echo $resultArray['story_id'] ?>">Submit</button>
         </form>
     </div>
 </body>

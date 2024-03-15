@@ -17,7 +17,7 @@
 
             echo "<h6 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
             
-            echo "<a href='storyView.php?story_id={$values['story_id']}'><button>View</button></a>"; 
+            echo "<button class='btn btn-primary'><a href='storyView.php?story_id={$values['story_id']}'>View</a></button>"; 
 
             echo '</div>';
     }

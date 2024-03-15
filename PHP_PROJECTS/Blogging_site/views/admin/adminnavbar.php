@@ -1,19 +1,55 @@
-<header>
-    <div class="logo" >A</div>
+<style>
+    .headertag{
+        width:100%;
+        background-color:cadetblue;
+    }
+    .navbar{
+        display: flex;
+        padding:5px;
+        background-color:grey;
+        height: 100%;
+    }
+    .navbar a{
+        text-decoration: none;
+        color:white;
+        font-size: larger;
+        padding:10px;
+    }
+    .navbar a:hover{
+        cursor: pointer;
+        color:skyblue;
+        font-size: larger;
+        padding:10px;
+    }
+    .card {
+        flex: 1;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+    main {
+    margin-left: 10px;
+    padding: 20px;
+    }
+    footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    }
+
+
+
+</style>
+<header class='headertag'>
     <div class="logo" >Admin Dashboard</div>
     <div class="logo" >Welcome, <?php echo $_SESSION['username'] ?></div>
-    <div class="search">
-        <input type="text" placeholder="Search...">
-    </div>
 </header>
-<nav>
-    <ul>
-        <li>Dashboard</li>
-        <li><a href="admin.php" style="text-decoration: none; color:white">Home</a></li>
-        <li><a href="adminallstoryview.php" style="text-decoration: none; color:white">All Stories</a></li>
-                <!-- <li>Products</li>
-                <li>Settings</li> -->
-        <li><a href="addstoryform.php" style="text-decoration: none; color:white">Add Story</a></li>
-        <li><a href="../common/logout.php" style="text-decoration: none; color:white">Logout</a></li>
-    </ul>
-</nav>
+<div class='navbar bg-dark'>
+        <a class='navbar-brand' href="admin.php" >Home</a></li>
+        <a class='navbar-brand' href="adminallstoryview.php" >All Stories</a>
+        <a class='navbar-brand' href="../user/user.php" >User DashBoard</a>
+        <a class='navbar-brand' href="alluserdetails.php" >All UserDetails</a>
+        <a class='navbar-brand' href="addstoryform.php" >Add Story</a>
+        <a class='navbar-brand' href="../common/logout.php" >Logout</a>
+</div>
