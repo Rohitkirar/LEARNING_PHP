@@ -63,9 +63,12 @@ if(isset($_POST['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGIN</title>
     <link rel="stylesheet" href="../../public/css/login.css">
+    <link rel="stylesheet" href="../../public/css/home.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-
+    <!-- adding navbar file -->
+    <?php require_once('navbar.php') ?>
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
         <div class="imgcontainer">
             <!-- <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
@@ -91,6 +94,7 @@ if(isset($_POST['submit'])){
             
         </div>
     </form>
-
+    <!-- adding footer file -->
+    <?php require_once('footer.php') ?>
 </body>
 </html>

@@ -34,3 +34,15 @@ SELECT role FROM users WHERE username = 'rohitkirar123' AND password = 'fe777d46
 SELECT Title , content , image FROM story JOIN images ON story.id = images.story_id WHERE story.id = 27;
 
 SELECT * FROM category;
+
+SELECT first_name , last_name , age , gender , email , mobile , password 
+        FROM users 
+        WHERE id = 10 ;
+
+UPDATE users SET first_name = $first_name , 
+                        last_name = $last_name , 
+                        age = $age , 
+                        gender = $gender , 
+                        email = $email , 
+                        mobile = $mobile
+                    WHERE id = {$_SESSION['user_id']}

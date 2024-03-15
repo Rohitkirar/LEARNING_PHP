@@ -9,18 +9,14 @@ if(isset($_SESSION['user_id'])){
     
     // retrieving story data from database
 
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content , image
+    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content
         FROM category JOIN story 
         ON category.id = story.category_id  AND story.id = {$_GET['story_id']}
-        LEFT JOIN images
-        ON story.id = images.story_id
         WHERE story.deleted_at IS NULL ";
-    $result = mysqli_query($conn , $sql);
-    $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
-
 
     $result = mysqli_query($conn , $sql);
-    $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
+    $values = mysqli_fetch_assoc($result);
+
 
     // comment add and delete operation file
 
@@ -41,6 +37,7 @@ else{
     <link rel="stylesheet" href="style.css">
     <title>User Page</title>
     <link rel="stylesheet" href="../../public/css/user.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
     <style>
         .story_inner_div_items{
             padding : 5%;
@@ -61,34 +58,46 @@ else{
     <main>
         <h2>Story</h2>
         <div class="story_inner_div">
-            <?php 
-                foreach($storyArray as $key=>$values){
-                    echo "<form action='{$_SERVER["PHP_SELF"]}.?story_id={$_GET['story_id']}' method='POST'>
-                    <div class='story_inner_div_items'>
+     
+            <form action='<?php echo "{$_SERVER["PHP_SELF"]}.?story_id={$_GET['story_id']}" ?>' method='POST'>
+                <div class='story_inner_div_items'>
+                    
+                    <div>
+                        <h3 style='color:purple'>Title :  <?php echo $values['story_title'] ?>  </h3><BR>
+                        <h3 style='color:purple'>Category : <?php echo $values['category_title'] ?> </h3><BR>
+                    </div>
+                    
+                    <div>
+                        <?php 
+                        $sql = "SELECT image FROM images WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
+                        $image = mysqli_query($conn ,$sql);
+                        if(mysqli_num_rows($image) > 0){
+                            $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
+                            foreach($imageArray as $key=> $path){
+                                echo "<img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
+                            }
+                        }
+                        ?>
+                    </div>
+                    
+                    <BR>
 
-                        <h3 style='color:purple'>Title :  {$values['story_title']} </h3><BR>
+                    <p><?php echo $values['content'] ?><p>
 
-                        <h3 style='color:purple'>Category : {$values['category_title']} </h3><BR>
+                    <BR>
 
-                        <img src='{$values['image']}' style='width:100%; height:50%;' alt='image not found'/>
-                        
-                        <BR>
-
-                        <p>{$values['content']}<p>
-
-                        <BR>
-
-                        <button  style='margin-right:1rem;'>
-                            <a href='like.php?story_id={$values['story_id']}' style='text-decoration:none; color:black'>Like</a>
-                        </button>
+                    <button  style='margin-right:1rem;'>
+                        <a href='like.php?story_id=<?php echo $values['story_id'] ?>' style='text-decoration:none; color:black'>Like</a>
+                    </button>
 
 
-                        <span class='like-button'>
-                        <input type='text' name='comment'>
-                        <button type='submit' name='comment_btn' value='{$values['story_id']}' >comment</button></span>
-                        
-                        <span style='color : red; margin-right:1rem;'>$commentErr</span>";
+                    <span class='like-button'>
+                    <input type='text' name='comment'>
+                    <button type='submit' name='comment_btn' value='<?php echo $values['story_id'] ?>' >comment</button></span>
+                    
+                    <span style='color : red; margin-right:1rem;'><?php $commentErr ?></span>
 
+                    <?php 
                         $sql = "SELECT count(*) as 'like_count' 
                                 FROM likes 
                                 WHERE story_id = {$values['story_id']}
@@ -137,11 +146,9 @@ else{
                             }
                             echo "<hr style='color:grey'>";
                         }
-
-                    echo "</div>";
-                    echo "</form>";   
-                }        
-            ?>
+                    ?>
+                </div>
+            </form>          
         </div>
         
     </main>

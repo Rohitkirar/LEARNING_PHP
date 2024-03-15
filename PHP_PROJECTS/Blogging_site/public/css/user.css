@@ -109,15 +109,9 @@ main {
 }
 .grid-container a{
     text-decoration: none;
+    color:white;
 }
-.grid-container button {
-    width: 80%;
-    height: 15%;
-    border: 0;
-    background-color: lightblue;
-    font-weight: bold;
-    color: black;
-}
+
 
 
 .grid-container {

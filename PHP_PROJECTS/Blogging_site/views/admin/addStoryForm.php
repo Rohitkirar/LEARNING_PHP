@@ -1,8 +1,10 @@
 <?php 
 session_start();
-$user_id = $category_id = $content = $story_title = '';
-if(isset($_SESSION['user_id'])){
 
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+
+    $user_id = $category_id = $content = $story_title = '';
+    
     require_once('../../database/connection.php');
 
     $sql = 'SELECT * FROM category';
@@ -49,7 +51,7 @@ if(isset($_SESSION['user_id'])){
                     $fileDestination = '../../uploads/'.$file_name;
                     move_uploaded_file($tmp_name , $fileDestination);
 
-                    $sql = "INSERT INTO images (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$fileDestination')";
+                    $sql = "INSERT INTO images (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
 
                     $result = mysqli_query($conn , $sql);
 
@@ -86,6 +88,7 @@ else{
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
     <link rel="stylesheet" href="../../public/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <!-- navbar file -->

@@ -48,7 +48,7 @@ nav li {
 
 /* Main content styles */
 main {
-    margin-left: 200px;
+    /* margin-left: 200px; */
     padding: 20px;
 }
 
@@ -115,22 +115,21 @@ main {
     margin-left:1rem;
     padding: 10px;
     float:right ; 
-    background-color:red; 
+    /* background-color:red;  */
     border :none;
 }
 #deletebtn a{
     text-decoration:none;
-    color:black;
+    color:white;
 }
 #updatebtn{
     margin-left:10rem;
     padding: 10px;
-    background-color:lightgreen; 
     border :none;
 }
 #updatebtn a{
     text-decoration:none;
-    color:black;
+    color:white;
 }
 #deletecommentbtn{
     padding: 1px;
