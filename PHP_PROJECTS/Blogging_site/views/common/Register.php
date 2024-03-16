@@ -11,6 +11,8 @@ $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr =
 
 if(isset($_POST['submit'])){
 
+    require_once('../../database/connection.php');
+
     $first_name = $_POST['first_name'];
 
     if(preg_match("/^[a-zA-Z]+$/" , $first_name))
@@ -55,26 +57,49 @@ if(isset($_POST['submit'])){
 
     $username = $_POST['username'];
 
-    if(preg_match("/^[a-zA-Z]+[\w]{8}$/" , $username))
+    if(preg_match("/^[a-zA-Z]+[\w]{6,15}$/" , $username))
         $usernameErr = '';
     else
         $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
 
 
+    if($usernameErr == '' && $mobileErr == '' && $emailErr == ''){
+
+        $sql = "SELECT email , username , mobile 
+                FROM users 
+                WHERE EXISTS (SELECT 1 FROM users WHERE email = '$email' OR mobile='$mobile' OR username='$username')";
+
+        $validationresult = mysqli_query($conn , $sql);
+        
+        $validationResultArray = mysqli_fetch_assoc($validationresult);
+
+        if($validationResultArray['email'] == $email){
+            $emailErr = "Email Already Exists!";
+        }
+        if($username == $validationResultArray['username']){
+            $usernameErr = "Username Already Exists!";
+        }
+        if($mobile == $validationResultArray['mobile']){
+            $mobileErr = "Mobile Number Already Exists!";
+        }
+    }
+
     $userpassword = $_POST['password'];
 
     if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $userpassword)){
         $passwordErr = '';
-        $userpassword = md5($userpassword);
+        if($userpassword == $username){
+            $passwordErr = "username and password should not be same!";
+        }else{
+            $userpassword = md5($userpassword);
+        }
     }
     else
-        $passwordErr = 'password should contains only alphabets and number and of 8 in size';
+        $passwordErr = 'contains only characters, number and range(6,15) length!';
 
 
 
     if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
-        
-        require_once('../../database/connection.php');
 
         $role = 'user';
         $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
@@ -134,16 +159,16 @@ if(isset($_POST['submit'])){
             <input type="number" name="age" value="<?php echo $age; ?>" size="3" ><br><br>
             
             <label>Mobile : <span style="color:red;"><?php echo $mobileErr ?></span></label>
-            <input type="text" name="mobile" value="<?php echo $mobile; ?>" size="10"><br><br>
+            <input type="Number" name="mobile" maxlength="10" value="<?php echo $mobile; ?>" size="10"><br><br>
             
             <label for="email">Email: <span style="color:red;"><?php echo $emailErr ?></span></label>
             <input type="text" id="email" value="<?php echo $email; ?>" name="email"><br><br>
             
             <label for="username">UserName :  <span style="color:red;"><?php echo $usernameErr ?></span></label>
-            <input type="text" id="username" value="<?php echo $username; ?>" name="username"><br><br>
+            <input type="text" id="username" maxlength="15" value="<?php echo $username; ?>" name="username"><br><br>
             
             <label for="pass">Password:  <span style="color:red;"><?php echo $passwordErr ?></span></label>
-            <input type="text" id="pass" value="<?php echo $userpassword; ?>" name="password"><br><br>
+            <input type="password" id="pass" maxlength="15"  name="password"><br><br>
             
             <input type="submit" name="submit"  class="registerbtn" />
 

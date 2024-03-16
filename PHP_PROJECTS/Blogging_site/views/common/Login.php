@@ -1,58 +1,54 @@
 <?php 
 session_start();
+
 if(isset($_SESSION['user_id'])){
     session_unset();
     session_destroy();
 }
 
 $username = $userpassword = ''; 
-$usernameErr = $passwordErr = ''; 
+$Error = ''; 
 
 if(isset($_POST['submit'])){
 
-    $username = $_POST['username'];
-    
-    if(preg_match("/^[a-zA-Z]+[\w]{8}$/" , $username))
-        $usernameErr = '';
-    else
-        $usernameErr = 'Please enter valid username ';
+    require_once('../../database/connection.php');
 
+    $username = $_POST['username'];
 
     $userpassword = $_POST['password'];
 
-    if(preg_match("/^[\w]{8}$/" , $userpassword))
-        $passwordErr = '';
-    else
-        $passwordErr = 'valid password!';
+    if(isset($username) && isset($userpassword)){
 
+        $sql = "SELECT id , username , password , role FROM users WHERE username = '$username' ";
 
-    if($usernameErr == '' && $passwordErr == '' ){
+        $validResult = mysqli_query($conn , $sql);
 
-        require_once('../../database/connection.php');
+        if(mysqli_num_rows($validResult)>0){
+            $validResultArray = mysqli_fetch_assoc($validResult);
+            $Error = '';
+            if(md5($userpassword) == $validResultArray['password']){
 
-        $userpassword = md5($userpassword);
+                $_SESSION['user_id'] = $validResultArray['id']; 
+                $_SESSION['username'] = $username;
+                $_SESSION['role'] = $validResultArray['role'];
+                
+                $username = $userpassword = ''; 
+                mysqli_close($conn);
+                
+                if($_SESSION['role'] == 'user')
+                    header('location: ../user/user.php');
+                else
+                    header('location: ../admin/admin.php');
 
-        $sql = "SELECT id , role FROM users WHERE username = '$username' AND password = '$userpassword'"; 
-        $result = mysqli_query($conn , $sql);
-        $resultArray = mysqli_fetch_assoc($result);
-
-        if($resultArray){
-
-            $_SESSION['user_id'] = $resultArray['id']; 
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = $resultArray['role'];
-            
-            if($_SESSION['role'] == 'user')
-                header('location: ../user/user.php');
-            else
-                header('location: ../admin/admin.php');
+            } 
+            else{
+                $Error = "Incorrect Username/Password!";
+            }
         }
         else{
-            echo "ERROR :  " . mysqli_error($conn);
+            $Error = "Incorrect Username/Password!";
         }
         
-        $username = $userpassword = ''; 
-        mysqli_close($conn);
     }
 }
 ?>
@@ -76,12 +72,12 @@ if(isset($_POST['submit'])){
         </div>
         <hr>
         <div class="container">
-
-            <label for="uname"><b>Username</b><b style="color:red"><?php echo $usernameErr ?></b></label>
+            <h6 class='text-center'><b style="color:red"><?php echo $Error ?></b></h6>
+            <label for="uname"><b>Username</b></label>
             <input type="text" name="username" required>
 
-            <label for="psw"><b>Password</b><b style="color:red"><?php echo $passwordErr ?></b></label>
-            <input type="text"  name="password" required>
+            <label for="psw"><b>Password</b></label>
+            <input type="password"  name="password" required>
 
             <button type="submit" value="submit" name="submit" >Login</button>
 
