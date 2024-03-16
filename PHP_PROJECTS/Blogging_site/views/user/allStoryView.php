@@ -12,7 +12,7 @@ if(isset($_SESSION['user_id'])){
     $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
         FROM category JOIN story 
         ON category.id = story.category_id 
-        WHERE story.deleted_at IS NULL ";
+        WHERE story.deleted_at IS NULL AND category.deleted_at IS NULL";
 
     $result = mysqli_query($conn , $sql);
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
@@ -75,7 +75,7 @@ else{
                                 if(mysqli_num_rows($image) > 0){
                                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
                                     foreach($imageArray as $key=> $path){
-                                        echo "<img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/>";
+                                        echo "<img src='../../uploads/{$path['image']}' class='card m-1' style='width:100%; height:100%;' alt='image not available'/>";
                                     }
                                 }
                                 echo "
@@ -84,12 +84,10 @@ else{
                             <div>
                                 <p>{$values['content']}<p>
                             </div>
-                            <div>
-                                <button  class='btn btn-primary' style='margin-right:1rem;'>
-                                    <a href='like.php?story_id={$values['story_id']}' style='text-decoration:none; color:white'>Like</a>
-                                </button>
-
-
+                            <div class='container m-3'>
+                                
+                                <a class='btn btn-primary' href='like.php?story_id={$values['story_id']}' >Like</a>
+    
                                 <span class='like-button'>
                                     <input type='text' name='comment'>
                                     <button class='btn btn-success' type='submit' name='comment_btn' value='{$values['story_id']}' >comment</button>
@@ -135,17 +133,18 @@ else{
                                 echo "<h5>Comments</h5><hr>";
                                 
                                 foreach($resultArray as $key => $values){
+                                    
+                                    echo "
+                                    <div class='container'>
+                                        <p>{$values['full_name']}</p>
+                                        <p>{$values['content']}</p>";
 
-                                    echo "<p>{$values['full_name']}</p>";
-                                    echo "<span>{$values['content']}</span>";
-
-                                    if($values['user_id'] == $_SESSION['user_id']){
-                                        echo "
-                                        <button class='btn btn-danger'>
-                                            <a href='deleteComment.php?comment_id={$values['comment_id']}&story_id={$values['story_id']}' style='text-decoration:none; color:white;margin:20px;'>Delete</a>
-                                        </button>";
-                                    }
-                                    echo "<hr style='color:grey'>";
+                                        if($values['user_id'] == $_SESSION['user_id']){
+                                            echo "<a class='btn btn-danger'  href='deleteComment.php?comment_id={$values['comment_id']}&story_id={$values['story_id']}' >Delete</a>";
+                                        }
+                                    echo "
+                                    </div>
+                                    <hr>";
                                 }
                             echo "
                             </div>

@@ -45,15 +45,16 @@ else{
     
     <main>
 
-        <div>
+        <div class="m-2">
             <span><strong style="font-size:x-large;">ALL Category Details</strong></span>
+            <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
         </div>
         <div >
-            <table class='container'>
+            <table class='container m-4' >
                 <tr>
                     <th>ID</th>
-                    <th>Title</th>
                     <th>Image</th>
+                    <th>Title</th>
                     <th>created_at</th>
                     <th>updated_at</th>
                     <th>deleted_at</th>
@@ -61,21 +62,21 @@ else{
                     <th>Delete</th>
                 </tr>
                 <?php 
-                    $sql = "SELECT *  FROM category ";
+                    $sql = "SELECT *  FROM category ORDER BY created_at DESC";
                     $result = mysqli_query($conn , $sql);
                     $userDataArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
                     
                     foreach($userDataArray as $key => $values){
                         echo "<tr> 
-                                    <td>{$values['id']}</td>
+                                    <td>"; echo $key+1 ."</td>
+                                    <td><img src='../../uploads/{$values['image']}' class=' rounded-circle' style='height:90px ; width:90px;' alt='image not uploaded'/></td>
                                     <td>{$values['Title']}</td>
-                                    <td>{$values['image']}</td>
                                     <td>{$values['created_at']}</td>
                                     <td>{$values['updated_at']}</td>
                                     <td>{$values['deleted_at']}</td>
-                                    <td><button class='updateuserbtn btn btn-primary'><a href='Editcategorydetails.php?category_id={$values['id']}' >Update</a></button></td>";
+                                    <td><a class='btn btn-primary' href='Editcategorydetails.php?category_id={$values['id']}' >Update</a></td>";
                                     if(empty($values['deleted_at'])){
-                                        echo "<td><button class='deleteuserbtn btn btn-danger'><a href='deletecategory.php?category_id={$values['id']}' >Delete</a></button></td>";   
+                                        echo "<td><a class='btn btn-danger' href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   
                                     }
                                 echo "</tr>";
                     }

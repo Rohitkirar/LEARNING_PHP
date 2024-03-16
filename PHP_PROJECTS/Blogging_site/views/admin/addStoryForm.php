@@ -96,8 +96,9 @@ else{
     
     <br><br>
 
-    <div class="container">
+    <div class="container p-5" style="width:60%">
         <h1>Add Your Story</h1>
+        <hr>
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
             <label for="title">Category Title:</label>
@@ -114,11 +115,15 @@ else{
 
             <label for="content">Content:</label>
             <textarea id="content" name="content" rows="4" placeholder="Write your story here" required></textarea>
+            
+            <br><br>
 
             <label for="image">Add Image</label>
             <input type="file" id="image" name="image[]" multiple required >
-
-            <button type="submit" name='submit'>Submit</button>
+            <hr>
+            <div class="card" style="border:none; background-color:transparent">
+                <button type="submit" name='submit'>Submit</button>
+            </div>
         </form>
     </div>
 </body>

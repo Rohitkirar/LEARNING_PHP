@@ -64,17 +64,13 @@ if(isset($_SESSION['user_id'])  && $_SESSION['role'] == 'admin'){
     $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
             FROM category JOIN story 
             ON category.id = story.category_id 
-            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL; 
+            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND category.deleted_at IS NULL; 
             ";
 
     $result = mysqli_query($conn , $sql);
     
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
-
-
-
-    // style="background-color:transparent; color:white"
 }
 else{
     session_unset();
@@ -109,7 +105,7 @@ else{
 
         <div>
             <span><strong style="font-size:x-large;">ALL Stories</strong></span>
-            <span style="float:right" ><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
+            <span style="float:right" ><a href="addstoryform.php" class='btn btn-success'>Add Story</a></span>
         </div>
 
         <div class="story_inner_div">
@@ -118,24 +114,20 @@ else{
 
                     echo "<form action='{$_SERVER["PHP_SELF"]}' method='POST'>
 
-                        <div class='story_inner_div_items card container-md ' style='width: 90%;'>
+                        <div class='story_inner_div_items card p-5' style='width: 80%; margin: 1rem auto;'>
 
                         <div class='postnavdiv'>
 
                             <div>
-                             <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>
-                             <h3 style='color:purple'>Category : {$values['category_title']} </h3><BR>
+                                <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>
+                                <h3 style='color:purple'>Category : {$values['category_title']} </h3><BR>
                             </div>
 
-                            <div style='margin : 0 auto'>
+                            <div style='margin:0 auto'>
 
-                                <button id='updatebtn' class='btn btn-primary'>
-                                    <a href='updateStoryForm.php?story_id={$values['story_id']}' style='text-decoration:none;color:white;'>Update Story</a>
-                                </button>
+                                <a href='updateStoryForm.php?story_id={$values['story_id']}' class='btn btn-primary'>Update Story</a>
 
-                                <button id='deletebtn' class='btn btn-danger'>
-                                    <a href='deleteStory.php?story_id={$values['story_id']}' style='text-decoration:none;color:white;'>Delete Story</a>
-                                </button>
+                                <a href='deleteStory.php?story_id={$values['story_id']}' class='btn btn-danger'>Delete Story</a>
 
                             </div>
 
@@ -200,9 +192,7 @@ else{
 
                                     <p>{$values['content']}</p>
 
-                                    <button  class='btn btn-danger'>
-                                        <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$values['story_id']}' style='text-decoration:none; color:white;'>Delete comment</a>
-                                    </button>
+                                    <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$values['story_id']}' class='btn btn-danger'>Delete comment</a>
 
                                     <hr>";
                             }

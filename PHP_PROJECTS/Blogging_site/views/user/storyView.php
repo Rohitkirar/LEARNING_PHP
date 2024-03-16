@@ -12,7 +12,7 @@ if(isset($_SESSION['user_id'])){
     $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content
         FROM category JOIN story 
         ON category.id = story.category_id  AND story.id = {$_GET['story_id']}
-        WHERE story.deleted_at IS NULL ";
+        WHERE story.deleted_at IS NULL AND category.deleted_at IS NULL ";
 
     $result = mysqli_query($conn , $sql);
     $values = mysqli_fetch_assoc($result);
@@ -80,20 +80,16 @@ else{
                         ?>
                     </div>
                     
-                    <BR>
-
                     <p><?php echo $values['content'] ?><p>
 
-                    <BR>
-
-                    <button  style='margin-right:1rem;'>
-                        <a href='like.php?story_id=<?php echo $values['story_id'] ?>' style='text-decoration:none; color:black'>Like</a>
-                    </button>
+                    <div class="container m-4">
+                    <a class="btn btn-primary" href='like.php?story_id=<?php echo $values['story_id'] ?>' >Like</a>
 
 
-                    <span class='like-button'>
+                    <span>
                     <input type='text' name='comment'>
-                    <button type='submit' name='comment_btn' value='<?php echo $values['story_id'] ?>' >comment</button></span>
+                    <button type='submit' class="btn btn-success" name='comment_btn' value='<?php echo $values['story_id'] ?>' >comment</button>
+                    </span>
                     
                     <span style='color : red; margin-right:1rem;'><?php $commentErr ?></span>
 
@@ -120,6 +116,7 @@ else{
 
                         echo "<span style='margin-right:1rem;'>Total comment : {$resultArray['comment_count']}</span>";
                         
+                        echo"</div>";
 
                         $sql = "SELECT comments.id as comment_id , user_id , story_id , content , CONCAT(first_name , ' ' , last_name) as full_name 
                                 FROM comments

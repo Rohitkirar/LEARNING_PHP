@@ -83,7 +83,7 @@ else{
         <br>
         <div>
             <span><strong style="font-size:x-large;">ALL Stories</strong></span>
-            <span style="float:right"><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
+            <span style="float:right"><a href="addstoryform.php" class='btn btn-success m-3'>Add Story</a></span>
         </div>
         <div class="grid-container container">
                     
