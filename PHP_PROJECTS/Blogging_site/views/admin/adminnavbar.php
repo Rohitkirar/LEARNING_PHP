@@ -51,6 +51,7 @@
         <a class='navbar-brand' href="../user/user.php" >User DashBoard</a>
         <a class='navbar-brand' href="alluserdetails.php" >User Details</a>
         <a class='navbar-brand' href="categorydetails.php" >Category Details</a>
-        <a class='navbar-brand' href="addstoryform.php" >Add Story</a>
+        <!-- <a class='navbar-brand' href="addstoryform.php" >Add Story</a>
+        <a class='navbar-brand' href="addcategoryform.php" >Add Category</a> -->
         <a class='navbar-brand' href="../common/logout.php" >Logout</a>
 </div>

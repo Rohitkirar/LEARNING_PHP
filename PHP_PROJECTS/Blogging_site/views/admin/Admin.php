@@ -69,7 +69,7 @@ else{
     <link rel="stylesheet" href="../../public/css/admin.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-<body>
+<body >
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
@@ -83,7 +83,7 @@ else{
         <br>
         <div>
             <span><strong style="font-size:x-large;">ALL Stories</strong></span>
-            <span style="float:right"><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
+            <span style="float:right"><a href="addstoryform.php" class='btn btn-success m-3'>Add Story</a></span>
         </div>
         <div class="grid-container container">
                     

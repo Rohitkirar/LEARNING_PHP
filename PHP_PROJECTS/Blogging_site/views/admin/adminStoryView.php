@@ -64,7 +64,7 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
     $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content
             FROM category JOIN story 
             ON category.id = story.category_id AND story.id = {$_GET['story_id']}
-            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL; 
+            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND category.deleted_at IS NULL; 
             ";
 
     $result = mysqli_query($conn , $sql);

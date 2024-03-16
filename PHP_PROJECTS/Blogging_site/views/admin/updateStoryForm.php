@@ -173,9 +173,7 @@ else{
                         
                         echo "<div class='card m-2'>
                             <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
-                            <button id='deletebtn' class='btn btn-danger m-3' >
-                                <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" style='text-decoration:none;color:black;'>Delete Image</a>
-                            </button>
+                            <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" class='btn btn-danger m-3'>Delete Image</a>
                             </div>";
                     }
                 ?>
