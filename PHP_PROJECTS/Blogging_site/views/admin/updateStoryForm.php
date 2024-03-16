@@ -162,20 +162,21 @@ else{
             <input type="text" name='story_title' id='story_title' value="<?php echo $resultArray['Title'];?>" required />
 
             <label for="content">Content:</label>
-            <textarea id="content" name="content" rows="4" required ><?php echo $resultArray['content'];?></textarea>
+            <textarea id="content" name="content" rows="10" required ><?php echo $resultArray['content'];?></textarea>
             
-            <div>
+            <div class="m-4">
                 <?php
                     $sql = "SELECT id as image_id , image FROM images WHERE story_id = $story_id AND deleted_at IS NULL";
                     $image = mysqli_query($conn , $sql);
                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
                     foreach($imageArray as $key=>$path){
-                        echo "{$path['image']}" . "
-
-                        <button id='deletebtn'>
-                            <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" style='text-decoration:none;color:black;'>Delete Image</a>
-                        </button>";
-
+                        
+                        echo "<div class='card m-2'>
+                            <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
+                            <button id='deletebtn' class='btn btn-danger m-3' >
+                                <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" style='text-decoration:none;color:black;'>Delete Image</a>
+                            </button>
+                            </div>";
                     }
                 ?>
             </div>
