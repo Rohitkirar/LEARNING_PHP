@@ -49,7 +49,8 @@
         <a class='navbar-brand' href="admin.php" >Home</a></li>
         <a class='navbar-brand' href="adminallstoryview.php" >All Stories</a>
         <a class='navbar-brand' href="../user/user.php" >User DashBoard</a>
-        <a class='navbar-brand' href="alluserdetails.php" >All UserDetails</a>
+        <a class='navbar-brand' href="alluserdetails.php" >User Details</a>
+        <a class='navbar-brand' href="categorydetails.php" >Category Details</a>
         <a class='navbar-brand' href="addstoryform.php" >Add Story</a>
         <a class='navbar-brand' href="../common/logout.php" >Logout</a>
 </div>
