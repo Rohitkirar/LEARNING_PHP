@@ -1,66 +1,102 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
-    
-    $user_id = $category_id = $content = $story_title = '' ;
-    $flag = false;
-    
+if(isset($_SESSION['user_id'])){
+
     require_once('../../database/connection.php');
+    
+    require_once('../common/userDetailsVerify.php');
 
-    $sql = 'SELECT * FROM category';
-    $result = mysqli_query($conn , $sql);
-    $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
+    $userData = userVerification($_SESSION['user_id'] , $conn);
 
+    if($userData['role'] == 'admin'){
+        
+        $user_id = $category_id = $content = $story_title = '' ;
+        $flag = false;
 
-    if(isset($_POST['submit'])){
-
-        $category_id  = $_POST['category_id'];
-        $story_title = addslashes($_POST['story_title']);
-        $content = addslashes($_POST['content']);
-
-        $user_id = $_SESSION['user_id'];
-        $story_id = $_POST['submit'];
-
-        $sql = "UPDATE story 
-                SET category_id = $category_id , title = '$story_title' , content = '$content' 
-                WHERE story.id = $story_id AND user_id = $user_id" ;
-
+        $sql = 'SELECT * FROM storycategory';
         $result = mysqli_query($conn , $sql);
+        $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
-        if($result){
-            echo "successfully updated story data";
-            $flag = true;
-        }
-        else{
-            echo "ERROR " . mysqli_error($conn);
-            $flag = false;
-        }
 
-        if(file_exists($_FILES['addimage']['tmp_name'][0])){
+        if(isset($_POST['submit'])){
 
-            $file = $_FILES['addimage'];
+            $category_id  = $_POST['category_id'];
+            $story_title = addslashes($_POST['story_title']);
+            $content = addslashes($_POST['content']);
 
-            if(is_array($file['name'])){
-            
-                for($i=0 ; $i< count($file['name']) ;$i++){
+            $user_id = $_SESSION['user_id'];
+            $story_id = $_POST['submit'];
 
-                    $file_name = $file['name'][$i];
-                    $file_size = $file['size'][$i];
-                    $file_error = $file['error'][$i];
-                    $tmp_name = $file['tmp_name'][$i];
+            $sql = "UPDATE story 
+                    SET category_id = $category_id , title = '$story_title' , content = '$content' 
+                    WHERE story.id = $story_id AND user_id = $user_id" ;
+
+            $result = mysqli_query($conn , $sql);
+
+            if($result){
+                echo "successfully updated story data";
+                $flag = true;
+            }
+            else{
+                echo "ERROR " . mysqli_error($conn);
+                $flag = false;
+            }
+
+            if(file_exists($_FILES['addimage']['tmp_name'][0])){
+
+                $file = $_FILES['addimage'];
+
+                if(is_array($file['name'])){
+                
+                    for($i=0 ; $i< count($file['name']) ;$i++){
+
+                        $file_name = $file['name'][$i];
+                        $file_size = $file['size'][$i];
+                        $file_error = $file['error'][$i];
+                        $tmp_name = $file['tmp_name'][$i];
+
+                        if($file_error == 0){
+                            $fileDestination = '../../uploads/'.$file_name;
+                            move_uploaded_file($tmp_name , $fileDestination);
+
+                            $sql = "INSERT INTO storyimages (story_id , image)
+                                    VALUES ($story_id , '$file_name')"; 
+
+                            $result = mysqli_query($conn , $sql);
+
+                            if($result){
+                                echo "successfully inserted data";
+                                $flag = true;
+                            }
+                            else{
+                                echo "ERROR " . mysqli_error($conn);
+                                $flag = false;
+                            }
+                        }
+                        else{
+                            echo "error in file ;";
+                            $flag = false;
+                        }
+                    }
+                }
+                else{
+                    $file_name = $file['name'];
+                    $file_size = $file['size'];
+                    $file_error = $file['error'];
+                    $tmp_name = $file['tmp_name'];
 
                     if($file_error == 0){
                         $fileDestination = '../../uploads/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
-                        $sql = "INSERT INTO images (story_id , image)
-                                VALUES ($story_id , '$file_name')"; 
+                        $sql = "INSERT INTO storyimages (story_id , image)
+                        VALUES ($story_id , '$file_name')";
 
                         $result = mysqli_query($conn , $sql);
 
                         if($result){
-                            echo "successfully inserted data";
+                            echo "successfully image inserted data";
                             $flag = true;
                         }
                         else{
@@ -74,41 +110,16 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
                     }
                 }
             }
-            else{
-                $file_name = $file['name'];
-                $file_size = $file['size'];
-                $file_error = $file['error'];
-                $tmp_name = $file['tmp_name'];
-
-                if($file_error == 0){
-                    $fileDestination = '../../uploads/'.$file_name;
-                    move_uploaded_file($tmp_name , $fileDestination);
-
-                    $sql = "INSERT INTO images (story_id , image)
-                    VALUES ($story_id , '$file_name')";
-
-                    $result = mysqli_query($conn , $sql);
-
-                    if($result){
-                        echo "successfully image inserted data";
-                        $flag = true;
-                    }
-                    else{
-                        echo "ERROR " . mysqli_error($conn);
-                        $flag = false;
-                    }
-                }
-                else{
-                    echo "error in file ;";
-                    $flag = false;
-                }
-            }
+        }
+        if($flag){
+            header("location: adminStoryView.php?story_id=$story_id");
         }
     }
-    if($flag){
-        header("location: adminStoryView.php?story_id=$story_id");
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
     }
-
 }
 else{
     session_unset();
@@ -134,9 +145,9 @@ else{
     
     <br><br>
 
-    <div class="container">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
         <h1>Update Story</h1>
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+        <form onsubmit="return confirm('Do you really want to update the story')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
             <?php 
                 $story_id = $_GET['story_id'];
@@ -166,16 +177,18 @@ else{
             
             <div class="m-4">
                 <?php
-                    $sql = "SELECT id as image_id , image FROM images WHERE story_id = $story_id AND deleted_at IS NULL";
+                    $sql = "SELECT id as image_id , image FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
                     $image = mysqli_query($conn , $sql);
                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
+                    echo "<div class='grid-container'>";
                     foreach($imageArray as $key=>$path){
                         
-                        echo "<div class='card m-2'>
+                        echo "<div class='card m-2 ' >
                             <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
                             <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" class='btn btn-danger m-3'>Delete Image</a>
                             </div>";
                     }
+                    echo "</div>";
                 ?>
             </div>
 

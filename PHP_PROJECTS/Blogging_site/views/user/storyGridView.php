@@ -2,20 +2,25 @@
         
     // retrieving story data from database
 
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
-            FROM category JOIN story 
-            ON category.id = story.category_id 
-            AND story.deleted_at IS NULL AND category.deleted_at IS NULL ";
+    $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content , storyimages.image
+            FROM storycategory JOIN story 
+            ON storycategory.id = story.category_id
+            JOIN storyimages ON story.id = storyimages.story_id
+            WHERE storyimages.deleted_at IS NULL 
+            AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL 
+            GROUP BY story_id";
 
     $result = mysqli_query($conn , $sql);
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
     
     foreach($storyArray as $key=>$values){
             echo '<div class="grid-item">';
+            
+            echo "<img src='../../uploads/{$values['image']}' style='height: 40%; width:40%; margin-bottom:1rem;'/>";
+            
+            echo "<h6 style='color:purple'>Title : " . $values['story_title'] . "</h3>";
 
-            echo "<h6 style='color:purple'>Title : " . $values['story_title'] . "</h3><BR>";
-
-            echo "<h6 style='color:purple'>Category : " . $values['category_title'] . "</h3><BR>";
+            echo "<h6 style='color:purple'>Category : " . $values['category_title'] . "</h3>";
             
             echo "<a class='container btn btn-primary' href='storyView.php?story_id={$values['story_id']}'>View</a>"; 
 

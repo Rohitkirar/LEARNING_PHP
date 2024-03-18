@@ -1,12 +1,20 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
+    
+    require_once('../common/userDetailsVerify.php');
 
-   
-    // style="background-color:transparent; color:white"
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    if($userData['role'] != 'admin'){
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
+    }
+    
 }
 else{
     session_unset();
@@ -71,19 +79,19 @@ else{
                     
                     foreach($userDataArray as $key => $values){
                         echo "<tr> 
-                                    <td>{$values['first_name']}</td>
-                                    <td>{$values['last_name']}</td>
-                                    <td>{$values['age']}</td>
-                                    <td>{$values['gender']}</td>
-                                    <td>{$values['email']}</td>
-                                    <td>{$values['mobile']}</td>
-                                    <td>{$values['username']}</td>
-                                    <td>{$values['user_status']}</td>
-                                    <td><button class='updateuserbtn btn btn-primary'><a href='Edituserdetails.php?user_id={$values['id']}' >Update</a></button></td>";
-                                    if($values['user_status'] == 'Active'){
-                                        echo "<td><button class='deleteuserbtn btn btn-danger'><a href='deleteUser.php?user_id={$values['id']}' >Delete</a></button></td>";   
-                                    }
-                                echo "</tr>";
+                            <td>{$values['first_name']}</td>
+                            <td>{$values['last_name']}</td>
+                            <td>{$values['age']}</td>
+                            <td>{$values['gender']}</td>
+                            <td>{$values['email']}</td>
+                            <td>{$values['mobile']}</td>
+                            <td>{$values['username']}</td>
+                            <td>{$values['user_status']}</td>
+                            <td><a href='Edituserdetails.php?user_id={$values['id']}' class='updateuserbtn btn btn-primary'>Update</a></td>";
+                            if($values['user_status'] == 'Active'){
+                                echo "<td><a href='deleteUser.php?user_id={$values['id']}' onclick=\"return confirm('Do you want to delete {$values['first_name']}');\" class='deleteuserbtn btn btn-danger' >Delete</a></td>";   
+                            }
+                        echo "</tr>";
                     }
                 ?>    
             </table>

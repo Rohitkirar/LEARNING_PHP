@@ -1,51 +1,63 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
-    
-    $category_id  = $category_title = '' ;
-    $flag = false;
-    
+if(isset($_SESSION['user_id'])){
+
     require_once('../../database/connection.php');
+    
+    require_once('../common/userDetailsVerify.php');
 
-    if(isset($_POST['submit'])){
+    $userData = userVerification($_SESSION['user_id'] , $conn);
 
-        $category_title = $_POST['category_title'];
+    if($userData['role'] == 'admin'){
 
-        if(file_exists($_FILES['addimage']['tmp_name'])){
-            
-            $file = $_FILES['addimage'];
+        $category_id  = $category_title = '' ;
+        $flag = false;
 
-            $file_name = $file['name'];
-            $file_size = $file['size'];
-            $file_error = $file['error'];
-            $tmp_name = $file['tmp_name'];
-            
-            if(!$file_error){
+        if(isset($_POST['submit'])){
 
-                $fileDestination = '../../uploads/'.$file_name;
+            $category_title = $_POST['category_title'];
 
-                move_uploaded_file($tmp_name , $fileDestination);
+            if(file_exists($_FILES['addimage']['tmp_name'])){
+                
+                $file = $_FILES['addimage'];
 
-                $sql = "INSERT INTO category (title , image) 
-                VALUES ('$category_title' , '$file_name')";
+                $file_name = $file['name'];
+                $file_size = $file['size'];
+                $file_error = $file['error'];
+                $tmp_name = $file['tmp_name'];
+                
+                if(!$file_error){
 
-                $result = mysqli_query($conn , $sql);
+                    $fileDestination = '../../uploads/'.$file_name;
 
-                if($result){
-                    $flag = true;
+                    move_uploaded_file($tmp_name , $fileDestination);
+
+                    $sql = "INSERT INTO storycategory (title , image) 
+                    VALUES ('$category_title' , '$file_name')";
+
+                    $result = mysqli_query($conn , $sql);
+
+                    if($result){
+                        $flag = true;
+                    }
+                    else{
+                        echo "ERROR " . mysqli_error($conn);
+                        $flag = false;
+                    }          
                 }
                 else{
-                    echo "ERROR " . mysqli_error($conn);
-                    $flag = false;
-                }          
-            }
-            else{
-                echo "error in file";
-            }
-        }    
-
+                    echo "error in file";
+                }
+            }    
+        }
     }
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
+    }
+    
     if($flag){
         header('location: categoryDetails.php');
     }
@@ -79,7 +91,7 @@ else{
         
         <hr>
 
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+        <form onsubmit="return confirm('Do you really want to submit the form');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
             <br>
             <label for="title">Category Title:</label>
             <input type='text' id="title" maxlength="20" name='category_title'  required>

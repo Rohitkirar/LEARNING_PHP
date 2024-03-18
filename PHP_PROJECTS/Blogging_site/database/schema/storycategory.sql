@@ -27,9 +27,9 @@ VALUES
     ('POETRY' , 'jpg')
     ;
 
+RENAME TABLE category to storyCategory;
 
-
-SELECT * FROM category;
+SELECT * FROM storycategory;
 
 DROP TABLE story;
 DROP TABLE category;

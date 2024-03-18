@@ -7,7 +7,7 @@ if(isset($_SESSION['user_id'])){
 
     $comment_id = $_GET['comment_id'];
 
-    $sql = "UPDATE comments SET deleted_at = CURRENT_TIMESTAMP WHERE id = $comment_id";
+    $sql = "UPDATE storycomments SET deleted_at = CURRENT_TIMESTAMP WHERE id = $comment_id";
     
     $result = mysqli_query($conn , $sql);
     

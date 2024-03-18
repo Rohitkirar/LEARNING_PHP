@@ -1,10 +1,19 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
+    
+    require_once('../common/userDetailsVerify.php');
 
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    if($userData['role'] != 'admin'){
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
+    }
 }
 else{
     session_unset();
@@ -62,7 +71,7 @@ else{
                     <th>Delete</th>
                 </tr>
                 <?php 
-                    $sql = "SELECT *  FROM category ORDER BY created_at DESC";
+                    $sql = "SELECT *  FROM storycategory ORDER BY created_at DESC";
                     $result = mysqli_query($conn , $sql);
                     $userDataArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
                     
@@ -76,7 +85,7 @@ else{
                                     <td>{$values['deleted_at']}</td>
                                     <td><a class='btn btn-primary' href='Editcategorydetails.php?category_id={$values['id']}' >Update</a></td>";
                                     if(empty($values['deleted_at'])){
-                                        echo "<td><a class='btn btn-danger' href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   
+                                        echo "<td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   
                                     }
                                 echo "</tr>";
                     }

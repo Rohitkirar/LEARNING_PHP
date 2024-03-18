@@ -9,7 +9,7 @@ if(isset($_SESSION['user_id'])){
     
     $story_id = $_GET['story_id'];
 
-    $sql = "SELECT id , deleted_at  FROM likes WHERE user_id={$_SESSION['user_id']} AND story_id=$story_id ";
+    $sql = "SELECT id , deleted_at  FROM storylikes WHERE user_id={$_SESSION['user_id']} AND story_id=$story_id ";
 
     $result = mysqli_query($conn , $sql);
 
@@ -18,7 +18,7 @@ if(isset($_SESSION['user_id'])){
     if($resultArray){
         
         if($resultArray['deleted_at']){
-            $sql = "UPDATE likes SET deleted_at = DEFAULT WHERE id = '{$resultArray['id']}'";
+            $sql = "UPDATE storylikes SET deleted_at = DEFAULT WHERE id = '{$resultArray['id']}'";
             $result = mysqli_query($conn , $sql);
             
             if($result)
@@ -27,7 +27,7 @@ if(isset($_SESSION['user_id'])){
                 echo "ERROR : " . mysqli_error($conn);
         }
         else{
-            $sql = "UPDATE likes SET deleted_at = CURRENT_TIMESTAMP WHERE id = '{$resultArray['id']}'";
+            $sql = "UPDATE storylikes SET deleted_at = CURRENT_TIMESTAMP WHERE id = '{$resultArray['id']}'";
             $result = mysqli_query($conn , $sql);
             
             if($result)
@@ -38,7 +38,7 @@ if(isset($_SESSION['user_id'])){
 
     }
     else{
-        $sql = "INSERT INTO likes (user_id , story_id ) VALUES( {$_SESSION['user_id']} , '$story_id')";
+        $sql = "INSERT INTO storylikes (user_id , story_id ) VALUES( {$_SESSION['user_id']} , '$story_id')";
 
         $result = mysqli_query($conn , $sql);
 

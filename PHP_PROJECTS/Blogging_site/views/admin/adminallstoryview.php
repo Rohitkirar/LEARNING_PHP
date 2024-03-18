@@ -1,76 +1,37 @@
 <?php 
 session_start();
 
+if(isset($_SESSION['user_id'])){
 
-if(isset($_SESSION['user_id'])  && $_SESSION['role'] == 'admin'){
-
-    $user_count = $comment_count = $story_count = $like_count = 0;
-    
     require_once('../../database/connection.php');
-
-    // total user count
-
-    $sql = "SELECT count(*) as user_count 
-            FROM users 
-            WHERE role = 'user' AND deleted_at IS NULL";
-
-    $result = mysqli_query($conn , $sql);
     
-    if($result){
-        $resultArray = mysqli_fetch_assoc($result);
-        $user_count = $resultArray['user_count'];
+    require_once('../common/userDetailsVerify.php');
+
+    $userData = userVerification($_SESSION['user_id'], $conn);
+
+    if($userData['role'] == 'admin'){
+
+        $user_count = $comment_count = $story_count = $like_count = 0;
+        
+        // total user count
+        require_once('Totalcount.php');
+
+
+        $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content 
+                FROM storycategory JOIN story 
+                ON storycategory.id = story.category_id 
+                WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL; 
+                ";
+
+        $result = mysqli_query($conn , $sql);
+        
+        $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
     }
-
-    // total story count
-
-    $sql = "SELECT count(*) as story_count 
-            FROM story 
-            WHERE user_id = {$_SESSION['user_id']} AND deleted_at IS NULL";
-
-    $result = mysqli_query($conn , $sql);
-
-    if($result){
-        $resultArray = mysqli_fetch_assoc($result);
-        $story_count = $resultArray['story_count'];
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
     }
-
-    // total like count
-
-    $sql = "SELECT count(*) as like_count 
-            FROM likes 
-            WHERE  deleted_at IS NULL";
-    
-    $result = mysqli_query($conn , $sql);
-    
-    if($result){
-        $resultArray = mysqli_fetch_assoc($result);
-        $like_count = $resultArray['like_count'];
-    }
-
-    //total comment count
-
-    $sql = "SELECT count(*) as comment_count 
-            FROM comments 
-            WHERE  deleted_at IS NULL";
-    
-    $result = mysqli_query($conn , $sql);
-    
-    if($result){
-        $resultArray = mysqli_fetch_assoc($result);
-        $comment_count = $resultArray['comment_count'];
-    }
-
-
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
-            FROM category JOIN story 
-            ON category.id = story.category_id 
-            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND category.deleted_at IS NULL; 
-            ";
-
-    $result = mysqli_query($conn , $sql);
-    
-    $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
-
 }
 else{
     session_unset();
@@ -127,14 +88,14 @@ else{
 
                                 <a href='updateStoryForm.php?story_id={$values['story_id']}' class='btn btn-primary'>Update Story</a>
 
-                                <a href='deleteStory.php?story_id={$values['story_id']}' class='btn btn-danger'>Delete Story</a>
+                                <a href='deleteStory.php?story_id={$values['story_id']}' onclick=\"return confirm('Do you want to delete the story')\" class='btn btn-danger'>Delete Story</a>
 
                             </div>
 
                         </div>
 
                         <div>";
-                            $sql = "SELECT image FROM images WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
+                            $sql = "SELECT image FROM storyimages WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
                             $image = mysqli_query($conn ,$sql);
                             if(mysqli_num_rows($image) > 0){
                                 $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
@@ -152,7 +113,7 @@ else{
                         <div>";
                             
                             $sql = "SELECT count(*) as 'like_count' 
-                                        FROM likes 
+                                        FROM storylikes 
                                         WHERE story_id = {$values['story_id']}
                                         AND deleted_at IS NULL";
                                 
@@ -163,7 +124,7 @@ else{
                         echo "<span> | Total like : {$resultArray['like_count']} | </span>";
                             
                             $sql = "SELECT count(*) as 'comment_count' 
-                                    FROM comments 
+                                    FROM storycomments 
                                     WHERE story_id = {$values['story_id']}
                                     AND deleted_at IS NULL";
                             
@@ -173,11 +134,11 @@ else{
 
                             echo "<span>Total comment : {$resultArray['comment_count']}</span>";
                             
-                            $sql = "SELECT comments.id as comment_id , user_id , story_id , content , CONCAT(first_name , ' ' , last_name) as full_name 
-                                        FROM comments
+                            $sql = "SELECT storycomments.id as comment_id , user_id , story_id , content , CONCAT(first_name , ' ' , last_name) as full_name 
+                                        FROM storycomments
                                         JOIN users 
                                         ON users.id = user_id 
-                                        WHERE story_id={$values['story_id']} AND comments.deleted_at IS NULL";
+                                        WHERE story_id={$values['story_id']} AND storycomments.deleted_at IS NULL";
 
                             $result = mysqli_query($conn ,$sql);
 

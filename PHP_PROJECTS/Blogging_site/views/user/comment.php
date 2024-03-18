@@ -7,7 +7,7 @@
             $story_id = $_POST['comment_btn'];
             $comment = $_POST['comment'];
 
-            $sql = "INSERT INTO comments 
+            $sql = "INSERT INTO storycomments 
                         (user_id , story_id , content)
                     VALUES
                         ('{$_SESSION['user_id']}' , '{$story_id}' , '{$comment}') ";

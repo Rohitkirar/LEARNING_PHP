@@ -1,124 +1,137 @@
 <?php 
 session_start();
 
+if(isset($_SESSION['user_id'])){
 
-if(isset($_SESSION['user_id']) && $_SESSION['role']=='admin'){
+    require_once('../../database/connection.php');
+    
+    require_once('../common/userDetailsVerify.php');
 
-require_once('../../database/connection.php');
+    $userData = userVerification($_SESSION['user_id'] , $conn);
 
-$user_id = $_GET['user_id'];
+    if($userData['role'] == 'admin'){
 
-$sql = "SELECT first_name , last_name , age , gender , email , mobile , username , deleted_at
-        FROM users 
-        WHERE id = $user_id";
+        $user_id = $_GET['user_id'];
 
-$result = mysqli_query($conn , $sql);
-$userDetailsArray = mysqli_fetch_assoc($result);
+        $sql = "SELECT first_name , last_name , age , gender , email , mobile , username , deleted_at
+                FROM users 
+                WHERE id = $user_id";
+
+        $result = mysqli_query($conn , $sql);
+        $userDetailsArray = mysqli_fetch_assoc($result);
 
 
-$first_name = $userDetailsArray['first_name']; 
-$last_name = $userDetailsArray['last_name'];
-$age = $userDetailsArray['age'];
-$gender = $userDetailsArray['gender'];
-$email = $userDetailsArray['email']; 
-$mobile = $userDetailsArray['mobile'];  
-$username = $userDetailsArray['username'];
+        $first_name = $userDetailsArray['first_name']; 
+        $last_name = $userDetailsArray['last_name'];
+        $age = $userDetailsArray['age'];
+        $gender = $userDetailsArray['gender'];
+        $email = $userDetailsArray['email']; 
+        $mobile = $userDetailsArray['mobile'];  
+        $username = $userDetailsArray['username'];
 
-if($userDetailsArray['deleted_at'])
-    $userstatus = 'InActive';
-else{
-    $userstatus = 'Active';
-} 
+        if($userDetailsArray['deleted_at'])
+            $userstatus = 'InActive';
+        else{
+            $userstatus = 'Active';
+        } 
 
-$first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = '';
+        $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = '';
 
-    if(isset($_POST['update'])){
+        if(isset($_POST['update'])){
 
-        $first_name = $_POST['first_name'];
+            $first_name = $_POST['first_name'];
 
-        if(preg_match("/^[a-zA-Z]+$/" , $first_name))
-            $first_nameErr = '';
-        else
-            $first_nameErr = 'Please enter valid first name!';
-
-        $last_name = $_POST['last_name'];
-
-        if(preg_match("/^[a-zA-Z]+$/" , $last_name))
-            $last_nameErr = '';
-        else
-            $last_nameErr = 'Please enter valid last name!';
-
-        $age = $_POST['age'];
-
-        if($age >= 15 && $age <= 100 )
-            $ageErr = '';
-        else 
-            $ageErr = 'Enter valid age b/w 15 to 100 ONLY!';
-
-        $gender = $_POST['gender'];
-
-        if($gender == 'male' || $gender == 'female' || $gender == 'other')
-            $genderErr = '';
-        else    
-            $genderErr = 'please choose Correct gender!';
-
-        $email = $_POST['email'];
-
-        if(preg_match("/^[a-zA-Z]+[.\_\-]*[\w]*@gmail.com$/" , $email))
-            $emailErr = '';
-        else
-            $emailErr = 'Please enter valid email like .....@gmail.com!';
-
-        $mobile = (string)$_POST['mobile'];
-
-        if(preg_match("/^[0-9]{10}$/" , $mobile))
-            $mobileErr = '';
-        else
-            $mobileErr = 'Please enter valid mobile containing 10 digit';
-
-        
-        $username = $_POST['username'];
-
-        if(preg_match("/^[a-zA-Z]+[\w]{8}$/" , $username))
-            $usernameErr = '';
-        else
-            $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
-
-        $status = $_POST['status'];
-
-        if($status == 'Active' || $status == 'InActive'){
-            $statusErr = '';
-            if($status == 'Active')
-                $status = 'DEFAULT';
+            if(preg_match("/^[a-zA-Z]+$/" , $first_name))
+                $first_nameErr = '';
             else
-                $status = 'CURRENT_TIMESTAMP';   
-        }
-        else    
-            $statusErr = 'please choose Correct status!';
+                $first_nameErr = 'Please enter valid first name!';
 
-        $user_id = $_POST['update'];
+            $last_name = $_POST['last_name'];
 
-        if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $statusErr == ''){
+            if(preg_match("/^[a-zA-Z]+$/" , $last_name))
+                $last_nameErr = '';
+            else
+                $last_nameErr = 'Please enter valid last name!';
 
-            $sql = "UPDATE users
-                    SET first_name = '$first_name' , 
-                        last_name = '$last_name' , 
-                        age = $age , 
-                        gender = '$gender' , 
-                        email = '$email' , 
-                        mobile = '$mobile',
-                        username = '$username',
-                        deleted_at = $status
-                    WHERE id = $user_id";
+            $age = $_POST['age'];
 
-            $result = mysqli_query($conn , $sql);
+            if($age >= 15 && $age <= 100 )
+                $ageErr = '';
+            else 
+                $ageErr = 'Enter valid age b/w 15 to 100 ONLY!';
+
+            $gender = $_POST['gender'];
+
+            if($gender == 'male' || $gender == 'female' || $gender == 'other')
+                $genderErr = '';
+            else    
+                $genderErr = 'please choose Correct gender!';
+
+            $email = $_POST['email'];
+
+            if(preg_match("/^[a-zA-Z]+[.\_\-]*[\w]*@gmail.com$/" , $email))
+                $emailErr = '';
+            else
+                $emailErr = 'Please enter valid email like .....@gmail.com!';
+
+            $mobile = (string)$_POST['mobile'];
+
+            if(preg_match("/^[0-9]{10}$/" , $mobile))
+                $mobileErr = '';
+            else
+                $mobileErr = 'Please enter valid mobile containing 10 digit';
+
             
-            if($result)
-                header('location: allUserDetails.php');
-            else
-                echo "ERROR : " . mysqli_error($conn);
+            $username = $_POST['username'];
 
+            if(preg_match("/^[a-zA-Z]+[\w]{8}$/" , $username))
+                $usernameErr = '';
+            else
+                $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
+
+            $status = $_POST['status'];
+
+            if($status == 'Active' || $status == 'InActive'){
+                
+                $statusErr = '';
+
+                if($status == 'Active')
+                    $status = 'DEFAULT';
+                else
+                    $status = 'CURRENT_TIMESTAMP';   
+            }
+            else    
+                $statusErr = 'please choose Correct status!';
+
+            $user_id = $_POST['update'];
+
+            if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $statusErr == ''){
+
+                $sql = "UPDATE users
+                        SET first_name = '$first_name' , 
+                            last_name = '$last_name' , 
+                            age = $age , 
+                            gender = '$gender' , 
+                            email = '$email' , 
+                            mobile = '$mobile',
+                            username = '$username',
+                            deleted_at = $status
+                        WHERE id = $user_id";
+
+                $result = mysqli_query($conn , $sql);
+                
+                if($result)
+                    header('location: allUserDetails.php');
+                else
+                    echo "ERROR : " . mysqli_error($conn);
+
+            }
         }
+    }
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
     }
 }
 else{
@@ -141,7 +154,7 @@ else{
 
     <form action="<?php echo $_SERVER['PHP_SELF']."?user_id=$user_id"; ?>" method="post" >
 
-        <div class="container">
+        <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
 
             <center><h1>Edit User Info</h1></center>
 
