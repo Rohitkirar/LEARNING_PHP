@@ -1,10 +1,11 @@
 <?php
  
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title
-    FROM category JOIN story 
-    ON category.id = story.category_id 
-    WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND category.deleted_at IS NULL
-    ";
+    $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title, storyimages.image
+    FROM storycategory JOIN story 
+    ON storycategory.id = story.category_id 
+    JOIN storyimages ON story.id = storyimages.story_id
+    WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL AND storyimages.deleted_at IS NULL
+    GROUP BY story_id";
 
     $result = mysqli_query($conn , $sql);
 
@@ -14,19 +15,20 @@
 
     foreach($storyArray as $key=>$values){
             echo "
-            <div class='grid-item' >
+            <div class='grid-item p1'  >
+                <img src='../../uploads/{$values['image']}' style='height: 40%; width:40%; margin-bottom:1rem;'/>
                 
-                <h6 style='color:purple'>Title : {$values['story_title']} </h3><BR>
+                <h6 style='color:purple ; margin-bottom:1rem;'>Title : {$values['story_title']} </h3>
 
-                <h6 style='color:purple'>Category : {$values['category_title']} </h3><BR>
+                <h6 style='color:purple ; margin-bottom:1rem;'>Category : {$values['category_title']} </h3>
                 
-                <div class='btn-group'>
+                <div class='btn-group m-2'>
 
                     <a href='adminStoryView.php?story_id={$values['story_id']}' class='btn btn-primary'>View</a>
 
                     <a href='updateStoryForm.php?story_id={$values['story_id']}' class='btn btn-secondary' >Update Story</a>
 
-                    <a href='deleteStory.php?story_id={$values['story_id']}' class='btn btn-danger'>Delete Story</a>
+                    <a href='deleteStory.php?story_id={$values['story_id']}' onclick=\"return confirm('Do you want to delete the story')\" class='btn btn-danger'>Delete Story</a>
                 
                 </div>
 

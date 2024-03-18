@@ -5,14 +5,14 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
     if($userData['role'] == 'admin'){
         // comment delete
 
-        $sql = "UPDATE comments SET deleted_at = CURRENT_TIMESTAMP WHERE id = {$_GET['deletecommentid']}";
+        $sql = "UPDATE storycomments SET deleted_at = CURRENT_TIMESTAMP WHERE id = {$_GET['deletecommentid']}";
         $result = mysqli_query($conn , $sql);
 
         if($result)

@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 

@@ -6,7 +6,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -14,7 +14,7 @@ if(isset($_SESSION['user_id'])){
 
         $category_id = $_GET['category_id'];
 
-        $sql = "UPDATE category SET deleted_at = CURRENT_TIMESTAMP WHERE id = $category_id";
+        $sql = "UPDATE storycategory SET deleted_at = CURRENT_TIMESTAMP WHERE id = $category_id";
         
         $result = mysqli_query($conn , $sql);
         

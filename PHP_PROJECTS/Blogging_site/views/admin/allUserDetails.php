@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -87,9 +87,9 @@ else{
                             <td>{$values['mobile']}</td>
                             <td>{$values['username']}</td>
                             <td>{$values['user_status']}</td>
-                            <td><button class='updateuserbtn btn btn-primary'><a href='Edituserdetails.php?user_id={$values['id']}' >Update</a></button></td>";
+                            <td><a href='Edituserdetails.php?user_id={$values['id']}' class='updateuserbtn btn btn-primary'>Update</a></td>";
                             if($values['user_status'] == 'Active'){
-                                echo "<td><button class='deleteuserbtn btn btn-danger'><a href='deleteUser.php?user_id={$values['id']}' >Delete</a></button></td>";   
+                                echo "<td><a href='deleteUser.php?user_id={$values['id']}' onclick=\"return confirm('Do you want to delete {$values['first_name']}');\" class='deleteuserbtn btn btn-danger' >Delete</a></td>";   
                             }
                         echo "</tr>";
                     }

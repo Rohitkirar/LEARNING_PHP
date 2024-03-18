@@ -5,57 +5,16 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
 
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
     if($userData['role'] == 'admin'){
 
-        $user_count = $comment_count = $story_count = $like_count = 0;
-
-        $sql = "SELECT count(*) as user_count 
-                FROM users 
-                WHERE role = 'user' AND deleted_at IS NULL";
-
-        $result = mysqli_query($conn , $sql);
+        // likes count , usercount , commentscount , story count
         
-        if($result){
-            $resultArray = mysqli_fetch_assoc($result);
-            $user_count = $resultArray['user_count'];
-        }
+        require_once('Totalcount.php');
 
-        $sql = "SELECT count(*) as story_count 
-                FROM story 
-                WHERE user_id = {$_SESSION['user_id']} AND deleted_at IS NULL";
-
-        $result = mysqli_query($conn , $sql);
-
-        if($result){
-            $resultArray = mysqli_fetch_assoc($result);
-            $story_count = $resultArray['story_count'];
-        }
-
-        $sql = "SELECT count(*) as like_count 
-                FROM likes 
-                WHERE deleted_at IS NULL";
-        
-        $result = mysqli_query($conn , $sql);
-        
-        if($result){
-            $resultArray = mysqli_fetch_assoc($result);
-            $like_count = $resultArray['like_count'];
-        }
-
-        $sql = "SELECT count(*) as comment_count 
-                FROM comments 
-                WHERE  deleted_at IS NULL";
-        
-        $result = mysqli_query($conn , $sql);
-        
-        if($result){
-            $resultArray = mysqli_fetch_assoc($result);
-            $comment_count = $resultArray['comment_count'];
-        }
     }
     else{
         session_unset();
@@ -90,12 +49,11 @@ else{
             <div class="card">Comments: <?php echo $comment_count ?></div>
             <div class="card">Total Users: <?php echo $user_count ?></div>
         </div>
-        <br>
-        <div>
+        <div class="m-2">
             <span><strong style="font-size:x-large;">ALL Stories</strong></span>
             <span style="float:right"><a href="addstoryform.php" class='btn btn-success m-3'>Add Story</a></span>
         </div>
-        <div class="grid-container container">
+        <div class="container">
                     
                     <?php 
                         require_once('adminStoryGridView.php');

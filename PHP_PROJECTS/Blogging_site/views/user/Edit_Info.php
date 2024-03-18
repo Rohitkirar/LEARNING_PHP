@@ -5,6 +5,10 @@ session_start();
 if(isset($_SESSION['user_id'])){
 
 require_once('../../database/connection.php');
+            
+require_once('../common/userDetailsVerify.php');
+    
+$userData = userVerification($_SESSION['user_id'] , $conn);
 
 $sql = "SELECT first_name , last_name , age , gender , email , mobile , password 
         FROM users 

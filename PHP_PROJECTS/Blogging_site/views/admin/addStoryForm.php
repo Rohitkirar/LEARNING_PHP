@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -13,7 +13,8 @@ if(isset($_SESSION['user_id'])){
 
         $user_id = $category_id = $content = $story_title = '';
 
-        $sql = 'SELECT * FROM category';
+        $sql = 'SELECT * FROM storycategory';
+
         $result = mysqli_query($conn , $sql);
         $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
@@ -57,7 +58,7 @@ if(isset($_SESSION['user_id'])){
                         $fileDestination = '../../uploads/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
-                        $sql = "INSERT INTO images (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
+                        $sql = "INSERT INTO storyimages (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
 
                         $result = mysqli_query($conn , $sql);
 
@@ -110,7 +111,7 @@ else{
     <div class="container p-5" style="width:60%">
         <h1>Add Your Story</h1>
         <hr>
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+        <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
             <label for="title">Category Title:</label>
             <select id="title" name='category_id'>

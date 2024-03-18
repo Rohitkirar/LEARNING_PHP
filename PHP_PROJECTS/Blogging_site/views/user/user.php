@@ -1,19 +1,23 @@
 <?php 
 session_start();
-$user_count = $comment_count = $story_count = $like_count = 0;
-$comment = $commentErr  = '';
+
 if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
-
-
+        
+    require_once('../common/userDetailsVerify.php');
     
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    $user_count = $comment_count = $story_count = $like_count = 0;
+    $comment = $commentErr  = '';
+
     // like data storing functionalites
     if(isset($_POST['like_btn'])){
 
         $story_id = $_POST['like_btn'];
         
-        $sql = "INSERT INTO likes 
+        $sql = "INSERT INTO storylikes 
                     (user_id , story_id )
                 VALUES
                     ('{$_SESSION['user_id']}' , '{$story_id}')";

@@ -1,18 +1,23 @@
 <?php 
 session_start();
-$user_count = $comment_count = $story_count = $like_count = 0;
-$comment = $commentErr  = '';
 
 if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
+            
+    require_once('../common/userDetailsVerify.php');
     
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    $user_count = $comment_count = $story_count = $like_count = 0;
+    $comment = $commentErr  = '';
+
     // retrieving story data from database
 
-    $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title , content 
-        FROM category JOIN story 
-        ON category.id = story.category_id 
-        WHERE story.deleted_at IS NULL AND category.deleted_at IS NULL";
+    $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content 
+        FROM storycategory JOIN story 
+        ON storycategory.id = story.category_id 
+        WHERE story.deleted_at IS NULL AND storycategory.deleted_at IS NULL";
 
     $result = mysqli_query($conn , $sql);
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
@@ -70,7 +75,7 @@ else{
                             </div>
                         
                             <div>";
-                                $sql = "SELECT image FROM images WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
+                                $sql = "SELECT image FROM storyimages WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
                                 $image = mysqli_query($conn ,$sql);
                                 if(mysqli_num_rows($image) > 0){
                                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
@@ -78,6 +83,7 @@ else{
                                         echo "<img src='../../uploads/{$path['image']}' class='card m-1' style='width:100%; height:100%;' alt='image not available'/>";
                                     }
                                 }
+
                                 echo "
                             </div>
 
@@ -96,7 +102,7 @@ else{
                                 <span style='color : red; margin-right:1rem;'>$commentErr</span>";
                                 
                                 $sql = "SELECT count(*) as 'like_count' 
-                                        FROM likes 
+                                        FROM storylikes 
                                         WHERE story_id = {$values['story_id']}
                                         AND deleted_at IS NULL";
                                 
@@ -107,7 +113,7 @@ else{
                                 echo "<span style='margin-right:1rem;'>Total like : {$resultArray['like_count']}</span>";
                                 
                                 $sql = "SELECT count(*) as 'comment_count' 
-                                        FROM comments 
+                                        FROM storycomments 
                                         WHERE story_id = {$values['story_id']}
                                         AND deleted_at IS NULL";
                                 
@@ -120,11 +126,11 @@ else{
 
                             <div>";
 
-                                $sql = "SELECT comments.id as comment_id , user_id , story_id , content , CONCAT(first_name , ' ' , last_name) as full_name 
-                                        FROM comments
+                                $sql = "SELECT storycomments.id as comment_id , user_id , story_id , content , CONCAT(first_name , ' ' , last_name) as full_name 
+                                        FROM storycomments
                                         JOIN users 
                                         ON users.id = user_id 
-                                        WHERE story_id = '{$values['story_id']}' AND comments.deleted_at IS NULL";
+                                        WHERE story_id = '{$values['story_id']}' AND storycomments.deleted_at IS NULL";
 
                                 $result = mysqli_query($conn ,$sql);
 

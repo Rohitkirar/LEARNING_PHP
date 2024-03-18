@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -39,7 +39,7 @@ if(isset($_SESSION['user_id'])){
                 move_uploaded_file($tmp_name , $fileDestination);
             }
 
-            $sql = "UPDATE category 
+            $sql = "UPDATE storycategory 
                     SET title = '$category_title' , image = '$file_name' , deleted_at=DEFAULT
                     WHERE id = $category_id ";
 
@@ -101,7 +101,7 @@ else{
                     $category_id='';
                 }
                 $sql = "SELECT id as category_id , Title , image 
-                        FROM category 
+                        FROM storycategory 
                         WHERE id = $category_id";
                 
                 $result = mysqli_query($conn , $sql);

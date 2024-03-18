@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -33,7 +33,7 @@ if(isset($_SESSION['user_id'])){
 
                     move_uploaded_file($tmp_name , $fileDestination);
 
-                    $sql = "INSERT INTO category (title , image) 
+                    $sql = "INSERT INTO storycategory (title , image) 
                     VALUES ('$category_title' , '$file_name')";
 
                     $result = mysqli_query($conn , $sql);
@@ -91,7 +91,7 @@ else{
         
         <hr>
 
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+        <form onsubmit="return confirm('Do you really want to submit the form');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
             <br>
             <label for="title">Category Title:</label>
             <input type='text' id="title" maxlength="20" name='category_title'  required>

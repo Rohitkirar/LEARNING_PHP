@@ -6,7 +6,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -14,9 +14,9 @@ if(isset($_SESSION['user_id'])){
 
         $story_id = $_GET['story_id'];
 
-        $sql = "UPDATE story JOIN images ON story.id = images.story_id 
-                SET story.deleted_at = CURRENT_TIMESTAMP , images.deleted_at = CURRENT_TIMESTAMP 
-                WHERE images.story_id = $story_id ";
+        $sql = "UPDATE story JOIN storyimages ON story.id = storyimages.story_id 
+                SET story.deleted_at = CURRENT_TIMESTAMP , storyimages.deleted_at = CURRENT_TIMESTAMP 
+                WHERE storyimages.story_id = $story_id ";
 
         $result = mysqli_query($conn , $sql);
 

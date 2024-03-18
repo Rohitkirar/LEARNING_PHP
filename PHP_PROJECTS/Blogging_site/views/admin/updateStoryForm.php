@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -14,7 +14,7 @@ if(isset($_SESSION['user_id'])){
         $user_id = $category_id = $content = $story_title = '' ;
         $flag = false;
 
-        $sql = 'SELECT * FROM category';
+        $sql = 'SELECT * FROM storycategory';
         $result = mysqli_query($conn , $sql);
         $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
@@ -60,7 +60,7 @@ if(isset($_SESSION['user_id'])){
                             $fileDestination = '../../uploads/'.$file_name;
                             move_uploaded_file($tmp_name , $fileDestination);
 
-                            $sql = "INSERT INTO images (story_id , image)
+                            $sql = "INSERT INTO storyimages (story_id , image)
                                     VALUES ($story_id , '$file_name')"; 
 
                             $result = mysqli_query($conn , $sql);
@@ -90,7 +90,7 @@ if(isset($_SESSION['user_id'])){
                         $fileDestination = '../../uploads/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
-                        $sql = "INSERT INTO images (story_id , image)
+                        $sql = "INSERT INTO storyimages (story_id , image)
                         VALUES ($story_id , '$file_name')";
 
                         $result = mysqli_query($conn , $sql);
@@ -177,7 +177,7 @@ else{
             
             <div class="m-4">
                 <?php
-                    $sql = "SELECT id as image_id , image FROM images WHERE story_id = $story_id AND deleted_at IS NULL";
+                    $sql = "SELECT id as image_id , image FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
                     $image = mysqli_query($conn , $sql);
                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
                     foreach($imageArray as $key=>$path){

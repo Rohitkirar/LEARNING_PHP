@@ -5,7 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../database/connection.php');
     
-    require_once('userDetailsVerify.php');
+    require_once('../common/userDetailsVerify.php');
 
     $userData = userVerification($_SESSION['user_id'] , $conn);
 
@@ -13,7 +13,7 @@ if(isset($_SESSION['user_id'])){
         $image_id = $_GET['image_id'];
         $story_id = $_GET['story_id'];
 
-        $sql = "UPDATE images  
+        $sql = "UPDATE storyimages  
                 SET deleted_at = CURRENT_TIMESTAMP  
                 WHERE id = $image_id";
 
