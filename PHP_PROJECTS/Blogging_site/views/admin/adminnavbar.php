@@ -40,9 +40,10 @@
 
 </style>
 <header class='headertag'>
+    <div class="logo" ><img src="../../uploads/icons8-admin.gif" alt="logout">Admin</div>
     
-    <div class="logo" >Admin Dashboard</div>
-    <div class="logo" style="text-align: center;"><img src="../../uploads/blogger-logo-icon-png-10168.png" style="height:12% ; width:12%"></div>
+    <div class="logo" style="text-align:center"><img  src="../../uploads/blogger-logo-icon-png-10168.png" style="height:12% ; width:12%"></div>
+    
     <div class="logo" >
         Welcome, <?php echo $userData['full_name'] ?>
         <a class='btn' href="../common/logout.php" ><img src="../../uploads/icons8-logout-32.png" alt="logout"></a>

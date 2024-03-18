@@ -145,9 +145,9 @@ else{
     
     <br><br>
 
-    <div class="container">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
         <h1>Update Story</h1>
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+        <form onsubmit="return confirm('Do you really want to update the story')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
             <?php 
                 $story_id = $_GET['story_id'];
@@ -180,13 +180,15 @@ else{
                     $sql = "SELECT id as image_id , image FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
                     $image = mysqli_query($conn , $sql);
                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
+                    echo "<div class='grid-container'>";
                     foreach($imageArray as $key=>$path){
                         
-                        echo "<div class='card m-2'>
+                        echo "<div class='card m-2 ' >
                             <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
                             <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" class='btn btn-danger m-3'>Delete Image</a>
                             </div>";
                     }
+                    echo "</div>";
                 ?>
             </div>
 

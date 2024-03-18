@@ -42,7 +42,7 @@ else{
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <main>
+    <main >
         <div class="cards">
             <div class="card">Total story: <?php echo $story_count ?></div>
             <div class="card">Likes: <?php echo $like_count ?></div>

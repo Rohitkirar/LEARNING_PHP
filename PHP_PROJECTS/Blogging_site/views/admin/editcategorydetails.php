@@ -89,7 +89,7 @@ else{
     
     <br><br>
 
-    <div class="container">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
         <h1>Update Category Details</h1>
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 

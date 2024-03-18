@@ -108,7 +108,7 @@ else{
     
     <br><br>
 
-    <div class="container p-5" style="width:60%">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded" style="width:60%;">
         <h1>Add Your Story</h1>
         <hr>
         <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >

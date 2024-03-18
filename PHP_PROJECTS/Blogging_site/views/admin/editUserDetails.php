@@ -154,7 +154,7 @@ else{
 
     <form action="<?php echo $_SERVER['PHP_SELF']."?user_id=$user_id"; ?>" method="post" >
 
-        <div class="container">
+        <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
 
             <center><h1>Edit User Info</h1></center>
 
