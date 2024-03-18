@@ -1,9 +1,15 @@
 <?php 
-    session_start();
+session_start();
 
-    if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+if(isset($_SESSION['user_id'])){
 
-        require_once('../../database/connection.php');
+    require_once('../../database/connection.php');
+    
+    require_once('userDetailsVerify.php');
+
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    if($userData['role'] == 'admin'){
 
         $category_id = $_GET['category_id'];
 
@@ -25,5 +31,11 @@
         session_destroy();
         header('location: ../common/logout.php');
     }
+}
+else{
+    session_unset();
+    session_destroy();
+    header('location: ../common/logout.php');
+}
 
 ?>

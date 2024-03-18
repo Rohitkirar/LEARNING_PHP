@@ -1,9 +1,16 @@
 <?php 
-    session_start();
 
-    if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
+session_start();
 
-        require_once('../../database/connection.php');
+if(isset($_SESSION['user_id'])){
+
+    require_once('../../database/connection.php');
+    
+    require_once('userDetailsVerify.php');
+
+    $userData = userVerification($_SESSION['user_id'] , $conn);
+
+    if($userData['role'] == 'admin'){
 
         $story_id = $_GET['story_id'];
 
@@ -15,7 +22,6 @@
 
         if($result){
             header('location: admin.php');
-            
         }
         else
             echo "ERROR " . mysqli_error($conn);
@@ -25,6 +31,12 @@
         session_destroy();
         header('location: ../common/logout.php');
     }
+}
+else{
+    session_unset();
+    session_destroy();
+    header('location: ../common/logout.php');
+}
 
         
     // delete story from db using form

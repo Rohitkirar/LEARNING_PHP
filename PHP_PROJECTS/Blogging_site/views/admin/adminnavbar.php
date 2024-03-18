@@ -43,7 +43,7 @@
 </style>
 <header class='headertag'>
     <div class="logo" >Admin Dashboard</div>
-    <div class="logo" >Welcome, <?php echo $_SESSION['username'] ?></div>
+    <div class="logo" >Welcome, <?php echo $userData['full_name'] ?></div>
 </header>
 <div class='navbar bg-dark'>
         <a class='navbar-brand' href="admin.php" >Home</a></li>

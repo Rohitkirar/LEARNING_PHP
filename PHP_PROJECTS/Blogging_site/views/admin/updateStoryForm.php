@@ -1,66 +1,102 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
-    
-    $user_id = $category_id = $content = $story_title = '' ;
-    $flag = false;
-    
+if(isset($_SESSION['user_id'])){
+
     require_once('../../database/connection.php');
+    
+    require_once('userDetailsVerify.php');
 
-    $sql = 'SELECT * FROM category';
-    $result = mysqli_query($conn , $sql);
-    $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
+    $userData = userVerification($_SESSION['user_id'] , $conn);
 
+    if($userData['role'] == 'admin'){
+        
+        $user_id = $category_id = $content = $story_title = '' ;
+        $flag = false;
 
-    if(isset($_POST['submit'])){
-
-        $category_id  = $_POST['category_id'];
-        $story_title = addslashes($_POST['story_title']);
-        $content = addslashes($_POST['content']);
-
-        $user_id = $_SESSION['user_id'];
-        $story_id = $_POST['submit'];
-
-        $sql = "UPDATE story 
-                SET category_id = $category_id , title = '$story_title' , content = '$content' 
-                WHERE story.id = $story_id AND user_id = $user_id" ;
-
+        $sql = 'SELECT * FROM category';
         $result = mysqli_query($conn , $sql);
+        $categoryArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
-        if($result){
-            echo "successfully updated story data";
-            $flag = true;
-        }
-        else{
-            echo "ERROR " . mysqli_error($conn);
-            $flag = false;
-        }
 
-        if(file_exists($_FILES['addimage']['tmp_name'][0])){
+        if(isset($_POST['submit'])){
 
-            $file = $_FILES['addimage'];
+            $category_id  = $_POST['category_id'];
+            $story_title = addslashes($_POST['story_title']);
+            $content = addslashes($_POST['content']);
 
-            if(is_array($file['name'])){
-            
-                for($i=0 ; $i< count($file['name']) ;$i++){
+            $user_id = $_SESSION['user_id'];
+            $story_id = $_POST['submit'];
 
-                    $file_name = $file['name'][$i];
-                    $file_size = $file['size'][$i];
-                    $file_error = $file['error'][$i];
-                    $tmp_name = $file['tmp_name'][$i];
+            $sql = "UPDATE story 
+                    SET category_id = $category_id , title = '$story_title' , content = '$content' 
+                    WHERE story.id = $story_id AND user_id = $user_id" ;
+
+            $result = mysqli_query($conn , $sql);
+
+            if($result){
+                echo "successfully updated story data";
+                $flag = true;
+            }
+            else{
+                echo "ERROR " . mysqli_error($conn);
+                $flag = false;
+            }
+
+            if(file_exists($_FILES['addimage']['tmp_name'][0])){
+
+                $file = $_FILES['addimage'];
+
+                if(is_array($file['name'])){
+                
+                    for($i=0 ; $i< count($file['name']) ;$i++){
+
+                        $file_name = $file['name'][$i];
+                        $file_size = $file['size'][$i];
+                        $file_error = $file['error'][$i];
+                        $tmp_name = $file['tmp_name'][$i];
+
+                        if($file_error == 0){
+                            $fileDestination = '../../uploads/'.$file_name;
+                            move_uploaded_file($tmp_name , $fileDestination);
+
+                            $sql = "INSERT INTO images (story_id , image)
+                                    VALUES ($story_id , '$file_name')"; 
+
+                            $result = mysqli_query($conn , $sql);
+
+                            if($result){
+                                echo "successfully inserted data";
+                                $flag = true;
+                            }
+                            else{
+                                echo "ERROR " . mysqli_error($conn);
+                                $flag = false;
+                            }
+                        }
+                        else{
+                            echo "error in file ;";
+                            $flag = false;
+                        }
+                    }
+                }
+                else{
+                    $file_name = $file['name'];
+                    $file_size = $file['size'];
+                    $file_error = $file['error'];
+                    $tmp_name = $file['tmp_name'];
 
                     if($file_error == 0){
                         $fileDestination = '../../uploads/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
                         $sql = "INSERT INTO images (story_id , image)
-                                VALUES ($story_id , '$file_name')"; 
+                        VALUES ($story_id , '$file_name')";
 
                         $result = mysqli_query($conn , $sql);
 
                         if($result){
-                            echo "successfully inserted data";
+                            echo "successfully image inserted data";
                             $flag = true;
                         }
                         else{
@@ -74,41 +110,16 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
                     }
                 }
             }
-            else{
-                $file_name = $file['name'];
-                $file_size = $file['size'];
-                $file_error = $file['error'];
-                $tmp_name = $file['tmp_name'];
-
-                if($file_error == 0){
-                    $fileDestination = '../../uploads/'.$file_name;
-                    move_uploaded_file($tmp_name , $fileDestination);
-
-                    $sql = "INSERT INTO images (story_id , image)
-                    VALUES ($story_id , '$file_name')";
-
-                    $result = mysqli_query($conn , $sql);
-
-                    if($result){
-                        echo "successfully image inserted data";
-                        $flag = true;
-                    }
-                    else{
-                        echo "ERROR " . mysqli_error($conn);
-                        $flag = false;
-                    }
-                }
-                else{
-                    echo "error in file ;";
-                    $flag = false;
-                }
-            }
+        }
+        if($flag){
+            header("location: adminStoryView.php?story_id=$story_id");
         }
     }
-    if($flag){
-        header("location: adminStoryView.php?story_id=$story_id");
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
     }
-
 }
 else{
     session_unset();

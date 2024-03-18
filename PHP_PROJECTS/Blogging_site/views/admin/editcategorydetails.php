@@ -1,61 +1,69 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin'){
-    
-    $category_id  = $category_title = '' ;
-    $flag = false;
-    
+if(isset($_SESSION['user_id'])){
+
     require_once('../../database/connection.php');
+    
+    require_once('userDetailsVerify.php');
 
-    if(isset($_POST['submit'])){
+    $userData = userVerification($_SESSION['user_id'] , $conn);
 
-        $category_id  = $_POST['submit'];
+    if($userData['role'] == 'admin'){
 
-        $category_title = $_POST['category_title'];
+        $category_id  = $category_title = '' ;
+        $flag = false;
+
+        if(isset($_POST['submit'])){
+
+            $category_id  = $_POST['submit'];
+
+            $category_title = $_POST['category_title'];
 
 
-        print_r($_FILES['addimage']);
+            print_r($_FILES['addimage']);
 
-        if($_FILES['addimage']['error']){
-            $file_name = $_POST['addimage'];
+            if($_FILES['addimage']['error']){
+                $file_name = $_POST['addimage'];
+            }
+            else{
+                $file = $_FILES['addimage'];
+
+                $file_name = $file['name'];
+                $file_size = $file['size'];
+                $file_error = $file['error'];
+                $tmp_name = $file['tmp_name'];
+                
+                $fileDestination = '../../uploads/'.$file_name;
+
+                move_uploaded_file($tmp_name , $fileDestination);
+            }
+
+            $sql = "UPDATE category 
+                    SET title = '$category_title' , image = '$file_name' , deleted_at=DEFAULT
+                    WHERE id = $category_id ";
+
+            $result = mysqli_query($conn , $sql);
+
+            if($result){
+
+                if($_POST['status'] == 0)
+                    header("location: categoryDetails.php");
+
+                elseif($_POST['status'])
+                    header("location: deleteCategory.php?category_id=$category_id");
+
+            }
+            else
+                echo "ERROR " . mysqli_error($conn);
+                       
         }
-        else{
-            $file = $_FILES['addimage'];
-
-            $file_name = $file['name'];
-            $file_size = $file['size'];
-            $file_error = $file['error'];
-            $tmp_name = $file['tmp_name'];
-            
-            $fileDestination = '../../uploads/'.$file_name;
-
-            move_uploaded_file($tmp_name , $fileDestination);
-        }
-
-                $sql = "UPDATE category 
-                SET title = '$category_title' , image = '$file_name' , deleted_at=DEFAULT
-                WHERE id = $category_id ";
-
-                $result = mysqli_query($conn , $sql);
-
-                if($result){
-                    $flag = true;
-
-                    if($flag && $_POST['status'] == 0){
-                        header("location: categoryDetails.php");
-                    }
-                    elseif($_POST['status']){
-                        header("location: deleteCategory.php?category_id=$category_id");
-                    }
-                }
-                else{
-                    echo "ERROR " . mysqli_error($conn);
-                    $flag = false;
-                }          
-
     }
-
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php');
+    }    
 }
 else{
     session_unset();
@@ -87,8 +95,9 @@ else{
 
             <?php 
                 if(isset($_GET['category_id'])){
-                $category_id = $_GET['category_id'];
-                }else{
+                    $category_id = $_GET['category_id'];
+                }
+                else{
                     $category_id='';
                 }
                 $sql = "SELECT id as category_id , Title , image 
@@ -96,8 +105,9 @@ else{
                         WHERE id = $category_id";
                 
                 $result = mysqli_query($conn , $sql);
+                
                 if(mysqli_num_rows($result) > 0){
-                $resultArray = mysqli_fetch_assoc($result);
+                    $resultArray = mysqli_fetch_assoc($result);
                 }
             ?>
 

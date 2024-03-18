@@ -1,11 +1,4 @@
-<style>
-    .grid-item{
-        background-image: url('../../uploads/7042259.jpg');
-        
-    }
-</style>
 <?php
-
  
     $sql = "SELECT story.id as story_id , category.Title as category_title , story.title as story_title
     FROM category JOIN story 
