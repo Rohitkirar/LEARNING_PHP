@@ -1,3 +1,4 @@
+-- Active: 1709188058198@@127.0.0.1@3306@blogging_site
 
 CREATE TABLE likes(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,4 +18,6 @@ CREATE TABLE likes(
     ON DELETE CASCADE
 );
 
-SELECT * FROM likes;
+SELECT * FROM storylikes;
+
+RENAME TABLE likes to storylikes;

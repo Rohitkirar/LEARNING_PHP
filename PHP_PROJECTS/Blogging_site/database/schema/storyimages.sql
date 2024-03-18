@@ -16,7 +16,9 @@ CREATE TABLE images(
     ON DELETE CASCADE
 );
 
-SELECT * FROM images;
+RENAME TABLE images TO storyImages;
+
+SELECT * FROM storyimages;
 SELECT * FROM story;
 
 ALTER TABLE images MODIFY image varchar(1000) ;

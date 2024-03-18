@@ -23,9 +23,9 @@ CREATE TABLE comments(
     ON DELETE CASCADE
 );
 
+RENAME TABLE comments TO storyComments;
 
-
-SELECT * FROM comments;
+SELECT * FROM storycomments;
 
 SELECT * FROM likes;
 
