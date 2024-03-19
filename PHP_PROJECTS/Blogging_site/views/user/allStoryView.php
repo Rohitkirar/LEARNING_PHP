@@ -67,7 +67,7 @@ else{
                     echo "
                     <form action='{$_SERVER["PHP_SELF"]}' method='POST'>
                         
-                        <div class='story_inner_div_items'>
+                        <div class='story_inner_div_items mb-5 p-5 shadow-lg bg-white rounded' style='width: 80%; margin: 1rem auto;' >
 
                             <div>
                             <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>

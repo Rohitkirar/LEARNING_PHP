@@ -39,7 +39,7 @@
     }
 </style>
 <header class='headertag'>
-        <div class="logo" ><img src="../../uploads/icons8-user-50 (1).png"  alt="logout">User</div>
+        <div class="logo" ><img src="../../uploads/icons8-user-50 (1).png"  alt="user-img">User</div>
 
         <div class="logo" style="text-align: center;"><img src="../../uploads/blogger-logo-icon-png-10168.png" style="height:12% ; width:12%"></div>
         

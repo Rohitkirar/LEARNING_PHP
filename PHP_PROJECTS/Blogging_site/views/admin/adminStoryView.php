@@ -66,7 +66,7 @@ else{
         <br>
 
         <div>
-            <span><strong style="font-size:x-large;">ALL Stories</strong></span>
+            <span><strong style="font-size:x-large;">Story</strong></span>
             <span style="float:right"><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
         </div>
 
@@ -74,7 +74,7 @@ else{
             
             <form action='{$_SERVER["PHP_SELF"]}' method='POST'>
 
-                <div class='story_inner_div_items'>
+                <div class='story_inner_div_items m-2 mb-5 p-5 shadow-lg bg-white rounded'>
 
                     <div class='postnavdiv'>
 
@@ -104,7 +104,7 @@ else{
                         if(mysqli_num_rows($image) > 0){
                             $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
                             foreach($imageArray as $key=> $path){
-                                echo "<img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
+                                echo "<img src='../../uploads/{$path['image']}' class='card' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
                             }
                         }
                         ?>
@@ -157,9 +157,7 @@ else{
 
                                 <p>{$values['content']}</p>
 
-                                <button class='btn btn-danger'>
-                                    <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$_GET['story_id']}' style='text-decoration:none; color:white;'>Delete comment</a>
-                                </button>
+                                <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$_GET['story_id']}' class='btn btn-danger' style='text-decoration:none; color:white;'>Delete comment</a>
 
                                 <hr>";
                         }
