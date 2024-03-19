@@ -41,59 +41,28 @@ else{
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Page</title>
     <link rel="stylesheet" href="../../public/css/user.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../public/css/style2.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
 </head>
 <body>
-
     
     <?php require_once('navbar.php'); ?>
-    
+
     <main>
-        <span><strong style="font-size:x-large;">ALL Stories</strong></span>
-        
+        <span>
+            <strong style="font-size:x-large;">ALL Stories</strong>
+        </span>
         <div class="grid-container">
-            
             <?php require_once('storyGridView.php') ?>
-
         </div>
-
     </main>
+
+    <?php require_once('../common/footer.php') ?>
 
 </body>
 </html>
-
-
-<!-- 
-        <div class="cards">
-            <div class="card">Total story: <?php echo $story_count ?></div>
-            <div class="card">Likes: <?php echo $like_count ?></div>
-            <div class="card">Comments: <?php echo $comment_count ?></div>
-            <div class="card">Total Users: <?php echo $user_count ?></div>
-        </div>
-<div class="post">
-            <h2>Title : </h2>
-            <p>This is the content of the post.</p>
-            
-        </div>
-
-        <div class="comments">
-            <h3>Comments</h3>
-            <div class="comment">
-            <p><strong>User1:</strong> Great post!</p>
-        </div>
-        <div class="comment">
-            <p><strong>User2:</strong> I agree!</p>
-        </div>
-        </div>
-
-        <div class="story">
-            <h3>Story</h3>
-            <p>This is a user story.</p>
-        </div>
-
- -->

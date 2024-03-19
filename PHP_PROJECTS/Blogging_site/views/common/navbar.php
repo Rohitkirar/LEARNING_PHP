@@ -1,54 +1,34 @@
 <style>
-.headertag{
-        width:100%;
-        height: 5rem;
-        background-color:silver;
-    }
     .navbar{
-        padding:5px;
-        background-color:grey;
-        height: 2.8rem;
-    }
-    .navbar a{
-        text-decoration: none;
-        color:white;
-        padding:1px;
-        margin-right: 2rem;
         font-weight: bold;
     }
+
     .navbar a:hover{
         cursor: pointer;
-        color:white;
-        background-color: darkgray;
-    }
-    .card {
-        flex: 1;
-        padding: 10px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-    }
-    main {
-    margin: 10px;
-    padding: 20px;
-    }
-    footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
+        color:darkblue;
+
     }
 </style>
- <!-- <a href="#" class="logo">My Website</a> -->
-<header class='headertag'>
-    <span class="logo" style="float:left" ><img src="../../uploads/icons8-user-50 (1).png"  alt="logout">User</span>
-
-    <div class="logo" style="text-align: center;"><img src="../../uploads/blogger-logo-icon-png-10168.png" style="height:3rem;"></div>
+ 
+<nav class="navbar navbar-expand-lg p-2">
+  <a class="navbar-brand" href="#"><img src="../../uploads/blogger-logo-icon-png-10168.png" style="height:3rem;"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link " href="home.php" >Home </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="register.php">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Login.php">Login</a>
+      </li>
+    </ul>
+    <!-- <a class="nav-link" href="Login.php" style="float:right"  ><img src="../../uploads/icons8-user-50 (1).png"   alt="logout">User</a> -->
     
-</header>
+  </div>
 
-<div class='navbar bg-dark navbar-expand-lg'>
-    <a href="home.php">Home</a>
-    <a href="register.php">Register</a>
-    <a href="Login.php">Login</a>
-        <!-- <a href="../common/logout.php" style="text-decoration: none; color:white;" >Logout</a> -->
-</div>
+</nav>

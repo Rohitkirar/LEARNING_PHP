@@ -29,7 +29,7 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/admin.css">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
     
     <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
@@ -37,16 +37,20 @@ else{
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
     <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap4.js"></script>
+    <link rel="stylesheet" href="../../public/css/admin1.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
 
     <script defer src="../../public/js/datatable.js"></script>
 
     <style>
-        table{
-            padding :1rem;
-        }
+
         td , th{
             padding:10px;
             text-align: left;
+        }
+        thead{
+            background-color: black;
+            color:white;
         }
         .updateuserbtn a{
             text-decoration: none;
@@ -62,16 +66,13 @@ else{
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <main>
-
-        <div>
-            <span><strong style="font-size:x-large;">ALL USERS</strong></span>
-        </div>
+    <main class="bg-white" style="margin:0; margin-top:1rem; ">
         	
-        <div >
+        <div class=" m-2" style="margin: 0 auto;">
+        <h4> ALL USERS</h4>
             <table id="usertable" class="table table-hover">
-                <thead>
-                    <tr>
+                <thead class="thead-dark">
+                    <tr >
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Age</th>
@@ -118,7 +119,19 @@ else{
     </main>
 
     <script>
-        
+
+         
+        // $(document).ready(function () { 
+        //     $('#usertable').DataTable({ 
+        //         searching: false // remove search option 
+        //     }); 
+        // }); 
+
+        // $(document).ready(function () { 
+        //     $('#usertable').DataTable({ 
+        //         searching: true // remove search option 
+        //     }); 
+        // }); 
     </script>
 
 </body>

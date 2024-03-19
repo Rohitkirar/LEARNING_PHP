@@ -2,11 +2,11 @@
 .headertag{
         width:100%;
         height: 5rem;
-        background-color:silver;
+        background-color:transparent;
     }
     .navbar{
         padding:5px;
-        background-color:grey;
+        /* background-color:grey; */
         height: 2.8rem;
     }
     .navbar a{
@@ -19,7 +19,7 @@
     .navbar a:hover{
         cursor: pointer;
         color:white;
-        background-color: darkgray;
+        /* background-color: darkgray; */
     }
     .card {
         flex: 1;
@@ -48,14 +48,15 @@
             <a class='btn' href="../common/logout.php" ><img src="../../uploads/icons8-logout-32.png" alt="logout"></a>
         </div>
 </header>
-<div class='navbar bg-dark navbar-expand-lg'>
+<div class='navbar navbar-expand-lg'>
         <a href="user.php" style="text-decoration: none; color:white">Home</a>
         <?php 
             if($userData['role'] == 'admin'){
                 echo "<a href='../admin/admin.php' style='text-decoration: none; color:white'>Admin Dashboard</a>";
             }
         ?>
-        <a href="Edit_Info.php" style="text-decoration: none; color:white">Edit Info</a>
         <a href="allStoryView.php" style="text-decoration: none; color:white">All Story</a>
+        <a href="Edit_Info.php" style="text-decoration: none; color:white">Edit Info</a>
+        <a href="updatepassword.php" style="text-decoration: none; color:white">change Password</a>
         <!-- <a href="../common/logout.php" style="text-decoration: none; color:white;" >Logout</a> -->
 </div>

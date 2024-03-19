@@ -129,14 +129,17 @@ if(isset($_POST['submit'])){
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../public/css/register.css">
-    <link rel="stylesheet" href="../../public/css/home.css">
+    <link rel="stylesheet" href="../../public/css/register1.css">
+    <link rel="stylesheet" href="../../public/css/home1.css">
+    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/style.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
 <body>
     <!-- adding navbar file -->
     <?php require_once('navbar.php') ?>
-    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" >
+    
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="shadow-lg p-3 mb-5 bg-white rounded"  method="post" >
 
         <div class="container p-5 shadow-lg p-3  rounded">
 
