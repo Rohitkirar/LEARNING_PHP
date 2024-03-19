@@ -13,6 +13,6 @@
         }
     ?>
     <?php if(mysqli_num_rows($image)>1){ ?>
-        <span id="arrow-left" class="arrow btn btn-primary"  onclick="startslide()">prev</span>
-        <span id="arrow-right"  class="arrow btn btn-primary" onclick="startslide()">next</span>
+        <span id="arrow-left" class="arrow btn btn-primary">prev</span>
+        <span id="arrow-right"  class="arrow btn btn-primary" >next</span>
    <?php } ?>
