@@ -48,6 +48,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/css/adminstoryView.css">
+    <link rel="stylesheet" href="../../public/css/imageslider.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -97,17 +98,8 @@ else{
 
                     </div>
 
-                    <div>
-                        <?php 
-                        $sql = "SELECT image FROM storyimages WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
-                        $image = mysqli_query($conn ,$sql);
-                        if(mysqli_num_rows($image) > 0){
-                            $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
-                            foreach($imageArray as $key=> $path){
-                                echo "<img src='../../uploads/{$path['image']}' class='card' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
-                            }
-                        }
-                        ?>
+                    <div class="container text-center" >
+                        <?php require('../common/imageslider.php') ?>
                     </div>
                     
                     <div>
@@ -168,6 +160,7 @@ else{
         </div>
 
     </main>
+    <script src="../../public/js/imageslider.js"></script>
 </body>
 </html>
 
