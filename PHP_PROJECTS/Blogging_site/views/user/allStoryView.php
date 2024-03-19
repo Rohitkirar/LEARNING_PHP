@@ -41,6 +41,8 @@ else{
     <link rel="stylesheet" href="style.css">
     <title>User Page</title>
     <link rel="stylesheet" href="../../public/css/user.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .story_inner_div_items{
@@ -67,7 +69,7 @@ else{
                     echo "
                     <form action='{$_SERVER["PHP_SELF"]}' method='POST'>
                         
-                        <div class='story_inner_div_items'>
+                        <div class='story_inner_div_items mb-5 p-5 shadow-lg bg-white rounded' style='width: 80%; margin: 1rem auto;' >
 
                             <div>
                             <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>

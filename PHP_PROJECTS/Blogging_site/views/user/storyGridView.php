@@ -14,7 +14,7 @@
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
     
     foreach($storyArray as $key=>$values){
-            echo '<div class="grid-item">';
+            echo '<div class="grid-item text-center m-2 mb-5 p-3 pt-5 shadow-lg bg-white rounded">';
             
             echo "<img src='../../uploads/{$values['image']}' style='height: 40%; width:40%; margin-bottom:1rem;'/>";
             

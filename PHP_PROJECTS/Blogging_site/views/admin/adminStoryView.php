@@ -47,7 +47,9 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/adminstoryView.css">
+    <link rel="stylesheet" href="../../public/css/adminstoryView1.css">
+    <link rel="stylesheet" href="../../public/css/imageslider.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -66,7 +68,7 @@ else{
         <br>
 
         <div>
-            <span><strong style="font-size:x-large;">ALL Stories</strong></span>
+            <span><strong style="font-size:x-large;">Story</strong></span>
             <span style="float:right"><a href="addstoryform.php"><button id="addstorybtn">Add Story</button></a></span>
         </div>
 
@@ -74,7 +76,7 @@ else{
             
             <form action='{$_SERVER["PHP_SELF"]}' method='POST'>
 
-                <div class='story_inner_div_items'>
+                <div class='story_inner_div_items m-2 mb-5 p-5 shadow-lg bg-white rounded'>
 
                     <div class='postnavdiv'>
 
@@ -97,17 +99,8 @@ else{
 
                     </div>
 
-                    <div>
-                        <?php 
-                        $sql = "SELECT image FROM storyimages WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
-                        $image = mysqli_query($conn ,$sql);
-                        if(mysqli_num_rows($image) > 0){
-                            $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
-                            foreach($imageArray as $key=> $path){
-                                echo "<img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
-                            }
-                        }
-                        ?>
+                    <div class="container text-center" >
+                        <?php require('../common/imageslider.php') ?>
                     </div>
                     
                     <div>
@@ -157,9 +150,7 @@ else{
 
                                 <p>{$values['content']}</p>
 
-                                <button class='btn btn-danger'>
-                                    <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$_GET['story_id']}' style='text-decoration:none; color:white;'>Delete comment</a>
-                                </button>
+                                <a href='deleteComment.php?deletecommentid={$values['comment_id']}&story_id={$_GET['story_id']}' class='btn btn-danger' style='text-decoration:none; color:white;'>Delete comment</a>
 
                                 <hr>";
                         }
@@ -170,6 +161,7 @@ else{
         </div>
 
     </main>
+    <script src="../../public/js/imageslider.js"></script>
 </body>
 </html>
 

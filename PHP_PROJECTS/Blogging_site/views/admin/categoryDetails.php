@@ -28,8 +28,19 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/admin.css">
+    <link rel="stylesheet" href="../../public/css/admin1.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
+     
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap4.js"></script>
+
+    <script defer src="../../public/js/datatable.js"></script>
+
+    
     <style>
         table{
             padding :1rem;
@@ -52,24 +63,27 @@ else{
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <main>
+    <main class="bg-white" style="margin-left:0 ; margin-top :1rem">
 
         <div class="m-2">
             <span><strong style="font-size:x-large;">ALL Category Details</strong></span>
             <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
         </div>
         <div >
-            <table class='container m-4' >
-                <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>created_at</th>
-                    <th>updated_at</th>
-                    <th>deleted_at</th>
-                    <th>Update</th>
-                    <th>Delete</th>
-                </tr>
+            <table id="categorytable" class='table table-hover' >
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>created_at</th>
+                        <th>updated_at</th>
+                        <th>deleted_at</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <?php 
                     $sql = "SELECT *  FROM storycategory ORDER BY created_at DESC";
                     $result = mysqli_query($conn , $sql);
@@ -77,7 +91,7 @@ else{
                     
                     foreach($userDataArray as $key => $values){
                         echo "<tr> 
-                                    <td>"; echo $key+1 ."</td>
+                                    <td>". $key+1 ."</td>
                                     <td><img src='../../uploads/{$values['image']}' class=' rounded-circle' style='height:90px ; width:90px;' alt='image not uploaded'/></td>
                                     <td>{$values['Title']}</td>
                                     <td>{$values['created_at']}</td>
@@ -87,9 +101,14 @@ else{
                                     if(empty($values['deleted_at'])){
                                         echo "<td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   
                                     }
-                                echo "</tr>";
+                                    else{
+                                        echo "<td></td>";   
+                                    }
+                                    
+                            echo "</tr>";
                     }
                 ?>    
+                </tbody>
             </table>
         </div>
 

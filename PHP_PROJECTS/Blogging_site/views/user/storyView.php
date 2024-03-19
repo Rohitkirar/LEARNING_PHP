@@ -42,6 +42,8 @@ else{
     <link rel="stylesheet" href="style.css">
     <title>User Page</title>
     <link rel="stylesheet" href="../../public/css/user.css">
+    <link rel="stylesheet" href="../../public/css/imageslider.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
     <style>
         .story_inner_div_items{
@@ -62,34 +64,24 @@ else{
     
     <main>
         <h2>Story</h2>
-        <div class="story_inner_div">
+        <div class="story_inner_div ">
      
             <form action='<?php echo "{$_SERVER["PHP_SELF"]}.?story_id={$_GET['story_id']}" ?>' method='POST'>
-                <div class='story_inner_div_items'>
+                <div class='story_inner_div_items mb-5 p-5 shadow-lg bg-white rounded' style='width: 80%; margin: 1rem auto;'>
                     
                     <div>
                         <h3 style='color:purple'>Title :  <?php echo $values['story_title'] ?>  </h3><BR>
                         <h3 style='color:purple'>Category : <?php echo $values['category_title'] ?> </h3><BR>
                     </div>
                     
-                    <div>
-                        <?php 
-                        $sql = "SELECT image FROM storyimages WHERE story_id = {$values['story_id']} AND deleted_at IS NULL";
-                        $image = mysqli_query($conn ,$sql);
-                        if(mysqli_num_rows($image) > 0){
-                            $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
-                            foreach($imageArray as $key=> $path){
-                                echo "<img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
-                            }
-                        }
-                        ?>
+                    <div class="container text-center" >
+                        <?php require('../common/imageslider.php') ?>
                     </div>
                     
                     <p><?php echo $values['content'] ?><p>
 
                     <div class="container m-4">
                     <a class="btn btn-primary" href='like.php?story_id=<?php echo $values['story_id'] ?>' >Like</a>
-
 
                     <span>
                     <input type='text' name='comment'>
@@ -141,10 +133,7 @@ else{
                             echo "<span>{$values['content']}</span>";
 
                             if($values['user_id'] == $_SESSION['user_id']){
-                                echo "
-                                <button id='deletecommentbtn'>
-                                    <a href='deleteComment.php?comment_id={$values['comment_id']}&story_id={$values['story_id']}' style='text-decoration:none; color:black;margin:20px;'>Delete</a>
-                                </button>";
+                                echo "<a class='btn btn-danger' href='deleteComment.php?comment_id={$values['comment_id']}&story_id={$values['story_id']}' style='text-decoration:none; color:black;margin:20px;'>Delete</a>";
                             }
                             echo "<hr style='color:grey'>";
                         }
@@ -154,6 +143,8 @@ else{
         </div>
         
     </main>
+    <script src="../../public/js/imageslider.js"></script>
 </body>
 </html>
+
 

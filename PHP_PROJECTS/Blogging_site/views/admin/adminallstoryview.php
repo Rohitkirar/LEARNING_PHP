@@ -46,7 +46,8 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../public/css/adminstoryView.css">
+    <link rel="stylesheet" href="../../public/css/adminstoryView1.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -75,7 +76,7 @@ else{
 
                     echo "<form action='{$_SERVER["PHP_SELF"]}' method='POST'>
 
-                        <div class='story_inner_div_items card p-5' style='width: 80%; margin: 1rem auto;'>
+                        <div class='story_inner_div_items  p-5 shadow-lg bg-white rounded card p-5' style='width: 80%; margin: 1rem auto;'>
 
                         <div class='postnavdiv'>
 
@@ -100,7 +101,7 @@ else{
                             if(mysqli_num_rows($image) > 0){
                                 $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
                                 foreach($imageArray as $key=> $path){
-                                    echo "<img src='../../uploads/{$path['image']}' class='card-img-top' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
+                                    echo "<img src='../../uploads/{$path['image']}' class='card' style='width:100%; height:100%;' alt='image not available'/><BR><BR>";
                                 }
                             }
                             echo "
