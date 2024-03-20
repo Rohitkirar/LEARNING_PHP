@@ -116,6 +116,13 @@ else{
         </div>
 
     </main>
+
+    <?php 
+        if(isset($_SESSION['addcategorysuccess']) && $_SESSION['addcategorysuccess']==true){
+            unset($_SESSION['addcategorysuccess']);
+            echo '<script> alert("Category added Successfully!") </script>';
+        }
+    ?>
 </body>
 </html>
 
