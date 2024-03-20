@@ -98,7 +98,7 @@ $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr  
             }
             else{
                 $_SESSION['successeditdetails'] = false;
-                header('location: user.php');
+                header('location: Edit_Info.php');
             }
         }
     }
@@ -159,6 +159,11 @@ else{
 
         </div>
     </form>
-
+    <?php 
+        if(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == false){
+            unset($_SESSION['successeditdetails']);
+            echo '<script>alert("Failed to edit user details!")</script>';
+        } 
+    ?>
 </body>
 </html>

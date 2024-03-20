@@ -66,7 +66,7 @@ if(isset($_SESSION['user_id'])){
             }
             else{
                 $_SESSION['successpassword']=false;
-                header('location: user.php');
+                header('location: updatepassword.php');
             }
         }
     }
@@ -111,6 +111,11 @@ else{
 
         </div>
     </form>
-
+    <?php 
+        if(isset($_SESSION['successpassword']) && $_SESSION['successpassword'] == false){
+            unset($_SESSION['successpassword']);
+            echo '<script>alert("Failed Password Updated!")</script>';
+        } 
+    ?>
 </body>
 </html>

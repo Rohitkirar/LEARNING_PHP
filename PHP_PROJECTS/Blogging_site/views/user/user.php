@@ -64,21 +64,13 @@ else{
 
     <?php 
         if(isset($_SESSION['successpassword']) && $_SESSION['successpassword'] == true){ 
-            echo '<script>alert("password successfully Updated!")</script>';
-            unset($_SESSION['successpassword']);        
-        }
-        elseif(isset($_SESSION['successpassword']) && $_SESSION['successpassword'] == false){
-            echo '<script>alert("Failed Password Updated!")</script>';
             unset($_SESSION['successpassword']);
-        } 
-        elseif(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == true){ 
-            echo '<script>alert("Successfully Saved user Details!")</script>';
-            unset($_SESSION['successeditdetails']);        
+            echo '<script>alert("password successfully Updated!")</script>';
         }
-        elseif(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == false){
-            echo '<script>alert("Failed to edit user details!")</script>';
+        elseif(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == true){ 
             unset($_SESSION['successeditdetails']);
-        } 
+            echo '<script>alert("Successfully Saved user Details!")</script>';      
+        }
     ?>
 
 </body>
