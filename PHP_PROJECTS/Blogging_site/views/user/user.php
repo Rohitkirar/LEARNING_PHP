@@ -71,6 +71,14 @@ else{
             echo '<script>alert("Failed Password Updated!")</script>';
             unset($_SESSION['successpassword']);
         } 
+        elseif(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == true){ 
+            echo '<script>alert("Successfully Saved user Details!")</script>';
+            unset($_SESSION['successeditdetails']);        
+        }
+        elseif(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == false){
+            echo '<script>alert("Failed to edit user details!")</script>';
+            unset($_SESSION['successeditdetails']);
+        } 
     ?>
 
 </body>

@@ -92,11 +92,14 @@ $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr  
 
             $result = mysqli_query($conn , $sql);
             
-            if($result)
+            if($result){
+                $_SESSION['successeditdetails'] = true;
                 header('location: user.php');
-            else
-                echo "ERROR : " . mysqli_error($conn);
-
+            }
+            else{
+                $_SESSION['successeditdetails'] = false;
+                header('location: user.php');
+            }
         }
     }
 }
