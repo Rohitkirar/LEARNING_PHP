@@ -10,6 +10,7 @@
         height: 2.8rem;
     }
     .navbar a{
+        font-size: medium;
         text-decoration: none;
         color:white;
         padding:1px;

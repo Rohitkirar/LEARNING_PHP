@@ -29,38 +29,20 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
-    
-    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
-    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap4.js"></script>
     <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../public/css/style1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script defer src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
 
     <script defer src="../../public/js/datatable.js"></script>
 
-    <style>
 
-        td , th{
-            padding:10px;
-            text-align: left;
-        }
-        thead{
-            background-color: black;
-            color:white;
-        }
-        .updateuserbtn a{
-            text-decoration: none;
-            color:white;
-        }
-        .deleteuserbtn a {
-            text-decoration: none;
-            color:white;
-        }
-    </style>
+
 </head>
 <body>
     <!-- navbar file -->
@@ -69,9 +51,9 @@ else{
     <main class="bg-white" style="margin:0; margin-top:1rem; ">
         <strong> All User's Details</strong><span style="float:right"><a class="btn btn-success" href="adduserform.php">Add User</a></span>
         <div class="m-4" style="margin: 0 auto;">
-            <table id="usertable" class="table table-hover">
-                <thead class="thead-dark">
-                    <tr >
+            <table id="usertable" class="table table-hover table-striped" style="width:100%">
+                <thead >
+                    <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Age</th>
@@ -119,7 +101,7 @@ else{
 
     <script>
 
-         
+
         // $(document).ready(function () { 
         //     $('#usertable').DataTable({ 
         //         searching: false // remove search option 
@@ -132,6 +114,7 @@ else{
         //     }); 
         // }); 
     </script>
+
 
 </body>
 </html>

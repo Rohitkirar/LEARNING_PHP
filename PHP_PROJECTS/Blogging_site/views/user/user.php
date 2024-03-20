@@ -46,7 +46,7 @@ else{
     <title>User Page</title>
     <link rel="stylesheet" href="../../public/css/user.css">
     <link rel="stylesheet" href="../../public/css/style.css">
-    <link rel="stylesheet" href="../../public/css/style2.css">
+    <link rel="stylesheet" href="../../public/css/style1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
 </head>
 <body>
@@ -54,9 +54,7 @@ else{
     <?php require_once('navbar.php'); ?>
 
     <main>
-        <span>
-            <strong style="font-size:x-large;">ALL Stories</strong>
-        </span>
+        <h2 style="color:white;">ALL Stories</h2>
         <div class="grid-container">
             <?php require_once('storyGridView.php') ?>
         </div>

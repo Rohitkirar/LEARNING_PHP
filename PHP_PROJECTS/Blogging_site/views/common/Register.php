@@ -139,9 +139,9 @@ if(isset($_POST['submit'])){
     <!-- adding navbar file -->
     <?php require_once('navbar.php') ?>
     
-    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="shadow-lg p-3 mb-5 bg-white rounded"  method="post" >
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="shadow-lg p-5 mb-5 bg-white rounded"  method="post" >
 
-        <div class="container p-5 shadow-lg p-3  rounded">
+        <div>
 
             <center><h1>User Registration Form</h1></center>
 
