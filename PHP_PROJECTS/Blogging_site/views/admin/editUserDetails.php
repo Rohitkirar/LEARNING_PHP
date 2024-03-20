@@ -76,7 +76,7 @@ if(isset($_SESSION['user_id'])){
 
             $mobile = (string)$_POST['mobile'];
 
-            if(preg_match("/^[0-9]{10}$/" , $mobile))
+            if(preg_match("^[6-9]{1}[0-9]{9}$/" , $mobile))
                 $mobileErr = '';
             else
                 $mobileErr = 'Please enter valid mobile containing 10 digit';

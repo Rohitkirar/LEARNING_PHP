@@ -69,7 +69,7 @@ else{
             <span><strong style="font-size:x-large;">ALL Category Details</strong></span>
             <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
         </div>
-        <div >
+        <div class="m-4">
             <table id="categorytable" class='table table-hover' >
                 <thead>
                     <tr>
@@ -79,6 +79,7 @@ else{
                         <th>created_at</th>
                         <th>updated_at</th>
                         <th>deleted_at</th>
+                        <th>View Post</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
@@ -97,6 +98,7 @@ else{
                                     <td>{$values['created_at']}</td>
                                     <td>{$values['updated_at']}</td>
                                     <td>{$values['deleted_at']}</td>
+                                    <td><a class='btn btn-success' href='adminallstoryview.php?category_id={$values['id']}' >View</a></td>
                                     <td><a class='btn btn-primary' href='Editcategorydetails.php?category_id={$values['id']}' >Update</a></td>";
                                     if(empty($values['deleted_at'])){
                                         echo "<td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   

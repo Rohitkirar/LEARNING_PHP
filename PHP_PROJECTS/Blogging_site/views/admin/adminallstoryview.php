@@ -16,13 +16,20 @@ if(isset($_SESSION['user_id'])){
         // total user count
         require_once('Totalcount.php');
 
-
-        $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content 
-                FROM storycategory JOIN story 
-                ON storycategory.id = story.category_id 
-                WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL; 
-                ";
-
+        if(isset($_GET['category_id'])){
+            $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content 
+            FROM storycategory JOIN story 
+            ON storycategory.id = story.category_id 
+            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.id = {$_GET['category_id']}; 
+            ";
+        }
+        else{
+            $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title , content 
+            FROM storycategory JOIN story 
+            ON storycategory.id = story.category_id 
+            WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL; 
+            ";
+        }
         $result = mysqli_query($conn , $sql);
         
         $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
@@ -66,14 +73,32 @@ else{
         <br>
 
         <div>
-            <span><strong style="font-size:x-large;">ALL Stories</strong></span>
+            <?php 
+            if(isset($_GET['category_id'])) {
+                echo "
+                <span>
+                <strong style='font-size:x-large; color:white'>Category : ";
+                    if(isset($storyArray[0]['category_title'])){
+                        echo $storyArray[0]['category_title'];
+                    }else{
+                        echo 'NO Story Found!';
+                    }
+                echo "
+                </strong>
+                </span>";
+            } 
+            else{
+                echo "<span><strong style='font-size:x-large; color:white ;'>ALL Stories</strong></span>";
+            }
+            ?>
             <span style="float:right" ><a href="addstoryform.php" class='btn btn-success'>Add Story</a></span>
         </div>
 
         <div class="story_inner_div">
-            <?php  
-                foreach($storyArray as $key=>$values){
+            <?php 
 
+            foreach($storyArray as $key=>$values){
+                if(isset($values['category_title'])){ 
                     echo "<form action='{$_SERVER["PHP_SELF"]}' method='POST'>
 
                         <div class='story_inner_div_items  p-5 shadow-lg bg-white rounded card p-5' style='width: 80%; margin: 1rem auto;'>
@@ -158,12 +183,15 @@ else{
 
                                     <hr>";
                             }
-                echo "
-                    </div>
-                    </div>
-                    </form>" ;
+                        echo "
+                        </div>
+                        </div>
+                        </form>" ;
                 }
-
+                else{
+                    break;
+                }
+            }
             ?>
         </div>
 

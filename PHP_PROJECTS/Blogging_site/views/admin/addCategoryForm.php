@@ -77,7 +77,8 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
-    <link rel="stylesheet" href="../../public/css/admin.css">
+    <link rel="stylesheet" href="../../public/css/admin1.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -93,10 +94,10 @@ else{
 
         <form onsubmit="return confirm('Do you really want to submit the form');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
             <br>
-            <label for="title">Category Title:</label>
+            <label for="title">Category Title: <span style="color:red">* </span></label>
             <input type='text' id="title" maxlength="20" name='category_title'  required>
             <br>    
-            <label >Add Image</label>
+            <label >Add Image<span style="color:red">* </span></label>
             <input type="file" class="image" name="addimage"  required/>
             <br><br>
             <hr>

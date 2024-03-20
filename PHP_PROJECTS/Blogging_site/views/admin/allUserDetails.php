@@ -67,9 +67,8 @@ else{
     <?php require_once('adminnavbar.php') ?>
     
     <main class="bg-white" style="margin:0; margin-top:1rem; ">
-        	
-        <div class=" m-2" style="margin: 0 auto;">
-        <h4> ALL USERS</h4>
+        <strong> All User's Details</strong><span style="float:right"><a class="btn btn-success" href="adduserform.php">Add User</a></span>
+        <div class="m-4" style="margin: 0 auto;">
             <table id="usertable" class="table table-hover">
                 <thead class="thead-dark">
                     <tr >

@@ -3,9 +3,9 @@
     $sql = "SELECT story.id as story_id , storycategory.Title as category_title , story.title as story_title, storyimages.image
     FROM storycategory JOIN story 
     ON storycategory.id = story.category_id 
-    JOIN storyimages ON story.id = storyimages.story_id
+    LEFT JOIN storyimages ON story.id = storyimages.story_id
     WHERE story.user_id = {$_SESSION['user_id']} AND story.deleted_at IS NULL AND storycategory.deleted_at IS NULL AND storyimages.deleted_at IS NULL
-    GROUP BY story_id";
+    GROUP BY story_id ORDER BY story_id DESC";
 
     $result = mysqli_query($conn , $sql);
 

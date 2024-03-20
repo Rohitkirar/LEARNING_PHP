@@ -51,13 +51,14 @@ if(isset($_SESSION['user_id'])){
         if($oldpasswordErr == '' && $newpasswordErr == '' && $retypepasswordErr == ''){
 
             $sql = "UPDATE users
-                    Set password = $newpassword
+                    Set password = '$newpassword'
                     WHERE id = {$_SESSION['user_id']}";
 
             $result = mysqli_query($conn , $sql);
             
-            if($result)
+            if($result){
                 header('location: user.php');
+            }
             else
                 echo "ERROR : " . mysqli_error($conn);
 
@@ -92,13 +93,13 @@ else{
             <hr>
 
             <label for="oldpassword">Current password : <span style="color:red;"><?php echo $oldpasswordErr ?></span></label>
-            <input type="text" id="oldpassword" name="oldpassword"><br>
+            <input type="password" id="oldpassword" name="oldpassword"><br>
 
             <label for="newpassword">New password : <span style="color:red;"><?php echo $newpasswordErr ?></span></label>
-            <input type="text" id="newpassword" name="newpassword"><br>
+            <input type="password" id="newpassword" name="newpassword"><br>
 
             <label for="retypepassword">Retype New password : <span style="color:red;"><?php echo $retypepasswordErr ?></span></label>
-            <input type="text" id="retypepassword" name="retypepassword"><br>
+            <input type="password" id="retypepassword" name="retypepassword"><br>
             
             <button type="submit" name="updatepassword"  class="registerbtn" >Update password</button>
 
