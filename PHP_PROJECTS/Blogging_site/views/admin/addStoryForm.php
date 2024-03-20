@@ -50,29 +50,38 @@ if(isset($_SESSION['user_id'])){
                 for($i=0 ; $i< count($file['name']) ;$i++){
 
                     $file_name = $file['name'][$i];
+                    $file_type = $file['type'][$i];
+                    $file_type = substr($file_type , 0 , strpos($file_type , '/'));
                     $file_size = $file['size'][$i];
                     $file_error = $file['error'][$i];
                     $tmp_name = $file['tmp_name'][$i];
 
                     if($file_error == 0){
-                        $fileDestination = '../../uploads/'.$file_name;
-                        move_uploaded_file($tmp_name , $fileDestination);
+                        echo $file_type;
+                        if($file_type == 'image'){
+                            
+                            $filenameErr = '';
 
-                        $sql = "INSERT INTO storyimages (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
+                            $fileDestination = '../../uploads/'.$file_name;
+                            
+                            move_uploaded_file($tmp_name , $fileDestination);
 
-                        $result = mysqli_query($conn , $sql);
+                            $sql = "INSERT INTO storyimages (story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
 
-                        if($result)
-                            echo "successfully inserted data";
-                        else
-                            echo "ERROR " . mysqli_error($conn);
+                            $result = mysqli_query($conn , $sql);
+
+                            if($result)
+                                echo "successfully inserted data";
+                            else
+                                echo "ERROR " . mysqli_error($conn);  
+                        }
+                        else{
+                            Echo "ERROR : Invalid file type, Upload Image type only!";
+                        }
                     }
                     else
-                        echo "error in file ;";
+                        echo 'error :file not uploaded';
                 }
-            }
-            else{
-                echo "Error : FILE NOT Uploaded !";
             }
                 
             header('location: admin.php');
@@ -81,13 +90,13 @@ if(isset($_SESSION['user_id'])){
     else{
         session_unset();
         session_destroy();
-        header('location: ../common/logout.php');
+        header('location: ../common/logout.php?LogoutSuccess=true');
     }    
 }
 else{
     session_unset();
     session_destroy();
-    header('location: ../common/logout.php');
+    header('location: ../common/logout.php?LogoutSuccess=true');
 }
 
 
@@ -99,7 +108,8 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
-    <link rel="stylesheet" href="../../public/css/admin.css">
+    <link rel="stylesheet" href="../../public/css/admin1.css">
+    <link rel="stylesheet" href="../../public/css/style1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -113,7 +123,7 @@ else{
         <hr>
         <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
-            <label for="title">Category Title:</label>
+            <label for="title">Category Title:<span style="color:red">* </span></label>
             <select id="title" name='category_id'>
                 <?php 
                     foreach($categoryArray as $key=>$values){
@@ -122,15 +132,15 @@ else{
                 ?>
             </select>
             <br><br>
-            <label for="story_title">Story Title:</label>
+            <label for="story_title">Story Title: <span style="color:red">* </span></label>
             <input type="text" name='story_title' id='story_title' required />
 
-            <label for="content">Content:</label>
+            <label for="content">Content: <span style="color:red">* </span></label>
             <textarea id="content" name="content" rows="4" placeholder="Write your story here" required></textarea>
             
             <br><br>
 
-            <label for="image">Add Image</label>
+            <label for="image">Add Image <span style="color:red">* </span></label>
             <input type="file" id="image" name="image[]" multiple required >
             <hr>
             <div class="card" style="border:none; background-color:transparent">

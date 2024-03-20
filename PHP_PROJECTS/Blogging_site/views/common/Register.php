@@ -50,7 +50,7 @@ if(isset($_POST['submit'])){
 
     $mobile = (string)$_POST['mobile'];
 
-    if(preg_match("/^[0-9]{10}$/" , $mobile))
+    if(preg_match("/^[6-9]{1}[0-9]{9}$/" , $mobile))
         $mobileErr = '';
     else
         $mobileErr = 'Please enter valid mobile containing 10 digit';
@@ -70,17 +70,20 @@ if(isset($_POST['submit'])){
                 WHERE EXISTS (SELECT 1 FROM users WHERE email = '$email' OR mobile='$mobile' OR username='$username')";
 
         $validationresult = mysqli_query($conn , $sql);
-        
-        $validationResultArray = mysqli_fetch_assoc($validationresult);
 
-        if($validationResultArray['email'] == $email){
-            $emailErr = "Email Already Exists!";
-        }
-        if($username == $validationResultArray['username']){
-            $usernameErr = "Username Already Exists!";
-        }
-        if($mobile == $validationResultArray['mobile']){
-            $mobileErr = "Mobile Number Already Exists!";
+        if(mysqli_num_rows($validationresult)>0){
+
+            $validationResultArray = mysqli_fetch_assoc($validationresult);
+
+            if($validationResultArray['email'] == $email){
+                $emailErr = "Email Already Exists!";
+            }
+            if($username == $validationResultArray['username']){
+                $usernameErr = "Username Already Exists!";
+            }
+            if($mobile == $validationResultArray['mobile']){
+                $mobileErr = "Mobile Number Already Exists!";
+            }
         }
     }
 
@@ -115,11 +118,12 @@ if(isset($_POST['submit'])){
 
         $result = mysqli_query($conn , $sql);
         
-        if($result)
-            header('location: login.php');
-        else
-            echo "ERROR : " . mysqli_error($conn);
-
+        if($result){
+            header('location: login.php?RegisterSuccess=true');
+        }
+        else{
+            echo header('location: Register.php?RegisterSuccess=false');
+        }
         mysqli_close($conn);
     }
 }
@@ -139,38 +143,38 @@ if(isset($_POST['submit'])){
     <!-- adding navbar file -->
     <?php require_once('navbar.php') ?>
     
-    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="shadow-lg p-3 mb-5 bg-white rounded"  method="post" >
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" class="shadow-lg p-5 mb-5 bg-white rounded"  method="post" >
 
-        <div class="container p-5 shadow-lg p-3  rounded">
+        <div>
 
             <center><h1>User Registration Form</h1></center>
 
             <hr>
 
-            <label>Firstname <span style="color:red;"></span><?php echo $first_nameErr ?></span></label>
+            <label>Firstname <span style="color:red;"><?php echo '* ' . $first_nameErr ?></span></label>
             <input type="text" name="first_name" value="<?php echo $first_name; ?>" >
             
-            <label>Lastname: <span style="color:red;"><?php echo $last_nameErr ?></span></label>
+            <label>Lastname: <span style="color:red;"><?php echo '* ' . $last_nameErr ?></span></label>
             <input type="text" name="last_name" value="<?php echo $last_name; ?>" >
             
-            <label>Gender: <span style="color:red;"><?php echo $genderErr ?></span></label><br>
+            <label>Gender: <span style="color:red;"><?php echo '* ' . $genderErr ?></span></label><br>
             <input type="radio" name="gender" value="male" checked> Male<br>
             <input type="radio" name="gender" value="female"> Female<br>
             <input type="radio" name="gender" value="other"> Other<br><br>
             
-            <label>Age : <span style="color:red;"><?php echo $ageErr ?></span></label>
+            <label>Age : <span style="color:red;"><?php echo '* ' . $ageErr ?></span></label>
             <input type="number" name="age" value="<?php echo $age; ?>" size="3" ><br><br>
             
-            <label>Mobile : <span style="color:red;"><?php echo $mobileErr ?></span></label>
+            <label>Mobile : <span style="color:red;"><?php echo '* ' . $mobileErr ?></span></label>
             <input type="Number" name="mobile" maxlength="10" value="<?php echo $mobile; ?>" size="10"><br><br>
             
-            <label for="email">Email: <span style="color:red;"><?php echo $emailErr ?></span></label>
+            <label for="email">Email: <span style="color:red;"><?php echo '* ' . $emailErr ?></span></label>
             <input type="text" id="email" value="<?php echo $email; ?>" name="email"><br><br>
             
-            <label for="username">UserName :  <span style="color:red;"><?php echo $usernameErr ?></span></label>
-            <input type="text" id="username" maxlength="15" value="<?php echo $username; ?>" name="username"><br><br>
+            <label for="username">UserName :  <span style="color:red;"><?php echo '* ' . $usernameErr ?></span></label>
+            <input type="text" id="username" maxlength="25" value="<?php echo $username; ?>" name="username"><br><br>
             
-            <label for="pass">Password:  <span style="color:red;"><?php echo $passwordErr ?></span></label>
+            <label for="pass">Password:  <span style="color:red;"><?php echo '* ' . $passwordErr ?></span></label>
             <input type="password" id="pass" maxlength="15"  name="password"><br><br>
             
             <input type="submit" name="submit"  class="registerbtn" />
@@ -185,6 +189,13 @@ if(isset($_POST['submit'])){
     </form>
     <!-- adding footer file -->
     <?php require_once('footer.php') ?>
+
+    <?php
+        if(isset($_GET['RegisterSuccess']) && $_GET['RegisterSuccess'] == false){
+            unset($_GET['RegisterSuccess']) ;
+            echo '<script> alert("User Registeration Failed!"); </script>';
+        }    
+    ?>
 </body>
 </html>
 

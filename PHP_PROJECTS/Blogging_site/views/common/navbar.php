@@ -1,5 +1,7 @@
 <style>
-    .navbar{
+    .nav-link{
+        font-size: medium;
+        color:white;
         font-weight: bold;
     }
 

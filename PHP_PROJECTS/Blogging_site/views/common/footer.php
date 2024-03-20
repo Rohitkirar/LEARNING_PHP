@@ -1,3 +1,3 @@
 <footer>
-        © 2024 My Website | Contact: contact@mywebsite.com
+        © 2020-<?php echo DATE('Y') ?> Blog | Contact: contact@blog.com
 </footer>

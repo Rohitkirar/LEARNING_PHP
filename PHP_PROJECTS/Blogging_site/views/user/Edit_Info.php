@@ -92,27 +92,30 @@ $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr  
 
             $result = mysqli_query($conn , $sql);
             
-            if($result)
+            if($result){
+                $_SESSION['successeditdetails'] = true;
                 header('location: user.php');
-            else
-                echo "ERROR : " . mysqli_error($conn);
-
+            }
+            else{
+                $_SESSION['successeditdetails'] = false;
+                header('location: Edit_Info.php');
+            }
         }
     }
 }
 else{
     session_unset();
     session_destroy();
-    header('location: ../common/logout.php');
+    header('location: ../common/logout.php?LogoutSuccess=true');
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../public/css/register.css">
+    <link rel="stylesheet" href="../../public/css/register1.css">
     <link rel="stylesheet" href="../../public/css/user.css">
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <link rel="stylesheet" href="../../public/css/style1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
 <body>
@@ -121,7 +124,7 @@ else{
 
     <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" >
 
-        <div class="container">
+        <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
 
             <center><h1>Edit User Info</h1></center>
 
@@ -156,6 +159,11 @@ else{
 
         </div>
     </form>
-
+    <?php 
+        if(isset($_SESSION['successeditdetails']) && $_SESSION['successeditdetails'] == false){
+            unset($_SESSION['successeditdetails']);
+            echo '<script>alert("Failed to edit user details!")</script>';
+        } 
+    ?>
 </body>
 </html>

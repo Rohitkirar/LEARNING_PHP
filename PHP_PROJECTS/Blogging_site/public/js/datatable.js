@@ -1,6 +1,17 @@
+// 1 way
 new DataTable('#usertable');
 
- // Initialize the DataTable 
+
+new DataTable('#categorytable');
+
+// 2 way
+// new DataTable('#usertable' ,{
+//     searching: false, 
+//     paging: false, 
+//     info: false
+// });
+
+// 3 way Initialize the DataTable 
 //  $(document).ready(function () { 
 //     $('#usertable').DataTable({ 
 
@@ -21,4 +32,3 @@ new DataTable('#usertable');
 
 
 
-new DataTable('#categorytable');

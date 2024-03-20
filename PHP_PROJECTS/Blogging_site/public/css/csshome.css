@@ -7,8 +7,8 @@ body {
     color:#fff;
 }
 main {
-    height: 33rem;
     color:#fff;
+    min-height: 33rem;
 }
 footer {
     color: #fff;

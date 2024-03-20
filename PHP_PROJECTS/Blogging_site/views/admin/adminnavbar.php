@@ -15,9 +15,12 @@
         height: 2.8rem;
     }
     .navbar a{
+        font-size:medium;
         text-decoration: none;
         color:white;
         padding:1px;
+        margin-right: 2rem;
+        font-weight: bold;
     }
     .navbar a:hover{
         cursor: pointer;
@@ -50,7 +53,7 @@
     
     <div class="logo" >
         Welcome, <?php echo $userData['full_name'] ?>
-        <a class='btn' href="../common/logout.php"><img src="../../uploads/icons8-logout-32.png" alt="logout"></a>
+        <a class='btn' href="../common/logout.php?LogoutSuccess=true"><img src="../../uploads/icons8-logout-32.png" alt="logout"></a>
     </div>
 </header>
 <div class='navbar navbar-expand-lg'>
