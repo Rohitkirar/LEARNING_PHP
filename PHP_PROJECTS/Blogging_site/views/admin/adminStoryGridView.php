@@ -11,28 +11,29 @@
 
     $storyArray = mysqli_fetch_all($result , MYSQLI_ASSOC);
 
-    echo "<div style=' display:grid; grid-template-columns:auto auto auto;' >";
+?>
 
-    foreach($storyArray as $key=>$values){
-            echo "
+    <div style='display:grid; grid-template-columns:auto auto auto;'>
+
+    <?php foreach($storyArray as $key=>$values){ ?>
+    
             <div class='grid-item text-center m-2 mb-5 p-3 pt-5 shadow-lg bg-white rounded'  >
-                <img src='../../uploads/{$values['image']}' style='height: 40%; width:40%; margin-bottom:1rem;'/>
+                <img src="../../uploads/<?php echo $values["image"] ?>" style="height: 40%; width:40%; margin-bottom:1rem;"/>
                 
-                <h6 style='color:purple ; margin-bottom:1rem;'>Title : {$values['story_title']} </h3>
+                <h6 style="color:purple ; margin-bottom:1rem;">Title : <?php echo $values["story_title"] ?> </h3>
 
-                <h6 style='color:purple ; margin-bottom:1rem;'>Category : {$values['category_title']} </h3>
+                <h6 style="color:purple ; margin-bottom:1rem;">Category : <?php echo $values["category_title"] ?> </h3>
                 
-                <div class='btn-group m-2'>
+                <div class="btn-group m-2">
 
-                    <a href='adminStoryView.php?story_id={$values['story_id']}' class='btn btn-primary'>View</a>
+                    <a href="adminStoryView.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-primary">View</a>
 
-                    <a href='updateStoryForm.php?story_id={$values['story_id']}' class='btn btn-secondary' >Update Story</a>
+                    <a href="updateStoryForm.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-secondary" >Update Story</a>
 
-                    <a href='deleteStory.php?story_id={$values['story_id']}' onclick=\"return confirm('Do you want to delete the story')\" class='btn btn-danger'>Delete Story</a>
+                    <a href="deleteStory.php?story_id=<?php echo $values['story_id'] ?>"  onclick="return confirm('Do you want to delete the story')" class="btn btn-danger">Delete Story</a>
                 
                 </div>
 
-            </div>";
-    }
-    echo "</div>"
-?>    
+            </div>
+    <?php } ?>
+    </div>

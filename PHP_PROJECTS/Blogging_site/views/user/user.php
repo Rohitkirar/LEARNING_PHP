@@ -34,7 +34,7 @@ if(isset($_SESSION['user_id'])){
 else{
     session_unset();
     session_destroy();
-    header('location: ../common/logout.php');
+    header('location: ../common/logout.php?LogoutSuccess=true');
 }
 
 ?>
