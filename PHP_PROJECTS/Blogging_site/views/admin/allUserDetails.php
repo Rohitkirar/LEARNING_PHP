@@ -98,6 +98,13 @@ else{
         </div>
 
     </main>
+    
+    <?php 
+        if(isset($_SESSION['addusersuccess']) && $_SESSION['addusersuccess']==true){
+            unset($_SESSION['addusersuccess']);
+            echo '<script> alert("User added Successfully!") </script>';
+        }
+    ?>
 
     <script>
 
