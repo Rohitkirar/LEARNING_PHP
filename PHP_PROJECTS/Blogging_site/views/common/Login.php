@@ -101,7 +101,15 @@ if(isset($_POST['submit'])){
     <div class='air air4'></div>
 
     <!-- adding footer file -->
-    <?php require_once('footer.php') ?>
+    <?php 
+        require_once('footer.php') ;
+
+        if(isset($_GET['RegisterSuccess']) && $_GET['RegisterSuccess'] == true){
+            unset($_GET['RegisterSuccess']) ;
+            echo '<script> alert("user Registered Successfully , Please Login"); </script>';
+        }
+    ?>
+    
 </section>
 </body>
 </html>
