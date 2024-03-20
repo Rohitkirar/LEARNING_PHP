@@ -40,7 +40,11 @@ if(isset($_SESSION['user_id'])){
 
             if($userpassword == $oldpassword){
                 $newpassword = md5($newpassword);
-                $oldpasswordErr = '';
+                if($oldpassword != $newpassword){
+                    $oldpasswordErr = '';
+                }else{
+                    $oldpasswordErr = 'Old and New password should not be same!';
+                }
             }
             else{
                 $oldpasswordErr = 'Wrong Password !';
@@ -57,11 +61,13 @@ if(isset($_SESSION['user_id'])){
             $result = mysqli_query($conn , $sql);
             
             if($result){
+                $_SESSION['successpassword']=true;
                 header('location: user.php');
             }
-            else
-                echo "ERROR : " . mysqli_error($conn);
-
+            else{
+                $_SESSION['successpassword']=false;
+                header('location: user.php');
+            }
         }
     }
 }

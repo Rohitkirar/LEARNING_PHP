@@ -62,5 +62,16 @@ else{
 
     <?php require_once('../common/footer.php') ?>
 
+    <?php 
+        if(isset($_SESSION['successpassword']) && $_SESSION['successpassword'] == true){ 
+            echo '<script>alert("password successfully Updated!")</script>';
+            unset($_SESSION['successpassword']);        
+        }
+        elseif(isset($_SESSION['successpassword']) && $_SESSION['successpassword'] == false){
+            echo '<script>alert("Failed Password Updated!")</script>';
+            unset($_SESSION['successpassword']);
+        } 
+    ?>
+
 </body>
 </html>
