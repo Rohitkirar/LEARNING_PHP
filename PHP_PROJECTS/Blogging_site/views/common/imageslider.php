@@ -7,7 +7,7 @@
             $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
             foreach($imageArray as $key=> $path){
                 echo "<div class='slide ' >
-                        <img src='../../uploads/{$path['image']}' class='card' style='width:100%; height:100%;' alt='image not available'/>
+                        <img src='../../uploads/{$path['image']}' style='width:100%; height:100%;' alt='image not available'/>
                     </div>";
             }
         }

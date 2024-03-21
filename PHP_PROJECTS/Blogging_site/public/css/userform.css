@@ -1,16 +1,8 @@
 
-body {
-    font-family: Calibri, Helvetica, sans-serif;
-    /* background-color: whitesmoke; */
-}
 form{
     width:50%;
     margin : 5% auto;
 }
-/* .container {
-    padding: 50px;
-    background-color: lightblue; 
-} */
 input[type=text], input[type=password], textarea {
     width: 100%;
     padding: 15px;
@@ -24,11 +16,6 @@ input[type=text]:focus, input[type=password]:focus {
     background-color: lightcyan;
     outline: none;
 }
-
-/* hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-} */
 .registerbtn {
     background-color: #4CAF50;
     color: white;
