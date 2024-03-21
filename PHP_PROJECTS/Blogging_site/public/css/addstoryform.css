@@ -4,14 +4,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
 }
-.container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -35,14 +27,20 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 button:hover {
     background-color: #0056b3;
+}
+input[type=text], input[type=password], textarea {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border:0.5px solid lightblue;
+    /* border: none; */
+    background: #f1f1f1;
+}
+input[type=text]:focus, input[type=password]:focus {
+    background-color: lightcyan;
+    outline: none;
 }

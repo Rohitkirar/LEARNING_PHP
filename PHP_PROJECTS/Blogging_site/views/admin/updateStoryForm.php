@@ -137,7 +137,7 @@ else{
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
     <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -146,7 +146,7 @@ else{
     
     <br><br>
 
-    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded" style="width:60%">
         <h1>Update Story</h1>
         <form onsubmit="return confirm('Do you really want to update the story')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
@@ -170,23 +170,25 @@ else{
                 ?>
             </select>
             <br><br>
+
             <label for="story_title">Story Title:</label>
             <input type="text" name='story_title' id='story_title' value="<?php echo $resultArray['Title'];?>" required />
 
             <label for="content">Content:</label>
             <textarea id="content" name="content" rows="10" required ><?php echo $resultArray['content'];?></textarea>
             
-            <div class="m-4">
+            <div class="mb-4">
                 <?php
                     $sql = "SELECT id as image_id , image FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
                     $image = mysqli_query($conn , $sql);
                     $imageArray = mysqli_fetch_all($image , MYSQLI_ASSOC);
-                    echo "<div class='grid-container'>";
+                    echo "<div class='grid-container' style='grid-template-columns:auto auto auto'>";
                     foreach($imageArray as $key=>$path){
                         
-                        echo "<div class='card m-2 ' >
-                            <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
-                            <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" class='btn btn-danger m-3'>Delete Image</a>
+                        echo 
+                            "<div class='card m-2' >
+                                <img src='../../uploads/{$path['image']}' alt='image Not uploaded'/>
+                                <a href=\"deleteImage.php?story_id={$resultArray['story_id']}&image_id={$path['image_id']}\" class='btn btn-danger mt-2'>Delete</a>
                             </div>";
                     }
                     echo "</div>";
@@ -195,10 +197,15 @@ else{
 
             <label for="image">Add Image</label>
             <input type="file" id="image" name="addimage[]" multiple value='' />
+            
+            <br><br>
 
-            <button type="submit" name='submit' value="<?php echo $resultArray['story_id'] ?>">Submit</button>
+            <button class="btn btn-primary" style="width:100%" type="submit" name='submit' value="<?php echo $resultArray['story_id'] ?>">Submit</button>
         </form>
     </div>
+    <?php
+        require_once('../common/footer.php');
+    ?>
 </body>
 </html>
 

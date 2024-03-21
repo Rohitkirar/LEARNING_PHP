@@ -29,7 +29,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
@@ -50,27 +50,19 @@ else{
             padding:10px;
             text-align: left;
         }
-        .updateuserbtn a{
-            text-decoration: none;
-            color:white;
-        }
-        .deleteuserbtn a {
-            text-decoration: none;
-            color:white;
-        }
     </style>
 </head>
 <body>
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <main class="bg-white" style="margin-left:0 ; margin-top :1rem">
+    <main class="bg-white" >
 
-        <div class="m-2">
+        <div class="mt-1 pt-2">
             <span><strong style="font-size:x-large;">ALL Category Details</strong></span>
             <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
         </div>
-        <div class="m-4">
+        <div class="m-2">
             <table id="categorytable" class='table table-hover' >
                 <thead style="color:red">
                     <tr style="color:red">
@@ -118,6 +110,8 @@ else{
     </main>
 
     <?php 
+        require_once('../common/footer.php');
+        
         if(isset($_SESSION['addcategorysuccess']) && $_SESSION['addcategorysuccess']==true){
             unset($_SESSION['addcategorysuccess']);
             echo '<script> alert("Category added Successfully!") </script>';
