@@ -54,6 +54,11 @@ else{
             background-color:red; 
             border :none;
         }
+        .story_inner_div_items{
+            display: flex; 
+            padding : 10px;
+
+        }
     </style>
 </head>
 <body>
@@ -70,10 +75,12 @@ else{
                     <form action='{$_SERVER["PHP_SELF"]}' method='POST'>
                         
                         <div class='story_inner_div_items mb-5 p-5 bg-white' >
+                            
                             <div class='m-2' style='width:55%; text-align:justify'>
+                                
                                 <div>
-                                <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>
-                                <h3 style='color:purple'>Category : {$values['category_title']}  </h3><BR>
+                                    <h3 style='color:purple'>Title :  {$values['story_title']}  </h3><BR>
+                                    <h3 style='color:purple'>Category : {$values['category_title']}  </h3><BR>
                                 </div>
                         
                                 <div>";

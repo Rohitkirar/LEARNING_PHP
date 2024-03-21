@@ -36,15 +36,20 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/admin1.css"> -->
+    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <style>
-        .cards{
-            display : flex;
-            flex-direction: row;
-            
+        .grid-container {
+            display: grid ;
+            grid-template-columns:  auto auto auto auto;
+            margin: 0 auto;
+            /* align-items: center; */
+            /* background-color: #2196F3; */
+            /* padding: 10px; */
         }
-
+        .grid-item{
+            margin:1rem;
+        }
     </style>
 </head>
 <body >
@@ -52,17 +57,19 @@ else{
     <?php require_once('adminnavbar.php') ?>
     
     <main >
-        <div class="cards">
+        <div class="cards d-flex mb-2">
             <div class="card">Total story: <?php echo $story_count ?></div>
             <div class="card">Likes: <?php echo $like_count ?></div>
             <div class="card">Comments: <?php echo $comment_count ?></div>
             <div class="card">Total Users: <?php echo $user_count ?></div>
         </div>
+        
         <div class="m-2">
             <span><strong style="font-size:x-large;">ALL Stories</strong></span>
             <span style="float:right"><a href="addstoryform.php" class='btn btn-success m-3'>Add Story</a></span>
         </div>
-        <div class="container">
+
+        <div class="grid-container m-2" style="width:100%">
                     
                     <?php 
                         require_once('adminStoryGridView.php');

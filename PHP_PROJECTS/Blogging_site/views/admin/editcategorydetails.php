@@ -81,7 +81,7 @@ else{
     <title>Add Story Form</title>
     <link rel="stylesheet" href="../../public/css/addstoryform.css">
     <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -90,8 +90,9 @@ else{
     
     <br><br>
 
-    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="container p-5 shadow-lg p-3 mb-5 bg-white rounded" style="width:50%">
         <h1>Update Category Details</h1>
+        <hr>
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 
             <?php 
@@ -121,7 +122,7 @@ else{
             <br>
             No <input type='radio' class="status"  value="0" name='status' checked>
 
-            <br><br>
+            <br>
             <?php 
                 if(!empty($resultArray['image'])){
                 echo "
@@ -131,12 +132,15 @@ else{
                 </div>";
                 }
             ?>
+            <br>
             <label >Add Image</label>
             <input type="file" class="image" name="addimage"  value="" />
 
             <input type="hidden" class="image" name="addimage"  value="<?php echo $resultArray['image']?>" />
+            
+            <br><br>
 
-            <button type="submit" name='submit' value="<?php echo $resultArray['category_id'] ?>">Submit</button>
+            <button class="btn btn-primary" style="width: 100%;" type="submit" name='submit' value="<?php echo $resultArray['category_id'] ?>">Submit</button>
         </form>
     </div>
 </body>

@@ -30,7 +30,7 @@ else{
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../../public/css/admin1.css">
-    <link rel="stylesheet" href="../../public/css/style1.css">
+    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
@@ -48,8 +48,13 @@ else{
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <main class="bg-white" style="margin:0; margin-top:1rem; ">
-        <strong> All User's Details</strong><span style="float:right"><a class="btn btn-success" href="adduserform.php">Add User</a></span>
+    <main class="bg-white" style="margin-top:0.2rem; ">
+        <div class="p-3">
+            <strong> All User's Details</strong>
+            <span style="float:right">
+                <a class="btn btn-success" href="adduserform.php">Add User</a>
+            </span>
+        </div>
         <div class="m-4" style="margin: 0 auto;">
             <table id="usertable" class="table table-hover table-striped" style="width:100%">
                 <thead >
@@ -99,7 +104,9 @@ else{
 
     </main>
     
-    <?php 
+    <?php
+        require_once('../common/footer.php');
+    
         if(isset($_SESSION['addusersuccess']) && $_SESSION['addusersuccess']==true){
             unset($_SESSION['addusersuccess']);
             echo '<script> alert("User added Successfully!") </script>';
