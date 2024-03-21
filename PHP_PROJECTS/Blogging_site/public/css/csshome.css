@@ -4,14 +4,14 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    color:#fff;
+    /* color:#fff; */
 }
 main {
-    color:#fff;
+    /* color:#fff; */
     min-height: 33rem;
 }
 footer {
-    color: #fff;
+    /* color: #fff; */
     text-align: center;
     padding: 10px;
 }
