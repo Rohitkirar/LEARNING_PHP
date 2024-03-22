@@ -1,11 +1,10 @@
 <?php 
 
-class Admin{
-    private $admin_id , $conn;
+class Admin extends Connection{
+    private $admin_id ;
 
     public function __construct($id){
-        require('../Database/Connection.php');
-        $this->conn = createConnection('localhost' , 'user' , '' , 'Blogging_site');  
+         
         $this->admin_id = $id;
     }
 
