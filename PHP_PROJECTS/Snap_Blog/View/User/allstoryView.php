@@ -1,17 +1,23 @@
 <?php
-require_once("../Class/User.php");
-
 session_start();
 
 
-if(isset($_SESSION['user'])){
+if(isset($_SESSION['user_id'])){
 
-  require_once("../Class/Connection.php");
-  $conn = new Connection();
-  $conn = $conn->createConnection();
-
+  require_once("../../Class/Connection.php");
+  require_once("../../Class/User.php");
+  require_once("../../Class/Story.php");
+  require_once("../../Class/StoryImage.php");
+  require_once("../../Class/StoryComment.php");
+  require_once("../../Class/StoryLike.php");
+  $user = new User();
+  $story = new Story();
+  $image = new StoryImage();
+  $comment = new StoryComment();
+  $like = new StoryLike();
 
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -31,7 +37,7 @@ if(isset($_SESSION['user'])){
       <div>
         <div class="" >
           <?php 
-          $storyArray = $_SESSION['user']->storyDetails($conn);
+          $storyArray = $story->storyDetails();
           foreach($storyArray as $key => $values){ 
           ?>
           <div class="mb-4 shadow-lg p-5 bg-light " style="display : grid; grid-template-columns: 60% 40% " >
@@ -40,10 +46,10 @@ if(isset($_SESSION['user'])){
                 <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
                 <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
               <?php 
-              $imageArray = $_SESSION['user']->imageDetails($conn , $values['story_id']);
+              $imageArray = $image->imageDetails($values['story_id']);
               if($imageArray){
               ?>
-              <img class="card-img-top" src="../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
+              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
               <?php } ?>
               <div class="card-body">
                 <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>
@@ -61,10 +67,10 @@ if(isset($_SESSION['user'])){
                 <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
                 <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
               <?php 
-              $imageArray = $_SESSION['user']->imageDetails($conn , $values['story_id']);
+              $imageArray = $image->imageDetails($values['story_id']);
               if($imageArray){
               ?>
-              <img class="card-img-top" src="../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
+              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
               <?php } ?>
               <div class="card-body">
                 <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>

@@ -9,43 +9,26 @@ if(isset($_SESSION['user']) || isset($_SESSION['admin'])){
 $ERROR = "";
 if(isset($_POST['submit'])){
     require_once('../Class/Connection.php');
-    $conn = new Connection();
-    $conn = $conn->createConnection();
+    require_once('../Class/User.php');
     
-    if($conn){
-        require_once('../Class/User.php');
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+    $user = new USER();
 
-        $user = new USER($conn);
+    if($user->userLogin($username , $password)){
+        $ERROR = "";
+        $result = $user->userDetails($_SESSION['user_id']);
 
-        if($user->userLogin($conn , $username , $password)){
-            $ERROR = "";
-            $result = $user->userDetails($conn);
-
-            if($result['role'] == 'admin'){
-                unset($user);
-                require_once('../Class/Admin.php');
-                $admin = new Admin($conn , $userResult['id']);
-                $_SESSION['admin'] = $admin;
-                unset($admin);
-                header('location: admin.php');
-            }
-            else{
-                $_SESSION['user'] = $user;
-
-                unset($user);
-                var_dump($_SESSION['user']);
-                header('location: user.php');
-            }
+        if($result['role'] == 'admin'){
+            header('location: Admin/admin.php');
         }
         else{
-            $ERROR = "Invalid Credentials!";
+            header('location: User/user.php');
         }
     }
     else{
-        $ERROR = 'connection lost!';
+        $ERROR = "Invalid Credentials!";
     }
 }
 ?>
