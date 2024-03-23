@@ -1,22 +1,23 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user'])){
-
-    require_once('../Class/Connection.php');
-
+if(isset($_SESSION['user_id'])){
 
     $oldpasswordErr = $newpasswordErr = $retypepasswordErr = $ERROR = '';
 
     if(isset($_POST['updatepassword'])){
 
+        require_once('../../Class/Connection.php');
+        require_once('../../Class/User.php');
+        $user = new User();
+
         $newpassword = $_POST['newpassword'];
 
-        if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $newpassword)){
+        if(preg_match("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/" , $newpassword)){
             $newpasswordErr = '';
         }
         else
-            $newpasswordErr = 'contains only characters, number and range(6,15) length!';
+            $newpasswordErr = 'Minimum 8 characters, at least one letter, one number, and one special character';
     
 
         $retypepassword = $_POST['retypepassword'];
@@ -29,41 +30,14 @@ if(isset($_SESSION['user'])){
         }
 
         if($newpasswordErr == ''  && $retypepasswordErr == ''){
-            $oldpassword = md5($_POST['oldpassword']);
-            $sql = "SELECT password FROM users WHERE id = {$_SESSION['user_id']}"; 
-            $result = mysqli_query($conn , $sql);
-            $userpassword = mysqli_fetch_assoc($result);
-            $userpassword = $userpassword['password'];
-
-            if($userpassword == $oldpassword){
-                $newpassword = md5($newpassword);
-                if($oldpassword != $newpassword){
-                    $oldpasswordErr = '';
-                }else{
-                    $oldpasswordErr = 'Old and New password should not be same!';
-                }
-            }
-            else{
-                $oldpasswordErr = 'Wrong Password !';
-            }
-        }
-
-
-        if($oldpasswordErr == '' && $newpasswordErr == '' && $retypepasswordErr == ''){
-
-            $sql = "UPDATE users
-                    Set password = '$newpassword'
-                    WHERE id = {$_SESSION['user_id']}";
-
-            $result = mysqli_query($conn , $sql);
+            $oldpassword = $_POST['oldpassword'];
             
-            if($result){
+            if($user->updatePassword($_SESSION['user_id'] , $oldpassword , $newpassword)){
                 $_SESSION['successpassword']=true;
                 header('location: user.php');
             }
             else{
-                $_SESSION['successpassword']=false;
-                header('location: updatepassword.php');
+                $oldpasswordErr = "Invalid Current Password";
             }
         }
     }
@@ -71,7 +45,7 @@ if(isset($_SESSION['user'])){
 else{
     session_unset();
     session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=true');
 }
 ?>
 <!DOCTYPE html>
@@ -96,7 +70,7 @@ else{
 
                     <div class="text-center">
                         <p >
-                            <img src="../upload/snapchat.png" alt="logo" style="width:15%">
+                            <img src="../../upload/snapchat.png" alt="logo" style="width:15%">
                             <span style="font-size:x-large">ɮʟօɢ</span>
                         </p>
                     </div>
