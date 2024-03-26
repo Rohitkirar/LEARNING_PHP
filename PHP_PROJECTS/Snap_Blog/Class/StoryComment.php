@@ -61,5 +61,17 @@ class StoryComment extends Connection{
 
         return false;
     }
+
+    public function commentCount($story_id){
+        $sql = "SELECT story_id , COUNT(id) as total_comment 
+                FROM storycomment WHERE deleted_at IS NULL
+                GROUP BY story_id";
+
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)>0){
+            return  mysqli_fetch_all($result , MYSQLI_ASSOC);
+        }
+        return false;
+    }
 }
 ?>

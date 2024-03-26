@@ -45,13 +45,12 @@ class User extends Connection{
                     FROM users WHERE id = $user_id";
         }
         else{
-            $sql = "SELECT id , first_name , last_name , age , gender , email , mobile , role 
-                    FROM users ";
+            $sql = "SELECT * FROM users ";
         }
         $result = mysqli_query($this->conn , $sql);
 
         if(mysqli_num_rows($result)>0){
-            $result = mysqli_fetch_assoc($result);
+            $result = mysqli_fetch_all($result , MYSQLI_ASSOC);
             return $result;
         }
         return false;

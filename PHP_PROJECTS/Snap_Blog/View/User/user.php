@@ -36,7 +36,10 @@ if(isset($_SESSION['user_id'])){
           <div class="m-4 card" >
             <div class="box-shadow ">
               <?php 
-              $imageArray = $image->imageDetails($values['story_id']);
+            
+            
+            
+            $imageArray = $image->imageDetails($values['story_id']);
               if($imageArray){
               ?>
               <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
