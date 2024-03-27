@@ -15,12 +15,12 @@ if(isset($_SESSION['user_id'])){
     
     if($userDetailsArray){
 
-        $first_name = $userDetailsArray['first_name']; 
-        $last_name = $userDetailsArray['last_name'];
-        $age = $userDetailsArray['age'];
-        $gender = $userDetailsArray['gender'];
-        $email = $userDetailsArray['email']; 
-        $mobile = $userDetailsArray['mobile'];  
+        $first_name = $userDetailsArray[0]['first_name']; 
+        $last_name = $userDetailsArray[0]['last_name'];
+        $age = $userDetailsArray[0]['age'];
+        $gender = $userDetailsArray[0]['gender'];
+        $email = $userDetailsArray[0]['email']; 
+        $mobile = $userDetailsArray[0]['mobile'];  
     }
     else{
         echo "Failed to retrieve data from db";
@@ -81,8 +81,7 @@ if(isset($_SESSION['user_id'])){
 
             $userdetails = [ 'first_name'=>$first_name , 'last_name'=>$last_name , 'age' => $age , 'mobile' => $mobile , 'email' => $email , 'gender'=>$gender ];
             
-            $result = $user->updateUserDetails($_SESSION['user_id'] , $password , $userdetails);
-            if($result){
+            if($user->updateUserDetails($_SESSION['user_id'] , $password , $userdetails)){
                 $passwordErr = '';
                 $_SESSION['update'] = true;
                 header('location: user.php');
@@ -129,16 +128,16 @@ else{
                     
 
 
-                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>"   method="post" >
+                    <form onsubmit="return confirm('your are updating personal details')" action="<?php echo $_SERVER['PHP_SELF'] ?>"   method="post" >
 
                         <div class="form-outline mb-3">
                             <label class="form-label" for="first_name">Firstname <span style="color:red;"><?php echo '* '. $first_nameErr ?></span></span></label>
-                            <input class="form-control" type="text" name="first_name" id="first_name" value="<?php echo $first_name; ?>" >
+                            <input class="form-control" type="text" name="first_name" id="first_name" value="<?php echo $first_name; ?>" required>
                             
                         </div>
                         <div class="form-outline mb-2">
                             <label class="form-label" for="last_name">Lastname: <span style="color:red;"><?php echo '* '. $last_nameErr ?></span></label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $last_name; ?>" >
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?php echo $last_name; ?>" required>
                         </div>
 
                         <div class="form-outline mb-2 ">
@@ -151,22 +150,22 @@ else{
                         </div>
                         <div class="form-outline mb-2">
                             <label class="form-label" for="age">Age : <span style="color:red;"><?php echo '* ' . $ageErr ?></span></label>
-                            <input type="number" class="form-control" name="age" id="age" value="<?php echo $age; ?>" maxlength="3" size="3" >
+                            <input type="number" class="form-control" name="age" id="age" value="<?php echo $age; ?>" maxlength="3" size="3"  required>
                         </div>
 
                         <div class="form-outline mb-1 ">
                             <label class="form-label" for="mobile">Mobile : <span style="color:red;"><?php echo '* ' . $mobileErr ?></span></label>
-                            <input type="Number" class="form-control" id="mobile" name="mobile" maxlength="10" value="<?php echo $mobile; ?>" size="10">
+                            <input type="Number" class="form-control" id="mobile" name="mobile" maxlength="10" required value="<?php echo $mobile; ?>" size="10">
                         </div>
 
                         <div class="form-outline mb-1 ">
                             <label for="email">Email: <span style="color:red;"><?php echo '* '. $emailErr ?></span></label>
-                            <input type="text" class="form-control" id="email" value="<?php echo $email; ?>" name="email">
+                            <input type="text" class="form-control" id="email" value="<?php echo $email; ?>" name="email" required>
                         </div>
 
                         <div class="form-outline mb-3 ">
                             <label for="pass">Confirm Password:  <span style="color:red;"><?php echo '* '. $passwordErr; ?></span></label>
-                            <input class="form-control" type="password" id="pass" name="password">
+                            <input class="form-control" type="password" id="pass" name="password" required>
                         </div>
                         
                         <div class="text-center pt-1 mb-5 pb-1">
