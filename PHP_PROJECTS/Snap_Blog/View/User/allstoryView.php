@@ -99,7 +99,7 @@ else{
                       echo $comment->commentCount($values['story_id'])['total_comment']; 
                     ?>
                   </small>
-                  
+
                 </div>
               </div>
             </div>
@@ -119,7 +119,9 @@ else{
                 <div>
                   <div class="d-flex" style="justify-content: space-between;">
                     <div class="card-text" style="text-align: justify; font-weight:100 "><?php echo $v['full_name']?></div>
-                    <a class="btn btn-danger" href="../deletecomment.php?comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                    <?php if($v['user_id'] == $_SESSION['user_id']){ ?>
+                      <a class="btn btn-danger" href="../deletecomment.php?comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                    <?php } ?>
                   </div>
                   <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
                   <hr>
