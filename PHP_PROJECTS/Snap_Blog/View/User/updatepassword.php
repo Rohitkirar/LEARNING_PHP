@@ -3,13 +3,13 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
+    $user = new User();
+
     $oldpasswordErr = $newpasswordErr = $retypepasswordErr = $ERROR = '';
 
     if(isset($_POST['updatepassword'])){
-
-        require_once('../../Class/Connection.php');
-        require_once('../../Class/User.php');
-        $user = new User();
 
         $newpassword = $_POST['newpassword'];
 
