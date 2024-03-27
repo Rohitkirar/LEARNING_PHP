@@ -16,6 +16,21 @@ if(isset($_SESSION['user_id'])){
   $comment = new StoryComment();
   $like = new StoryLike();
 
+  if(isset($_POST['comment'])){
+
+    $comment_content = $_POST['commentcontent'];
+    $story_id = $_POST['comment'];
+    
+    if($comment->addComment($_SESSION['user_id'] , $story_id ,$comment_content ))
+      header('location: allstoryView.php');
+  
+  }
+
+}
+else{
+  session_unset();
+  session_destroy();
+  header('location: logout.php?success=false');
 }
 
 
@@ -45,17 +60,46 @@ if(isset($_SESSION['user_id'])){
             <div class="box-shadow ">
                 <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
                 <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
-              <?php 
-              $imageArray = $image->imageDetails($values['story_id']);
-              if($imageArray){
-              ?>
-              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
-              <?php } ?>
-              <div class="card-body">
-                <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>
-                <div class="d-flex justify-content-between align-items-center">
+              
 
-                  <small class="text-muted">9 mins</small>
+              <?php 
+                $imageArray = $image->imageDetails($values['story_id']);
+                if($imageArray){
+                  foreach($imageArray as $key=>$path){
+              ?>
+                <img class="card p-2" style="height:100% ; width:100%" src="../../Upload/<?php echo $path['image'] ?>"  alt="Card image cap">
+              <?php 
+                  } 
+                } 
+              ?>
+              <div class="card-body">
+                
+                <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  
+                  <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+                    <div class="d-flex">
+                      <a href="../like.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-outline-primary">Like</a>  
+                      <input type="text" name="commentcontent" placeholder="comment here" required>
+                      <button class="btn btn-outline-success" value="<?php echo $values['story_id'] ?>" name="comment" type="submit">Comment</button>
+                    </div>
+                  </form>
+
+                  <small class="text-muted">
+                    Total like: 
+                    <?php 
+                      echo $like->likeCount($values['story_id'])['total_like']; 
+                    ?>
+                  </small>
+
+                  <small class="text-muted">
+                    Total Comment: 
+                    <?php 
+                      echo $comment->commentCount($values['story_id'])['total_comment']; 
+                    ?>
+                  </small>
+                  
                 </div>
               </div>
             </div>
@@ -64,51 +108,54 @@ if(isset($_SESSION['user_id'])){
             <!-- comment section -->
             <div class="p-2" >
             <div class="box-shadow ">
-                <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
-                <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
-              <?php 
-              $imageArray = $image->imageDetails($values['story_id']);
-              if($imageArray){
-              ?>
-              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="Card image cap">
-              <?php } ?>
+              <h5 class="card-text">Comments</h5>
+              <hr>
               <div class="card-body">
-                <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>
-                <div class="d-flex justify-content-between align-items-center">
-
-                  <small class="text-muted">9 mins</small>
+                <?php 
+                  $commentArray = $comment->commentDetails($values['story_id']);
+                  if($commentArray){ 
+                  foreach($commentArray as $k=>$v){  
+                ?>
+                <div>
+                  <div class="d-flex" style="justify-content: space-between;">
+                    <div class="card-text" style="text-align: justify; font-weight:100 "><?php echo $v['full_name']?></div>
+                    <a class="btn btn-danger" href="../deletecomment.php?comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                  </div>
+                  <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
+                  <hr>
                 </div>
+                <?php 
+                    } 
+                  }
+                  else 
+                    echo 'No Comments Yet';  
+                ?>
               </div>
             </div>
           </div>
           
           </div>
           </div>
-          <?php } ?>
+          <?php }?>
           
         </div>
       </div>
     </div>
   </main>
 
-    <footer class="text-muted">
-      <div class="container">
-        <p class="float-right">
-          <a href="#">Back to top</a>
-        </p>
-        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
-      </div>
-    </footer>
+<?php 
+  if(isset($_SESSION['deletecomment'])){
+    unset($_SESSION['deletecomment']);
+    echo "<script> alert('comment delted successfully') </script>";
+  }
+?>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="../../assets/js/vendor/popper.min.js"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/vendor/holder.min.js"></script>
 
 </body>
 </html>
