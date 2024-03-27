@@ -3,39 +3,31 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/StoryCategory.php');
     
-    require_once('../common/userDetailsVerify.php');
+    $user = new User();
+    $category = new StoryCategory();
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData['role'] == 'admin'){
+    if($userData[0]['role'] != 'admin'){
+        header('location: ../logout.php?LogoutSuccess=false');
+    }
+    $category_id = $_GET['category_id'];
 
-        $category_id = $_GET['category_id'];
+    $result = $category->updateCategory($category_id , ['image' => '']);
 
-        $sql = "UPDATE storycategory  
-                SET image = ''  
-                WHERE id = $category_id";
-
-        $result = mysqli_query($conn , $sql);
-
-        if($result){
-            header("location: editCategorydetails.php?category_id=$category_id");
-        }
-        else{
-            echo "ERROR " . mysqli_error($conn);
-        }
+    if($result){
+        header("location: editCategorydetails.php?category_id=$category_id");
     }
     else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
+        echo "ERROR " . mysqli_error($conn);
     }
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=true');
 }
 
 ?>

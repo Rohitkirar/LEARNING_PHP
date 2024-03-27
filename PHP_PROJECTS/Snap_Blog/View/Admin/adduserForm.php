@@ -3,137 +3,112 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
     
-    require_once('../common/userDetailsVerify.php');
+    $user = new User();
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $userData = $user->userDetails($_SESSION['user_id']);
 
     if($userData['role'] != 'admin'){
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
+        header('location: ../logout.php?LogoutSuccess=false');
     }
-    else{
-        $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
-        $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = $passwordErr = ''; 
 
-        if(isset($_POST['submit'])){
+    $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
+    $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = $passwordErr = ''; 
 
-            require_once('../../database/connection.php');
+    if(isset($_POST['submit'])){
 
-            $first_name = $_POST['first_name'];
+        $first_name = $_POST['first_name'];
 
-            if(preg_match("/^[a-zA-Z]+$/" , $first_name))
-                $first_nameErr = '';
-            else
-                $first_nameErr = 'Please enter valid first name!';
+        if(preg_match("/^[a-zA-Z]+$/" , $first_name))
+            $first_nameErr = '';
+        else
+            $first_nameErr = 'Please enter valid first name!';
 
-            $last_name = $_POST['last_name'];
+        $last_name = $_POST['last_name'];
 
-            if(preg_match("/^[a-zA-Z]+$/" , $last_name))
-                $last_nameErr = '';
-            else
-                $last_nameErr = 'Please enter valid last name!';
+        if(preg_match("/^[a-zA-Z]+$/" , $last_name))
+            $last_nameErr = '';
+        else
+            $last_nameErr = 'Please enter valid last name!';
 
-            $age = $_POST['age'];
+        $age = $_POST['age'];
 
-            if($age >= 15 && $age <= 100 )
-                $ageErr = '';
-            else 
-                $ageErr = 'Enter valid age b/w 15 to 100 ONLY!';
+        if($age >= 15 && $age <= 100 )
+            $ageErr = '';
+        else 
+            $ageErr = 'Enter valid age b/w 15 to 100 ONLY!';
 
-            $gender = $_POST['gender'];
+        $gender = $_POST['gender'];
 
-            if($gender == 'male' || $gender == 'female' || $gender == 'other')
-                $genderErr = '';
-            else    
-                $genderErr = 'please choose Correct gender!';
+        if($gender == 'male' || $gender == 'female' || $gender == 'other')
+            $genderErr = '';
+        else    
+            $genderErr = 'please choose Correct gender!';
 
-            $email = $_POST['email'];
+        $email = $_POST['email'];
 
-            if(preg_match("/^[a-zA-Z]+[.\_\-]*[\w]*@gmail.com$/" , $email))
-                $emailErr = '';
-            else
-                $emailErr = 'Please enter valid email like .....@gmail.com!';
+        if(preg_match("/^[a-zA-Z]+[.\_\-]*[\w]*@gmail.com$/" , $email))
+            $emailErr = '';
+        else
+            $emailErr = 'Please enter valid email like .....@gmail.com!';
 
-            $mobile = (string)$_POST['mobile'];
+        $mobile = (string)$_POST['mobile'];
 
-            if(preg_match("/^[6-9]{1}[0-9]{9}$/" , $mobile))
-                $mobileErr = '';
-            else
-                $mobileErr = 'enter valid mobile starts with [5-9] containing 10 digit';
+        if(preg_match("/^[6-9]{1}[0-9]{9}$/" , $mobile))
+            $mobileErr = '';
+        else
+            $mobileErr = 'enter valid mobile starts with [5-9] containing 10 digit';
 
-            $username = $_POST['username'];
+        $username = $_POST['username'];
 
-            if(preg_match("/^[a-zA-Z]+[\w]{6,15}$/" , $username))
-                $usernameErr = '';
-            else
-                $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
+        if(preg_match("/^[a-zA-Z]+[\w]{6,15}$/" , $username))
+            $usernameErr = '';
+        else
+            $usernameErr = 'Please enter valid username abcd1234 of 8 characters';
 
+        $userpassword = $_POST['password'];
 
-            if($usernameErr == '' && $mobileErr == '' && $emailErr == ''){
-
-                $sql = "SELECT email , username , mobile 
-                        FROM users 
-                        WHERE EXISTS (SELECT 1 FROM users WHERE email = '$email' OR mobile='$mobile' OR username='$username')";
-
-                $validationresult = mysqli_query($conn , $sql);
-                
-                $validationResultArray = mysqli_fetch_assoc($validationresult);
-
-                if($validationResultArray['email'] == $email){
-                    $emailErr = "Email Already Exists!";
-                }
-                if($username == $validationResultArray['username']){
-                    $usernameErr = "Username Already Exists!";
-                }
-                if($mobile == $validationResultArray['mobile']){
-                    $mobileErr = "Mobile Number Already Exists!";
-                }
-            }
-
-            $userpassword = $_POST['password'];
-
-            if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $userpassword)){
-                $passwordErr = '';
-                if($userpassword == $username){
-                    $passwordErr = "username and password should not be same!";
-                }else{
-                    $userpassword = md5($userpassword);
-                }
-            }
-            else
-                $passwordErr = 'contains only characters, number and range(6,15) length!';
-
-
-
-            if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
-
-                $role = 'user';
-                $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
-                
-                $resultstr = json_encode($resultarr);
-                $resultstr = substr($resultstr , 1 , -1);
-                
-                $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
-
-                $sql = "INSERT INTO users
-                            (first_name , last_name , age , gender , email , mobile , username , password , role)
-                        VALUES($resultstr)";
-
-                $result = mysqli_query($conn , $sql);
-                
-                if($result){
-                    $_SESSION['addusersuccess'] = true;
-                    header('location: allUserDetails.php');
-                }
-                else
-                    echo "ERROR : " . mysqli_error($conn);
-
-                mysqli_close($conn);
+        if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $userpassword)){
+            $passwordErr = '';
+            if($userpassword == $username){
+                $passwordErr = "username and password should not be same!";
+            }else{
+                $userpassword = md5($userpassword);
             }
         }
+        else
+            $passwordErr = 'contains only characters, number and range(6,15) length!';
+
+
+
+        if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
+
+            $role = 'user';
+            $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
+            
+            $resultstr = json_encode($resultarr);
+            $resultstr = substr($resultstr , 1 , -1);
+            
+            $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
+
+            $sql = "INSERT INTO users
+                        (first_name , last_name , age , gender , email , mobile , username , password , role)
+                    VALUES($resultstr)";
+
+            $result = mysqli_query($conn , $sql);
+            
+            if($result){
+                $_SESSION['addusersuccess'] = true;
+                header('location: allUserDetails.php');
+            }
+            else
+                echo "ERROR : " . mysqli_error($conn);
+
+            mysqli_close($conn);
+        }
+
     }
 }
 else{

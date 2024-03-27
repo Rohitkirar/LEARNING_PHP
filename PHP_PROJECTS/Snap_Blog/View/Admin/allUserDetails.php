@@ -48,7 +48,7 @@ else{
                 <a class="btn btn-success" href="adduserform.php">Add User</a>
             </span>
         </div>
-        <div class="m-4" style="margin: 0 auto;">
+        <div class="card m-4 p-3" style="margin: 0 auto;">
             <table id="usertable" class="table table-hover table-striped" style="width:100%">
                 <thead >
                     <tr>
@@ -59,63 +59,53 @@ else{
                         <th>email</th>
                         <th>mobile</th>
                         <th>username</th>
-
+                        <th>status</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php 
-                    
-                    $userDataArray = $user->userDetails();
-
-                    foreach($userDataArray as $key => $values){
-                        echo "<tr> 
-                            <td>{$values['first_name']}</td>
-                            <td>{$values['last_name']}</td>
-                            <td>{$values['age']}</td>
-                            <td>{$values['gender']}</td>
-                            <td>{$values['email']}</td>
-                            <td>{$values['mobile']}</td>
-                            <td>{$values['username']}</td>
-
-                            <td><a href='Edituserdetails.php?user_id={$values['id']}' class='updateuserbtn btn btn-primary'>Update</a></td>";
+                   $userDataArray = $user->userDetails();    
+                    foreach($userDataArray as $key => $values){ 
+                ?>
+                        <tr> 
+                            <td><?php echo $values['first_name'] ?></td>
+                            <td><?php echo $values['last_name'] ?></td>
+                            <td><?php echo $values['age'] ?> </td>
+                            <td><?php echo $values['gender'] ?></td>
+                            <td><?php echo $values['email'] ?></td>
+                            <td><?php echo $values['mobile'] ?></td>
+                            <td><?php echo $values['username'] ?></td>
+                            <?php if($values['status']){ ?>
+                            <td>Active</td>
+                            <?php }else{ ?>
+                            <td>In Active</td>
+                            <?php } ?>
+                            <td><a href='Edituserdetails.php?user_id=<?php echo $values['id'] ?>' class='updateuserbtn btn btn-primary'>Update</a></td>
                             
+                            <?php 
+                            if($values['status']){ ?>
+                                <td>
+                                    <a href='deleteUser.php?user_id=<?php echo $values['id'] ?>' onclick="return confirm('Do you want to delete {$values['first_name']}');\" class='deleteuserbtn btn btn-danger' >Delete</a>
+                                </td>   
+                            <?php 
+                            }else{ 
+                            ?>
+                                <td></td>
+                            <?php 
+                            } 
+                            ?>
                             
-                        echo "</tr>";
-                    }
-                ?>    
+                        </tr>
+                    <?php 
+                    } 
+                    ?>  
                 </tbody>
             </table>
         </div>
 
     </main>
-    
-    <?php
-        require_once('../common/footer.php');
-    
-        if(isset($_SESSION['addusersuccess']) && $_SESSION['addusersuccess']==true){
-            unset($_SESSION['addusersuccess']);
-            echo '<script> alert("User added Successfully!") </script>';
-        }
-    ?>
-
-    <script>
-
-
-        // $(document).ready(function () { 
-        //     $('#usertable').DataTable({ 
-        //         searching: false // remove search option 
-        //     }); 
-        // }); 
-
-        // $(document).ready(function () { 
-        //     $('#usertable').DataTable({ 
-        //         searching: true // remove search option 
-        //     }); 
-        // }); 
-    </script>
-
 
 </body>
 </html>

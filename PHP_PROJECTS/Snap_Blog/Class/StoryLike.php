@@ -24,10 +24,10 @@ class StoryLike extends Connection{
 
     public function likeCount($story_id){
         
-        $sql = "SELECT story_id , count(id) as total_like FROM storyLikes WHERE deleted_at IS NULL GROUP BY story_id";
+        $sql = "SELECT story_id , count(id) as total_like FROM storyLikes WHERE deleted_at IS NULL AND story_id = $story_id GROUP BY story_id";
         $result = mysqli_query($this->conn , $sql);
         if(mysqli_num_rows($result)>0){
-            return mysqli_fetch_all($result , MYSQLI_ASSOC);
+            return mysqli_fetch_assoc($result);
         }
         return false;
     }

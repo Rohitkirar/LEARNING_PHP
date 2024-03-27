@@ -86,7 +86,7 @@ if(isset($_POST['submit'])){
             require_once('../Class/User.php');
             $user = new USER();
 
-            if($user->userRegister($conn , $first_name , $last_name , $age , $gender , $email , $mobile , $username , $password)){
+            if($user->userRegister(compact('first_name' , 'last_name' , 'age' , 'email' , 'gender' , 'username' , 'mobile' , 'password'))){
                 $ERROR = "";
                 unset($user);
                 header('location: login.php?RegisterSuccess=true');

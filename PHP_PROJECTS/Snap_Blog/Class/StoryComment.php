@@ -7,9 +7,9 @@ class StoryComment extends Connection{
 
     public function commentDetails($story_id){
 
-        $sql = "SELECT id as comment_id , content , user_id , CONCAT(first_name , ' ' , last_name) as full_name , story_id 
+        $sql = "SELECT storycomments.id as comment_id , content , user_id , CONCAT(first_name , ' ' , last_name) as full_name , story_id 
                 FROM storycomments JOIN users ON user_id = users.id AND story_id = $story_id 
-                WHERE  storycomments.deleted_at IS NULL";
+                WHERE  storycomments.deleted_at IS NULL ORDER BY updated_at DESC";
 
         $result = mysqli_query($this->conn , $sql);
 
@@ -21,7 +21,8 @@ class StoryComment extends Connection{
     }
 
     public function addComment($commentArray){
-        $commentkeyarray = substr(json_encode(array_keys($commentArray)) , 1 , -1) ;
+
+        $commentkeyarray = implode("," , array_keys($commentArray));
         $commentvaluearray = substr(json_encode(array_values($commentArray)) , 1 , -1);
 
         $sql = "INSERT INTO storycomments ($commentkeyarray)
@@ -63,14 +64,17 @@ class StoryComment extends Connection{
     }
 
     public function commentCount($story_id){
+
         $sql = "SELECT story_id , COUNT(id) as total_comment 
-                FROM storycomment WHERE deleted_at IS NULL
+                FROM storycomments WHERE deleted_at IS NULL AND story_id = $story_id
                 GROUP BY story_id";
 
         $result = mysqli_query($this->conn , $sql);
+
         if(mysqli_num_rows($result)>0){
-            return  mysqli_fetch_all($result , MYSQLI_ASSOC);
+            return mysqli_fetch_assoc($result);
         }
+
         return false;
     }
 }

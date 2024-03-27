@@ -1,47 +1,34 @@
-<!-- <link rel="stylesheet" href="../../public/css/adminnavbar.css">     -->
-<style>
-     .headertag{
-    /* Header styles */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color:transparent;
-    }
-        /* .navbar{
-            padding:5px;
-            height: 2.8rem;
-        } */
-        .navbar a{
-            font-size: medium;
-            text-decoration: none;
-            color:black;
-            /* padding:1px; */
-            margin-right: 2rem;
-            font-weight: bold;
-        }
-        .navbar a:hover{
-            cursor: pointer;
-            color:darkblue;
-            /* background-color: darkgray; */
-        }
-</style>
-<div class="nav_div shadow-lg bg-white " >
-    <?php $userData = $user->userDetails($_SESSION['user_id']) ?>
-    <header class='headertag'>
-        <div class="logo" ><img src="../../upload/icons8-admin-48.png" alt="admin-img">Admin</div>
-        
-        <div class="logo" style="text-align:center"><img  src="../../upload/blogger-logo-icon-png-10168.png" style="height:12% ; width:12%"></div>
-        
-        <div class="logo" >
-            Welcome, <?php echo $userData[0]['first_name'] . " " . $userData[0]['last_name'] ?>
-            <a class='btn' href="../logout.php?LogoutSuccess=true"><img src="../../upload/icons8-logout-32.png" alt="logout"></a>
-        </div>
-    </header>
-    <div class='navbar navbar-expand-lg'>
-            <a class='navbar-brand' href="admin.php" >Home</a></li>
-            <a class='navbar-brand' href="adminallstoryview.php" >All Stories</a>
-            <a class='navbar-brand' href="../user/user.php" >User DashBoard</a>
-            <a class='navbar-brand' href="alluserdetails.php" >User Details</a>
-            <a class='navbar-brand' href="categorydetails.php" >Category Details</a>
+<?php $userDetails = $user->userDetails($_SESSION['user_id']);  ?>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    
+    <a class="navbar-brand" style="width:10% ; height:10%;" href="#">
+        <img src="../../upload/snapchat.png" style="width:25% ; height:25%;" alt="">
+        <span  style="color:white">ɮʟօɢ</span>
+    </a>
+    <div class="collapse navbar-collapse"  id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" >
+            <li class="nav-item active">
+                <a class='nav-link' style="color:white"  href="admin.php" >Home</a></li>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="adminallstoryview.php" >All Story</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="../user/user.php" >User DashBoard</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="alluserdetails.php" >User Details</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="categorydetails.php" >Category Details</a>
+            </li>
+        </ul>
     </div>
-</div>
+    <div class="d-flex" style="color:white">
+        
+        <div class="p-1"><?php echo "Welcome, ". $userDetails[0]['first_name'] . ' ' . $userDetails[0]['last_name']; ?></div>
+
+        <a class="my-2 my-sm-0" href="../logout.php?success=true"><img src="../../Upload/icons8-logout-32.png" style="height: 100% ; width:100%;" alt=""></a>
+    </div>
+</nav>    

@@ -47,7 +47,8 @@ class Story extends Connection{
 
     public function addStory($storyArray){
 
-        $storykeyarray = substr(json_encode(array_keys($storyArray)) , 1 , -1);
+        $storykeyarray = implode("," , array_keys($storyArray));
+        
         $storyvaluesarray = substr(json_encode(array_values($storyArray)) , 1 , -1);
         
 
@@ -62,12 +63,23 @@ class Story extends Connection{
         return false;
     }
 
+    public function updateStory($story_id  , $storyArray){
+        foreach($storyArray as $key => $value){
+            $sql = "UPDATE story SET $key = $value WHERE id = $story_id";
+            $result = mysqli_query($this->conn , $sql);
+            if($result)
+                return true;
+            
+            return false;
+        }
+    }
+
     public function deleteStory($story_id){
         
         $sql = "UPDATE story 
                 LEFT JOIN storyimages ON story.id = storyimages.story_id 
                 LEFT JOIN storycomments ON story.id = storycomments.story_id
-                LEFT JOIN storylikes ON story.id = storylikes
+                LEFT JOIN storylikes ON story.id = storylikes.story_id
                 SET story.deleted_at = CURRENT_TIMESTAMP , 
                     storyimages.deleted_at = CURRENT_TIMESTAMP,
                     storycomments.deleted_at = CURRENT_TIMESTAMP,

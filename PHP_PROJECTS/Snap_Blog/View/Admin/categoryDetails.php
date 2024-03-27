@@ -6,6 +6,7 @@ if(isset($_SESSION['user_id'])){
     require_once('../../class/connection.php');
     require_once('../../class/User.php');
     require_once('../../class/storycategory.php');
+    
     $user = new User();
     $category = new StoryCategory();
 
@@ -54,11 +55,11 @@ else{
     
     <main class="bg-white" >
 
-        <div class="mt-1 pt-2">
-            <span><strong style="font-size:x-large;">ALL Category Details</strong></span>
+        <div class="mb-3 pt-2">
+            <span><strong style="font-size:x-large;">Category Details</strong></span>
             <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
         </div>
-        <div class="m-2">
+        <div  class="card m-4 p-3" style="margin: 0 auto;">
             <table id="categorytable" class='table table-hover' >
                 <thead style="color:red">
                     <tr style="color:red">

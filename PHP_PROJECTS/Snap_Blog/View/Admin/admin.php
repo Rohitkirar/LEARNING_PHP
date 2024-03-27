@@ -1,21 +1,25 @@
-<?php 
+<?php
 session_start();
 
+
 if(isset($_SESSION['user_id'])){
+  require_once('../../Class/Connection.php');
+  require_once('../../Class/User.php');
+  require_once('../../Class/Story.php');
+  require_once('../../Class/StoryImage.php');
+  $user = new User();
+  $story = new Story();
+  $image = new StoryImage();
 
-    require_once('../../class/connection.php');
-    require_once('../../Class/User.php');
-    require_once('../../Class/Story.php');
-    require_once('../../Class/StoryImage.php');
+  // condition for admin excess only 
 
-    $user = new User();
-    $story = new Story();
-    $image = new StoryImage();
-}
-else{
-    session_unset();
-    session_destroy();
-    header('location: ../logout.php?LogoutSuccess=true');
+  $userResult = $user->userDetails($_SESSION['user_id']);
+  if($userResult){
+    if($userResult[0]['role'] != 'admin')
+        header('location: logout.php');
+  }
+
+
 }
 
 ?>
@@ -24,54 +28,58 @@ else{
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <style>
-       
-        .card {
-            flex: 1;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-        }
-    
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-        }
-    
-    
-        .grid-container {
-            display: grid ;
-            grid-template-columns:  auto auto auto auto;
-            margin: 0 auto;
-
-        }
-        .grid-item{
-            margin:1rem;
-        }
-    </style>
+    <title>Home</title>
 </head>
-<body >
-
+<body>
+    <!-- navbar file add -->
     <?php require_once('adminnavbar.php') ?>
-    
-    <main >
-        <div class="m-2">
-            <span><strong style="font-size:x-large;">ALL Stories</strong></span>
-            <span style="float:right"><a href="addstoryform.php" class='btn btn-success m-3'>Add Story</a></span>
-        </div>
+    <main role="main" >
+    <div class="album py-5 bg-light">
+      <div class="container">
 
-        <div class="grid-container m-2" style="width:100%">
-                    
-                    <?php 
-                        require_once('adminStoryGridView.php');
-                    ?>    
+        <div class="" style="display : grid ; grid-template-columns:auto auto auto auto;">
+          <?php 
+          $storyArray = $story->storyDetails();
+          foreach($storyArray as $key => $values){ 
+          ?>
+          <div class="m-4 card" >
+            <div class="box-shadow ">
+              <?php 
+            
+            
+            
+            $imageArray = $image->imageDetails($values['story_id']);
+              if($imageArray){
+              ?>
+              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="image not found">
+              <?php } ?>
+              <div class="card-body">
+              <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
+                <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="adminstoryView.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-primary">View</a>
+                    <a href="updateStoryForm.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-secondary">Update</a>
+                    <a href="deleteStory.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-danger">Delete</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php } ?>
+          
         </div>
+      </div>
+    </div>
+  </main>
 
-    </main>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="../../assets/js/vendor/popper.min.js"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/vendor/holder.min.js"></script>
+
 </body>
 </html>
-

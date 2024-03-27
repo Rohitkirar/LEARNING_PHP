@@ -11,7 +11,7 @@ class User extends Connection{
 
     public function userRegister($userdetails){
 
-        $keys = substr(json_encode(array_keys($userdetails)) , 1 , -1);
+        $keys = implode("," , array_keys($userdetails));
         $values = substr(json_encode(array_values($userdetails)) , 1 , -1);
         
         $sql = "INSERT INTO users ($keys)
@@ -27,7 +27,9 @@ class User extends Connection{
     public function userLogin($username , $password){
 
         $password = md5($password);
+
         $sql = "SELECT id FROM users WHERE username = '$username' AND password = '$password' ";
+        
         $result = mysqli_query($this->conn , $sql);
         
         if(mysqli_num_rows($result)>0){
@@ -41,11 +43,10 @@ class User extends Connection{
 
     public function userDetails($user_id=null){
         if($user_id){
-            $sql = "SELECT id , first_name , last_name , age , gender , email , mobile , role 
-                    FROM users WHERE id = $user_id";
+            $sql = "SELECT * FROM users WHERE id = $user_id";
         }
         else{
-            $sql = "SELECT * FROM users ";
+            $sql = "SELECT * , IF(deleted_at , 0 , 1) as status FROM users WHERE role != 'admin' ";
         }
         $result = mysqli_query($this->conn , $sql);
 
@@ -54,6 +55,22 @@ class User extends Connection{
             return $result;
         }
         return false;
+    }
+
+    public function deleteUser($user_id){
+        $userData = $this->userDetails($user_id);
+        
+        if($userData[0]['role'] == 'admin')
+            return false;
+
+        $sql = "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = $user_id";
+        $result = mysqli_query($this->conn , $sql);
+        
+        if($result)
+            return true;
+
+        return false;
+        
     }
 
 

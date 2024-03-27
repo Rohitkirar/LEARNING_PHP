@@ -2,32 +2,25 @@
 session_start();
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
-    
-    require_once('../common/userDetailsVerify.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/user.php');
+    $user = new User();
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
-
-    if($userData['role'] == 'admin'){
-
+    if($userData['role'] != 'admin'){
+        header('location: logout.php?logoutsuccess=false');
+    }
         $user_id = $_GET['user_id'];
 
-        $sql = "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = $user_id";
-        $result = mysqli_query($conn , $sql);
-        if($result)
+        $result = $user->deleteUser($user_id);
+        if($result){
+            $_SESSION['deleteUser'] = true;
             header('location: allUserDetails.php');
+        }
         else
-            echo 'ERROR ' . mysqli_error($conn);
-    }
-    else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
-    }
+            header('location: allUserDetails.php');
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=false');
 }
 ?>

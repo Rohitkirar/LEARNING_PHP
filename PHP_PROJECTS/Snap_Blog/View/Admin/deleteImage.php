@@ -3,39 +3,31 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
-    
-    require_once('../common/userDetailsVerify.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/StoryImage.php');
+    $user = new User();
+    $image = new StoryImage();
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData['role'] == 'admin'){
-        $image_id = $_GET['image_id'];
-        $story_id = $_GET['story_id'];
+    if($userData[0]['role'] != 'admin'){
+        header('location: ../common/logout.php?LogoutSuccess=false');
+    }
 
-        $sql = "UPDATE storyimages  
-                SET deleted_at = CURRENT_TIMESTAMP  
-                WHERE id = $image_id";
+    $image_id = $_GET['image_id'];
+    $story_id = $_GET['story_id'];
 
-        $result = mysqli_query($conn , $sql);
-
-        if($result){
-            header("location: updateStoryForm.php?story_id=$story_id");
-        }
-        else{
-            echo "ERROR " . mysqli_error($conn);
-        }
+    if($image->deleteImage($image_id)){
+        header("location: updateStoryForm.php?story_id=$story_id");
     }
     else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
+        header("location: updateStoryForm.php?story_id=$story_id");
     }
+
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../common/logout.php?LogoutSuccess=false');
 }
 
 ?>

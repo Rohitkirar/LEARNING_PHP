@@ -79,7 +79,7 @@ if(isset($_SESSION['user_id'])){
 
         if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $passwordErr == '' ){
 
-            $userdetails = [ 'first_name'=>$first_name , 'last_name'=>$last_name , 'age' => $age , 'mobile' => $mobile , 'email' => $email , 'gender'=>$gender ];
+            $userdetails = compact('first_name' , 'last_name' , 'age' , 'mobile' , 'email' , 'gender' );
             
             if($user->updateUserDetails($_SESSION['user_id'] , $password , $userdetails)){
                 $passwordErr = '';
@@ -111,7 +111,7 @@ else{
     <?php require_once('navbar.php') ?>
 
     <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container py-5 h-100 d-flex justify-content-center align-items-center">
+        <div class="container py-5 h-100 d-flex justify-content-center ; align-items-center">
             <div class="card rounded-3 text-black" style="width:55%">
 
                 <div class="card-body p-md-5 mx-md-4">

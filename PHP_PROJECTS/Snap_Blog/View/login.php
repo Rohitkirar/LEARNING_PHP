@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['user']) || isset($_SESSION['admin'])){
+if(isset($_SESSION['user_id'])){
     session_unset();
     session_destroy();
 }
@@ -19,8 +19,8 @@ if(isset($_POST['submit'])){
     if($user->userLogin($username , $password)){
         $ERROR = "";
         $result = $user->userDetails($_SESSION['user_id']);
-
-        if($result['role'] == 'admin'){
+        
+        if($result[0]['role'] == 'admin'){
             header('location: Admin/admin.php');
         }
         else{
@@ -45,7 +45,7 @@ if(isset($_POST['submit'])){
     <?php require_once('navbar.php') ?>
 
     <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container py-5 h-100 d-flex justify-content-center align-items-center">
+        <div class="container py-5 h-100 d-flex justify-content-center ;align-items-center">
             <div class="card rounded-3 text-black" style="width:45%">
 
                 <div class="card-body p-md-5 mx-md-4">
@@ -65,8 +65,7 @@ if(isset($_POST['submit'])){
 
                         <div class="form-outline mb-4">
                             <label class="form-label" for="form2Example11">Username</label>
-                            <input type="text" name="username" maxlength="25" id="form2Example11" class="form-control"
-                            placeholder="username" required/>    
+                            <input type="text" name="username" maxlength="25" id="form2Example11" class="form-control" placeholder="username" required/>    
                         </div>
 
                         <div class="form-outline mb-4">

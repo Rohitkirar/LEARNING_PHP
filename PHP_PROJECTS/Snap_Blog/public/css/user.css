@@ -1,0 +1,47 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body { 
+    font-family: Arial, sans-serif; 
+}
+
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.story_inner_div_items{
+    display: flex; 
+    padding : 10px;
+
+}
+
+.grid-container a{
+    text-decoration: none;
+    color:white;
+}
+
+
+
+.grid-container {
+    display: grid ;
+    grid-template-columns:  auto auto auto auto;
+    /* background-color: #2196F3; */
+    /* padding: 10px; */
+  }
+  .grid-item {
+    /* background-color: whitesmoke; */
+    /* border: 1px solid goldenrod; */
+    /* padding: 10px; */
+    /* height: 90%; */
+    /* margin:10px; */
+    /* font-size: 30px; */
+    /* text-align: center; */
+  }

@@ -9,7 +9,7 @@ class StoryCategory extends Connection{
     public function addCategory($categoryArray){
         if(count($categoryArray)>1){
             foreach($categoryArray as $key=>$values){
-                $categorykeys = substr(json_encode(array_keys($values)) , 1 , -1);
+                $categorykeys = implode("," , array_keys($values));
                 $categoryvalues = substr(json_encode(array_values($values)) , 1 , -1);
                 
                 $sql = "INSERT INTO storycategory($categorykeys)
@@ -24,7 +24,7 @@ class StoryCategory extends Connection{
             }
         }
         else{
-            $categorykeys = substr(json_encode(array_keys($categoryArray)) , 1 , -1);
+            $categorykeys = implode("," , array_keys($categoryArray));
             $categoryvalues = substr(json_encode(array_values($categoryArray)) , 1 , -1);
 
             $sql = "INSERT INTO storycategory($categorykeys)
@@ -74,8 +74,8 @@ class StoryCategory extends Connection{
 
     public function deleteCategory($category_id){
 
-        $sql = "UPDATE storycategory LEFT JOIN story 
-                ON storycategory.story_id = story.id 
+        $sql = "UPDATE storycategory 
+                LEFT JOIN story ON storycategory.id = story.category_id 
                 LEFT JOIN storyimages ON storyimages.id = story.id
                 SET storycategory.deleted_at = CURRENT_TIMESTAMP , 
                     story.deleted_at = CURRENT_TIMESTAMP,

@@ -4,34 +4,32 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
-    
-    require_once('../common/userDetailsVerify.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/StoryCategory.php');
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $user = new User();
+    $category = new StoryCategory();
 
-    if($userData['role'] == 'admin'){
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-        $category_id = $_GET['category_id'];
+    if($userData[0]['role'] != 'admin'){
+        header('location: ../logout.php?LogoutSuccess=false');
+    }
 
-        $sql = "UPDATE storycategory SET deleted_at = CURRENT_TIMESTAMP WHERE id = $category_id";
-        
-        $result = mysqli_query($conn , $sql);
-        
-        if($result)
-            header('location: CategoryDetails.php');
-        else
-            echo 'ERROR ' . mysqli_error($conn);
+    $category_id = $_GET['category_id'];
+
+    if($category->deleteCategory($category_id)){
+        $_SESSION['deletecategory'] = true;
+        header('location: CategoryDetails.php');
     }
     else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
+        print_r($category->deleteCategory($category_id));
+        // header('location: CategoryDetails.php');
     }
+            
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=false');
 }
 ?>

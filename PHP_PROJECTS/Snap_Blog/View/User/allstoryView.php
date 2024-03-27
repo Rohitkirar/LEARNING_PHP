@@ -17,11 +17,14 @@ if(isset($_SESSION['user_id'])){
   $like = new StoryLike();
 
   if(isset($_POST['comment'])){
-
-    $comment_content = $_POST['commentcontent'];
+    
+    $user_id = $_SESSION['user_id'];
+    $content = $_POST['commentcontent'];
     $story_id = $_POST['comment'];
     
-    if($comment->addComment($_SESSION['user_id'] , $story_id ,$comment_content ))
+    $commentArray = compact('user_id' , 'story_id' , 'content');
+
+    if($comment->addComment($commentArray))
       header('location: allstoryView.php');
   
   }

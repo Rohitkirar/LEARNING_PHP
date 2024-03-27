@@ -6,7 +6,7 @@ class StoryImage extends Connection{
     }
     
     public function imageDetails($story_id){
-        $sql = "SELECT image FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
+        $sql = "SELECT * FROM storyimages WHERE story_id = $story_id AND deleted_at IS NULL";
         $result = mysqli_query($this->conn , $sql);
 
         if(mysqli_num_rows($result)>0){
@@ -20,7 +20,7 @@ class StoryImage extends Connection{
         if(count($imageArray) > 1){
             foreach($imageArray as $key => $values){
 
-                $imagearraykeys = substr(json_encode(array_keys($values)) , 1 , -1);
+                $imagearraykeys = implode("," , array_keys($values));
                 $imagearrayvalues = substr(json_encode(array_values($values)) , 1 , -1);
                 
                 $sql = "INSERT INTO storyimages($imagearraykeys)
@@ -36,8 +36,9 @@ class StoryImage extends Connection{
             return true;
         }
         else{
-            $imagearraykeys = substr(json_encode(array_keys($imageArray)) , 1 , -1);
+            $imagearraykeys = implode("," ,array_keys($imageArray));
             $imagearrayvalues = substr(json_encode(array_values($imageArray)) , 1 , -1);
+            
             $sql = "INSERT INTO storyimages($imagearraykeys)
                         VALUES ($imagearrayvalues)";
 

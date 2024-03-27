@@ -4,54 +4,31 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
+    require_once('../../Class/Connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/Story.php');
     
-    require_once('../common/userDetailsVerify.php');
+    $user = new User();
+    $story = new Story();
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData['role'] == 'admin'){
-
+    if($userData['role'] != 'admin'){
+        header('location: ../common/logout.php?LogoutSuccess=false');
+    }
         $story_id = $_GET['story_id'];
 
-        $sql = "UPDATE story JOIN storyimages ON story.id = storyimages.story_id 
-                SET story.deleted_at = CURRENT_TIMESTAMP , storyimages.deleted_at = CURRENT_TIMESTAMP 
-                WHERE storyimages.story_id = $story_id ";
-
-        $result = mysqli_query($conn , $sql);
-
+        $result = $story->deleteStory($story_id);
+        
         if($result){
+            $_SESSION['storydelete'] = true;
             header('location: admin.php');
         }
         else
-            echo "ERROR " . mysqli_error($conn);
-    }
-    else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
-    }
+            header('location: admin.php');
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../common/logout.php?LogoutSuccess=false');
 }
 
-        
-    // delete story from db using form
-
-    // if(isset($_POST['delete'])){
-    //     $story_id = $_POST['delete'];
-    //     $sql = "UPDATE story JOIN images ON story.id = images.story_id 
-    //             SET story.deleted_at = CURRENT_TIMESTAMP , images.deleted_at = CURRENT_TIMESTAMP 
-    //             WHERE images.story_id = $story_id ";
-    //     $result = mysqli_query($conn , $sql);
-    //     if($result){
-    //         header('location: adminStoryGridView.php');
-    //     }
-    //     else{
-    //         header('location: Admin.php');
-    //     }
-    // }
 ?>
