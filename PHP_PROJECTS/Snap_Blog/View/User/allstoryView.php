@@ -89,14 +89,22 @@ else{
                   <small class="text-muted">
                     Total like: 
                     <?php 
-                      echo $like->likeCount($values['story_id'])['total_like']; 
+                      $likeResult =  $like->likeCount($values['story_id']);
+                      if($likeResult)
+                        echo $likeResult['total_like'];
+                      else
+                        echo 0; 
                     ?>
                   </small>
 
                   <small class="text-muted">
                     Total Comment: 
                     <?php 
-                      echo $comment->commentCount($values['story_id'])['total_comment']; 
+                      $commentResult = $comment->commentCount($values['story_id']) ;
+                      if($commentResult)
+                        echo $commentResult['total_comment'];
+                      else
+                        echo 0 ; 
                     ?>
                   </small>
 
