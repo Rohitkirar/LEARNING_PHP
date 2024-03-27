@@ -1,3 +1,4 @@
+<?php $userDetails = $user->userDetails($_SESSION['user_id']);  ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     
@@ -21,10 +22,10 @@
             </li>
         </ul>
     </div>
-    <div class="form-inline my-2 my-lg-0 d-flex">
+    <div class="d-flex" style="color:white">
         
-        <?php echo "Welcome ". $userDetails['first_name'] . ' ' . $userDetails['last_name']; ?>
+        <div class="p-1"><?php echo "Welcome, ". $userDetails[0]['first_name'] . ' ' . $userDetails[0]['last_name']; ?></div>
 
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <a class="my-2 my-sm-0" href="../logout.php?success=true"><img src="../../Upload/icons8-logout-32.png" style="height: 100% ; width:100%;" alt=""></a>
     </div>
 </nav>    
