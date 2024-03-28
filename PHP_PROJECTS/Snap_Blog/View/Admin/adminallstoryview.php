@@ -7,12 +7,14 @@ if(isset($_SESSION['user_id'])){
     require_once("../../Class/User.php");
     require_once("../../Class/Story.php");
     require_once("../../Class/StoryImage.php");
+    require_once("../../Class/StoryCategory.php");
     require_once("../../Class/StoryComment.php");
     require_once("../../Class/StoryLike.php");
 
     $user = new User();
     $story = new Story();
     $image = new StoryImage();
+    $category = new StoryCategory();
     $comment = new StoryComment();
     $like = new StoryLike();
 
@@ -63,14 +65,25 @@ if(isset($_SESSION['user_id'])){
     <?php require_once('adminnavbar.php') ?>
     <main role="main" class="py-3" >
         <div class="d-flex pb-2" style="justify-content: space-between;">
-            <h4>All Story</h4>
-            <a href="addStoryForm.php" class="btn btn-success">Add Story</a>
+            <?php if(isset($_GET['category_id'])){ 
+              $categoryData = $category->categoryDetails($_GET['category_id']);  
+              $storyArray = $story->storyDetails(null , $_GET['category_id']);
+            ?>
+              <h4>Category : <?php echo $categoryData[0]['Title'] ?></h4>
+            <?php 
+              }else { 
+                $storyArray = $story->storyDetails();
+            ?>
+              
+              <h4>All Story</h4>
+              <a href="addStoryForm.php" class="btn btn-success">Add Story</a>
+            <?php }?>
         </div>
     <div class="album ">
       <div>
         <div class="" >
           <?php 
-          $storyArray = $story->storyDetails();
+          if($storyArray)
           foreach($storyArray as $key => $values){ 
           ?>
           <div class="mb-4 shadow-lg p-5 bg-light " style="display : grid; grid-template-columns: 60% 40% " >
@@ -168,7 +181,7 @@ if(isset($_SESSION['user_id'])){
           
           </div>
           </div>
-          <?php }?>
+          <?php } else echo "No Story Available" ;?>
           
         </div>
       </div>

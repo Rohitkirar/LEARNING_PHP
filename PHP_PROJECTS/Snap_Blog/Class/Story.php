@@ -9,7 +9,7 @@ class Story extends Connection{
             $this->admin_id = $admin_id ;
     }
     
-    public function storyDetails($story_id = null){
+    public function storyDetails($story_id = null , $category_id = null){
         if($story_id){
             $sql = "SELECT story.id as story_id , storycategory.id as category_id , 
                     story.title as story_title ,  storycategory.title as category_title , 
@@ -18,6 +18,14 @@ class Story extends Connection{
                     ON story.category_id = storycategory.id AND story.id = $story_id
                     WHERE storycategory.deleted_at IS NULL AND story.deleted_at IS NULL;";
                 
+        }
+        elseif($category_id){
+            $sql = "SELECT story.id as story_id , storycategory.id as category_id , 
+                    story.title as story_title ,  storycategory.title as category_title , 
+                    story.content as story_content 
+                    FROM story JOIN storycategory 
+                    ON story.category_id = storycategory.id AND storycategory.id = $category_id
+                    WHERE storycategory.deleted_at IS NULL AND story.deleted_at IS NULL ORDER BY story.created_at DESC;";
         }
         else{
             $sql = "SELECT story.id as story_id , storycategory.id as category_id , 
