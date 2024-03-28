@@ -14,16 +14,19 @@
             <li class="nav-item">
                 <a class='nav-link' style="color:white" href="adminallstoryview.php" >All Story</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class='nav-link' style="color:white" href="../user/user.php" >User DashBoard</a>
+            </li> -->
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="alluserdetails.php" >User DashBoard</a>
             </li>
             <li class="nav-item">
-                <a class='nav-link' style="color:white" href="alluserdetails.php" >User Details</a>
-            </li>
-            <li class="nav-item">
-                <a class='nav-link' style="color:white" href="categorydetails.php" >Category Details</a>
+                <a class='nav-link' style="color:white" href="categorydetails.php" >Category DashBoard</a>
             </li>
         </ul>
+    </div>
+    <div>
+        <img src="../../Upload/icons8-admin-48.png" style="height: 100% ; width:100%;" alt="">
     </div>
     <div class="d-flex" style="color:white">
         

@@ -76,7 +76,7 @@ else{
             <div class="box-shadow ">
                 <div class="d-flex mb-2" style="align-items: center; justify-content:space-between">
                     <div>
-                        <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
+                        <p class="card-text">Title : <?php echo stripslashes($values['story_title']) ?></p>
                         <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
                     </div>
                     <div>
@@ -88,7 +88,7 @@ else{
 
               <div class="card-body">
                 
-                <p class="card-text" style="text-align: justify;"><?php echo $values['story_content'] ?></p>
+                <p class="card-text" style="text-align: justify;"><?php echo stripslashes($values['story_content']) ?></p>
 
                 <div class="d-flex justify-content-between align-items-center">
                   
@@ -166,6 +166,9 @@ else{
   </main>
 
 <?php 
+ 
+  require_once('../footer.php');
+
   if(isset($_SESSION['deletecomment'])){
     unset($_SESSION['deletecomment']);
     echo "<script> alert('comment delted successfully') </script>";

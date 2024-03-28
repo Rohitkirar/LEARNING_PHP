@@ -77,7 +77,7 @@ else{
                 <tbody>
                 <?php 
                     
-                    $userDataArray = $category->categoryDetails();
+                    $userDataArray = $category->categoryDetails(null , true);
                     
                     foreach($userDataArray as $key => $values){
                         echo "<tr> 
@@ -105,8 +105,9 @@ else{
 
     </main>
 
-
+    <?php 
+    require_once('../footer.php');
+  ?>
 </body>
 </html>
 
-<!-- <?php print_r($_SESSION) ?> -->

@@ -22,6 +22,11 @@
             </li>
         </ul>
     </div>
+
+    <div>
+        <img src="../../Upload/icons8-user-50.png" style="height: 100% ; width:100%;" alt="">
+    </div>
+    
     <div class="d-flex" style="color:white">
         
         <div class="p-1"><?php echo "Welcome, ". $userDetails[0]['first_name'] . ' ' . $userDetails[0]['last_name']; ?></div>

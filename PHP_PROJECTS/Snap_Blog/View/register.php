@@ -187,7 +187,9 @@ if(isset($_POST['submit'])){
             </div>
         </div>
     </section>
-
+<?php 
+    require_once('footer.php');
+?>
 </body>
 
 </html>

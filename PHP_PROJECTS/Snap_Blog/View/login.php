@@ -90,6 +90,8 @@ if(isset($_POST['submit'])){
         </div>
     </section>
     <?php 
+        require_once('footer.php');
+        
         if(isset($_GET['RegisterSuccess']) && $_GET['RegisterSuccess'] == true){
             echo "<script> alert('User Successfully Register, Please Login to Continue!') </script>";
             unset($_GET['RegisterSuccess']);

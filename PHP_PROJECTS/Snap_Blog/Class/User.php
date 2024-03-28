@@ -46,7 +46,7 @@ class User extends Connection{
             $sql = "SELECT * FROM users WHERE id = $user_id";
         }
         else{
-            $sql = "SELECT * , IF(deleted_at , 0 , 1) as status FROM users WHERE role != 'admin' ";
+            $sql = "SELECT * , IF(deleted_at , 0 , 1) as status FROM users WHERE role != 'admin'  ";
         }
         $result = mysqli_query($this->conn , $sql);
 
@@ -113,20 +113,18 @@ class User extends Connection{
         return false;
     }
 
-    public function updateUserDetails($user_id , $password ,  $userdetails ){
-        
-        if($this->userVerify($user_id , $password)){
-            foreach($userdetails as $key => $value){
-            $sql = "UPDATE users SET $key = '$value' WHERE id = $user_id  ";
+    public function updateUserDetails($user_id , $password = null ,  $userdetails ){
+        if($password)
+            if(!$this->userVerify($user_id , $password))
+                return false;
+
+        foreach($userdetails as $key => $value){
+            $sql = "UPDATE users SET $key = '$value' , deleted_at = DEFAULT WHERE id = $user_id  ";
             $result = mysqli_query($this->conn , $sql);
             
             if($result)
                 continue;
 
-            return false;
-            }
-        }
-        else{
             return false;
         }
         return true;

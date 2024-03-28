@@ -188,6 +188,8 @@ else{
         </div>
     </form>
 
-
+    <?php 
+    require_once('../footer.php');
+  ?>
 </body>
 </html>

@@ -13,7 +13,31 @@
     
     <main role="main">
 
-      <section class="jumbotron text-center ">
+      <section class="jumbotron ">
+        
+        <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded "  style="background-color: whitesmoke;  ">
+          <div class="text-center">
+            <img src="../upload/snapchat.png" style="width:5% ;" alt="">
+            <span style="font-size:xx-large;">ɮʟօɢ</span><br><br>
+          </div>  
+          <p class="lead text-muted">
+                A Snap blog is an online journal that displays information on a variety of topics. 
+                The blog is a shortened version of “ weblog ” which means web blog.
+          </p>
+          <div class="container d-flex" style="justify-content: space-around;">
+            <div class="container p-4"><img src="../Upload/wp7348236-blogger-wallpapers.jpg" style="width:100% ;"  alt=""></div>
+            <div class="p-4 lead">
+                <p>Blogging can help you1234:</p>
+                <ol>
+                <li>Boost brand awareness</li>
+                <li>Increase credibility</li>
+                <li>Increase conversions and revenue</li>
+                <li>Drive traffic to your website</li>
+                <li>Grow online traffic</li>
+                </ol>
+            </div>
+          </div>
+        </div>
         <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded "  style="background-color:gray; height:25rem ; ">
           <h1 class="jumbotron-heading">Join millions of others</h1>
           <p class="lead text-muted">
@@ -25,26 +49,11 @@
             <a href="register.php" class="btn btn-secondary my-2">Register</a>
           </p>
         </div>
-        <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded "  style="background-color: whitesmoke; height:25rem ; ">
-          <img src="../upload/snapchat.png" style="width:5% ;" alt="">
-          <span style="font-size:xx-large;">ɮʟօɢ</span><br><br>
-          <p class="lead text-muted">
-                A Snap blog is an online journal that displays information on a variety of topics. 
-                The blog is a shortened version of “ weblog ” which means web blog.
-          </p>
-          <p>
-            <!-- <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
-          </p>
-        </div>
       </section>
 
-      
-
     </main>
-
-    <?php 
-      require_once('footer.php');
-    ?>
+<?php 
+    require_once('footer.php');
+?>
 </body>
 </html>

@@ -155,6 +155,9 @@ else{
   </main>
 
 <?php 
+ 
+  require_once('../footer.php');
+
   if(isset($_SESSION['deletecomment'])){
     unset($_SESSION['deletecomment']);
     echo "<script> alert('comment delted successfully') </script>";

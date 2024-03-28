@@ -16,37 +16,16 @@ class StoryImage extends Connection{
         return false;
     }
 
-    public function addImage($imageArray){
-        if(count($imageArray) > 1){
-            foreach($imageArray as $key => $values){
+    public function addImage($story_id , $image){
+        
+        $sql = "INSERT INTO storyimages(story_id , image)
+                    VALUES ($story_id , '$image' )";
 
-                $imagearraykeys = implode("," , array_keys($values));
-                $imagearrayvalues = substr(json_encode(array_values($values)) , 1 , -1);
-                
-                $sql = "INSERT INTO storyimages($imagearraykeys)
-                        VALUES ($imagearrayvalues)";
+        $result = mysqli_query($this->conn , $sql);
 
-                $result = mysqli_query($this->conn , $sql);
-
-                if($result)
-                    continue;
-
-                return false;
-            }
+        if($result)
             return true;
-        }
-        else{
-            $imagearraykeys = implode("," ,array_keys($imageArray));
-            $imagearrayvalues = substr(json_encode(array_values($imageArray)) , 1 , -1);
-            
-            $sql = "INSERT INTO storyimages($imagearraykeys)
-                        VALUES ($imagearrayvalues)";
 
-                $result = mysqli_query($this->conn , $sql);
-
-                if($result)
-                    return true;
-        }
         return false;
     }
 

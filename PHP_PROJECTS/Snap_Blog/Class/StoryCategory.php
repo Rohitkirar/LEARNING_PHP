@@ -7,60 +7,48 @@ class StoryCategory extends Connection{
     }
         
     public function addCategory($categoryArray){
-        if(count($categoryArray)>1){
-            foreach($categoryArray as $key=>$values){
-                $categorykeys = implode("," , array_keys($values));
-                $categoryvalues = substr(json_encode(array_values($values)) , 1 , -1);
-                
-                $sql = "INSERT INTO storycategory($categorykeys)
-                        Values ($categoryvalues) ;";
 
-                $result = mysqli_query($this->conn , $sql);
-                
-                if($result)
-                    continue;      
-                
-                return false;
-            }
-        }
-        else{
-            $categorykeys = implode("," , array_keys($categoryArray));
-            $categoryvalues = substr(json_encode(array_values($categoryArray)) , 1 , -1);
+        $categorykeys = implode("," , array_keys($categoryArray));
+        $categoryvalues = substr(json_encode(array_values($categoryArray)) , 1 , -1);
 
-            $sql = "INSERT INTO storycategory($categorykeys)
-                    Values ($categoryvalues) ;";
+        $sql = "INSERT INTO storycategory($categorykeys)
+                Values ($categoryvalues) ;";
 
-            $result = mysqli_query($this->conn , $sql);
-            
-            if($result)
-                return true;
+        $result = mysqli_query($this->conn , $sql);
+        
+        if($result)
+            return true;
 
-        }
         return false;
     }
 
     public function updateCategory($category_id , $categoryArray){
 
         foreach($categoryArray as $key => $value){
+
             $sql = "UPDATE storycategory
-                    SET $key = '$value' WHERE id = $category_id ;";
+                    SET $key = '$value' , deleted_at = DEFAULT WHERE id = $category_id ;";
 
             $result = mysqli_query($this->conn , $sql);
             
             if($result)
-                return true;
+                continue;
 
+            return false;
         }
-        return false;
+        return true;
     }
 
-    public function categoryDetails($category_id = null){
+    public function categoryDetails($category_id = null , $allcategorydata = false){
         
         if($category_id)
-            $sql = "SELECT * , IF(deleted_at , 0 , 1 ) as status FROM storycategory WHERE id = $category_id";
+           $sql = "SELECT * , IF(deleted_at , 0 , 1 ) as status FROM storycategory WHERE id = $category_id";
+        
+        elseif($allcategorydata)
+            $sql = "SELECT * , IF(deleted_at , 0 , 1 ) as status FROM storycategory ORDER BY updated_at DESC ";
         
         else
-            $sql = "SELECT * , IF(deleted_at , 0 , 1 ) as status FROM storycategory ";
+            $sql = "SELECT * , IF(deleted_at , 0 , 1 ) as status FROM storycategory WHERE deleted_at IS NULL ORDER BY updated_at DESC ";
         
 
         $result = mysqli_query($this->conn , $sql );
