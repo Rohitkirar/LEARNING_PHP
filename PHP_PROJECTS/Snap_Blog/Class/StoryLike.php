@@ -7,12 +7,17 @@ class StoryLike extends Connection{
     }
 
 
-    public function likeDetails( $story_id){
-
-        $sql = "SELECT id as like_id , user_id , story_id , CONCAT(first_name , ' ' , last_name) as full_name 
+    public function likeDetails($story_id=null){
+        if($story_id){
+            $sql = "SELECT id as like_id , user_id , story_id , CONCAT(first_name , ' ' , last_name) as full_name 
                 FROM  storylikes JOIN users ON user_id = users.id AND story_id = $story_id
                 WHERE storylikes.deleted_at IS NULL";
-
+        }
+        else{
+            $sql = "SELECT id as like_id , user_id , story_id 
+                FROM  storylikes
+                WHERE storylikes.deleted_at IS NULL";
+        }
         $result = mysqli_query($this->conn , $sql);
 
         if(mysqli_num_rows($result)>0){

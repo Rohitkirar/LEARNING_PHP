@@ -5,12 +5,17 @@ class StoryComment extends Connection{
         $this->createConnection();
     }
 
-    public function commentDetails($story_id){
-
-        $sql = "SELECT storycomments.id as comment_id , content , user_id , CONCAT(first_name , ' ' , last_name) as full_name , story_id 
+    public function commentDetails($story_id=null){
+        if($story_id){
+            $sql = "SELECT storycomments.id as comment_id , content , user_id , CONCAT(first_name , ' ' , last_name) as full_name , story_id 
                 FROM storycomments JOIN users ON user_id = users.id AND story_id = $story_id 
                 WHERE  storycomments.deleted_at IS NULL ORDER BY updated_at DESC";
-
+        }
+        else{
+            $sql = "SELECT storycomments.id as comment_id , content , user_id ,  story_id 
+                FROM storycomments
+                WHERE  storycomments.deleted_at IS NULL ORDER BY updated_at DESC";
+        }
         $result = mysqli_query($this->conn , $sql);
 
         if(mysqli_num_rows($result) > 0 ){

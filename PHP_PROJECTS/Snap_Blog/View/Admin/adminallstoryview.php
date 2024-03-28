@@ -35,7 +35,7 @@ if(isset($_SESSION['user_id'])){
       $commentArray = compact('user_id' , 'story_id' , 'content');
       
       if($comment->addComment($commentArray))
-        header('location: allstoryView.php');
+        header('location: adminallstoryView.php');
     
     }
   

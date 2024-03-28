@@ -34,10 +34,10 @@ if(isset($_SESSION['user_id'])){
     $commentArray = compact('user_id' , 'story_id' , 'content');
     if($comment->addComment($commentArray)){
       if(isset($_GET['story_id']))
-      header("location: storyView.php?story_id={$_GET['story_id']}");
+      header("location: adminstoryView.php?story_id={$_GET['story_id']}");
 
       else
-      header('location: allstoryView.php');
+      header('location: adminallstoryView.php');
 
     }
   }

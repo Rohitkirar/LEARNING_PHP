@@ -6,9 +6,13 @@ if(isset($_SESSION['user_id'])){
   require_once('../../Class/Connection.php');
   require_once('../../Class/User.php');
   require_once('../../Class/Story.php');
+  require_once('../../Class/StoryLike.php');
+  require_once('../../Class/StoryComment.php');
   require_once('../../Class/StoryImage.php');
   $user = new User();
   $story = new Story();
+  $like = new StoryLike();
+  $comment = new StoryComment();
   $image = new StoryImage();
 
   // condition for admin excess only 
@@ -35,6 +39,38 @@ if(isset($_SESSION['user_id'])){
     <!-- navbar file add -->
     <?php require_once('adminnavbar.php') ?>
     <main role="main" >
+    <div class="d-flex" style=" align-items:center ; justify-content: space-between; height:2rem">
+        <?php 
+          $story_count = $story->storyDetails();
+          if($story_count)  
+            $story_count = count($story_count);
+          else
+            $story_count = 0 ;
+          
+          $like_count = $like->likeDetails();
+          if($like_count)  
+            $like_count = count($like_count);
+          else
+            $like_count = 0 ;
+
+          $comment_count = $comment->commentDetails();
+          if($comment_count)  
+            $comment_count = count($comment_count);
+          else
+            $comment_count = 0 ;
+          
+          $user_count = $user->userDetails();
+          if($user_count)  
+            $user_count = count($user_count);
+          else
+            $user_count = 0 ;
+        ?>
+
+        <div class="card p-1" style="width:25%;" >Total story: <?php echo $story_count ?></div>
+        <div class="card p-1" style="width:25% ">Likes: <?php echo $like_count ?></div>
+        <div class="card p-1" style="width:25%">Comments: <?php echo $comment_count ?></div>
+        <div class="card p-1" style="width:25%">Total Users: <?php echo $user_count ?></div>
+    </div>
     <div class="album py-5 bg-light">
       <div class="container">
 
