@@ -11,87 +11,98 @@ if(isset($_SESSION['user_id'])){
     
     $user = new User();
     $story = new Story();
-    $category = new StoryCategory();
-    $image = new StoryImage();
+    $categoryobj = new StoryCategory();
+    $imageobj = new StoryImage();
 
     $userData = $user->userDetails($_SESSION['user_id']);
-    if($userData[0]['role'] != 'admin'){
-        header('../logout.php?logoutsuccess=false');
-    }
 
-    $user_id = $category_id = $content = $story_title = '';
-    
+    if($userData[0]['role'] == 'admin'){
+
+        $ERROR = $user_id = $category_id = $content = $story_title = '';
+
+        $categoryArray = $categoryobj->categoryDetails();
+
+        if(isset($_POST['submit'])){
+
+            // story data inserting in database;
+
+            $category_id  = $_POST['category_id'];
+            $title = addslashes($_POST['story_title']);
+            $content = addslashes($_POST['content']);
+
+            $user_id = $_SESSION['user_id'];
+
+            $storyArray = compact('user_id' , 'category_id' , 'title' , 'content');
+
+            $result = $story->addStory($storyArray) ;
+
+            if($result){
+                echo "successfully inserted data";
+            }
+            else{
+                $ERROR = "Failed to insert Data";
+            }
 
 
-    $categoryArray = $category->categoryDetails();
+            if(isset($_FILES['image'])){
 
-    if(isset($_POST['submit'])){
+                $story_id = $story->getLastStoryId();
+                $story_id = $story_id['story_id'];
 
-        // story data inserting in database;
+                $file = $_FILES['image'];
+                
+                for($i=0 ; $i< count($file['name']) ;$i++){
 
-        $category_id  = $_POST['category_id'];
-        $story_title = addslashes($_POST['story_title']);
-        $content = addslashes($_POST['content']);
+                    $file_name = $file['name'][$i];
+                    $file_type = $file['type'][$i];
+                    $file_type = substr($file_type , 0 , strpos($file_type , '/'));
+                    $file_size = $file['size'][$i];
+                    $file_error = $file['error'][$i];
+                    $tmp_name = $file['tmp_name'][$i];
 
-        $user_id = $_SESSION['user_id'];
+                    if($file_error == 0){
+                        echo $file_type;
+                        if($file_type == 'image'){
+                            
+                            $ERROR = '';
 
-        $result = $story->addStory([ 'user_id' => $user_id , 'category_id' => $category_id, 'title' => "$story_title" , 'content' => "$content"]);
+                            $filenameErr = '';
 
-        if($result){
-            echo "successfully inserted data";
-        }
-        else{
-            echo "ERROR " . mysqli_error($conn);
-        }
+                            $fileDestination = '../../upload/'.$file_name;
+                            
+                            move_uploaded_file($tmp_name , $fileDestination);
 
-        if(isset($_FILES['image'])){
-            
-            $file = $_FILES['image'];
-            
-            for($i=0 ; $i< count($file['name']) ;$i++){
+                            $result = $imageobj->addImage($story_id , $file_name );
 
-                $file_name = $file['name'][$i];
-                $file_type = $file['type'][$i];
-                $file_type = substr($file_type , 0 , strpos($file_type , '/'));
-                $file_size = $file['size'][$i];
-                $file_error = $file['error'][$i];
-                $tmp_name = $file['tmp_name'][$i];
-
-                if($file_error == 0){
-                    echo $file_type;
-                    if($file_type == 'image'){
-                        
-                        $filenameErr = '';
-
-                        $fileDestination = '../../upload/'.$file_name;
-                        
-                        move_uploaded_file($tmp_name , $fileDestination);
-
-                        // $image->addImage();
-
-                        $sql = "INSERT INTO storyimages x(story_id , image) VALUES ( (SELECT id FROM story order by id Desc LIMIT 1) , '$file_name')";
-
-                        $result = mysqli_query($conn , $sql);
-
-                        if($result)
-                            echo "successfully inserted data";
-                        else
-                            echo "ERROR " . mysqli_error($conn);  
+                            if($result)
+                                echo "successfully inserted data";
+                            else
+                                $ERROR  = "Failed to upload image";  
+                        }
+                        else{
+                            $ERROR =  "Invalid file type, Upload Image type only!";
+                        }
                     }
-                    else{
-                        Echo "ERROR : Invalid file type, Upload Image type only!";
-                    }
+                    else
+                        $ERROR =  'error :file not uploaded';
                 }
-                else
-                    echo 'error :file not uploaded';
+            }
+            if($ERROR == ''){
+                $_SESSION['addstory'] = true; 
+                header('location: admin.php');
             }
         }
-            
-        header('location: admin.php');
-    } 
+    }
+    else{
+        session_unset();
+        session_destroy();
+        header('location: ../common/logout.php?LogoutSuccess=true');
+    }    
 }
 else{
-    header('location: ../logout.php?LogoutSuccess=true');
+    session_unset();
+    session_destroy();
+    header('location: ../common/logout.php?LogoutSuccess=true');
 }
 
 
@@ -111,7 +122,6 @@ else{
     <!-- navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-
     <section class="h-100 gradient-form" style="background-color: #eee;">
         <div class="container py-5 h-100 d-flex justify-content-center align-items-center">
             <div class="card rounded-3 text-black" style="width:55%">
@@ -127,6 +137,7 @@ else{
                     </div>
 
                     <center><p>Fill Details to Add Story</p></center>
+                    <center><p><?php echo $ERROR ?></p></center>
 
                     <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >                        
                         
@@ -169,3 +180,100 @@ else{
 
 
 <!-- <?php print_r($categoryArray); ?> -->
+<?php
+/* 
+session_start();
+
+if(isset($_SESSION['user_id'])){
+
+    require_once('../../class/connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/StoryCategory.php');
+    require_once('../../Class/Story.php');
+    require_once('../../Class/StoryImage.php');
+    
+    $user = new User();
+    $story = new Story();
+    $category = new StoryCategory();
+    $imageobj = new StoryImage();
+
+    $userData = $user->userDetails($_SESSION['user_id']);
+    if($userData[0]['role'] != 'admin'){
+        header('../logout.php?logoutsuccess=false');
+    }
+
+    $ERROR = $user_id = $category_id = $content = $story_title = '';
+
+    $categoryArray = $category->categoryDetails();
+
+    if(isset($_POST['submit'])){
+
+        // story data inserting in database;
+
+        $category_id  = $_POST['category_id'];
+        $title = addslashes($_POST['story_title']);
+        $content = addslashes($_POST['content']);
+
+        $user_id = $_SESSION['user_id'];
+
+        $storyArray = compact('user_id' , 'category_id', 'title' , 'content');
+        
+        $result = $story->addStory($storyArray);
+
+        if($result){
+            $ERROR = '';
+            $result = $story->getLastStoryId() ;
+            var_dump($result);
+            $story_id = $result['story_id'];
+
+            if(isset($_FILES['image'])){
+            
+                $file = $_FILES['image'];
+
+                if(count($file['name'])){
+                
+                    for($i=0 ; $i < count($file['name']) ;$i++){
+        
+                        $image = $file['name'][$i];
+                        $file_type = $file['type'][$i];
+                        $file_type = substr($file_type , 0 , strpos($file_type , '/'));
+                        $file_size = $file['size'][$i];
+                        $file_error = $file['error'][$i];
+                        $tmp_name = $file['tmp_name'][$i];
+        
+                        if($file_error == 0){
+
+                            if($file_type == 'image'){
+                                
+                                $filenameErr = '';
+        
+                                $fileDestination = '../../upload/'.$image;
+                                
+                                move_uploaded_file($tmp_name , $fileDestination);
+        
+                                $imageArray = compact('story_id' , 'image');
+                            
+                                $result = $imageobj->addImage($imageArray) ;
+                                var_dump($result);
+                                if($result)
+                                    continue;
+                                else
+                                    break;  
+                            }
+                        }
+                    }
+                    // header('location: admin.php');
+                }
+
+            }
+        }
+        else
+            $ERROR = 'Failed to Upload Story, Please Try again!';
+    } 
+}
+else{
+    header('location: ../logout.php?LogoutSuccess=true');
+}
+
+
+?> */
