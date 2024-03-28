@@ -3,33 +3,29 @@ session_start();
 
 if(isset($_SESSION['user_id'])){
 
-    require_once('../../database/connection.php');
-    
-    require_once('../common/userDetailsVerify.php');
+    require_once('../../Class/connection.php');
+    require_once('../../Class/User.php');
+    $user = new User();
 
-    $userData = userVerification($_SESSION['user_id'] , $conn);
+    $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData['role'] == 'admin'){
+    if($userData[0]['role'] != 'admin'){
+        header('location: ../logout.php?logoutsuccess=false');
+    }
 
         $user_id = $_GET['user_id'];
 
-        $sql = "SELECT first_name , last_name , age , gender , email , mobile , username , deleted_at
-                FROM users 
-                WHERE id = $user_id";
+        $userDetailsArray = $user->userDetails($user_id);
 
-        $result = mysqli_query($conn , $sql);
-        $userDetailsArray = mysqli_fetch_assoc($result);
+        $first_name = $userDetailsArray[0]['first_name']; 
+        $last_name = $userDetailsArray[0]['last_name'];
+        $age = $userDetailsArray[0]['age'];
+        $gender = $userDetailsArray[0]['gender'];
+        $email = $userDetailsArray[0]['email']; 
+        $mobile = $userDetailsArray[0]['mobile'];  
+        $username = $userDetailsArray[0]['username'];
 
-
-        $first_name = $userDetailsArray['first_name']; 
-        $last_name = $userDetailsArray['last_name'];
-        $age = $userDetailsArray['age'];
-        $gender = $userDetailsArray['gender'];
-        $email = $userDetailsArray['email']; 
-        $mobile = $userDetailsArray['mobile'];  
-        $username = $userDetailsArray['username'];
-
-        if($userDetailsArray['deleted_at'])
+        if($userDetailsArray[0]['deleted_at'])
             $userstatus = 'InActive';
         else{
             $userstatus = 'Active';
@@ -76,7 +72,7 @@ if(isset($_SESSION['user_id'])){
 
             $mobile = (string)$_POST['mobile'];
 
-            if(preg_match("^[6-9]{1}[0-9]{9}$/" , $mobile))
+            if(preg_match("/^[6-9]{1}[0-9]{9}$/" , $mobile))
                 $mobileErr = '';
             else
                 $mobileErr = 'Please enter valid mobile containing 10 digit';
@@ -96,9 +92,9 @@ if(isset($_SESSION['user_id'])){
                 $statusErr = '';
 
                 if($status == 'Active')
-                    $status = 'DEFAULT';
+                    $status = 1 ;
                 else
-                    $status = 'CURRENT_TIMESTAMP';   
+                    $status = 0 ;   
             }
             else    
                 $statusErr = 'please choose Correct status!';
@@ -107,46 +103,32 @@ if(isset($_SESSION['user_id'])){
 
             if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $statusErr == ''){
 
-                $sql = "UPDATE users
-                        SET first_name = '$first_name' , 
-                            last_name = '$last_name' , 
-                            age = $age , 
-                            gender = '$gender' , 
-                            email = '$email' , 
-                            mobile = '$mobile',
-                            username = '$username',
-                            deleted_at = $status
-                        WHERE id = $user_id";
+                if($status){
+                    $userdetails = compact('first_name' , 'last_name' , 'age' , 'gender' , 'email' , 'mobile' , 'username' );
 
-                $result = mysqli_query($conn , $sql);
-                
-                if($result)
-                    header('location: allUserDetails.php');
+                    $result = $user->updateUserDetails($user_id , null , $userdetails);
+                    
+                    if($result){
+                        $_SESSION['useraddsuccess'] = true;
+                        header('location: allUserDetails.php');
+                    }
+                    else
+                        header('location: allUserDetails.php');
+                }
                 else
-                    echo "ERROR : " . mysqli_error($conn);
-
+                    header("location: deleteUser.php?user_id=$user_id");
             }
         }
-    }
-    else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
-    }
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=true');
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../public/css/addstoryform.css">
-    <link rel="stylesheet" href="../../public/css/admin1.css">
-    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
 </head>
 <body>
@@ -155,52 +137,57 @@ else{
 
     <form onsubmit="return confirm('Do you want to update user details') " action="<?php echo $_SERVER['PHP_SELF']."?user_id=$user_id"; ?>" method="post" >
 
-        <div class="container mt-5 p-5 shadow-lg mb-5 bg-white rounded" style="width:50%">
-
-            <center><h1>Edit User Info</h1></center>
-
+        <div class="container mt-5 p-5 shadow-lg mb-5 bg-white rounded" style="width:45%">
+            <div class="text-center">
+                <p >
+                    <img src="../../upload/snapchat.png" alt="logo" style="width:10%">
+                    <span style="font-size:x-large">ɮʟօɢ</span>
+                </p>
+                <h4 class="mt-1 mb-5 pb-1">Edit User Info</h4>
+            </div>
             <hr>
-
-            <label>Firstname <span style="color:red;"></span><?php echo $first_nameErr ?></span></label>
-            <input type="text" name="first_name" value="<?php echo $first_name; ?>" >
-            
-            <label>Lastname: <span style="color:red;"><?php echo $last_nameErr ?></span></label>
-            <input type="text" name="last_name" value="<?php echo $last_name; ?>" >
-            
-            <label>Gender: <span style="color:red;"><?php echo $genderErr ?></span></label><br>
-            <input type="radio" name="gender" value="male" checked> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            <input type="radio" name="gender" value="other"> Other<br><br>
-            
-            <label>Age : <span style="color:red;"><?php echo $ageErr ?></span></label>
-            <input type="number" name="age" value="<?php echo $age; ?>" size="3" ><br><br>
-            
-            <label>Mobile : <span style="color:red;"><?php echo $mobileErr ?></span></label>
-            <input type="text" name="mobile" value="<?php echo $mobile; ?>" size="10"><br><br>
-            
-            <label for="email">Email: <span style="color:red;"><?php echo $emailErr ?></span></label>
-            <input type="text" id="email" value="<?php echo $email; ?>" name="email"><br><br>
-            
-            <label for="username">UserName :  <span style="color:red;"><?php echo $usernameErr ?></span></label>
-            <input type="text" id="username" value="<?php echo $username; ?>" name="username"><br><br>
-            
-            <label>User Status:</label><br>
-            <input type="radio" name="status" value="Active" checked>User Activate<br>
-            <input type="radio" name="status" value="InActive">User DeActivate<br>
-            
-            <br>
-
-            <!-- <label for="pass">Confirm Password:  <span style="color:red;"><?php echo $passwordErr; ?></span></label>
-            <input type="text" id="pass" name="userpassword"><br><br> -->
-            
-            <button class="btn btn-primary" style="width:100%" type="submit" name="update" value='<?php echo $_GET['user_id'] ?>'  class="registerbtn" >Submit</button>
-
+            <div class="form-outline mb-4">
+                <label class="form-label">Firstname <span style="color:red;"></span><?php echo $first_nameErr ?></span></label>
+                <input class="form-control" type="text" name="first_name" value="<?php echo $first_name; ?>" >
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Lastname: <span style="color:red;"><?php echo $last_nameErr ?></span></label>
+                <input class="form-control" type="text" name="last_name" value="<?php echo $last_name; ?>" >
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Gender: <span style="color:red;"><?php echo $genderErr ?></span></label><br>
+                <input type="radio" name="gender" value="male" checked> Male<br>
+                <input type="radio" name="gender" value="female"> Female<br>
+                <input type="radio" name="gender" value="other"> Other<br><br>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Age : <span style="color:red;"><?php echo $ageErr ?></span></label>
+                <input class="form-control" type="number" name="age" value="<?php echo $age; ?>" size="3" ><br><br>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Mobile : <span style="color:red;"><?php echo $mobileErr ?></span></label>
+                <input class="form-control" type="text" name="mobile" value="<?php echo $mobile; ?>" size="10"><br><br>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="email">Email: <span style="color:red;"><?php echo $emailErr ?></span></label>
+                <input class="form-control" type="text" id="email" value="<?php echo $email; ?>" name="email"><br><br>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="username">UserName :  <span style="color:red;"><?php echo $usernameErr ?></span></label>
+                <input class="form-control" type="text" id="username" value="<?php echo $username; ?>" name="username"><br><br>
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">User Status:</label><br>
+                <input type="radio" name="status" value="Active" checked>User Activate<br>
+                <input type="radio" name="status" value="InActive">User DeActivate<br>
+            <div class="form-outline mb-4">
+            </div>
+            <div class="form-outline mb-4">
+                <button class="btn btn-primary" style="width:100%" type="submit" name="update" value='<?php echo $_GET['user_id'] ?>'  class="registerbtn" >Submit</button>
+            </div>
         </div>
     </form>
 
-    <?php 
-        require_once('../common/footer.php');
-    ?>
 
 </body>
 </html>
