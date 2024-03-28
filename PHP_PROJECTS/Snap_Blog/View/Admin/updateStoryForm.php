@@ -47,18 +47,16 @@ if(isset($_SESSION['user_id'])){
             
                 for($i=0 ; $i< count($file['name']) ;$i++){
 
-                    $image = $file['name'][$i];
+                    $file_name = $file['name'][$i];
                     $file_size = $file['size'][$i];
                     $file_error = $file['error'][$i];
                     $tmp_name = $file['tmp_name'][$i];
 
                     if($file_error == 0){
-                        $fileDestination = '../../upload/'.$image;
+                        $fileDestination = '../../upload/'.$file_name;
                         move_uploaded_file($tmp_name , $fileDestination);
 
-                        $imageArray = compact('story_id' , 'image');
-
-                        $result =  $image->addImage($imageArray);
+                        $result =  $image->addImage($story_id , $file_name);
 
                         if($result)
                             $flag = true;
@@ -71,18 +69,16 @@ if(isset($_SESSION['user_id'])){
                 }
             }
             else{
-                $image = $file['name'];
+                $file_name = $file['name'];
                 $file_size = $file['size'];
                 $file_error = $file['error'];
                 $tmp_name = $file['tmp_name'];
 
                 if($file_error == 0){
-                    $fileDestination = '../../upload/'.$image;
+                    $fileDestination = '../../upload/'.$file_name;
                     move_uploaded_file($tmp_name , $fileDestination);
 
-                    $imageArray = compact('story_id' , 'image');
-
-                    $result =  $image->addImage($imageArray);
+                    $result =  $image->addImage($story_id , $file_name);
 
                     if($result)
                         $flag = true;
@@ -157,20 +153,18 @@ else
             <textarea class="form-control" id="content" name="content" rows="10" required ><?php echo $resultArray[0]['story_content'];?></textarea>
             </div>
             
-            <div class="container mb-4">
+            <div class="container mb-4" style="display:grid; grid-template-columns: auto auto;">
                 <?php
                     
                     $imageArray = $image->imageDetails($story_id);
-                    echo "<div class='d-flex'>";
                     foreach($imageArray as $key=>$path){
                         
                         echo 
-                            "<div class='card m-2' >
+                            "<div class='card p-2 m-2 '   >
                                 <img src='../../upload/{$path['image']}' alt='image Not uploaded'/>
                                 <a href=\"deleteImage.php?story_id={$resultArray[0]['story_id']}&image_id={$path['id']}\" class='btn btn-danger mt-2'>Delete</a>
                             </div>";
                     }
-                    echo "</div>";
                 ?>
             </div>
 
