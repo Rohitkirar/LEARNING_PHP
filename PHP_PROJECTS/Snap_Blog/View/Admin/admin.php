@@ -22,8 +22,6 @@ if(isset($_SESSION['user_id'])){
     if($userResult[0]['role'] != 'admin')
         header('location: logout.php');
   }
-
-
 }
 
 ?>
@@ -39,7 +37,7 @@ if(isset($_SESSION['user_id'])){
     <!-- navbar file add -->
     <?php require_once('adminnavbar.php') ?>
     <main role="main" >
-    <div class="d-flex" style=" align-items:center ; justify-content: space-between; height:2rem">
+    <div class="d-flex " style=" align-items:center ; justify-content: space-between; height:2rem">
         <?php 
           $story_count = $story->storyDetails();
           if($story_count)  
@@ -66,12 +64,25 @@ if(isset($_SESSION['user_id'])){
             $user_count = 0 ;
         ?>
 
-        <div class="card p-1" style="width:25%;" >Total story: <?php echo $story_count ?></div>
-        <div class="card p-1" style="width:25% ">Likes: <?php echo $like_count ?></div>
-        <div class="card p-1" style="width:25%">Comments: <?php echo $comment_count ?></div>
-        <div class="card p-1" style="width:25%">Total Users: <?php echo $user_count ?></div>
+        <div class="shadow-lg p-2 bg-white" style="width:25%;" >Total story: <?php echo $story_count ?></div>
+        <div class="shadow-lg p-2 bg-white" style="width:25% ">Likes: <?php echo $like_count ?></div>
+        <div class="shadow-lg p-2 bg-white" style="width:25%">Comments: <?php echo $comment_count ?></div>
+        <div class="shadow-lg p-2 bg-white" style="width:25%">Total Users: <?php echo $user_count ?></div>
     </div>
-    <div class="album py-5 bg-light">
+
+    <div class="album py-2 bg-light">
+    <div class="d-flex" style="align-items: center; justify-content:space-between">
+          <div>
+            <h3>Story</h3>
+          </div>
+          <div>
+              <form action="" method="">
+                Date From <input class="btn btn-outline-secondary" type="date" />
+                To <input class="btn btn-outline-secondary" type="date" />
+                <button class="btn btn-outline-success" type="submit" >Search</button>
+              </form>
+          </div>
+        </div>
       <div class="container">
 
         <div class="" style="display : grid ; grid-template-columns:auto auto auto auto;">

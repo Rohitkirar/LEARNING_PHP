@@ -5,6 +5,7 @@ if(isset($_SESSION['user']) || isset($_SESSION['admin'])){
     session_unset();
     session_destroy();
 }
+
 $ERROR = "";
 
 $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
@@ -78,25 +79,16 @@ if(isset($_POST['submit'])){
     if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
         
         require_once('../Class/Connection.php');
-        $conn = new Connection();
-        $conn = $conn->createConnection();
-        
-        if($conn){
+        require_once('../Class/User.php');
 
-            require_once('../Class/User.php');
-            $user = new USER();
+        $user = new USER();
 
-            if($user->userRegister(compact('first_name' , 'last_name' , 'age' , 'email' , 'gender' , 'username' , 'mobile' , 'password'))){
-                $ERROR = "";
-                unset($user);
-                header('location: login.php?RegisterSuccess=true');
-            }
-            else{
-                $ERROR = 'Failed to Register, Try Again!';
-            }
+        if($user->userRegister($_POST)){
+            $ERROR = "";
+            header('location: login.php?RegisterSuccess=true');
         }
         else{
-            $ERROR = 'Connection Lost!';
+            $ERROR = 'Failed to Register, Try Again!';
         }
 
     }

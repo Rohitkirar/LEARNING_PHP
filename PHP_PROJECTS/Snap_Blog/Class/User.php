@@ -11,14 +11,21 @@ class User extends Connection{
 
     public function userRegister($userdetails){
 
-        $keys = implode("," , array_keys($userdetails));
-        $values = substr(json_encode(array_values($userdetails)) , 1 , -1);
+        $password = md5($userdetails['password']) ;
         
-        $sql = "INSERT INTO users ($keys)
-                VALUES ($values)";
+        $sql = "INSERT INTO users (first_name , last_name , gender , age , mobile , email , username , password)
+                VALUES ( 
+                        '{$userdetails['first_name']}' , 
+                        '{$userdetails['last_name']}' , 
+                        '{$userdetails['gender']}' ,
+                        '{$userdetails['age']}' , 
+                        '{$userdetails['mobile']}' , 
+                        '{$userdetails['email']}' , 
+                        '{$userdetails['username']}' ,
+                        '$password' 
+                        )";
 
-        $result = mysqli_query($this->conn , $sql);
-        if($result)
+        if(mysqli_query($this->conn , $sql))
             return true;
         
         return false;
