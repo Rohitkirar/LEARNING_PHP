@@ -4,19 +4,23 @@ session_start();
 if(isset($_SESSION['user_id'])){
 
     require_once('../../class/connection.php');
+    require_once('../../Class/User.php');
+    require_once('../../Class/StoryCategory.php');
+    $user = new User();
+    $categoryobj = new StoryCategory();
 
-    $category_title = $Error = '';
+    $title = $Error = '';
     $flag = false;
 
     if(isset($_POST['submit'])){
 
-        $category_title = $_POST['category_title'];
+        $title = $_POST['category_title'];
 
         if(file_exists($_FILES['addimage']['tmp_name'])){
             
             $file = $_FILES['addimage'];
 
-            $file_name = $file['name'];
+            $image = $file['name'];
             $file_type = $file['type'];
             $file_type = substr($file_type , 0 , strpos($file_type , '/'));
             $file_size = $file['size'];
@@ -26,16 +30,13 @@ if(isset($_SESSION['user_id'])){
             if(!$file_error){
                 if($file_type == 'image'){
 
-                    $fileDestination = '../../upload/'.$file_name;
+                    $fileDestination = '../../upload/'.$image;
 
                     move_uploaded_file($tmp_name , $fileDestination);
+                    
+                    $categoryArray = compact('title' , 'image');
 
-                    $sql = "INSERT INTO storycategory (title , image) 
-                    VALUES ('$category_title' , '$file_name')";
-
-                    $result = mysqli_query($conn , $sql);
-
-                    if($result){
+                    if($categoryobj->addcategory($categoryArray)){
                         $Error = '';
                         $flag = true;
                     }
@@ -59,9 +60,7 @@ if(isset($_SESSION['user_id'])){
     }
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=false');
 }
 
 
@@ -90,16 +89,17 @@ else{
         <p class="text-center" style="color:red"><?php echo $Error ?><p>
 
         <form onsubmit="return confirm('Do you really want to submit the form');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
-            <br>
-            <label for="title">Category Title: <span style="color:red">* </span></label>
-            <input type='text' id="title" maxlength="20" name='category_title' value="<?php echo $category_title ?>"  required>
-            <br>    
-            <label >Add Image<span style="color:red">* </span></label>
-            <input type="file" class="image" name="addimage"  required/>
-            <br><br>
-            <hr>
-            <div class="card" style="border:none; background-color:transparent">
-                <button type="submit" name='submit'>Submit</button>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="title">Category Title: <span style="color:red">* </span></label>
+                <input class="form-control" type='text' id="title" maxlength="20" name='category_title' value="<?php echo $title ?>"  required>
+            </div>    
+            <div class="form-outline mb-4">    
+                <label class="form-label" >Add Image<span style="color:red">* </span></label>
+                <input class="form-control" type="file" class="image" name="addimage"  required/>
+            </div>
+            
+            <div class="card form-outline mb-4" style="border:none; background-color:transparent">
+                <button class="btn btn-primary" type="submit" name='submit'>Submit</button>
             </div>
 
         </form>
