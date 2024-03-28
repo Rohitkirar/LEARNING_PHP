@@ -10,7 +10,7 @@ if(isset($_SESSION['user_id'])){
 
     $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData['role'] != 'admin'){
+    if($userData[0]['role'] != 'admin'){
         header('location: ../logout.php?LogoutSuccess=false');
     }
 
@@ -70,7 +70,7 @@ if(isset($_SESSION['user_id'])){
 
         $userpassword = $_POST['password'];
 
-        if(preg_match("/^[a-zA-Z0-9]{6,15}$/" , $userpassword)){
+        if(preg_match("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/"  , $userpassword)){
             $passwordErr = '';
             if($userpassword == $username){
                 $passwordErr = "username and password should not be same!";
@@ -79,42 +79,30 @@ if(isset($_SESSION['user_id'])){
             }
         }
         else
-            $passwordErr = 'contains only characters, number and range(6,15) length!';
+            $passwordErr = 'Minimum 8 characters, at least one letter, one number, and one special character';
 
 
 
         if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $passwordErr == '' ){
 
             $role = 'user';
-            $resultarr = [$first_name , $last_name , $age , $gender , $email , $mobile , $username , $userpassword , $role];
-            
-            $resultstr = json_encode($resultarr);
-            $resultstr = substr($resultstr , 1 , -1);
-            
-            $role = $first_name = $last_name = $age = $gender = $email = $mobile = $username = $userpassword = ''; 
+            $password = $userpassword;
+            $userdetails = compact('first_name' , 'last_name' , 'age' , 'gender' , 'email' , 'mobile' , 'username' , 'password' , 'role');
 
-            $sql = "INSERT INTO users
-                        (first_name , last_name , age , gender , email , mobile , username , password , role)
-                    VALUES($resultstr)";
-
-            $result = mysqli_query($conn , $sql);
+            $result = $user->userRegister($userdetails);
             
             if($result){
                 $_SESSION['addusersuccess'] = true;
                 header('location: allUserDetails.php');
             }
             else
-                echo "ERROR : " . mysqli_error($conn);
+                header('location: allUserDetails.php');
 
-            mysqli_close($conn);
         }
-
     }
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?LogoutSuccess=false');
 }
 ?>
 <!DOCTYPE html>
@@ -122,8 +110,7 @@ else{
 <head>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../../public/css/register1.css">
-    <link rel="stylesheet" href="../../public/css/admin1.css">
+
     <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <!-- <link rel="stylesheet" href="../../public/css/style.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    
@@ -134,55 +121,57 @@ else{
     
     <form onsubmit="return confirm('Do you want to add this user!') " action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="post" >
 
-        <div class="container p-5 shadow-lg p-3  rounded">
-
-            <center><h1>Add New User </h1></center>
+        <div class="container p-5 shadow-lg p-3 mt-4 rounded" style="width:40%">
+            <div class="text-center">
+                <p >
+                    <img src="../../upload/snapchat.png" alt="logo" style="width:10%">
+                    <span style="font-size:x-large">ɮʟօɢ</span>
+                </p>
+                <h4 class="mt-1 mb-5 pb-1">Add New User</h4>
+            </div>
 
             <hr>
 
-            <label>Firstname <span style="color:red;"><?php echo '* ' . $first_nameErr ?></span></label>
-            <input type="text" name="first_name" value="<?php echo $first_name; ?>" >
-            
-            <label>Lastname: <span style="color:red;"><?php echo '* ' . $last_nameErr ?></span></label>
-            <input type="text" name="last_name" value="<?php echo $last_name; ?>" >
-            
-            <label>Gender: <span style="color:red;"><?php echo '* ' . $genderErr ?></span></label><br>
-            <input type="radio" name="gender" value="male" checked> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            <input type="radio" name="gender" value="other"> Other<br><br>
-            
-            <label>Age : <span style="color:red;"><?php echo '* ' . $ageErr ?></span></label>
-            <input type="number" name="age" value="<?php echo $age; ?>" size="3" ><br><br>
-            
-            <label>Mobile : <span style="color:red;"><?php echo '* ' . $mobileErr ?></span></label>
-            <input type="Number" name="mobile" maxlength="10" value="<?php echo $mobile; ?>" size="10"><br><br>
-            
-            <label for="email">Email: <span style="color:red;"><?php echo '* ' . $emailErr ?></span></label>
-            <input type="text" id="email" value="<?php echo $email; ?>" name="email"><br><br>
-            
-            <label for="username">UserName :  <span style="color:red;"><?php echo '* ' . $usernameErr ?></span></label>
-            <input type="text" id="username" maxlength="25" value="<?php echo $username; ?>" name="username"><br><br>
-            
-            <label for="pass">Password:  <span style="color:red;"><?php echo '* ' . $passwordErr ?></span></label>
-            <input type="password" id="pass" maxlength="15"  name="password"><br><br>
-            
-            <button type="submit" name="submit"  class="registerbtn" >Add User</button>
+            <div class="form-outline mb-4">
+                <label class="form-label" >Firstname <span style="color:red;"><?php echo '* ' . $first_nameErr ?></span></label>
+                <input class="form-control" type="text" name="first_name" value="<?php echo $first_name; ?>" >
+            </div>
 
+            <div class="form-outline mb-4">
+                <label class="form-label">Lastname: <span style="color:red;"><?php echo '* ' . $last_nameErr ?></span></label>
+                <input class="form-control" type="text" name="last_name" value="<?php echo $last_name; ?>" >
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Gender: <span style="color:red;"><?php echo '*  ' . $genderErr ?></span></label>
+                <input type="radio" name="gender" value="male" checked> Male
+                <input type="radio" name="gender" value="female"> Female
+                <input type="radio" name="gender" value="other"> Other
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Age : <span style="color:red;"><?php echo '* ' . $ageErr ?></span></label>
+                <input class="form-control" type="number" name="age" value="<?php echo $age; ?>" size="3" >
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Mobile : <span style="color:red;"><?php echo '* ' . $mobileErr ?></span></label>
+                <input class="form-control" type="Number" name="mobile" maxlength="10" value="<?php echo $mobile; ?>" size="10">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="email">Email: <span style="color:red;"><?php echo '* ' . $emailErr ?></span></label>
+                <input class="form-control" type="text" id="email" value="<?php echo $email; ?>" name="email">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="username">UserName :  <span style="color:red;"><?php echo '* ' . $usernameErr ?></span></label>
+                <input class="form-control" type="text" id="username" maxlength="25" value="<?php echo $username; ?>" name="username">
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label" for="pass">Password:  <span style="color:red;"><?php echo '* ' . $passwordErr ?></span></label>
+                <input class="form-control" type="password" id="pass" maxlength="15"  name="password">
+            </div>
+            <div class="form-outline mb-4">
+                <button class="btn btn-primary w-100" type="submit" name="submit"  class="registerbtn" >Add User</button>
+            </div>
         </div>
     </form>
 
-    <?php 
-        require_once('../common/footer.php')
-    ?>
 </body>
 </html>
-
-
-
-<?php 
-
-        // $sql = "INSERT INTO users
-        //             (first_name , last_name , age , gender , email , mobile , username , password , role)
-        //         VALUES
-        //             ('$first_name' , '$last_name' , '$age' , '$gender' , '$email' , '$mobile' , '$username' , '$password' , '$role')";
-?>
