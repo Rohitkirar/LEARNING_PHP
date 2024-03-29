@@ -31,7 +31,7 @@ if(isset($_SESSION['user_id'])){
             $userstatus = 'Active';
         } 
 
-        $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = '';
+        $ERROR = $first_nameErr = $last_nameErr = $ageErr = $genderErr = $emailErr = $mobileErr = $usernameErr = '';
 
         if(isset($_POST['update'])){
 
@@ -104,16 +104,14 @@ if(isset($_SESSION['user_id'])){
             if($first_nameErr == '' && $last_nameErr == '' && $ageErr == '' && $genderErr == '' && $emailErr == '' && $mobileErr == '' && $usernameErr == '' && $statusErr == ''){
 
                 if($status){
-                    $userdetails = compact('first_name' , 'last_name' , 'age' , 'gender' , 'email' , 'mobile' , 'username' );
 
-                    $result = $user->updateUserDetails($user_id , null , $userdetails);
-                    
-                    if($result){
+                    if($user->updateUserDetails($user_id , null , $_POST)){
+                        $ERROR = '';
                         $_SESSION['useraddsuccess'] = true;
                         header('location: allUserDetails.php');
                     }
                     else
-                        header('location: allUserDetails.php');
+                        $ERROR = "Failed To Update, Please Try Again!";  
                 }
                 else
                     header("location: deleteUser.php?user_id=$user_id");
@@ -144,6 +142,7 @@ else{
                     <span style="font-size:x-large">ɮʟօɢ</span>
                 </p>
                 <h4 class="mt-1 mb-5 pb-1">Edit User Info</h4>
+                <center style="color : red;"><?php echo $ERROR ?> </center>
             </div>
             <hr>
             <div class="form-outline mb-4">
