@@ -23,6 +23,9 @@
             <li class="nav-item">
                 <a class='nav-link' style="color:white" href="categorydetails.php" >Category DashBoard</a>
             </li>
+            <li class="nav-item">
+                <a class='nav-link' style="color:white" href="storyDashboard.php" >Story DashBoard</a>
+            </li>
         </ul>
     </div>
     <div>

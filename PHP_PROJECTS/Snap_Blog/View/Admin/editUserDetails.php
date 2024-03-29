@@ -179,7 +179,6 @@ else{
                 <label class="form-label">User Status:</label><br>
                 <input type="radio" name="status" value="Active" checked>User Activate<br>
                 <input type="radio" name="status" value="InActive">User DeActivate<br>
-            <div class="form-outline mb-4">
             </div>
             <div class="form-outline mb-4">
                 <button class="btn btn-primary" style="width:100%" type="submit" name="update" value='<?php echo $_GET['user_id'] ?>'  class="registerbtn" >Submit</button>

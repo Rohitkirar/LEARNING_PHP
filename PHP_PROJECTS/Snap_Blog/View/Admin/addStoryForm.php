@@ -16,94 +16,71 @@ if(isset($_SESSION['user_id'])){
 
     $userData = $user->userDetails($_SESSION['user_id']);
 
-    if($userData[0]['role'] == 'admin'){
+    if($userData[0]['role'] != 'admin'){
+        header('location: ../logout.php?LogoutSuccess=false');
+    }
 
-        $ERROR = $user_id = $category_id = $content = $story_title = '';
+    $ERROR  = $category_id = $content = $title = '';
 
-        $categoryArray = $categoryobj->categoryDetails();
+    $categoryArray = $categoryobj->categoryDetails();
 
-        if(isset($_POST['submit'])){
+    if(isset($_POST['submit'])){
 
-            // story data inserting in database;
+        // story data inserting in database;
 
-            $category_id  = $_POST['category_id'];
-            $title = addslashes($_POST['story_title']);
-            $content = addslashes($_POST['content']);
+        $category_id  = $_POST['category_id'];
+        $title = ($_POST['title']);
+        $content = ($_POST['content']);
 
-            $user_id = $_SESSION['user_id'];
+        $story_id = $story->addStory( $_SESSION['user_id'] , $_POST ) ;
 
-            $storyArray = compact('user_id' , 'category_id' , 'title' , 'content');
-
-            $result = $story->addStory($storyArray) ;
-
-            if($result){
-                echo "successfully inserted data";
-            }
-            else{
-                $ERROR = "Failed to insert Data";
-            }
-
-
-            if(isset($_FILES['image'])){
-
-                $story_id = $story->getLastStoryId();
-                $story_id = $story_id['story_id'];
+        if($story_id){
+            if(isset($_FILES['image']) && !empty($_FILES['image']['name'][0])){
 
                 $file = $_FILES['image'];
-                
                 for($i=0 ; $i< count($file['name']) ;$i++){
-
                     $file_name = $file['name'][$i];
                     $file_type = $file['type'][$i];
                     $file_type = substr($file_type , 0 , strpos($file_type , '/'));
                     $file_size = $file['size'][$i];
                     $file_error = $file['error'][$i];
                     $tmp_name = $file['tmp_name'][$i];
-
                     if($file_error == 0){
-                        echo $file_type;
                         if($file_type == 'image'){
                             
-                            $ERROR = '';
-
-                            $filenameErr = '';
-
+                            $ERROR = $filenameErr = '';
                             $fileDestination = '../../upload/'.$file_name;
                             
                             move_uploaded_file($tmp_name , $fileDestination);
-
+    
                             $result = $imageobj->addImage($story_id , $file_name );
-
+    
                             if($result)
-                                echo "successfully inserted data";
+                                continue;
                             else
                                 $ERROR  = "Failed to upload image";  
                         }
-                        else{
+                        else
                             $ERROR =  "Invalid file type, Upload Image type only!";
-                        }
+                        
                     }
                     else
                         $ERROR =  'error :file not uploaded';
                 }
             }
-            if($ERROR == ''){
-                $_SESSION['addstory'] = true; 
-                header('location: admin.php');
-            }
+        }
+        else
+            $ERROR = "Failed to insert Data";
+        
+        if($ERROR == ''){
+            $_SESSION['addstory'] = true; 
+            header('location: admin.php');
         }
     }
-    else{
-        session_unset();
-        session_destroy();
-        header('location: ../common/logout.php?LogoutSuccess=true');
-    }    
 }
-else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
-}
+else
+    header('location: ../logout.php?LogoutSuccess=false');
+
 
 
 ?>
@@ -142,8 +119,8 @@ else{
                     <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >                        
                         
                         <div class="form-outline mb-4">
-                            <label class="form-label"  for="title">Category Title:<span style="color:red">* </span></label>
-                            <select class="form-control" id="title" name='category_id'>
+                            <label class="form-label"  for="category_title">Category Title:<span style="color:red">* </span></label>
+                            <select class="form-control" id="category_title" name='category_id'>
                                 <?php 
                                     foreach($categoryArray as $key=>$values){
                                             echo "<option value='". $categoryArray[$key]['id'] ."'>" . $categoryArray[$key]['Title'] . "</option>";
@@ -153,13 +130,13 @@ else{
                         </div>
 
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="story_title">Story Title: <span style="color:red">* </span></label>
-                            <input class="form-control" type="text" name='story_title' id='story_title' required />    
+                            <label class="form-label" for="title">Story Title: <span style="color:red">* </span></label>
+                            <input class="form-control" type="text" name='title' id='title' value="<?php echo $title ?>" required />    
                         </div>
 
                         <div class="form-outline mb-4">
                             <label class="form-label" for="content">Content: <span style="color:red">* </span></label>
-                            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Write your story here" required></textarea>   
+                            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Write your story here" required><?php echo $content ?></textarea>   
                         </div>
 
                         <div class="form-outline mb-4">

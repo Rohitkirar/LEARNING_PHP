@@ -14,21 +14,27 @@ if(isset($_SESSION['user_id'])){
     $userData = $user->userDetails($_SESSION['user_id']);
 
     if($userData['role'] != 'admin'){
-        header('location: ../common/logout.php?LogoutSuccess=false');
+        header('location: ../logout.php?LogoutSuccess=false');
     }
-        $story_id = $_GET['story_id'];
+    $story_id = $_GET['story_id'];
 
-        $result = $story->deleteStory($story_id);
-        
-        if($result){
+    $result = $story->deleteStory($story_id);
+    
+    if($result){
+        if(isset($_GET['status'])){
+            $_SESSION['storydelete'] = true;
+            header('location: storydashboard.php');
+        }
+        else{
             $_SESSION['storydelete'] = true;
             header('location: admin.php');
         }
-        else
-            header('location: admin.php');
+    }
+    else
+        header('location: admin.php');
 }
 else{
-    header('location: ../common/logout.php?LogoutSuccess=false');
+    header('location: ../logout.php?LogoutSuccess=false');
 }
 
 ?>

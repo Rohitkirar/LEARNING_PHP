@@ -13,92 +13,76 @@ if(isset($_SESSION['user_id'])){
     $story = new Story();
     $image = new StoryImage();
     $category = new StoryCategory();
+
+    $userData = $user->userDetails($_SESSION['user_id']);
+
+    if($userData[0]['role'] != 'admin')
+        header('location: ../logout.php?logoutsuccess=false');
         
-    $user_id = $category_id = $content = $story_title = '' ;
+    $ERROR = $user_id = $category_id = $content = $story_title = '' ;
     $flag = false;
 
     $categoryArray = $category->categoryDetails();
 
     if(isset($_POST['submit'])){
 
-        $category_id  = $_POST['category_id'];
-        $title = addslashes($_POST['story_title']);
-        $content = addslashes($_POST['content']);
-
         $story_id = $_POST['submit'];
-        $storyArray = compact('category_id' , 'title' , 'content');
 
-        $result = $story->updateStory($story_id , $storyArray);
-
-        if($result){
-            echo "successfully updated story data";
-            $flag = true;
+        if($_POST['status'] == 0){
+            header("location: deleteStory.php?story_id=$story_id");
         }
         else{
-            echo "ERROR " . mysqli_error($conn);
-            $flag = false;
-        }
 
-        if(file_exists($_FILES['addimage']['tmp_name'][0])){
+            $result = $story->updateStory($story_id , $_POST);
 
-            $file = $_FILES['addimage'];
-
-            if(is_array($file['name'])){
-            
-                for($i=0 ; $i< count($file['name']) ;$i++){
-
-                    $file_name = $file['name'][$i];
-                    $file_size = $file['size'][$i];
-                    $file_error = $file['error'][$i];
-                    $tmp_name = $file['tmp_name'][$i];
-
-                    if($file_error == 0){
-                        $fileDestination = '../../upload/'.$file_name;
-                        move_uploaded_file($tmp_name , $fileDestination);
-
-                        $result =  $image->addImage($story_id , $file_name);
-
-                        if($result)
-                            $flag = true;
-                        
+            if($result){
+                $ERROR = '';
+                if(isset($_FILES['image']) && !empty($_FILES['image']['name'][0])){
+                    $file = $_FILES['image'];
+                    for($i=0 ; $i < count($file['name']) ;$i++){
+                        $file_name = $file['name'][$i];
+                        $file_type = $file['type'][$i];
+                        $file_type = substr($file_type , 0 , strpos($file_type , '/'));
+                        $file_size = $file['size'][$i];
+                        $file_error = $file['error'][$i];
+                        $tmp_name = $file['tmp_name'][$i];
+                        if($file_error == 0){
+                            if($file_type == 'image'){
+                                
+                                $ERROR = $filenameErr = '';
+                                $fileDestination = '../../upload/'.$file_name;
+                                
+                                move_uploaded_file($tmp_name , $fileDestination);
+        
+                                $result = $image->addImage($story_id , $file_name );
+        
+                                if($result)
+                                    continue;
+                                else
+                                    $ERROR  = "Failed to upload image";  
+                            }
+                            else
+                                $ERROR =  "Invalid file type, Upload Image type only!";
+                            
+                        }
                         else
-                            $flag = false;
+                            $ERROR =  'File not uploaded';
                     }
-                    else
-                        $flag = false;
                 }
             }
-            else{
-                $file_name = $file['name'];
-                $file_size = $file['size'];
-                $file_error = $file['error'];
-                $tmp_name = $file['tmp_name'];
+            else
+                $ERROR = 'failed to update story!';
 
-                if($file_error == 0){
-                    $fileDestination = '../../upload/'.$file_name;
-                    move_uploaded_file($tmp_name , $fileDestination);
-
-                    $result =  $image->addImage($story_id , $file_name);
-
-                    if($result)
-                        $flag = true;
-                    
-                    else
-                        $flag = false;
-                    
-                }
-                else
-                    $flag = false;
-                
+        
+            if($ERROR == ''){
+                $_SESSION['updatestory'] = true;
+                header("location: adminStoryView.php?story_id=$story_id");
             }
-        }
+        }    
     }
-    if($flag)
-        header("location: adminStoryView.php?story_id=$story_id");
-    
 }
 else
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?logoutsuccess=false');
 
 ?>
 <!DOCTYPE html>
@@ -122,19 +106,21 @@ else
                 <img src="../../upload/snapchat.png" alt="logo" style="width:10%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </p>
-            <h4 class="mt-1 mb-5 pb-1">Update Story</h4>
+            <h4 class="mt-1 pb-1">Update Story</h4>
+            <center class="mb-3" style="color : red;"><?php echo $ERROR ?></center>
         </div>
         
         <form onsubmit="return confirm('Do you really want to update the story')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
-            <?php 
-                $story_id = $_GET['story_id'];
+            <?php
+                if(isset($_GET['story_id'])) 
+                    $story_id = $_GET['story_id'];
                 
                 $resultArray = $story->storyDetails($story_id); 
             ?>
             <div class="form-outline mb-4">
-            <label class="form-label" for="title">Category Title:</label>
-            <select id="title" name='category_id' >
+            <label class="form-label" for="category_title">Category Title:</label>
+            <select id="category_title" name='category_id' >
                 <?php 
                     foreach($categoryArray as $key=>$values){
                             echo "<option value='". $categoryArray[$key]['id'] ."'>" . $categoryArray[$key]['Title'] . "</option>";
@@ -144,8 +130,8 @@ else
             </div>
             
             <div class="form-outline mb-4">
-            <label class="form-label" for="story_title">Story Title:</label>
-            <input class="form-control" type="text" name='story_title' id='story_title' value="<?php echo $resultArray[0]['story_title'];?>" required />
+            <label class="form-label" for="title">Story Title:</label>
+            <input class="form-control" type="text" name='title' id='title' value="<?php echo $resultArray[0]['story_title'];?>" required />
             </div>
             
             <div class="form-outline mb-4">
@@ -157,24 +143,30 @@ else
                 <?php
                     
                     $imageArray = $image->imageDetails($story_id);
-                    foreach($imageArray as $key=>$path){
-                        
-                        echo 
-                            "<div class='card p-2 m-2 '   >
-                                <img src='../../upload/{$path['image']}' alt='image Not uploaded'/>
-                                <a href=\"deleteImage.php?story_id={$resultArray[0]['story_id']}&image_id={$path['id']}\" class='btn btn-danger mt-2'>Delete</a>
-                            </div>";
-                    }
+                    if($imageArray)
+                        foreach($imageArray as $key=>$path){
+                            
+                            echo 
+                                "<div class='card p-2 m-2 '   >
+                                    <img src='../../upload/{$path['image']}' alt='image Not uploaded'/>
+                                    <a href=\"deleteImage.php?story_id={$resultArray[0]['story_id']}&image_id={$path['id']}\" class='btn btn-danger mt-2'>Delete</a>
+                                </div>";
+                        }
                 ?>
             </div>
 
             <div class="form-outline mb-4">
             <label class="form-label" for="image">Add Image</label>
-            <input class="form-control" type="file" id="image" name="addimage[]" multiple value='' />
+            <input class="form-control" type="file" id="image" name="image[]" multiple />
+            </div>
+            <div class="form-outline mb-4">
+                <label class="form-label">Story Status:</label><br>
+                <input type="radio" name="status" value="1" checked>Active<br>
+                <input type="radio" name="status" value="0">Hide<br>
             </div>
             
             <div class="form-label" class="form-outline mb-4">
-            <button class="form-control btn btn-primary" style="width:100%" type="submit" name='submit' value="<?php echo $resultArray[0]['story_id'] ?>">Submit</button>
+                <button class="form-control btn btn-primary" style="width:100%" type="submit" name='submit' value="<?php echo $resultArray[0]['story_id'] ?>">Submit</button>
             </div>
         </form>
     </div>

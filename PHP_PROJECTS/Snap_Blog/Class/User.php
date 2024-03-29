@@ -55,7 +55,7 @@ class User extends Connection{
         else
             $sql = "SELECT * , IF(deleted_at , 0 , 1) as status 
                     FROM users 
-                    WHERE role != 'admin'  ";
+                    WHERE role != 'admin' ";
         
         $result = mysqli_query($this->conn , $sql);
 

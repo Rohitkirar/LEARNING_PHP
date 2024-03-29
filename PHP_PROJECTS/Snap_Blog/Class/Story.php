@@ -1,5 +1,4 @@
 <?php 
-
 class Story extends Connection{
     private $admin_id ;
 
@@ -7,6 +6,20 @@ class Story extends Connection{
         $this->createConnection() ;  
         if($admin_id)
             $this->admin_id = $admin_id ;
+    }
+    public function getAllStoryData(){
+        $sql = "SELECT story.id as story_id , storycategory.id as category_id , 
+                    story.title as story_title ,  storycategory.title as category_title , 
+                    story.content as story_content , story.created_at , story.updated_at , story.deleted_at
+                    FROM story JOIN storycategory 
+                    ON story.category_id = storycategory.id
+                    ORDER BY story.created_at DESC;";
+        $result = mysqli_query($this->conn , $sql);
+        
+        if(mysqli_num_rows($result))
+            return $result ;
+        
+        return false;
     }
     
     public function storyDetails($story_id = null , $category_id = null){
@@ -16,7 +29,7 @@ class Story extends Connection{
                     story.content as story_content
                     FROM story JOIN storycategory 
                     ON story.category_id = storycategory.id AND story.id = $story_id
-                    WHERE storycategory.deleted_at IS NULL AND story.deleted_at IS NULL;";
+                    ;";
                 
         }
         elseif($category_id){
@@ -44,44 +57,40 @@ class Story extends Connection{
         }
         return false;
     }
-    public function getLastStoryId(){
-        $sql = "SELECT id as story_id FROM story order by id DESC LIMIT 1";
-        $result = mysqli_query($this->conn , $sql);
-        if(mysqli_num_rows($result)>0){
-            $result = mysqli_fetch_assoc($result);
-            return $result;
-        }
-        return false;
-    }
 
-    public function addStory($storyArray){
-
-        $storykeyarray = implode("," , array_keys($storyArray));
+    public function addStory($user_id , $storyArray){
         
-        $storyvaluesarray = substr(json_encode(array_values($storyArray)) , 1 , -1);
-        
+        $title = addslashes($storyArray['title']);
+        $content = addslashes($storyArray['content']);
 
-        $sql = "INSERT INTO story ($storykeyarray)
-                VALUES  ($storyvaluesarray);";
+        $sql = "INSERT INTO story (user_id , category_id , Title , content)
+                VALUES( $user_id , {$storyArray['category_id']} , '$title' , '$content')";
 
         $result = mysqli_query($this->conn , $sql);
         
         if($result)
-            return true;
+            return mysqli_insert_id($this->conn);
         
         return false;
     }
 
     public function updateStory($story_id  , $storyArray){
-        foreach($storyArray as $key => $value){
-            $sql = "UPDATE story SET $key = '$value' WHERE id = $story_id";
-            $result = mysqli_query($this->conn , $sql);
-            if($result)
-                continue;
-            
-            return false;
-        }
-        return true;
+
+        $title = addslashes($storyArray['title']);
+        $content = addslashes($storyArray['content']);
+
+        $sql = "UPDATE story
+                SET category_id = {$storyArray['category_id']} ,
+                    title = '$title' ,
+                    content = '$content' ,
+                    deleted_at = DEFAULT
+                WHERE id = $story_id";
+                
+        $result = mysqli_query($this->conn , $sql);
+        if($result)
+            return true;
+        
+        return false;
     }
 
     public function deleteStory($story_id){
@@ -103,6 +112,46 @@ class Story extends Connection{
         return false;    
     }
     
+    public function totalCountInRange($startrange , $endrange){
+        $Countarray = [];
+        $sql = "SELECT count(id) as like_count  From StoryLikes WHERE deleted_at IS NULL AND DATE(created_at) BETWEEN '$startrange' AND '$endrange' "; 
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)){
+            $result = mysqli_fetch_assoc($result);
+            $Countarray['like_count'] = $result['like_count'];
+        }else
+            $Countarray['like_count'] = 0 ; 
+
+        $sql = "SELECT count(id) as user_count From Users WHERE deleted_at IS NULL AND role != 'admin' AND DATE(created_at) BETWEEN '$startrange' AND '$endrange'  "; 
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)){
+            $result = mysqli_fetch_assoc($result);
+            $Countarray['user_count'] = $result['user_count'];
+        }else
+            $Countarray['user_count'] = 0;
+
+
+        $sql = "SELECT count(id) as comment_count FROM StoryComments WHERE deleted_at IS NULL AND DATE(created_at) BETWEEN '$startrange' AND '$endrange'  " ;
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)){
+            $result = mysqli_fetch_assoc($result);
+            $Countarray['comment_count'] = $result['comment_count'];
+        }
+        else
+            $Countarray['comment_count'] = 0;
+
+        $sql = "SELECT count(id) as story_count FROM Story WHERE deleted_at IS NULL AND DATE(created_at) BETWEEN '$startrange' AND '$endrange' " ; 
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)){
+            $result = mysqli_fetch_assoc($result);
+            $Countarray['story_count'] = $result['story_count'];
+        }
+        else 
+            $Countarray['story_count'] = 0;
+
+
+        return $Countarray;
+    }
 }
 
 ?>

@@ -47,8 +47,10 @@ if(isset($_SESSION['user_id'])){
 
         if($result){
 
-            if($_POST['status'] == 0)
+            if($_POST['status'] == 0){
+                $_SESSION['updatecategorysuccess'] = true;
                 header("location: categoryDetails.php");
+            }
 
             elseif($_POST['status'])
                 header("location: deleteCategory.php?category_id=$category_id");
@@ -60,7 +62,7 @@ if(isset($_SESSION['user_id'])){
     }
 }
 else{
-    header('location: ../logout.php?LogoutSuccess=false');
+    header('location: ../logout.php?logoutsuccess=false');
 }    
 
 
@@ -71,9 +73,7 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Story Form</title>
-    <link rel="stylesheet" href="../../public/css/addstoryform.css">
-    <link rel="stylesheet" href="../../public/css/admin1.css">
-    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>

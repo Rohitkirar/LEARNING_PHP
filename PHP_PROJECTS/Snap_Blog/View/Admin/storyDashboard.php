@@ -5,9 +5,11 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../class/connection.php');
     require_once('../../class/User.php');
+    require_once('../../class/Story.php');
     require_once('../../class/storycategory.php');
     
     $user = new User();
+    $story = new Story();
     $category = new StoryCategory();
 
     $userData = $user->userDetails($_SESSION['user_id']);
@@ -57,44 +59,50 @@ else{
     <main class="bg-white" >
 
         <div class="mb-3 pt-2">
-            <span><strong style="font-size:x-large;">Category Details</strong></span>
-            <span style="float:right"><a class="btn btn-success" href="addCategoryForm.php" >Add Category</a></span>
+            <span><strong style="font-size:x-large;">Story DashBoard</strong></span>
+            <span style="float:right"><a class="btn btn-success" href="addStoryForm.php" >Add Story</a></span>
         </div>
         <div  class="card m-4 p-3" style="margin: 0 auto;">
             <table id="categorytable" class='table table-hover' >
                 <thead style="color:red">
                     <tr style="color:red">
                         <th>S.No</th>
-                        <th>Image</th>
+                        <!-- <th>Image</th> -->
+                        <th>category</th>
                         <th>Title</th>
+                        <!-- <th>Content</th>
+                        <th>Image</th> -->
                         <th>created_at</th>
                         <th>updated_at</th>
                         <th>deleted_at</th>
-                        <th>View Post</th>
                         <th>Update</th>
+                        <th>Story</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php 
                     
-                    $userDataArray = $category->categoryDetails(null , true);
+                    $storyDataArray = $story->getAllStoryData();
+                    // $categoryDataArray = $category->categoryDetails();
                     
-                    foreach($userDataArray as $key => $values){
+                    foreach($storyDataArray as $key => $values){
+                        // <td><button class='btn btn-secondary' onclick='viewContent({$values['story_id']})' >Open</button></td>
+                        // <td><button class='btn btn-secondary' onclick='viewImage({$values['story_id']})' >Open</button></td>
                         echo "<tr> 
                                 <td>". $key+1 ."</td>
-                                <td><img src='../../upload/{$values['image']}' class=' rounded-circle' style='height:90px ; width:90px;' alt='image not uploaded'/></td>
-                                <td>{$values['Title']}</td>
+                                <td>{$values['category_title']}</td>
+                                <td>{$values['story_title']}</td>
                                 <td>{$values['created_at']}</td>
                                 <td>{$values['updated_at']}</td>
                                 <td>{$values['deleted_at']}</td>
-                                <td><a class='btn btn-success' href='adminallstoryview.php?category_id={$values['id']}' >View</a></td>
-                                <td><a class='btn btn-primary' href='Editcategorydetails.php?category_id={$values['id']}' >Update</a></td>";
+                                <td><a class='btn btn-primary' href='updatestoryform.php?story_id={$values['story_id']}' >Update</a></td>";
                                 if(empty($values['deleted_at'])){
-                                    echo "<td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deletecategory.php?category_id={$values['id']}' >Delete</a></td>";   
+                                    echo "<td><a class='btn btn-success' href='adminstoryview.php?story_id={$values['story_id']}' >View</a></td>
+                                    <td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deleteStory.php?story_id={$values['story_id']}&status=1' >Delete</a></td>";   
                                 }
                                 else{
-                                    echo "<td></td>";   
+                                    echo "<td></td><td></td>";   
                                 }
                                 
                         echo "</tr>";
@@ -107,14 +115,7 @@ else{
     </main>
 
 <?php
-    if(isset($_SESSION['addcategorysuccess'])){
-        unset($_SESSION['addcategorysuccess']);
-        echo "<script> alert('Category Added Successfully!') </script>";
-    }
-    else if(isset($_SESSION['updatecategorysuccess'])){
-        unset($_SESSION['updatecategorysuccess']);
-        echo "<script> alert('Category Updated Successfully!') </script>";
-    }
+
     require_once('../footer.php');
 ?>
 </body>

@@ -168,6 +168,10 @@ else{
 <?php 
  
   require_once('../footer.php');
+  if(isset($_SESSION['updatestory'])){
+    unset($_SESSION['updatestory']);
+    echo "<script> alert('story updated successfully')</script>";
+  }
 
   if(isset($_SESSION['deletecomment'])){
     unset($_SESSION['deletecomment']);

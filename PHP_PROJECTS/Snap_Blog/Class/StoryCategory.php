@@ -8,11 +8,11 @@ class StoryCategory extends Connection{
         
     public function addCategory($categoryArray){
 
-        $categorykeys = implode("," , array_keys($categoryArray));
-        $categoryvalues = substr(json_encode(array_values($categoryArray)) , 1 , -1);
-
-        $sql = "INSERT INTO storycategory($categorykeys)
-                Values ($categoryvalues) ;";
+        $title = addslashes($categoryArray['title']);
+        $image = $categoryArray['image'];
+        
+        $sql = "INSERT INTO storycategory(title , image)
+                Values ('$title' , '$image') ;";
 
         $result = mysqli_query($this->conn , $sql);
         
@@ -24,19 +24,18 @@ class StoryCategory extends Connection{
 
     public function updateCategory($category_id , $categoryArray){
 
-        foreach($categoryArray as $key => $value){
+        $title = addslashes($categoryArray['title']);
+        $image = $categoryArray['image'];
 
-            $sql = "UPDATE storycategory
-                    SET $key = '$value' , deleted_at = DEFAULT WHERE id = $category_id ;";
+        $sql = "UPDATE storycategory
+                SET title = '$title' , image = '$image' , deleted_at = DEFAULT WHERE id = $category_id ;";
 
-            $result = mysqli_query($this->conn , $sql);
-            
-            if($result)
-                continue;
+        $result = mysqli_query($this->conn , $sql);
+        
+        if($result)
+            return true;
 
-            return false;
-        }
-        return true;
+        return false;
     }
 
     public function categoryDetails($category_id = null , $allcategorydata = false){
