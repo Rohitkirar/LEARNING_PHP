@@ -11,6 +11,8 @@ if(isset($_SESSION['user_id'])){
   $story = new Story();
   $image = new StoryImage();
 }
+else
+  header('location: ../logout.php?logoutsuccess=false');
 
 ?>
 <!DOCTYPE html>
