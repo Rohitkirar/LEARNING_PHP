@@ -5,6 +5,7 @@ if(isset($_SESSION['user_id'])){
 
     require_once('../../Class/Connection.php');
     require_once('../../Class/User.php');
+
     $user = new User();
 
     $oldpasswordErr = $newpasswordErr = $retypepasswordErr = $ERROR = '';
@@ -14,7 +15,11 @@ if(isset($_SESSION['user_id'])){
         $newpassword = $_POST['newpassword'];
 
         if(preg_match("/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,16}$/" , $newpassword)){
-            $newpasswordErr = '';
+            
+            if($newpassword == $_POST['oldpassword'])
+                $ERROR = "Current & new password should not be Same!";
+            else
+                $ERROR = $newpasswordErr =  '';
         }
         else
             $newpasswordErr = 'Minimum 8 characters, at least one letter, one number, and one special character';
@@ -22,31 +27,29 @@ if(isset($_SESSION['user_id'])){
 
         $retypepassword = $_POST['retypepassword'];
 
-        if($retypepassword == $newpassword){
+        if($retypepassword == $newpassword)
             $retypepasswordErr = '';
-        }
-        else{
+        
+        else
             $retypepasswordErr = "password doesn't match with new password";
-        }
+        
 
-        if($newpasswordErr == ''  && $retypepasswordErr == ''){
+        if($newpasswordErr == ''  && $retypepasswordErr == '' && $ERROR == ''){
             $oldpassword = $_POST['oldpassword'];
             
             if($user->updatePassword($_SESSION['user_id'] , $oldpassword , $newpassword)){
                 $_SESSION['successpassword']=true;
                 header('location: user.php');
             }
-            else{
+            else
                 $oldpasswordErr = "Invalid Current Password";
-            }
+            
         }
     }
 }
-else{
-    session_unset();
-    session_destroy();
+else
     header('location: ../logout.php?LogoutSuccess=true');
-}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,9 +65,7 @@ else{
     <section class="h-100 gradient-form" style="background-color: #eee;">
         <div class="container py-5 h-100 d-flex justify-content-center ; align-items-center">
             <div class="card rounded-3 text-black" style="width:40%">
-
                 <div class="card-body p-md-5 mx-md-4">
-
                     <div class="text-center">
                         <p>
                             <img src="../../upload/snapchat.png" alt="logo" style="width:15%" />
@@ -101,6 +102,7 @@ else{
         </div>
     </section>
     <?php 
+        // add footer file
         require_once('../footer.php');
     ?>
 </body>
