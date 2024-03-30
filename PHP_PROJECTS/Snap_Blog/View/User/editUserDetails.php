@@ -128,7 +128,7 @@ else{
                     
 
 
-                    <form onsubmit="return confirm('your are updating personal details')" action="<?php echo $_SERVER['PHP_SELF'] ?>"   method="post" >
+                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>"   method="post" >
 
                         <div class="form-outline mb-3">
                             <label class="form-label" for="first_name">Firstname <span style="color:red;"><?php echo '* '. $first_nameErr ?></span></span></label>

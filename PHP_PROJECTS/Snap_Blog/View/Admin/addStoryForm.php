@@ -90,9 +90,6 @@ else
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Story Form</title>
-    <link rel="stylesheet" href="../../public/css/addstoryform.css">
-    <link rel="stylesheet" href="../../public/css/admin1.css">
-    <!-- <link rel="stylesheet" href="../../public/css/style1.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -116,7 +113,7 @@ else
                     <center><p>Fill Details to Add Story</p></center>
                     <center><p><?php echo $ERROR ?></p></center>
 
-                    <form onsubmit="return confirm('Do you really want to submit the form?');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >                        
+                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >                        
                         
                         <div class="form-outline mb-4">
                             <label class="form-label"  for="category_title">Category Title:<span style="color:red">* </span></label>

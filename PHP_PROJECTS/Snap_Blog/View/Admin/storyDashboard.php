@@ -97,7 +97,7 @@ else{
                                     echo "<td><a class='btn btn-danger' onclick=\"return confirm('Do you want to delete the category')\" href='deleteStory.php?story_id={$values['story_id']}&status=1' >Delete</a></td>";   
                                 }
                                 else{
-                                    echo "<td></td><td></td>";   
+                                    echo "<td></td>";   
                                 }
                                 
                         echo "</tr>";

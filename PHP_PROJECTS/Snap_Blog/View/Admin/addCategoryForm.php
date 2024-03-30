@@ -92,7 +92,7 @@ else{
         <hr>
 
 
-        <form onsubmit="return confirm('Do you really want to submit the form');" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+        <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
             <div class="form-outline mb-4">
                 <label class="form-label" for="title">Category Title: <span style="color:red">* </span></label>
                 <input class="form-control" type='text' id="title" maxlength="20" name='category_title' value="<?php echo $title ?>"  required>

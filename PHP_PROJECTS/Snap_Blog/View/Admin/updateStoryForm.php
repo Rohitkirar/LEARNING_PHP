@@ -123,7 +123,7 @@ else
             <center class="mb-3" style="color : red;"><?php echo $ERROR ?></center>
         </div>
         
-        <form onsubmit="return confirm('Do you really want to update the story')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
+        <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data" >
 
             <?php
                 if(isset($_GET['story_id'])) 
@@ -158,12 +158,18 @@ else
                     $imageArray = $image->imageDetails($story_id);
                     if($imageArray)
                         foreach($imageArray as $key=>$path){
-                            
+                            if(count($imageArray)==1){
+                            echo 
+                                "<div class='card p-2 m-2 '   >
+                                    <img src='../../upload/{$path['image']}' alt='image Not uploaded'/>
+                                </div>";
+                            }else{
                             echo 
                                 "<div class='card p-2 m-2 '   >
                                     <img src='../../upload/{$path['image']}' alt='image Not uploaded'/>
                                     <a href=\"deleteImage.php?story_id={$resultArray[0]['story_id']}&image_id={$path['id']}\" class='btn btn-danger mt-2'>Delete</a>
                                 </div>";
+                            }
                         }
                 ?>
             </div>

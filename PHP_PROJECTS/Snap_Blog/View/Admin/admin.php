@@ -36,6 +36,7 @@ if(isset($_SESSION['user_id'])){
 <body>
     <!-- navbar file add -->
     <?php require_once('adminnavbar.php') ?>
+
     <main role="main" >
     <div class="d-flex " style=" align-items:center ; justify-content: space-between; height:3rem">
         <?php 
@@ -77,10 +78,74 @@ if(isset($_SESSION['user_id'])){
         </div>
       </div>
 
+  <div id="myCarousel" class="carousel slide wet-asphalt" data-bs-ride="carousel"  data-ride="carousel"   data-interval="5000" data-pause="false" >
+    <div class="carousel-inner">
+
+    <?php 
+      $storyArray = $story->storyDetails();
+      foreach($storyArray as $key => $values){           
+        $imageArray = $image->imageDetails($values['story_id']);
+        if($imageArray){
+    ?>
+    <?php if($key == 0 ) { ?>
+    <div class="carousel-item active" style="transition-duration: 1.5s;">
+      <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
+        <img class="d-block w-100" style="object-fit:fill; height:35rem; opacity:0.8;"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+        <div class="carousel-caption">
+          <div>
+            <h1>Title : <?php echo $values['story_title'] ?></h1>
+            <p>Category : <?php echo $values['category_title'] ?></p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <?php }
+    else { ?>
+    <div class="carousel-item" style="transition-duration: 1.5s;">
+      <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
+        <img class="d-block w-100" style="object-fit:fill; height:35rem; opacity:0.8"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Title : <?php echo $values['story_title'] ?></h5>
+          <h5>Category : <?php echo $values['category_title'] ?></h5>
+        </div>
+      </a>
+    </div>
+    <?php 
+        } 
+      } 
+    } ?>
+    
+    </div>
+    <button class="carousel-control-prev" 
+                    type="button" 
+                    data-bs-target="#myCarousel" 
+                    data-bs-slide="prev"> 
+                <span class="carousel-control-prev-icon  
+                             bg-black rounded-circle"  
+                      aria-hidden="true"> 
+                </span> 
+                <span class="visually-hidden"> 
+                    Previous 
+                </span> 
+            </button> 
+            <button class="carousel-control-next" 
+                    type="button" 
+                    data-bs-target="#myCarousel" 
+                    data-bs-slide="next"> 
+                <span class="carousel-control-next-icon  
+                             bg-black rounded-circle"  
+                      aria-hidden="true"> 
+                </span> 
+                <span class="visually-hidden"> 
+                    Next 
+                </span> 
+            </button> 
+  </div>
+
     <div class="album py-2 bg-light">
     <div class="d-flex" style="align-items: center; justify-content:space-between">
       <div>
-        <h3>Story</h3>
+        <h3>Latest Story</h3>
       </div>
       <!-- <div class="d-flex " style="height: 2rem; width:20%  ">
         <input type="search" class="form-control" id="search_field" placeholder="Search here" />
@@ -142,7 +207,36 @@ if(isset($_SESSION['user_id'])){
       echo "<script>alert('story deleted successfully!')</script>";
     }
   ?>
+  
+    <script src= 
+"https://code.jquery.com/jquery-3.6.4.min.js"> 
+    </script> 
+    <script src= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"> 
+    </script> 
+  
+    <script> 
+  
+        // Activate Carousel 
+
+        $('#myCarousel').carousel(); 
+  
+        // Enable Carousel Indicators 
+        $('.carousel-item').click(function () { 
+            $('#myCarousel').carousel($(this) 
+                            .index()); 
+        }); 
+  
+        // Pause the carousel when the mouse is over it 
+        $('#myCarousel').hover(function () { 
+            $(this).carousel('pause'); 
+        }, function () { 
+            $(this).carousel('cycle'); 
+        }); 
+    </script> 
   <script>
+
+
     function updateData(){
       let startrange = document.getElementById('startrange').value;
       let endrange = document.getElementById('endrange').value;

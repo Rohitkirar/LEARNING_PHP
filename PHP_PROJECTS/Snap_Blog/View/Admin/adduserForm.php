@@ -119,7 +119,7 @@ else{
     <!-- adding navbar file -->
     <?php require_once('adminnavbar.php') ?>
     
-    <form onsubmit="return confirm('Do you want to add this user!') " action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="post" >
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>"  method="post" >
 
         <div class="container p-5 shadow-lg p-3 mt-4 rounded" style="width:40%">
             <div class="text-center">

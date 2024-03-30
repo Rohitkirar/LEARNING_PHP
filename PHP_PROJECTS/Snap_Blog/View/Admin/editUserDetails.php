@@ -133,7 +133,7 @@ else{
     <!-- adding navbar file -->
     <?php require_once('adminnavbar.php') ?>
 
-    <form onsubmit="return confirm('Do you want to update user details') " action="<?php echo $_SERVER['PHP_SELF']."?user_id=$user_id"; ?>" method="post" >
+    <form  action="<?php echo $_SERVER['PHP_SELF']."?user_id=$user_id"; ?>" method="post" >
 
         <div class="container mt-5 p-5 shadow-lg mb-5 bg-white rounded" style="width:45%">
             <div class="text-center">

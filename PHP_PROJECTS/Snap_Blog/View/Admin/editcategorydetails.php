@@ -91,7 +91,7 @@ else{
             <h4 class="mt-1 mb-5 pb-1">Update Category Details</h4>
         </div>
         <hr>
-        <form onsubmit="confirm('please confirm to update the details')" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+        <form  action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
 
             <?php 
                 if(isset($_GET['category_id']))
