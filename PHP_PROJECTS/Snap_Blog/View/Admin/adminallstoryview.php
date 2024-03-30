@@ -38,6 +38,17 @@ if(isset($_SESSION['user_id'])){
         header('location: adminallstoryView.php');
     
     }
+    //edit comment logic
+
+    if(isset($_POST['editcomment'])){
+      $editCommentContent = $_POST['editcommentcontent'];
+      $comment_id = $_POST['editcomment'];
+  
+      if($comment->updateComment($comment_id , $editCommentContent))
+        header("location: adminallstoryView.php");
+      else
+        header("location: adminallstoryView.php");
+    }
   
   }
   else{
@@ -164,9 +175,21 @@ if(isset($_SESSION['user_id'])){
                 <div>
                   <div class="d-flex" style="justify-content: space-between;">
                     <div class="card-text" style="text-align: justify; font-weight:100 "><?php echo $v['full_name']?></div>
-                      <a class="btn btn-danger" href="../deletecomment.php?comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                    <div>
+                      <script> commentflag = true </script>
+                      <button class="btn btn-success editcommentbutton" id="editcommentbtn<?php echo $v['comment_id'] ?>" onclick="commentEditFunction(this.id)" >Edit</button>
+                      <a class="btn btn-danger" href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                    </div>
                   </div>
-                  <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
+                  <div id="showeditcomment<?php echo $v['comment_id'] ?>" style="display:none">
+                  <form action="<?php echo "{$_SERVER['PHP_SELF']}" ?>" method="POST">
+                    <input type="text" name="editcommentcontent" value="<?php echo $v['content']?>">
+                    <button type="submit" name="editcomment" class="btn btn-success" value="<?php echo $v['comment_id'] ?>">Edit</button>
+                  </form>
+                  </div>
+                  <div id="showcomment<?php echo $v['comment_id'] ?>" style="display:block">
+                    <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
+                  </div>
                   <hr>
                 </div>
                 <?php 
@@ -191,5 +214,7 @@ if(isset($_SESSION['user_id'])){
 <?php 
     require_once('../footer.php');
   ?>
+
+<script src="../../public/js/editcomment.js"></script>
 </body>
 </html>

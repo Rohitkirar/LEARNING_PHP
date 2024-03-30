@@ -40,21 +40,17 @@ class StoryComment extends Connection{
         return false;
     }
 
-    public function updateComment($story_id , $user_id , $commentArray){
+    public function updateComment($comment_id , $editCommentContent){
+        
+        $sql = "UPDATE storycomments SET content = '$editCommentContent' WHERE id = $comment_id";
+        
+        $result = mysqli_query($this->conn , $sql);
+        
+        if($result)
+            return true;
 
-        foreach($commentArray as $key => $value){
-            
-            $sql = "UPDATE storycomments SET $key = '$value' WHERE story_id = $story_id AND user_id = $user_id";
-            
-            $result = mysqli_query($this->conn , $sql);
-            
-            if($result)
-                continue;
+        return false;
 
-            return false;
-        }
-       
-        return true;
     }
     
     public function deleteComment($comment_id){

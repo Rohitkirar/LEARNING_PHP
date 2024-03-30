@@ -41,6 +41,15 @@ if(isset($_SESSION['user_id'])){
 
     }
   }
+  if(isset($_POST['editcomment'])){
+    $editCommentContent = $_POST['editcommentcontent'];
+    $comment_id = $_POST['editcomment'];
+
+    if($comment->updateComment($comment_id , $editCommentContent))
+      header("location: adminstoryView.php?story_id={$_GET['story_id']}");
+    else
+      header("location: adminstoryView.php?story_id={$_GET['story_id']}");
+  }
 }
 else{
   header('location: logout.php?success=false');
@@ -138,12 +147,22 @@ else{
                   if($commentArray){ 
                   foreach($commentArray as $k=>$v){  
                 ?>
-                <div>
-                  <div class="d-flex" style="justify-content: space-between;">
+                <div><div class="d-flex" style="justify-content: space-between;">
                     <div class="card-text" style="text-align: justify; font-weight:100 "><?php echo $v['full_name']?></div>
+                    <div>
+                      <button class="btn btn-success" id="editcommentbtn<?php echo $v['comment_id'] ?>" onclick="commentEditFunction(this.id)" >Edit</button>
                       <a class="btn btn-danger" href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                    </div>
                   </div>
-                  <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
+                  <div id="showeditcomment<?php echo $v['comment_id'] ?>" style="display:none">
+                  <form action="<?php echo "{$_SERVER['PHP_SELF']}?story_id={$values['story_id']}" ?>" method="POST">
+                    <input type="text" name="editcommentcontent" value="<?php echo $v['content']?>">
+                    <button type="submit" name="editcomment" class="btn btn-success" value="<?php echo $v['comment_id'] ?>">Edit</button>
+                  </form>
+                  </div>
+                  <div id="showcomment<?php echo $v['comment_id'] ?>" style="display:block">
+                    <p class="card-text" style="text-align: justify;"><?php echo $v['content']?></p>
+                  </div>
                   <hr>
                 </div>
                 <?php 
@@ -178,63 +197,58 @@ else{
   }
 ?>
 
-  
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-  <script src="../../assets/js/vendor/popper.min.js"></script>
-  <script src="../../dist/js/bootstrap.min.js"></script>
-  <script src="../../assets/js/vendor/holder.min.js"></script>
+<script src="../../public/js/editcomment.js"></script>
 
-  <script>
-    let sliderImages = document.querySelectorAll(".slide"),
-      arrowLeft = document.querySelector("#arrow-left"),
-      arrowRight = document.querySelector("#arrow-right"),
-      current = 0;
-      
-      // Clear all images
-      function reset() {
-      for (let i = 0; i < sliderImages.length; i++) {
-        sliderImages[i].style.display = "none";
-          }
-      }
-      
-      // Initial slide
-      function startSlide() {
-      reset();
-      sliderImages[0].style.display = "block";
-      }
-      
-      // Show previous
-      function slideLeft() {
-      reset();
-      sliderImages[current - 1].style.display = "block";
-      current--;
-      }
-      
-      // Show next
-      function slideRight() {
-      reset();
-      sliderImages[current + 1].style.display = "block";
-      current++;
-      }
-      
-      // Left arrow click
-      arrowLeft.addEventListener("click", function () {
-      if (current === 0) {
-        current = sliderImages.length;
-      }
-      slideLeft();
-      });
-      
-      // Right arrow click
-      arrowRight.addEventListener("click", function () {
-      if (current === sliderImages.length - 1) {
-        current = -1;
-      }
-      slideRight();
-      });
-      
-      startSlide();
-  </script>
+<script>
+  let sliderImages = document.querySelectorAll(".slide"),
+    arrowLeft = document.querySelector("#arrow-left"),
+    arrowRight = document.querySelector("#arrow-right"),
+    current = 0;
+    
+    // Clear all images
+    function reset() {
+    for (let i = 0; i < sliderImages.length; i++) {
+      sliderImages[i].style.display = "none";
+        }
+    }
+    
+    // Initial slide
+    function startSlide() {
+    reset();
+    sliderImages[0].style.display = "block";
+    }
+    
+    // Show previous
+    function slideLeft() {
+    reset();
+    sliderImages[current - 1].style.display = "block";
+    current--;
+    }
+    
+    // Show next
+    function slideRight() {
+    reset();
+    sliderImages[current + 1].style.display = "block";
+    current++;
+    }
+    
+    // Left arrow click
+    arrowLeft.addEventListener("click", function () {
+    if (current === 0) {
+      current = sliderImages.length;
+    }
+    slideLeft();
+    });
+    
+    // Right arrow click
+    arrowRight.addEventListener("click", function () {
+    if (current === sliderImages.length - 1) {
+      current = -1;
+    }
+    slideRight();
+    });
+    
+    startSlide();
+</script>
 </body>
 </html>
