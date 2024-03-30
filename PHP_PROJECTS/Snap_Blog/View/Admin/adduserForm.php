@@ -92,7 +92,7 @@ if(isset($_SESSION['user_id'])){
             $result = $user->userRegister($userdetails);
             
             if($result){
-                $_SESSION['addusersuccess'] = true;
+                $_SESSION['useraddsuccess'] = true;
                 header('location: allUserDetails.php');
             }
             else

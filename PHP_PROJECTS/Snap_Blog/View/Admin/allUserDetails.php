@@ -42,8 +42,8 @@ else{
     <?php require_once('adminnavbar.php') ?>
     
     <main class="bg-white" style="margin-top:0.2rem; ">
-        <div class="p-3">
-            <strong> All User's Details</strong>
+        <div class="mb-3 pt-2">
+            <span><strong style="font-size:x-large;">All User's Details</strong></span>
             <span style="float:right">
                 <a class="btn btn-success" href="adduserform.php">Add User</a>
             </span>
@@ -108,6 +108,18 @@ else{
     </main>
     <?php 
     require_once('../footer.php');
+    if(isset($_SESSION['useraddsuccess'])){
+        unset($_SESSION['useraddsuccess']);
+        echo "<script> alert('User Data Successfully Added!') </script>" ;
+    }
+    elseif(isset($_SESSION['deleteUser'])){
+        unset($_SESSION['deleteUser']);
+        echo "<script>alert('User Deleted Successfully!')</script>" ;
+    }
+    elseif(isset($_SESSION['userupdatesuccess'])){
+        unset($_SESSION['userupdatesuccess']);
+        echo "<script> alert('User Data Updated Successfully!') </script>" ;
+    }
   ?>
 </body>
 </html>

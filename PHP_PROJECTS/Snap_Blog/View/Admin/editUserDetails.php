@@ -107,7 +107,7 @@ if(isset($_SESSION['user_id'])){
 
                     if($user->updateUserDetails($user_id , null , $_POST)){
                         $ERROR = '';
-                        $_SESSION['useraddsuccess'] = true;
+                        $_SESSION['userupdatesuccess'] = true;
                         header('location: allUserDetails.php');
                     }
                     else

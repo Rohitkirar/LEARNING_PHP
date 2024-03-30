@@ -24,12 +24,18 @@ if(isset($_SESSION['user_id'])){
 
     $categoryArray = $category->categoryDetails();
 
+    if(isset($_GET['status']))
+        $_SESSION['status'] = $_GET['status'];
+    
+
     if(isset($_POST['submit'])){
 
         $story_id = $_POST['submit'];
 
         if($_POST['status'] == 0){
-            header("location: deleteStory.php?story_id=$story_id");
+            if(isset($_SESSION['status']))
+                unset($_SESSION['status']);
+            header("location: deleteStory.php?story_id=$story_id&status=1");
         }
         else{
 
@@ -75,8 +81,15 @@ if(isset($_SESSION['user_id'])){
 
         
             if($ERROR == ''){
-                $_SESSION['updatestory'] = true;
-                header("location: adminStoryView.php?story_id=$story_id");
+                if(isset($_SESSION['status'])){
+                    unset($_SESSION['status']);
+                    $_SESSION['updatestory'] = true;
+                    header("location: storydashboard.php");
+                }
+                else{
+                    $_SESSION['updatestory'] = true;
+                    header("location: adminStoryView.php?story_id=$story_id");
+                }
             }
         }    
     }

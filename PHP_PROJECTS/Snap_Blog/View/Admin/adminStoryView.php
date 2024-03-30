@@ -172,8 +172,7 @@ else{
     unset($_SESSION['updatestory']);
     echo "<script> alert('story updated successfully')</script>";
   }
-
-  if(isset($_SESSION['deletecomment'])){
+  elseif(isset($_SESSION['deletecomment'])){
     unset($_SESSION['deletecomment']);
     echo "<script> alert('comment delted successfully') </script>";
   }

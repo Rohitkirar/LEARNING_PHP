@@ -137,6 +137,10 @@ if(isset($_SESSION['user_id'])){
       unset($_SESSION['addstory']);
       echo "<script> alert('Story added successfull!') </script>";
     }
+    elseif(isset($_SESSION['storydelete'])){
+      unset($_SESSION['storydelete']);
+      echo "<script>alert('story deleted successfully!')</script>";
+    }
   ?>
   <script>
     function updateData(){
