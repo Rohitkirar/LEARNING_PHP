@@ -44,7 +44,7 @@ else
     <?php if($key == 0 ) { ?>
     <div class="carousel-item active">
       <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
-        <img class="d-block w-100" style="object-fit:fill; height:35rem; opacity:0.8;"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+        <img class="d-block w-100" style="object-fit:fill; height:35rem; "  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
         <div class="carousel-caption">
           <div>
             <h1>Title : <?php echo $values['story_title'] ?></h1>
@@ -57,7 +57,7 @@ else
     else { ?>
     <div class="carousel-item">
       <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
-        <img class="d-block w-100" style="object-fit:fill; height:35rem; opacity:0.8"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+        <img class="d-block w-100" style="object-fit:fill; height:35rem;"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
         <div class="carousel-caption d-none d-md-block">
           <h5>Title : <?php echo $values['story_title'] ?></h5>
           <h5>Category : <?php echo $values['category_title'] ?></h5>
