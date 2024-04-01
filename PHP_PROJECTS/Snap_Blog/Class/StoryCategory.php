@@ -64,9 +64,7 @@ class StoryCategory extends Connection{
         $sql = "UPDATE storycategory 
                 LEFT JOIN story ON storycategory.id = story.category_id 
                 LEFT JOIN storyimages ON storyimages.id = story.id
-                SET storycategory.deleted_at = CURRENT_TIMESTAMP , 
-                    story.deleted_at = CURRENT_TIMESTAMP,
-                    storyimages.deleted_at = CURRENT_TIMESTAMP
+                SET storycategory.deleted_at = CURRENT_TIMESTAMP 
                 WHERE storycategory.id = $category_id";
             
         $result = mysqli_query($this->conn , $sql);

@@ -31,107 +31,109 @@ else
   <?php require_once('navbar.php') ?>
 
   <hr style="margin:0 ; border:3px solid white;">
+  <div id="myCarousel" class="carousel slide wet-asphalt bg-white " data-bs-ride="carousel" data-interval="5000" data-pause="false">
+      <div class="carousel-inner">
 
-  <div id="myCarousel" class="carousel slide " style=" width:100%; margin: 0 auto;" data-ride="carousel">
-    <div class="carousel-inner">
+        <?php
+        $storyArray = $story->storyDetails();
+        foreach ($storyArray as $key => $values) {
+          $imageArray = $image->imageDetails($values['story_id']);
+          if ($imageArray) {
+        ?>
+            <?php if ($key == 0) { ?>
+              <div class="carousel-item active card p-4 " style="transition-duration: 1.5s; ">
+                <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
+                  <div>
+                    <img class="d-block w-100 " style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+                  </div>
+                  <div class="carousel-caption">
+                    <h4>Title :
+                      <?php echo $values['story_title'] ?>
+                    </h4>
+                    <p>Category :
+                      <?php echo $values['category_title'] ?>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            <?php } else { ?>
+              <div class="carousel-item card p-4" style="transition-duration: 1.5s;">
+                <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
+                  <img class="d-block w-100" style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Title :
+                      <?php echo $values['story_title'] ?>
+                    </h5>
+                    <h5>Category :
+                      <?php echo $values['category_title'] ?>
+                    </h5>
+                  </div>
+                </a>
+              </div>
+        <?php
+            }
+          }
+        } ?>
 
-    <?php 
-      $storyArray = $story->storyDetails();
-      foreach($storyArray as $key => $values){           
-        $imageArray = $image->imageDetails($values['story_id']);
-        if($imageArray){
-    ?>
-    <?php if($key == 0 ) { ?>
-    <div class="carousel-item active">
-      <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
-        <img class="d-block w-100" style="object-fit:fill; height:35rem; "  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
-        <div class="carousel-caption">
-          <div>
-            <h1>Title : <?php echo $values['story_title'] ?></h1>
-            <p>Category : <?php echo $values['category_title'] ?></p>
-          </div>
-        </div>
-      </a>
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-black rounded-circle" aria-hidden="true">
+        </span>
+        <span class="visually-hidden">
+          Previous
+        </span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon  
+                  bg-black rounded-circle" aria-hidden="true">
+        </span>
+        <span class="visually-hidden">
+          Next
+        </span>
+      </button>
     </div>
-    <?php }
-    else { ?>
-    <div class="carousel-item">
-      <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
-        <img class="d-block w-100" style="object-fit:fill; height:35rem;"  src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Title : <?php echo $values['story_title'] ?></h5>
-          <h5>Category : <?php echo $values['category_title'] ?></h5>
-        </div>
-      </a>
-    </div>
-    <?php 
-        } 
-      } 
-    } ?>
-    
-    </div>
-    <button class="carousel-control-prev" 
-                    type="button" 
-                    data-bs-target="#myCarousel" 
-                    data-bs-slide="prev"> 
-                <span class="carousel-control-prev-icon  
-                             bg-black rounded-circle"  
-                      aria-hidden="true"> 
-                </span> 
-                <span class="visually-hidden"> 
-                    Previous 
-                </span> 
-            </button> 
-            <button class="carousel-control-next" 
-                    type="button" 
-                    data-bs-target="#myCarousel" 
-                    data-bs-slide="next"> 
-                <span class="carousel-control-next-icon  
-                             bg-black rounded-circle"  
-                      aria-hidden="true"> 
-                </span> 
-                <span class="visually-hidden"> 
-                    Next 
-                </span> 
-            </button> 
-  </div>
+
   <main role="main" >
 
-    <div class="album py-5 bg-light">
-    <h2>Latest Story</h2>
+  <div class="album py-2 bg-light">
+      <h3>Latest Story</h3>
+
       <div class="container">
 
-        <div class="" style="display : grid ; grid-template-columns:auto auto auto auto;">
-          <?php 
+        <div class="" style="display : grid ; grid-template-columns:auto auto auto auto; ">
+          <?php
           $storyArray = $story->storyDetails();
-          foreach($storyArray as $key => $values){ 
-          ?>
-          <div class="m-4 card" >
-            <div class="box-shadow ">
-              <?php 
-            
-            
-            
-            $imageArray = $image->imageDetails($values['story_id']);
-              if($imageArray){
-              ?>
-              <img class="card-img-top" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="image not found">
-              <?php } ?>
-              <div class="card-body">
-              <p class="card-text">Title : <?php echo $values['story_title'] ?></p>
-                <p class="card-text">Category : <?php echo $values['category_title'] ?></p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <a href="storyView.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-secondary">View</a>
-                    <!-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> -->
-                  </div>
-                  <!-- <small class="text-muted">9 mins</small> -->
+          foreach ($storyArray as $key => $values) {
+            ?>
+            <div class="m-3 shadow-lg card">
+              <div class="box-shadow ">
+                <?php
+                $imageArray = $image->imageDetails($values['story_id']);
+                if ($imageArray) {
+                  ?>
+                  <img class="card-img-top" style="height:10rem ; object-fit:fill;"
+                    src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="image not found">
+                <?php } ?>
+                
+              </div>
+              <div class=" m-2 text-center" >
+                <div class="card-body" style="min-height:6rem ; text-align:justify">
+                <h6 style="font-size:12px">Category :
+                    <?php echo $values['category_title'] ?>
+                </h6>
+                <h6 style="font-size:12px">Title : 
+                    <?php echo $values['story_title'] ?>
+                </h6>
+                </div>
+                <div class="btn-group mb-2">
+                  <a href="storyView.php?story_id=<?php echo $values['story_id'] ?>"
+                    class="btn btn-sm btn-outline-primary">View</a>
                 </div>
               </div>
             </div>
-          </div>
           <?php } ?>
-          
+
         </div>
       </div>
     </div>

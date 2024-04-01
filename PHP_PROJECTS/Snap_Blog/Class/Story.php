@@ -99,10 +99,7 @@ class Story extends Connection{
                 LEFT JOIN storyimages ON story.id = storyimages.story_id 
                 LEFT JOIN storycomments ON story.id = storycomments.story_id
                 LEFT JOIN storylikes ON story.id = storylikes.story_id
-                SET story.deleted_at = CURRENT_TIMESTAMP , 
-                    storyimages.deleted_at = CURRENT_TIMESTAMP,
-                    storycomments.deleted_at = CURRENT_TIMESTAMP,
-                    storylikes.deleted_at = CURRENT_TIMESTAMP
+                SET story.deleted_at = CURRENT_TIMESTAMP 
                 WHERE story.id = $story_id
                 ";
         $result = mysqli_query($this->conn , $sql);
@@ -110,6 +107,23 @@ class Story extends Connection{
             return true;
 
         return false;    
+    }
+
+    public function getStoryDataInRange($startrange , $endrange){
+        $sql = "SELECT story.id as story_id , storycategory.id as category_id , 
+                story.title as story_title ,  storycategory.title as category_title , 
+                story.content as story_content 
+                FROM story JOIN storycategory 
+                ON story.category_id = storycategory.id
+                AND DATE(story.created_at) BETWEEN '$startrange' AND '$endrange'
+                WHERE storycategory.deleted_at IS NULL AND story.deleted_at IS NULL 
+                ORDER BY story.created_at DESC;";
+
+        $result = mysqli_query($this->conn , $sql);
+        if(mysqli_num_rows($result)){
+            return mysqli_fetch_all($result , MYSQLI_ASSOC);
+        }
+        return false;
     }
     
     public function totalCountInRange($startrange , $endrange){

@@ -52,7 +52,7 @@ if(isset($_SESSION['user_id'])){
   }
 }
 else{
-  header('location: logout.php?success=false');
+  header('location: ../logout.php?logoutsuccess=false');
 }
 
 
@@ -85,7 +85,7 @@ else{
       if ($storyArray)
         foreach ($storyArray as $key => $values) {
           ?>
-          <div class="container mb-5 shadow-lg p-3">
+          <div class="container mb-5 shadow-lg p-3" id="<?php echo $values['story_id'] ?>">
             <div class="d-flex mb-2" style="justify-content:space-between">
               <div>
                 <strong class="card-text">Title :
@@ -147,13 +147,18 @@ else{
 
               <div class="d-flex justify-content-between align-items-center">
 
-                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                  <div class="d-flex">
-                    <a href="../like.php?story_id=<?php echo $values['story_id'] ?>"
-                      class="btn btn-outline-primary">Like</a>
-                    <input type="text" name="commentcontent" placeholder="comment here" required>
-                    <button class="btn btn-outline-success" value="<?php echo $values['story_id'] ?>" name="comment"
-                      type="submit">Comment</button>
+                <form action="<?php echo $_SERVER['PHP_SELF'] . "?story_id={$_GET['story_id']}" ?>" method="POST">
+                <div class="d-flex" style="justify-content: space-between;">
+                    <?php if($like->likeDetails($values['story_id'] , $_SESSION['user_id'])){ ?>
+                    <a class="card p-2" href="../like.php?story_id=<?php echo $values['story_id'] ?>&storyview=1"
+                      ><img src='../../Upload/icons8-like-48.png' style="width:95%" alt="Liked"/></a>
+                    <?php }else{?>
+                    <a class="card p-2" href="../like.php?story_id=<?php echo $values['story_id'] ?>&storyview=1"
+                      ><img src='../../Upload/icons8-like-50.png' style="width:95%"  alt="Like"/></a>
+                      <?php } ?>
+                    <input style="margin-left: 0.5rem;" class="form-control" type="text" name="commentcontent" placeholder="comment here" required>
+                    <button class="card p-2" style="margin-left: 0.5rem; align-items:center" value="<?php echo $values['story_id'] ?>" name="comment"
+                      type="submit" ><img src="../../Upload/icons8-send-64.png" style="width:60%" alt=""></button>
                   </div>
                 </form>
 
@@ -203,11 +208,11 @@ else{
                           <?php echo $v['full_name'] ?>
                         </div>
                         <div>
-                          <script> commentflag = true </script>
-                          <button class="btn btn-success editcommentbutton" id="editcommentbtn<?php echo $v['comment_id'] ?>"
-                            onclick="commentEditFunction(this.id)">Edit</button>
-                          <a class="btn btn-danger"
-                            href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                          <button class="editcommentbutton bg-transparent" id="editcommentbtn<?php echo $v['comment_id'] ?>"
+                          value="showeditcomment<?php echo $v['comment_id'] ?>"
+                            onclick="commentEditFunction(this.id)" style="border:none;"><img src="../../Upload/icons8-edit-50.png" style="width:55%" alt="Edit"></button>
+                          <a 
+                            href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>"><img src="../../Upload/icons8-delete-50.png" style="width:25% ;" alt="Delete"></a>
                         </div>
                       </div>
                       <div id="showeditcomment<?php echo $v['comment_id'] ?>" style="display:none">

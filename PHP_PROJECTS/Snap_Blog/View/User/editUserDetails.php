@@ -95,7 +95,7 @@ if(isset($_SESSION['user_id'])){
 else{
     session_unset();
     session_destroy();
-    header('location: logout?success=false');
+    header('location: ../logout?logoutsuccess=false');
 }
 ?>
 <!DOCTYPE html>

@@ -8,7 +8,7 @@ if(isset($_SESSION['user_id'])){
     $userData = $user->userDetails($_SESSION['user_id']);
 
     if($userData['role'] != 'admin'){
-        header('location: logout.php?logoutsuccess=false');
+        header('location: ../logout.php?logoutsuccess=false');
     }
         $user_id = $_GET['user_id'];
 
@@ -21,6 +21,6 @@ if(isset($_SESSION['user_id'])){
             header('location: allUserDetails.php');
 }
 else{
-    header('location: ../logout.php?LogoutSuccess=false');
+    header('location: ../logout.php?logoutsuccess=false');
 }
 ?>

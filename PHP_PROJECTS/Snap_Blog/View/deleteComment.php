@@ -41,9 +41,7 @@ if(isset($_SESSION['user_id'])){
     }    
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: logout.php?Success=false');
+    header('location: logout.php?logoutsuccess=false');
 }
 
 ?>

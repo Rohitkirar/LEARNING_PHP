@@ -13,7 +13,7 @@ if(isset($_SESSION['user_id'])){
     $userData = $user->userDetails($_SESSION['user_id']);
 
     if($userData[0]['role'] != 'admin'){
-        header('location: ../logout.php?LogoutSuccess=false');
+        header('location: ../logout.php?logoutsuccess=false');
     }
     $category_id = $_GET['category_id'];
 
@@ -27,7 +27,7 @@ if(isset($_SESSION['user_id'])){
     }
 }
 else{
-    header('location: ../logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?logoutsuccess=true');
 }
 
 ?>

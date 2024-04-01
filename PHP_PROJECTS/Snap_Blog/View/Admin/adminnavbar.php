@@ -1,4 +1,8 @@
-<?php $userDetails = $user->userDetails($_SESSION['user_id']);  ?>
+<?php 
+
+$userDetails = $user->userDetails($_SESSION['user_id']);  
+
+?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     
@@ -18,13 +22,13 @@
                 <a class='nav-link' style="color:white" href="../user/user.php" >User DashBoard</a>
             </li> -->
             <li class="nav-item">
-                <a class='nav-link' style="color:white" href="alluserdetails.php" >User DashBoard</a>
+                <a class='nav-link' style="color:white" href="alluserdetails.php" >User Details</a>
             </li>
             <li class="nav-item">
-                <a class='nav-link' style="color:white" href="categorydetails.php" >Category DashBoard</a>
+                <a class='nav-link' style="color:white" href="categorydetails.php" >Category Details</a>
             </li>
             <li class="nav-item">
-                <a class='nav-link' style="color:white" href="storyDashboard.php" >Story DashBoard</a>
+                <a class='nav-link' style="color:white" href="storyDashboard.php" >Story Details</a>
             </li>
         </ul>
     </div>

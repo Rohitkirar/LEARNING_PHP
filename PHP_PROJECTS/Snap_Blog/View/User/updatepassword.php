@@ -48,7 +48,7 @@ if(isset($_SESSION['user_id'])){
     }
 }
 else
-    header('location: ../logout.php?LogoutSuccess=false');
+    header('location: ../logout.php?logoutsuccess=false');
 
 ?>
 <!DOCTYPE html>

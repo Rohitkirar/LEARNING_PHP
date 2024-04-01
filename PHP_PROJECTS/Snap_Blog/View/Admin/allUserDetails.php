@@ -6,13 +6,14 @@ if(isset($_SESSION['user_id'])){
     require_once('../../class/connection.php');
     require_once('../../class/User.php');
     $user = new User();
-    
+
+    $userData = $user->userDetails($_SESSION['user_id']);
+    if($userData[0]['role'] != 'admin')
+        header('location: ../logout.php?logoutsuccess=false');
     
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: ../common/logout.php?LogoutSuccess=true');
+    header('location: ../logout.php?logoutsuccess=false');
 }
 
 ?>

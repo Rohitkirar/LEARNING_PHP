@@ -7,8 +7,14 @@ class StoryLike extends Connection{
     }
 
 
-    public function likeDetails($story_id=null){
-        if($story_id){
+    public function likeDetails($story_id=null , $user_id = null){
+        
+        if($story_id && $user_id){
+            $sql = "SELECT id as like_id , user_id , story_id  
+                FROM  storylikes 
+                WHERE user_id = $user_id AND story_id = $story_id AND storylikes.deleted_at IS NULL";
+        }
+        elseif($story_id){
             $sql = "SELECT id as like_id , user_id , story_id , CONCAT(first_name , ' ' , last_name) as full_name 
                 FROM  storylikes JOIN users ON user_id = users.id AND story_id = $story_id
                 WHERE storylikes.deleted_at IS NULL";

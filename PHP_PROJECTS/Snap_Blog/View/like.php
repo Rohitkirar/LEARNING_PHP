@@ -20,7 +20,7 @@ if(isset($_SESSION['user_id'])){
                 header("location: admin/adminstoryview.php?story_id={$_GET['story_id']}");
             }
             else{
-                header("location: admin/adminallstoryview.php");
+                header("location: admin/adminallstoryview.php?#{$_GET['story_id']}");
             }
         }
         else{
@@ -28,15 +28,13 @@ if(isset($_SESSION['user_id'])){
                 header("location: User/storyview.php?story_id={$_GET['story_id']}");
             }
             else{
-                header("location: User/allstoryview.php");
+                header("location: User/allstoryview.php?#{$_GET['story_id']}");
             }
         }
     }
 }
 else{
-    session_unset();
-    session_destroy();
-    header('location: logout.php?Success=false');
+    header('location: logout.php?logoutsuccess=false');
 }
 
 ?>

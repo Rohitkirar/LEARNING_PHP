@@ -20,7 +20,15 @@
 
       <section class="jumbotron text-center ">
         <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded "  style="background-color:gray; height:25rem ; ">
-          <h1 class="jumbotron-heading">Your Are Successfully Logout</h1>
+          <?php 
+          if(isset($_GET['logoutsuccess'])){
+            if($_GET['logoutsuccess'] == 'false'){ ?>
+            <h3 class="jumbotron-heading" >Sorry You Do Not Have the Access!</h3>  
+          <?php 
+            }
+          } 
+          ?>
+          <h3 class="jumbotron-heading">Your Are Successfully Logout</h3>
           <p class="lead text-muted">
                Thank You For Joining Us! You can login again to continue Services
           </p>

@@ -1,10 +1,8 @@
 <?php 
 session_start();
+session_unset();
+session_destroy();
 
-if(isset($_SESSION['user']) || isset($_SESSION['admin'])){
-    session_unset();
-    session_destroy();
-}
 
 $ERROR = "";
 

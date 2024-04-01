@@ -14,7 +14,7 @@ if(isset($_SESSION['user_id'])){
     $userData = $user->userDetails($_SESSION['user_id']);
 
     if($userData['role'] != 'admin'){
-        header('location: ../logout.php?LogoutSuccess=false');
+        header('location: ../logout.php?logoutsuccess=false');
     }
     $story_id = $_GET['story_id'];
 
@@ -34,7 +34,7 @@ if(isset($_SESSION['user_id'])){
         header('location: admin.php');
 }
 else{
-    header('location: ../logout.php?LogoutSuccess=false');
+    header('location: ../logout.php?logoutsuccess=false');
 }
 
 ?>

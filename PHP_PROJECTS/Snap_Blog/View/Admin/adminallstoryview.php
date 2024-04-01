@@ -35,7 +35,7 @@ if (isset($_SESSION['user_id'])) {
     $commentArray = compact('user_id', 'story_id', 'content');
 
     if ($comment->addComment($commentArray))
-      header('location: adminallstoryView.php');
+      header("location: adminallstoryView.php?#$story_id");
 
   }
   //edit comment logic
@@ -43,11 +43,12 @@ if (isset($_SESSION['user_id'])) {
   if (isset($_POST['editcomment'])) {
     $editCommentContent = $_POST['editcommentcontent'];
     $comment_id = $_POST['editcomment'];
+    $story_id = $_POST['story_id'];
 
     if ($comment->updateComment($comment_id, $editCommentContent))
-      header("location: adminallstoryView.php");
+      header("location: adminallstoryView.php?#$story_id");
     else
-      header("location: adminallstoryView.php");
+      header("location: adminallstoryView.php?#$story_id");
   }
 
 } else {
@@ -77,7 +78,7 @@ if (isset($_SESSION['user_id'])) {
   <!-- navbar file add -->
   <?php require_once ('adminnavbar.php') ?>
 
-  <main role="main" class="d-flex m-2">
+  <main role="main" class="d-flex m-2" style="min-height:29rem" >
     <div class="d-flex pb-2" style="justify-content: space-between;">
       <?php if (isset($_GET['category_id'])) {
         $categoryData = $category->categoryDetails($_GET['category_id']);
@@ -99,7 +100,7 @@ if (isset($_SESSION['user_id'])) {
       if ($storyArray)
         foreach ($storyArray as $key => $values) {
           ?>
-          <div class="container mb-5 shadow-lg p-3">
+          <div class="container mb-5 shadow-lg p-3" id="<?php echo $values['story_id'] ?>">
             <div class="d-flex mb-2" style="justify-content:space-between">
               <div>
                 <strong class="card-text">Title :
@@ -163,12 +164,17 @@ if (isset($_SESSION['user_id'])) {
               <div class="d-flex justify-content-between align-items-center">
 
                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-                  <div class="d-flex">
-                    <a href="../like.php?story_id=<?php echo $values['story_id'] ?>"
-                      class="btn btn-outline-primary">Like</a>
-                    <input type="text" name="commentcontent" placeholder="comment here" required>
-                    <button class="btn btn-outline-success" value="<?php echo $values['story_id'] ?>" name="comment"
-                      type="submit">Comment</button>
+                  <div class="d-flex" style="justify-content: space-between;">
+                    <?php if($like->likeDetails($values['story_id'] , $_SESSION['user_id'])){ ?>
+                    <a class="card p-2" href="../like.php?story_id=<?php echo $values['story_id'] ?>"
+                      ><img src='../../Upload/icons8-like-48.png' style="width:95%" alt="Liked"/></a>
+                    <?php }else{?>
+                    <a class="card p-2" href="../like.php?story_id=<?php echo $values['story_id'] ?>"
+                      ><img src='../../Upload/icons8-like-50.png' style="width:95%"  alt="Like"/></a>
+                      <?php } ?>
+                    <input style="margin-left: 0.5rem;" class="form-control" type="text" name="commentcontent" placeholder="comment here" required>
+                    <button class="card p-2" style="margin-left: 0.5rem; align-items:center" value="<?php echo $values['story_id'] ?>" name="comment"
+                      type="submit" ><img src="../../Upload/icons8-send-64.png" style="width:60%" alt=""></button>
                   </div>
                 </form>
 
@@ -218,16 +224,17 @@ if (isset($_SESSION['user_id'])) {
                           <?php echo $v['full_name'] ?>
                         </div>
                         <div>
-                          <button class="btn btn-success editcommentbutton" id="editcommentbtn<?php echo $v['comment_id'] ?>"
+                          <button class="editcommentbutton bg-transparent" id="editcommentbtn<?php echo $v['comment_id'] ?>"
                           value="showeditcomment<?php echo $v['comment_id'] ?>"
-                            onclick="commentEditFunction(this.id)">Edit</button>
-                          <a class="btn btn-danger"
-                            href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>">delete</a>
+                            onclick="commentEditFunction(this.id)" style="border:none;"><img src="../../Upload/icons8-edit-50.png" style="width:55%" alt="Edit"></button>
+                          <a 
+                            href="../deletecomment.php?story_id=<?php echo $v['story_id'] ?>&comment_id=<?php echo $v['comment_id'] ?>"><img src="../../Upload/icons8-delete-50.png" style="width:25% ;" alt="Delete"></a>
                         </div>
                       </div>
-                      <div id="showeditcomment<?php echo $v['comment_id'] ?>" style="display:none">
+                      <div id="showeditcomment<?php echo $v['comment_id'] ?>"  style="display:none">
                         <form action="<?php echo "{$_SERVER['PHP_SELF']}" ?>" method="POST">
-                          <input type="text" name="editcommentcontent" value="<?php echo $v['content'] ?>">
+                          <input class="w-50"  type="text" name="editcommentcontent" value="<?php echo $v['content'] ?>">
+                          <input type="text" style="display:none" name="story_id" value="<?php echo $values['story_id'] ?>">
                           <button type="submit" name="editcomment" class="btn btn-success"
                             value="<?php echo $v['comment_id'] ?>">Save</button>
                         </form>
