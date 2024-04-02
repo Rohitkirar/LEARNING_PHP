@@ -16,6 +16,8 @@ if(isset($_SESSION['user_id'])){
   $comment = new StoryComment();
   $like = new StoryLike();
 
+  $storyArray = $story->storyDetails();
+
   if(isset($_POST['comment'])){
     
     $user_id = $_SESSION['user_id'];
@@ -61,24 +63,81 @@ else{
 <body>
     <!-- navbar file add -->
     <?php require_once('navbar.php') ?>
-    <main role="main" class="d-flex m-2">
-    <div class="d-flex pb-2" style="justify-content: space-between;">
-      <?php if (isset($_GET['category_id'])) {
-        $categoryData = $category->categoryDetails($_GET['category_id']);
-        $storyArray = $story->storyDetails(null, $_GET['category_id']);
-        ?>
-        <h4>Category :
-          <?php echo $categoryData[0]['Title'] ?>
-        </h4>
-        <?php
-      } else {
-        $storyArray = $story->storyDetails();
-        ?>
+    <main role="main" class="">
+    <div class="d-flex shadow-lg p-2 "  style=" justify-content: space-between;">
+      <div>
+        <button id="viewStory" class="btn" onclick="viewStory(this.id)">Story View</button>
+        <button id="viewStoryGrid" class="btn" onclick="viewStoryGrid(this.id)">Story Grid</button>
+        <button id="slideshow" class="btn" onclick="viewSlideShow(this.id)" >Slideshow View</button>
+      </div>
 
-        <h4>All Story</h4>
-      <?php } ?>
     </div>
-    <div class="bg-light " style="margin:0 auto; width:55%">
+
+    <div id="myCarousel" style="display:none" class="carousel slide wet-asphalt bg-white " data-bs-ride="carousel" data-interval="5000" data-pause="false">
+      <div class="carousel-inner">
+
+        <?php
+
+        foreach ($storyArray as $key => $values) {
+          $imageArray = $image->imageDetails($values['story_id']);
+          if ($imageArray) {
+        ?>
+            <?php if ($key == 0) { ?>
+              <div class="carousel-item active card p-4 " style="transition-duration: 1.5s; ">
+                <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
+                  <div>
+                    <img class="d-block w-100 " style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+                  </div>
+                  <div class="carousel-caption">
+                    <h4>Title :
+                      <?php echo $values['story_title'] ?>
+                    </h4>
+                    <p>Category :
+                      <?php echo $values['category_title'] ?>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            <?php } else { ?>
+              <div class="carousel-item card p-4" style="transition-duration: 1.5s;">
+                <a href="storyview.php?story_id=<?php echo $values['story_id'] ?>">
+                  <img class="d-block w-100" style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
+                  <div class="carousel-caption d-none d-md-block">
+                    <h5>Title :
+                      <?php echo $values['story_title'] ?>
+                    </h5>
+                    <h5>Category :
+                      <?php echo $values['category_title'] ?>
+                    </h5>
+                  </div>
+                </a>
+              </div>
+        <?php
+            }
+          }
+        } ?>
+
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-black rounded-circle" aria-hidden="true">
+        </span>
+        <span class="visually-hidden">
+          Previous
+        </span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon  
+                  bg-black rounded-circle" aria-hidden="true">
+        </span>
+        <span class="visually-hidden">
+          Next
+        </span>
+      </button>
+    </div>
+
+
+    <div class="bg-light mt-3" id="viewstorydiv" style="margin:0 auto; width:55%">
       <?php
       if ($storyArray)
         foreach ($storyArray as $key => $values) {
@@ -240,6 +299,42 @@ else{
     </div>
     <div >
     </div>
+
+    <div class="container" id="viewstorygrid">
+
+          <div class="" id="storyDiv" style="display : grid ; grid-template-columns:25% 25% 25% 25%; ">
+            <?php
+            
+            foreach ($storyArray as $key => $values) {
+            ?>
+              <div class="m-3 shadow-lg card">
+                <div class="box-shadow ">
+                  <?php
+                  $imageArray = $image->imageDetails($values['story_id']);
+                  if ($imageArray) {
+                  ?>
+                    <img class="card-img-top" style="height:10rem ; object-fit:fill;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="image not found">
+                  <?php } ?>
+
+                </div>
+                <div class=" m-2 text-center">
+                  <div class="card-body" style="min-height:6rem ; text-align:justify">
+                    <h6 style="font-size:12px">Category :
+                      <?php echo $values['category_title'] ?>
+                    </h6>
+                    <h6 style="font-size:12px">Title :
+                      <?php echo $values['story_title'] ?>
+                    </h6>
+                  </div>
+                  <div class="btn-group mb-2">
+                    <a href="storyView.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-primary">View</a>
+                  </div>
+                </div>
+              </div>
+            <?php } ?>
+
+          </div>
+        </div>
   </main>
 <?php 
  
@@ -252,6 +347,14 @@ else{
 ?>
 
 <script src="../../public/js/editcomment.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../public/js/allstoryviewpage.js"></script>
 
 </body>
 </html>

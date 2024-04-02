@@ -15,6 +15,8 @@ if (isset($_SESSION['user_id'])) {
   $comment = new StoryComment();
   $image = new StoryImage();
 
+  $storyArray = $story->storyDetails();
+
   // condition for admin excess only 
 
   $userResult = $user->userDetails($_SESSION['user_id']);
@@ -22,9 +24,8 @@ if (isset($_SESSION['user_id'])) {
 
     if ($userResult[0]['role'] != 'admin')
       header('location: ../logout.php?logoutsuccess=false');
-  
   }
-}else{
+} else {
   header('location: ../logout.php?logoutsuccess=false');
 }
 
@@ -49,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
 
       <div class="d-flex " id="countDiv" style=" align-items:center ; justify-content: space-between; height:3rem">
         <?php
-        $story_count = $story->storyDetails();
+        $story_count = $storyArray;
         if ($story_count)
           $story_count = count($story_count);
         else
@@ -73,16 +74,16 @@ if (isset($_SESSION['user_id'])) {
         else
           $user_count = 0;
         ?>
-        <div class="shadow-lg p-2 bg-white" style="width:25%;">Total story: <span id="story_count">
+        <div class="shadow-lg p-2 bg-white" id="totalstorycount" style="width:25%;">Total story: <span id="story_count">
             <?php echo $story_count ?>
           </span></div>
-        <div class="shadow-lg p-2 bg-white" style="width:25% ">Likes: <span id="like_count">
+        <div class="shadow-lg p-2 bg-white" id="totallikecount" style="width:25% ">Likes: <span id="like_count">
             <?php echo $like_count ?>
           </span></div>
-        <div class="shadow-lg p-2 bg-white" style="width:25%">Comments: <span id="comment_count">
+        <div class="shadow-lg p-2 bg-white" id="totalcommentcount" style="width:25%">Comments: <span id="comment_count">
             <?php echo $comment_count ?>
           </span></div>
-        <div class="shadow-lg p-2 bg-white" style="width:25%">Total Users: <span id="user_count">
+        <div class="shadow-lg p-2 bg-white" id="totalusercount" style="width:25%">Total Users: <span id="user_count">
             <?php echo $user_count ?>
           </span>
         </div>
@@ -93,80 +94,19 @@ if (isset($_SESSION['user_id'])) {
         <input class="form-control" id="startrange" type="date" />
         <label class="form-label p-1" for="endrange">To</label>
         <input class="form-control" id="endrange" type="date" />
-        <button class="btn btn-primary" style="color :white ;" onclick="updateStoryData()">Filter</button>
+        <button class="btn btn-primary" id="filterdatabtn" style="color :white ;">Filter</button>
       </div>
     </div>
-    <div id="myCarousel" class="carousel slide wet-asphalt bg-white " data-bs-ride="carousel" data-interval="5000" data-pause="false">
-      <div class="carousel-inner">
 
-        <?php
-        $storyArray = $story->storyDetails();
-        foreach ($storyArray as $key => $values) {
-          $imageArray = $image->imageDetails($values['story_id']);
-          if ($imageArray) {
-        ?>
-            <?php if ($key == 0) { ?>
-              <div class="carousel-item active card p-4 " style="transition-duration: 1.5s; ">
-                <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
-                  <div>
-                    <img class="d-block w-100 " style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
-                  </div>
-                  <div class="carousel-caption">
-                    <h4>Title :
-                      <?php echo $values['story_title'] ?>
-                    </h4>
-                    <p>Category :
-                      <?php echo $values['category_title'] ?>
-                    </p>
-                  </div>
-                </a>
-              </div>
-            <?php } else { ?>
-              <div class="carousel-item card p-4" style="transition-duration: 1.5s;">
-                <a href="adminstoryview.php?story_id=<?php echo $values['story_id'] ?>">
-                  <img class="d-block w-100" style="object-fit:fill; height:35rem;" src="../../Upload/<?php echo $imageArray[0]['image'] ?>" alt="First slide">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5>Title :
-                      <?php echo $values['story_title'] ?>
-                    </h5>
-                    <h5>Category :
-                      <?php echo $values['category_title'] ?>
-                    </h5>
-                  </div>
-                </a>
-              </div>
-        <?php
-            }
-          }
-        } ?>
-
-      </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bg-black rounded-circle" aria-hidden="true">
-        </span>
-        <span class="visually-hidden">
-          Previous
-        </span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon  
-                  bg-black rounded-circle" aria-hidden="true">
-        </span>
-        <span class="visually-hidden">
-          Next
-        </span>
-      </button>
-    </div>
 
     <div class="album py-2 bg-light">
       <h3>Latest Story</h3>
 
-      <div class="container">
+      <div class="container" id="storydivhide"  >
 
-        <div class="" id="storyDiv" style="display : grid ; grid-template-columns:25% 25% 25% 25%; ">
+        <div class="" style="display : grid ; grid-template-columns:25% 25% 25% 25%; ">
           <?php
-          $storyArray = $story->storyDetails();
+
           foreach ($storyArray as $key => $values) {
           ?>
             <div class="m-3 shadow-lg card">
@@ -188,7 +128,7 @@ if (isset($_SESSION['user_id'])) {
                     <?php echo $values['story_title'] ?>
                   </h6>
                 </div>
-                <div class="btn-group mb-2">
+                <div class="btn-group mb-2" >
                   <a href="adminstoryView.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-primary">View</a>
                   <a href="updateStoryForm.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-secondary">Update</a>
                   <a href="deleteStory.php?story_id=<?php echo $values['story_id'] ?>" class="btn btn-sm btn-outline-danger">Delete</a>
@@ -203,9 +143,7 @@ if (isset($_SESSION['user_id'])) {
   </main>
 
 
-
-
-  <?php
+<?php
   require_once('../footer.php');
 
   if (isset($_SESSION['addstory'])) {
@@ -215,81 +153,13 @@ if (isset($_SESSION['user_id'])) {
     unset($_SESSION['storydelete']);
     echo "<script>alert('story deleted successfully!')</script>";
   }
-  ?>
+?>
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-  </script>
-
-  <script>
-    // Activate Carousel 
-
-    $('#myCarousel').carousel();
-
-    // Enable Carousel Indicators 
-    $('.carousel-item').click(function() {
-      $('#myCarousel').carousel($(this)
-        .index());
-    });
-
-    // Pause the carousel when the mouse is over it 
-    $('#myCarousel').hover(function() {
-      $(this).carousel('pause');
-    }, function() {
-      $(this).carousel('cycle');
-    });
-  </script>
-  <script>
-    updateStoryData();
-
-
-    function updateStoryData() {
-
-      let storyDiv = document.getElementById('storyDiv');
-
-      let startrange = document.getElementById('startrange').value;
-      let endrange = document.getElementById('endrange').value;
-      var xhttp = new XMLHttpRequest();
-
-      if (startrange != '' && endrange != '') {
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            updateCountData(startrange, endrange);
-            storyDiv.innerHTML = this.response;
-          }
-        }
-      } else {
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-
-            storyDiv.innerHTML = this.response;
-
-          }
-        }
-      }
-      xhttp.open("GET", "getStoryDataInRange.php?startrange=" + startrange + "&endrange=" + endrange, true);
-      xhttp.send();
-    }
-
-
-
-    function updateCountData(startrange, endrange) {
-
-      let countDiv = document.getElementById('countDiv');
-
-      var xhttp = new XMLHttpRequest();
-
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          countDiv.innerHTML = this.response;
-        }
-      }
-
-      xhttp.open("GET", "getdataInRange.php?startrange=" + startrange + "&endrange=" + endrange, true);
-      xhttp.send();
-    }
-  </script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="../../public/js/adminpage.js"></script>
+  
 </body>
 
 </html>
