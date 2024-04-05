@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         //
-        return "I am index method of usercontroller";
+        echo "I am index From userControllers "  ;
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
     public function create()
     {
         //
-        return "I am create method of usercontroller ";
+        echo "I am create from userController (:-))";
     }
 
     /**
@@ -37,7 +37,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-        return "I am store method of userController $request";
     }
 
     /**
@@ -49,7 +48,6 @@ class UserController extends Controller
     public function show($id)
     {
         //
-        return "I am show method of UserController. Id passed Here is : $id<BR>";
     }
 
     /**
@@ -61,7 +59,6 @@ class UserController extends Controller
     public function edit($id)
     {
         //
-        return "I am edit method of userController $id <BR>";
     }
 
     /**
@@ -74,7 +71,6 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return "I am update method of UserController. Id passed Here is : $id<BR>";
     }
 
     /**
@@ -86,6 +82,5 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-        return "I am destroy method of UserController. Id passed Here is : $id<BR>";
     }
 }
