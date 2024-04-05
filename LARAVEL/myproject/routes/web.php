@@ -174,3 +174,17 @@ Route::get('post/' , function(){
     return "post Home page";
 });
 Route::get('post/{id}/{name}' , "\App\Http\Controllers\PostController" );
+
+Route::get('contact' , function(){
+
+    // calling controller static method
+
+    return UserController::contact("ROHIT KIRAR" , "1234567890");
+
+    //2nd way to call a non static controller method
+
+    // $user = new UserController(); 
+
+    // return $user->contact("ROHIT KIRAR" , "1234567890" ) ;
+
+});

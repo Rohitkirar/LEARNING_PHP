@@ -83,4 +83,10 @@ class UserController extends Controller
     {
         //
     }
+
+    public static function contact($name , $number){
+
+        return view('contact' , compact('name' , 'number'));
+
+    } 
 }

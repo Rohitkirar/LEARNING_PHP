@@ -14,6 +14,19 @@ class PostController extends Controller
      */
     public function __invoke($id , $name)
     {
-        return view('post' , compact('id' , 'name'));
+        // Two way to parse variable in view
+
+        // 1st way by using compact()
+        // return view('post' , compact('id' , 'name'));
+
+        
+        // 2nd way by using array (key=>value)
+        // return view('post' , ['id'=>$id , 'name'=>$name ]);
+
+        $people = ['Ram' , 'shyam' , 'krishna' , 'hariom' ];
+        
+        // $people=[]; //empty data pass example
+        
+        return view('post' , compact('people' , 'id' , 'name'));
     }
 }
