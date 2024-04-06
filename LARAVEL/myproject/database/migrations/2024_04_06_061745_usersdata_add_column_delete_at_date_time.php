@@ -15,9 +15,21 @@ return new class extends Migration
     {
         Schema::table('usersdata', function (Blueprint $table) {
             //
-            $table->dateTime('created_at')->change();
+            $table->dateTime('deleted_at')->nullable();
 
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('usersdata', function (Blueprint $table) {
+            //
+            $table->dropColumn('deleted_at');
+        });
+    }
 };

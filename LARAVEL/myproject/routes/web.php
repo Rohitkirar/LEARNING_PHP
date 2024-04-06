@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,15 +55,19 @@ Route::get("user/main/view" , function(){
     echo route('user.view');
 })->name('user.view');
 
+/** 
+
 // redirect is used to redirect another route
 
-// Route::redirect('/index' , '/output');
+Route::redirect('/index' , '/output');
 
-// Route::get("/index" , function(){
-//     return redirect("/output");
-//});
+Route::get("/index" , function(){
+    return redirect("/output");
+});
 
 // any is used to route when request come from any method it will route
+
+*/
 
 Route::any('/userdashboard' , function(){
     echo "any route method call(get , post , delete , put , patch , options)";
@@ -81,13 +88,14 @@ Route::get('/showformdata' , function(){
         return "No Data Found";
 
 });
-// Route::get('/showformdata?{first_name}&{last_name}&{submit}' , function($first_name , $last_name , $submit){
 
-//     echo "$first_name $last_name $submit";
+Route::get('/showformdata?{first_name}&{last_name}&{submit}' , function($first_name , $last_name , $submit){
 
-// });  //invalid approach
+    echo "$first_name $last_name $submit";
 
-//get data by post method using csrf_field() in form
+});  //invalid approach
+
+// get data by post method using csrf_field() in form
 
 Route::post('/showformdata' , function(){
 
@@ -120,35 +128,34 @@ Route::match(['GET' , 'POST'] , '/showformdata2' , function(){
     else
         return "No Data Found";
 });
-
+/** 
 
 // calling a controller by routes (use backslash only)
 
 // 1 st way
 
-// route::get('/usercontroller' , "App\Http\Controllers\UserController@index");
+route::get('/usercontroller' , "App\Http\Controllers\UserController@index");
 
 // 2nd way
-use App\Http\Controllers\UserController;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Redirect;
 
-// route::get('/usercontroller/{name}' , [UserController::class , "index"]);
+
+route::get('/usercontroller/{name}' , [UserController::class , "index"]);
 
 
 
 // create route by calling resource static method 
 
-// route::resource('/usercontroller' , "\App\Http\Controllers\UserController");
+route::resource('/usercontroller' , "\App\Http\Controllers\UserController");
 
 route::resource('/usercontroller' , "\App\Http\Controllers\UserController");
 
+*/
+
 // passing value to view
 
-// Route::get("index/{first_name}/{last_name}" , function(){
-//     return view('index');
-// });
-
+Route::get("index/{first_name}/{last_name}" , function(){
+    return view('index');
+});
 
 
 // Route::view('/index' , 'index' );
@@ -175,16 +182,36 @@ Route::get('post/' , function(){
 });
 Route::get('post/{id}/{name}' , "\App\Http\Controllers\PostController" );
 
+/** 
+
 Route::get('contact' , function(){
 
     // calling controller static method
 
     return UserController::contact("ROHIT KIRAR" , "1234567890");
 
-    //2nd way to call a non static controller method
+    // 2nd way to call a non static controller method
 
-    // $user = new UserController(); 
+    $user = new UserController(); 
 
-    // return $user->contact("ROHIT KIRAR" , "1234567890" ) ;
+    return $user->contact("ROHIT KIRAR" , "1234567890" ) ;
 
 });
+
+*/
+
+//resource route 
+
+route::resource('/usercontroller' , "\App\Http\Controllers\UserController");
+
+/** 
+
+Route::resource('/user_s' , "\App\Http\Controllers\UserController" )->only([
+    'index' , 'create' , 'store' , 'show'
+]);
+
+Route::resource('user_s' , UserController::class)->except([
+    'edit' , 'update'
+]);
+
+*/

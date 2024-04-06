@@ -15,9 +15,20 @@ return new class extends Migration
     {
         Schema::table('usersdata', function (Blueprint $table) {
             //
-            $table->dateTime('created_at')->change();
-
+            $table->dateTime('updated_at')->change();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('usersdata', function (Blueprint $table) {
+            //
+            $table->timestamp('updated_at')->change();
+        });
+    }
 };
