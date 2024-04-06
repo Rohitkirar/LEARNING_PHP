@@ -14,17 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('User', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id('id');
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('gender' , ['male' , 'female' , 'other']);
             $table->date('date_of_birth');
-            $table->string('email');
-            $table->string('number');
-            $table->string('username');
+            $table->string('email')->unique();
+            $table->string('number')->unique();
+            $table->string('username')->unique();
             $table->string('password');
-            $table->enum('role' , ['admin' , 'user']);
+            $table->enum('role' , ['admin' , 'user'])->default('user');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('User');
+        Schema::dropIfExists('users');
     }
 };

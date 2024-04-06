@@ -40,10 +40,14 @@
                     <span>
                         Don't have an account?
                     </span>
-                    <a href="register" class="btn btn-outline-success">Create new</a>
+                    <a href="/register" class="btn btn-outline-success">Create new</a>
                 </span>
             </div>
         </form>
     </section>
+
+    @if(isset($_GET['success']))
+        <script> alert('user registered successfull') </script> 
+    @endif
 
 @endsection

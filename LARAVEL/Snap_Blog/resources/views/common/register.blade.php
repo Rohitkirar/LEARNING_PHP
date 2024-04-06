@@ -17,7 +17,7 @@
 
             <p>Create Your Account</p>
         </div>
-        <form action="user" method="post">
+        <form action="/" method="post">
             @csrf
             <div class="form-outline mb-3">
                 <label class="form-label" for="first_name">Firstname </label>
@@ -37,8 +37,8 @@
                 </div>
             </div>
             <div class="form-outline mb-3">
-                <label>Age : </label>
-                <input type="number" class="form-control" name="age" size="3" required />
+                <label>Date Of Birth : </label>
+                <input type="date" class="form-control" name="dob" required />
             </div>
 
             <div class="form-outline mb-3 ">
@@ -69,7 +69,7 @@
                     <a href="/" style="text-decoration: none;">Home</a>
                 </span>
                 <span style="float:right;">Already have an account? 
-                    <a href="Login" style="text-decoration: none;">Sign in</a>
+                    <a href="/login" style="text-decoration: none;">Sign in</a>
                 </span>
             </div>
         </form>

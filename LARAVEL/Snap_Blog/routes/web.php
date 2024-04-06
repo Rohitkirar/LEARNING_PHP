@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,11 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::view('/' ,  'home');
+Route::resource('/' ,  IndexController::class )->only(['index' , 'create' , 'store' ]); 
 
 Route::view('/about' ,  'about');
 
 Route::view('/login' ,  'common.login');
-
-Route::view('/register' ,  'common.register');
 
 Route::resource('/user' , UserController::class);
 

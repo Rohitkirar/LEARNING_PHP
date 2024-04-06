@@ -12,13 +12,13 @@
                 <a class="nav-link"  style="color:white" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="about">About</a>
+                <a class="nav-link"  style="color:white" href="/about">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="register">Register</a>
+                <a class="nav-link"  style="color:white" href="/create">Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="login">Login</a>
+                <a class="nav-link"  style="color:white" href="/login">Login</a>
             </li>
         </ul>
     </div>
