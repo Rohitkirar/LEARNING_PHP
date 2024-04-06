@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -215,3 +216,70 @@ Route::resource('user_s' , UserController::class)->except([
 ]);
 
 */
+
+
+// raw sql query 
+
+Route::post('/insert'  , function(){
+    $result = 
+    DB::insert(
+        "INSERT INTO usersdata 
+                (first_name , last_name , email , number) 
+        VALUES  (? , ? , ? , ?);" , 
+        [$_POST['first_name'] , $_POST['last_name'] , $_POST['email'] , $_POST['number']]
+    );
+
+    if($result){
+        return redirect('/showdata');
+    }
+    else{
+        return redirect('/');
+    }
+        
+});
+
+Route::match( ['POST' , 'GET'] , '/showdata/{id?}' , function($id=null){
+    if($id){
+        return DB::select(
+            "SELECT * FROM usersdata WHERE id = ?;",
+            [ $id ]
+        );
+    }
+    else{
+        return DB::select(
+            "SELECT * FROM usersdata;"
+        );
+    }   
+});
+
+Route::POST('/update/{id}' , function($id){
+    $result =  
+    DB::update(
+        "UPDATE usersdata 
+        SET first_name = ? ,
+            last_name = ?,
+            email = ?  ,
+            number = ? 
+        WHERE id = ? ;  
+        " , 
+        [$_POST['first_name'] , $_POST['last_name'] , $_POST['email'] , $_POST['number'] , $id ]
+    );
+
+    if($result){
+        return redirect("/showdata/$id");
+    }else{
+        return redirect('/');
+    }
+});
+
+Route::get('/delete/{id}' , function($id){
+    $result = 
+    DB::delete(
+        "DELETE FROM usersdata WHERE id = ?;" , 
+        [$id]
+    );
+    if($result)
+        return "data with id : $id deleted successfully";
+    else
+        return "No data available with this id : $id";
+});

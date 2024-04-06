@@ -21,7 +21,7 @@ class PostController extends Controller
 
         
         // 2nd way by using array (key=>value)
-        // return view('post' , ['id'=>$id , 'name'=>$name ]);
+        return view('post' , ['id'=>$id , 'name'=>$name ]);
 
         $people = ['Ram' , 'shyam' , 'krishna' , 'hariom' ];
         

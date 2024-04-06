@@ -20,7 +20,35 @@
             }
         </style>
     </head>
-    <body class="antialiased">
+    <body >
+        
+    <h5>Form data Submiting using POST method</h5>
+    <form action="/insert" method="post">
+        @csrf
+        First_Name : 
+        <input type="text" name="first_name"><br>
+        Last_Name : 
+        <input type="text" name="last_name"><br>
+        Email : 
+        <input type="text" name="email"><br>
+        Number : 
+        <input type="text" name="number"><br>
+        <input type="submit" name="submit">
+    </form>
+
+    <h5>Form data Updating using POST method</h5>
+    <form action="/update/1" method="post">
+        @csrf
+        First_Name : 
+        <input type="text" name="first_name"><br>
+        Last_Name : 
+        <input type="text" name="last_name"><br>
+        Email : 
+        <input type="text" name="email"><br>
+        Number : 
+        <input type="text" name="number"><br>
+        <input type="submit" name="submit">
+    </form>
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
