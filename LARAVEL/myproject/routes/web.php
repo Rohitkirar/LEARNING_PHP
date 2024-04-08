@@ -5,6 +5,8 @@ use App\Http\Controllers\UserController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use App\Models\Post;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -217,7 +219,6 @@ Route::resource('user_s' , UserController::class)->except([
 
 */
 
-
 // raw sql query 
 
 Route::post('/insert'  , function(){
@@ -283,3 +284,134 @@ Route::get('/delete/{id}' , function($id){
     else
         return "No data available with this id : $id";
 });
+
+Route::get('/insert' , function(){
+    $result = DB::insert(
+        "INSERT INTO posts (title , content) 
+        VALUES
+            ('post1' , 'hello everyone') , 
+            ('post2' , 'good morning everyone'),
+            ('post3' , 'good afternoon everyone'),
+            ('post4' , 'good evening everyone'),
+            ('post5' , 'good night everyone')
+        ");
+        if($result)
+            return "Data inserted successfully!";
+        else
+            return "failed to insert data!";
+});
+
+Route::get('/getpostdata' , function(){
+    $postData = Post::all();
+    return $postData;
+});
+
+Route::get('/getpostdatawhere' , function(){
+    $result = Post::where('id' , 2)->get();
+    return $result;
+});
+Route::get('/getpostdatafind' , function(){
+    
+    // $result = Post::find(1);
+
+    $result = Post::find([1 , 2 , 3]);
+    
+    return $result;
+});
+Route::get('/insertpost' , function(){
+
+    $post = new Post;
+
+    $post->title = 'laravel';
+
+    $post->content = 'learning laravel framework for php';
+    
+    $result = $post->save();
+    
+    if($result)
+        return "data inserting in table successfullly";
+
+    else
+        return "failed to insert data in table;";
+
+});
+
+// insert data by using create (mass assingment)
+
+Route::get('/insertpost2' , function(){
+    // $result = Post::create(['title'=>'java' , 'content'=>'Java is a high level programming language']);
+    $result = Post::create(['title'=>'java' , 'content'=>'Java is a high level programming language' , 'created_at'=>'2024-04-05']);
+    if($result)
+        return "insert data by create successfully";
+    else
+        return "failed to store data by create";
+});
+
+Route::get('/updatepost' , function(){
+    $post = Post::find(1);
+    $post->title = 'PHP';
+    $post->content = 'PHP is a server-side scripting language';
+    $post->created_at = '2024-04-01';
+    $result = $post->save();
+
+    if($result)
+        return "successfully updated data";
+    else
+        return "failed to update data";
+});
+
+
+Route::get('/updatepost2' , function(){
+    $post = new Post;
+    $result = $post->where('id' , 2)->where('title' , 'post2')->update(['title'=>'Javascript' , 'content'=>'javascript is a client side language']);
+    if($result)
+        return "updated data successfully";
+    else
+        return "failed to update data";
+});
+
+Route::get('/delete' , function(){
+    $post = new Post;
+    $result = $post->find(2)->delete();
+    if($result )
+        return "data deleted successfully";
+    else
+        return "failed to delete data";
+});
+
+Route::get('/destroy' , function(){
+    $post = new Post;
+    // $result = $post->destroy(3);
+
+    // $result = $post->destroy(4,5,6);
+
+    $result = $post->destroy([7,8]);
+
+    if($result)
+        return "data deleted successfully!";
+    else
+        return "failed to delete data";
+});
+
+Route::get('/forcedelete' , function(){
+    $post = new Post;
+    $result = $post->where('id',84)->forceDelete();
+    
+    if($result)
+        return "data deleted successfully!";
+    else
+        return "failed to delete data";
+});
+
+Route::get('/getuserdata' , function(){
+    $user = new User;
+    $userData = $user->where('id' , '>=' , 10)->limit(10)->get() ;
+    return $userData;
+});
+
+Route::get('/getdeleteduser' , function(){
+    $user = new User;
+    $userData = $user->where('id' , '<' , 10)->get();
+    return $userData;
+});
+    
