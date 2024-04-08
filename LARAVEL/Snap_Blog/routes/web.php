@@ -15,11 +15,16 @@ use App\Http\Controllers\IndexController;
 |
 */
 
-Route::resource('/' ,  IndexController::class )->only(['index' , 'create' , 'store' ]); 
+Route::view('/' ,  'home'); 
 
 Route::view('/about' ,  'about');
+
+Route::view('/create' ,  'common.register');
 
 Route::view('/login' ,  'common.login');
 
 Route::resource('/user' , UserController::class);
+
+
+?>
 
