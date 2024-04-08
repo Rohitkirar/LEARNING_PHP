@@ -14,10 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('PostCategory', function (Blueprint $table) {
+        Schema::create('post_comments', function (Blueprint $table) {
             $table->id('id');
-            $table->string('title');
-            $table->string('image');
+            $table->text('content');
+            $table->foreignId('user_id')->references('id')->on('users')->onUpdate('cascade');
+            $table->foreignId('post_id')->references('id')->on('posts')->onUpdate('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->softDeletes();
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('PostCategory');
+        Schema::dropIfExists('post_comments');
     }
 };
