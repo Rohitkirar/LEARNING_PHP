@@ -17,7 +17,7 @@
 
             <p>Create Your Account</p>
         </div>
-        <form action="/" method="post">
+        <form action="/user" method="post">
             @csrf
             <div class="form-outline mb-3">
                 <label class="form-label" for="first_name">Firstname </label>
@@ -38,12 +38,12 @@
             </div>
             <div class="form-outline mb-3">
                 <label>Date Of Birth : </label>
-                <input type="date" class="form-control" name="dob" required />
+                <input type="date" class="form-control" name="date_of_birth" required />
             </div>
 
             <div class="form-outline mb-3 ">
                 <label>Mobile :</label>
-                <input type="Number" class="form-control" name="mobile" maxlength="10" size="10" required>
+                <input type="Number" class="form-control" name="number" maxlength="10" size="10" required>
             </div>
 
             <div class="form-outline mb-3">
