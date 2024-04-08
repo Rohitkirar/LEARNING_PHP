@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Post;
 
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +15,9 @@ class UserController extends Controller
     public function index()
     {
         //
-
-
-        return view('user.user' );
+        $result = Post::all();
+        
+        return view('user.storyview' , compact('result'));
     }
 
     /**
@@ -29,7 +28,6 @@ class UserController extends Controller
     public function create()
     {
         //
-        
     }
 
     /**
@@ -40,15 +38,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $userData = $request->all();
-        array_slice($userData , 1 , -1);
-
-        $result = User::create($userData);
-
-        if($result)
-            return view('common.login');
-        else
-            return view('common.register');
+        //
     }
 
     /**
@@ -70,9 +60,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $userData = User::find($id);
-        
-        return view('user.editUserDetails' , compact('userData'));
+        //
     }
 
     /**
@@ -84,18 +72,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $userData =  $request->all();
-
-        array_slice($userData , 2 , -1);
-
-        $result = User::find($id)->update($userData);
-
-        if($result)
-            return redirect('user/');
-        else
-            return redirect('/user/$id/edit');
-        
+        //
     }
 
     /**
