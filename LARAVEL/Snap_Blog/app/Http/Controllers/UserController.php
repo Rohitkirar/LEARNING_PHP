@@ -59,7 +59,17 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $postData = User::find($id)->posts; // error (doubt)
+        
+        // $postData = User::find($id)->posts->get(); // return all resultset
+        // return $postData;
+        
+        // $postData = User::find($id)->posts;
+        //echo "<div><p>{$postData['id']} ) {$postData['title']}</p><p>{$postData['content']}</p><div>";
+        
+        $postData = User::find($id)->posts;
+        return $postData;
+ 
     }
 
     /**

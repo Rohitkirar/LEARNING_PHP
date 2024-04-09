@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +25,7 @@ Route::view('/login' ,  'common.login');
 
 Route::resource('/user' , UserController::class);
 
+Route::resource('/post' , PostController::class);
 
 ?>
 

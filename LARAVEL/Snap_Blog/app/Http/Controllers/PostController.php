@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -17,7 +18,8 @@ class PostController extends Controller
         //
         $result = Post::all();
         
-        return view('user.storyview' , compact('result'));
+        return $result;
+        // return view('user.storyview' , compact('result'));
     }
 
     /**
@@ -49,7 +51,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        return Post::find($id)->users()->get();
+        
     }
 
     /**
