@@ -175,9 +175,9 @@ Route::get('index/{num1}/{num2}/{num3}' , function($num1 , $num2 , $num3){
     return "$num1 / $num2 / $num3";
 })->whereNumber('num1')->whereAlpha( 'num2')->whereAlphaNumeric('num3');
 
-Route::get('user/{id}' , function($id){
-    return "the user is a valid user with id number : $id";
-})->whereIn('id' ,  [100 ,102 ,103]);
+// Route::get('user/{id}' , function($id){
+//     return "the user is a valid user with id number : $id";
+// })->whereIn('id' ,  [100 ,102 ,103]);
 
 //post controller calling
 Route::get('post/' , function(){
@@ -349,7 +349,7 @@ Route::get('/insertpost2' , function(){
 
 Route::get('/updatepost' , function(){
     $post = Post::find(1);
-    $post->title = 'PHP';
+    $post->title = 'PHP2';
     $post->content = 'PHP is a server-side scripting language';
     $post->created_at = '2024-04-01';
     $result = $post->save();
