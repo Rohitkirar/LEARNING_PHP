@@ -19,7 +19,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="/user/1/edit">Edit Details</a>
+                <a class="nav-link"  style="color:white" href="/user/9/edit">Edit Details</a>
             </li>
 
             <li class="nav-item">

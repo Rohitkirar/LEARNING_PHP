@@ -16,7 +16,7 @@
             <p>Edit User Information</p>
         </div>
         
-        <form action="/user/1"   method="POST" >
+        <form action="/user/{{$userData['id']}}"   method="POST" >
             @method('PATCH')
             @csrf
             <div class="form-outline mb-3">

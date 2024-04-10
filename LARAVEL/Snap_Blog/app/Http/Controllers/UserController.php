@@ -41,10 +41,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $userData = $request->all();
+        dd($userData);
         array_slice($userData , 1 , -1);
 
         $result = User::create($userData);
-
+        
         if($result)
             return view('common.login');
         else
@@ -59,17 +60,20 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $postData = User::find($id)->posts; // error (doubt)
-        
-        // $postData = User::find($id)->posts->get(); // return all resultset
-        // return $postData;
-        
-        // $postData = User::find($id)->posts;
-        //echo "<div><p>{$postData['id']} ) {$postData['title']}</p><p>{$postData['content']}</p><div>";
-        
-        $postData = User::find($id)->posts;
-        return $postData;
+
+    /*      
+        // hasOne() 
+        $postData = User::first()->posts;
+        return ($postData) ; 
  
+        // hasMany() (only get post data) 
+        $postData = User::first()->posts()->get(); 
+        $postData = User::find($id)->posts;
+        return dd($postData) ; 
+    */
+        //hasMany() (with())
+        $user = User::find($id)->with('posts')->get();
+        dd($user);
     }
 
     /**

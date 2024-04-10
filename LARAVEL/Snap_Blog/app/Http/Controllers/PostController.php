@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -15,11 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-        $result = Post::all();
         
-        return $result;
-        // return view('user.storyview' , compact('result'));
+        $storyData = Post::with(['postImages' , 'postComments' , 'postLikes' , 'category'])->get();
+        
+        return view('user.allStoryView' , compact('storyData') );
+
     }
 
     /**
@@ -62,8 +63,17 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+
+        // $storyData = Post::with(['categories'])->find($id);
+
+        // $storyData = Category::with('posts')->get();
+        
+        $storyData = Post::with('category')->find($id);
+
+        dd($storyData);
+        return view('user.updateStoryForm' , compact('storyData') );
+    
     }
 
     /**
@@ -75,7 +85,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

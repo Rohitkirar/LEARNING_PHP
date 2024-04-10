@@ -23,9 +23,6 @@ Route::view('/create' ,  'common.register');
 
 Route::view('/login' ,  'common.login');
 
-Route::resource('/user' , UserController::class);
-
-Route::resource('/post' , PostController::class);
 
 ?>
 

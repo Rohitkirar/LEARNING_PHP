@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PostLike extends Model
 {
     use HasFactory;
+
+    public function post(){
+        return $this->belongsTo(Post::class);
+    }
 }
