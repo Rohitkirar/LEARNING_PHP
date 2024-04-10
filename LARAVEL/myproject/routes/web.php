@@ -347,8 +347,22 @@ Route::get('/insertpost2' , function(){
         return "failed to store data by create";
 });
 
-Route::get('/updatepost' , function(){
-    $post = Post::find(1);
+Route::get('/updatepost/{id}' , function($id){
+
+    //1st way of updating records
+
+    $result = Post::find($id)->update(['title'=>'php3' , 'content'=>"php3 content" ]);
+
+    if($result)
+        return "successfully updated data";
+    else
+        return "failed to update data";
+
+
+    // 2nd way of updating records
+/* 
+
+    $post = Post::find($id);
     $post->title = 'PHP2';
     $post->content = 'PHP is a server-side scripting language';
     $post->created_at = '2024-04-01';
@@ -358,6 +372,8 @@ Route::get('/updatepost' , function(){
         return "successfully updated data";
     else
         return "failed to update data";
+
+*/
 });
 
 
