@@ -2,13 +2,15 @@
 
 @section('title') Edit Story @endsection
 
-@section('maincontent')
+@section('main')
     <div class="container p-5 shadow-lg p-3 mb-5 mt-5 bg-white rounded" style="width:45%">
         <div class="text-center">
-            <p >
+            
+            <p>
                 <img src="../../upload/snapchat.png" alt="logo" style="width:10%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </p>
+
             <h4 class="mt-1 pb-1">Update Story</h4>
             
         </div>

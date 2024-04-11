@@ -2,7 +2,7 @@
 
 @section('title') User @endsection
 
-@section('maincontent')
+@section('main')
 
 {{-- <div class="container" style="display:grid; grid-template-columns:25% 25% 25% 25%">
   

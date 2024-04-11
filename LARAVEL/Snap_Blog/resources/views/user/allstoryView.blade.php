@@ -2,37 +2,65 @@
 
 @section('title') Post @endsection
 
-@section('maincontent')
+@section('main')
 
+@php 
+  $postData = json_decode($postData , true);
+@endphp
 
-<div class="bg-light mt-3" id="viewstorydiv" style="margin:0 auto; width:55%">
-  @foreach ($storyData as $key=>$values)
+<div class="bg-light shadow-lg mt-3 " id="viewstorydiv" style="margin:0 auto; width:55% ; text-align:justify">
+
+@if($postData)
+
+  @foreach ($postData as $key=>$values)
+
     @php 
-      $imageData = $values['postImages'];
-      $likeData = $values['postLikes'];
-      $commentData = $values['postComments'];
+      $imageData = $values['post_images'];
+      $likeData = $values['post_likes'];
+      $commentData = $values['post_comments'];
       $category = $values['category'];
     @endphp
-{{$category}}
-    <div>
-      <a class="btn btn-primary" href="/post/{{$values['id']}}/edit">update</a>
-      <h1>Title : {{$values['title']}}</h1>
-      {{-- <h1>Category : {{ $category['title'] }}</h1> --}}
 
-      <p>{{$values['content']}}</p>
+    <div class="p-4">
+      <div class="d-flex " style="justify-content: space-between">
+        <div>
+          <h3>Title : {{$values['title']}}</h3>
 
-      @if (count($commentData))
-        @foreach($commentData as $commentvalues)
-          <p>{{$commentvalues['content']}}</p>
-        @endforeach
-      @else
-        <p>No comments available</p>
-      @endif
+          <h4>Category : {{ $category['title'] }}</h4>
+        </div>
+        <div>
+          <a class="btn btn-primary" href="/posts/{{$values['id']}}/edit">update</a>
+          <a class="btn btn-danger" href="#">delete</a>
+        </div>
+      </div>
+      
+      <div>
+        <p>{{$values['content']}}</p>
+      </div>
+
+      <div>
+        <h5>Comments</h5>
+        <hr>
+        @if (count($commentData))
+          
+          @foreach($commentData as $commentvalues)
+
+            <p>{{$commentvalues['content']}}</p>
+          
+          @endforeach
+
+        @else
+          <p>No comments available</p>
+        @endif
+      </div>
 
     </div>
 
   @endforeach
 
+@else
+  <p>No Post Available</p>    
+@endif
 </div>
 
 

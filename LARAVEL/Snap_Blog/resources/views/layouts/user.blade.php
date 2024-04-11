@@ -17,7 +17,7 @@
     @endif
 
     <main>
-        @yield("maincontent")
+        @yield("main")
     </main>
 
     @if(View::exists('common.footer'))

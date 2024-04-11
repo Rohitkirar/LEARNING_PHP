@@ -17,7 +17,7 @@
 
             <p>Create Your Account</p>
         </div>
-        <form action="/user" method="post">
+        <form action="/users" method="post">
             @csrf
             <div class="form-outline mb-3">
                 <label class="form-label" for="first_name">Firstname </label>

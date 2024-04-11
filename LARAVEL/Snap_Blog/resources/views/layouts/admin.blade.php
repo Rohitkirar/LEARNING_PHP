@@ -17,7 +17,7 @@
     </nav>
 
     <main>
-        @yield('maincontent')
+        @yield('main')
     </main>
 
     <footer>

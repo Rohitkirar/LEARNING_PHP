@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Models\User;
-use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -17,9 +15,13 @@ class PostController extends Controller
     public function index()
     {
         
-        $storyData = Post::with(['postImages' , 'postComments' , 'postLikes' , 'category'])->get();
+        $postData = Post::with(['postImages' , 'postComments' , 'postLikes' , 'category'])->get();
+
+        // $postData = $postData->toArray();
+
+        $postData = json_encode($postData);
         
-        return view('user.allStoryView' , compact('storyData') );
+        return view('user.allStoryView' , compact('postData') );
 
     }
 
@@ -52,7 +54,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return Post::find($id)->users()->get();
+        return Post::find($id)->user;
         
     }
 
@@ -64,15 +66,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {   
-
-        // $storyData = Post::with(['categories'])->find($id);
-
-        // $storyData = Category::with('posts')->get();
-        
         $storyData = Post::with('category')->find($id);
 
-        dd($storyData);
         return view('user.updateStoryForm' , compact('storyData') );
+
+        // $storyData = Post::with(['categories'])->find($id);
+        // $storyData = Category::with('posts')->get();
+        
     
     }
 

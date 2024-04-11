@@ -2,7 +2,7 @@
 
 @section('title') Edit Details @endsection
 
-@section('maincontent')
+@section('main')
 
     <div class="card shadow-lg p-5 mt-5 mb-5" style="width:40% ; margin:0 auto" >
 
@@ -16,7 +16,7 @@
             <p>Edit User Information</p>
         </div>
         
-        <form action="/user/{{$userData['id']}}"   method="POST" >
+        <form action="/users/{{$userData['id']}}"   method="POST" >
             @method('PATCH')
             @csrf
             <div class="form-outline mb-3">

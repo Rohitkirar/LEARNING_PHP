@@ -4,7 +4,7 @@
     About
 @endsection
 
-@section('maincontent')
+@section('main')
   <section class="jumbotron ">
       <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded " style="background-color: whitesmoke;  ">
           <div class="text-center">

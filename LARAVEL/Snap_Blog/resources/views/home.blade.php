@@ -4,7 +4,7 @@
     Home
 @endsection
 
-@section('maincontent')
+@section('main')
     <section class="jumbotron text-center ">
         <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded " style="height:25rem ; ">
             <h1 class="jumbotron-heading">Join millions of others</h1>
