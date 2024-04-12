@@ -1,23 +1,23 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    public function postImages(){
-        return $this->hasMany(PostImage::class);
-    }
+    // public function images(){
+    //     return $this->hasMany(PostImage::class);
+    // }
 
-    public function postLikes(){
+    public function likes(){
         return $this->hasMany(PostLike::class);
     }
 
-    public function postComments(){
+    public function comments(){
         return $this->hasMany(PostComment::class);
     }
 
@@ -29,4 +29,9 @@ class Post extends Model
         return $this->belongsTo(Category::class );
     }
 
+    public function images(){
+
+        return $this->morphMany(Image::class , 'imageable' );
+    
+    }
 }

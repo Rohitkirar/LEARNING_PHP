@@ -12,4 +12,5 @@
         <strong class="card p-1 m-1" style="font-size:12px"><a style="text-decoration:none" href="#">linkedln</a></strong>
         <strong class="card p-1 m-1" style="font-size:12px"><a style="text-decoration:none" href="#">Youtube</a></strong>
     </ul>
+    
 </footer>

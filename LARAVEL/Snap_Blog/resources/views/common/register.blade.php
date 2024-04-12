@@ -4,7 +4,7 @@
     Sign up
 @endsection
 
-@section('maincontent')
+@section('main')
 
     <section class="container mt-3 p-5 card" style="width:45%">
         <div class="text-center">

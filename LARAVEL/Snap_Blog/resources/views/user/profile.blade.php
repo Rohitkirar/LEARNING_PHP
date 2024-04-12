@@ -31,8 +31,8 @@
                     </div>
 
                     <div class="h-50 d-flex align-items-end" style="justify-content:space-between ; ">
-                        <span>Like : {{count($values['post_likes'])}}</span>
-                        <span>Comment : {{count($values['post_comments'])}}</span>
+                        <span>Like : {{count($values['likes'])}}</span>
+                        <span>Comment : {{count($values['comments'])}}</span>
                     </div>
 
                 </div>

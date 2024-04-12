@@ -15,9 +15,9 @@
   @foreach ($postData as $key=>$values)
 
     @php 
-      $imageData = $values['post_images'];
-      $likeData = $values['post_likes'];
-      $commentData = $values['post_comments'];
+      $imageData = $values['images'];
+      $likeData = $values['likes'];
+      $commentData = $values['comments'];
       $category = $values['category'];
     @endphp
 

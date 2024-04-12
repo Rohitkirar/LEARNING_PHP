@@ -15,7 +15,7 @@
                 <a class="nav-link"  style="color:white" href="/about">About</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="/create">Register</a>
+                <a class="nav-link"  style="color:white" href="/users/create">Register</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  style="color:white" href="/login">Login</a>
