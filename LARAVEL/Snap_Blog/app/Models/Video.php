@@ -6,16 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PostLike extends Model
+class Video extends Model
 {
     use HasFactory , SoftDeletes;
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
+    
+    public function tags(){
 
-    public function post(){
-        return $this->belongsTo(Post::class);
+        return $this->morphToMany(Tag::class , 'taggable');
     }
-
 }

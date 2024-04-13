@@ -25,8 +25,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->enum('role' , ['admin' , 'user'])->default('user');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->timestamps();
             $table->softDeletes();
         });
     }

@@ -17,6 +17,7 @@
                         </p>
                     </div>
                     <form onsubmit="return confirm('Do you want to update your password'); " action="#" method="post" >
+                        
                         <center><p>Update Password</p></center>
 
                         <div class="form-outline">

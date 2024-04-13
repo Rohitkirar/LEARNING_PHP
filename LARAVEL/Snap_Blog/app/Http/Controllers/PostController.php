@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         
-        $postData = Post::with(['comments' , 'likes' , 'category'])->get();
+        $postData = Post::with(['comments' , 'images' , 'likes' , 'category'])->get();
 
         // $postData = $postData->toArray();
 

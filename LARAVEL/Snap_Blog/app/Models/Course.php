@@ -21,6 +21,5 @@ class Course extends Model
                 ->withPivot('created_at' , 'updated_at');
     
     }
-    
 
 }
