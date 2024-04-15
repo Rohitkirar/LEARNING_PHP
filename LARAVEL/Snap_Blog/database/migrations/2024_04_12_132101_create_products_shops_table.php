@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('id');
             $table->foreignId('product_id');
             $table->foreignId('shop_id');
+            $table->unique(['product_id' , 'shop_id']);
             $table->timestamps();
         });
     }

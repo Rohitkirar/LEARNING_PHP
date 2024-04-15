@@ -9,6 +9,8 @@ class Post extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $guarded = ['id'];
+
     // public function images(){
     //     return $this->hasMany(PostImage::class);
     // }

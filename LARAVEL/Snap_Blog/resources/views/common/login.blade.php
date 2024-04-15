@@ -6,10 +6,10 @@
 
 @section('main')
 
-    <section class="container p-5 mt-3 card " style="width:40%">
+    <section class="container p-5 mt-3 card " style="width:30%">
         <div class="text-center">
             <div>
-                <img src="../upload/snapchat.png" alt="logo" style="width:15%">
+                <img src="Upload/snapchat.png" alt="logo" style="width:15%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </div>
             <h4 class="m-1 p-1">Welcome To Snap Blog</h4>

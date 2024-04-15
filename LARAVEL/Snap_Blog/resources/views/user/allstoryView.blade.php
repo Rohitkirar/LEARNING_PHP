@@ -28,12 +28,28 @@
 
           <h4>Category : {{ $category['title'] }}</h4>
         </div>
-        <div>
+        <div class="d-flex h-100" >
+
           <a class="btn btn-primary" href="/posts/{{$values['id']}}/edit">update</a>
-          <a class="btn btn-danger" href="#">delete</a>
+
+          <form method="POST" action="{{ route('posts.destroy' , $values['id'] ) }}">
+
+            @csrf @method('delete')
+            
+            <button type="submit" class="btn btn-danger">delete</button>
+          
+          </form>
         </div>
       </div>
       
+      @if ($imageData)
+      <div>
+        @foreach($imageData as $image)
+          <img src="Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
+        @endforeach
+      </div>
+      @endif
+
       <div>
         <p>{{$values['content']}}</p>
       </div>

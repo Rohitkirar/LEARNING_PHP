@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
     
     <a class="navbar-brand" style="width:10% ; height:10%;" href="#">
-        <img src="" style="width:25% ; height:25%;" alt="logo">
+        <img src="Upload/snapchat.png" style="width:25% ; height:25%;" alt="logo">
         <span  style="color:white">ɮʟօɢ</span>
     </a>
 

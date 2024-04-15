@@ -30,7 +30,7 @@
               </div>
           </div>
       </div>
-      <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded " style="background-color:gray; height:25rem ; ">
+      <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded text-center " style="background-color:gray; height:25rem ; ">
           <h1 class="jumbotron-heading">Join millions of others</h1>
           <p class="lead text-muted">
               Whether sharing your expertise, breaking news, or whatever’s on your mind,

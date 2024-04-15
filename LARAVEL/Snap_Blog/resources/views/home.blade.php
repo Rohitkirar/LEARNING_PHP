@@ -21,7 +21,7 @@
         <div class="container shadow-lg mt-5 p-3 mb-5 bg-white rounded "
             style="background-color: whitesmoke; height:25rem ; ">
             <div>
-                <img src="../upload/snapchat.png" style="width:5% ;" alt="logo">
+                <img src="Upload/snapchat.png" style="width:5% ;" alt="logo">
                 <span style="font-size:xx-large;">ɮʟօɢ</span>
             </div>
             <p class="lead text-muted">

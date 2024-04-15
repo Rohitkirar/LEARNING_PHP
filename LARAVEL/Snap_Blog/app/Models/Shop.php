@@ -16,7 +16,7 @@ class Shop extends Model
 
     public function products(){
 
-        return $this->belongsToMany(Product::class)->withPivot('created' , 'updated_at');
+        return $this->belongsToMany(Product::class)->withPivot('created_at' , 'updated_at');
     
     }
 }

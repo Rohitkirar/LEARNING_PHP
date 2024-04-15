@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Post;
-
+use App\Models\Category;
 class PostController extends Controller
 {
 
@@ -42,9 +41,11 @@ class PostController extends Controller
 
     public function edit($id)
     {   
-        $storyData = Post::with('category')->find($id);
+        $storyData = Post::with('category' , 'images')->find($id);
+        
+        $categoryData = Category::all();
 
-        return view('user.updateStoryForm' , compact('storyData') );
+        return view('user.updateStoryForm' , compact('storyData' , 'categoryData') );
         
     
     }
@@ -57,6 +58,10 @@ class PostController extends Controller
 
     public function destroy($id)
     {
+        if(Post::destroy($id))
+            return redirect('posts');
+
+        abort(404 );
         
     }
 }

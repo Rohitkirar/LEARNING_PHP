@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers;
 use App\Models;
@@ -277,7 +278,7 @@ Route::get("/insertuseraddress" , function(){
 
 //! Read Operation
 
-Route::get("readuseraddress/{id}" , function($id){
+Route::get("/readuseraddress/{id}" , function($id){
 
     //! get user details with address
 
@@ -297,7 +298,7 @@ Route::get("readuseraddress/{id}" , function($id){
 
 //! update 
 
-Route::get('updateuseraddress' , function(){
+Route::get('/updateuseraddress' , function(){
 
     $user = Models\User::findorfail(9);
     $result = $user->address->update(['address'=>"new home"]);
@@ -316,18 +317,210 @@ Route::get('updateuseraddress' , function(){
 
 //! delete
 
-Route::get('deleteuseraddress' , function(){
+Route::get('/deleteuseraddress' , function(){
     
     $user = Models\User::findorfail(9);
     
     // $result = $user->address()->delete();
 
-    $result = $user->address()->onlyTrashed()->restore();
+    $result = $user->address()->onlyTrashed()->restore(); // to restore deleted data
     
     return $result;
 
-    // 
 });
+
+//! CRUD Operation One to Many Relationship
+
+//! one to many create opertion
+
+Route::get('/createuserposts'  , function(){
+
+    $user = Models\User::findorfail(60);
+    
+    //?for single post add
+
+    // return $user->posts()->create(["title"=>"Preeti post" , 'category_id' => 11 , 'content'=>'pretty smile' ]);
+
+
+    //? for multiple post add
+
+    return $user->posts()->insert([
+        ['user_id' => $user['id']  , 'title'=>"preeti post 2 " , 'category_id' => 14 , 'content' => 'pretty 2'],
+        ['user_id' => $user['id'] , 'title'=>"preeti post 3 " , 'category_id' => 15 , 'content' => 'pretty 3']
+    ]);
+
+});
+
+//! one to many Read operation
+
+Route::get('/readuserposts' , function(){
+
+    // $posts = Models\User::with('posts')->find(60);
+
+    $posts = Models\User::find(60)->posts;
+
+    foreach($posts as $key=>$post)
+        echo $post  ."<br>";
+
+});
+
+//! one to many update operation
+
+Route::get('updateuserposts', function(){
+
+    $user = Models\User::findorfail(60);
+
+    $post = $user->posts()->findorfail(119)->update(['title' => 'Kings XI punjab' , 'content'=>'She spent all the parse to buy sharma , virat , dhoni if they come in mega auction']);
+    
+    return $post;
+    
+    // if id is not specify it update whole records of posts for user present in db
+    
+    // $post = $user->posts()->update(['title' => 'Kings XI punjab' , 'content'=>'She spent all the parse to buy sharma , virat , dhoni if they come in mega auction']);
+
+});
+
+
+//! delete one to many relations
+
+Route::get('deleteuserposts' , function(){
+
+    $user = Models\User::findorfail(60);
+
+    $post = $user->posts()->whereId('122')->delete();
+    
+    // $post = $user->posts()->delete();
+    
+    // $post = $user->posts()->withTrashed()->find(122)->restore();
+
+    // $post = $user->posts()->restore();
+    
+    return $post;
+
+});
+
+//! CRUD operation many to many relationship
+
+//! Create operation on Many to Many relationship
+
+Route::get('/createstudentcourses' , function(){
+
+    $student = Models\Student::find('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
+
+    return $student->courses()->create( ['name' => 'biology' ]);
+
+});
+
+//! Read operation on Many to Many relationship
+
+Route::get('/readstudentcourses' , function(){
+
+    $student = Models\Student::with('courses')->find('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
+
+    return $student;
+});
+
+//! Update operation on Many to Many relationship
+
+Route::get('/updatestudentcourses' , function(){
+
+    $student = Models\Student::find('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
+
+    $course = $student->courses()->whereId('9bcfb6c0-908e-4f8c-bdd1-441f7fb69392')->update(['name' => 'Hindi']);
+
+    // $course = $student->courses()->update(['name' => 'biology2']);
+
+    return $course;
+
+});
+
+//! Delete operation on Many to Many relationship
+
+Route::get('/deletestudentcourses' , function(){
+    
+    $student = Models\Student::find('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
+
+    return $student->courses()->find('9bc9acc2-57f5-4c12-83fb-2941c18facee')->delete();
+
+    // return $student->courses()->delete(); //?to delete all courses record of student
+
+    // return $student->courses()->onlyTrashed()->find('9bc9acc2-57f5-4c12-83fb-2941c18facee')->restore(); //? to restore record
+
+    // return $student->courses()->restore(); //? to restore record
+
+});
+
+
+//! createMany() to store multiple data in related model when one to many and many to many relation
+
+Route::get('/createmanycourse' , function(){
+
+    $student = Models\Student::findorfail('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
+
+    $courses = $student->courses()->createMany([
+        ['name' => 'BEEE' ] ,
+        ['name' => 'ED'],
+        ['name' => 'Image Processing']
+    ]);
+
+    return $courses;
+});
+
+//! saveMany() to store save multiple data in related model when one to many and mant to many relationship
+
+Route::get('/savemanycourse' , function(){
+
+    $student = Models\Student::findorfail('4b3b9671-f898-11ee-b4dc-fc3fdb8b48eb');
+
+    $courses = $student->courses()->saveMany([
+        new Models\Course(['name'=>"ED"]) , new Models\Course(['name'=>'BEEE' ]) , new Models\Course(['name'=>'Image Processing'])
+    ]);
+
+    return $courses;
+});
+
+
+//! attach , detach  and sync  to add , remove , or both in pivot table for Many to Many relation 
+
+//! attach() : it use to add relation in pivot table
+
+
+Route::get('/attach' , function(){
+
+    $shop = Models\Shop::find(1);
+
+    // return $shop->products()->attach(2);  //? to add single relation in pivot table
+
+    return $shop->products()->attach([6 , 8 , 9]); //? to insert multiple relation in pivot table 
+
+});
+
+
+//! detach($id) : it use to remove relation from pivot table
+
+Route::get('/detach' , function (){
+    $shop = Models\Shop::find(1);
+
+    // return $shop->products;
+
+    return $shop->products()->detach(8);
+
+    // return $shop->products()->detach(); // to delete all relations in pivot
+});
+
+
+//! sync() : basically it detach all relation and then attach the new one as pass in method
+
+Route::get('/sync' , function(){
+
+    $shop = Models\Shop::find(1);
+
+    return $shop->products()->sync([1 , 2 , 3]);
+
+    // return $shop->products;
+
+});
+
 
 ?>
 
