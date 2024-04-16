@@ -14,4 +14,6 @@ class PostImage extends Model
         return $this->belongsTo(Post::class);
     }
 
+    protected $guarded = [ 'id' ];
+
 }

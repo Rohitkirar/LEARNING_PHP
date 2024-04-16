@@ -10,6 +10,8 @@ class Image extends Model
 {
     use HasFactory , SoftDeletes;
 
+    protected $guarded = [ 'id' ] ;
+
     // get the parent imageable model (user or post);
     
     public function imageable(){

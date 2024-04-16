@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('url');
             $table->foreignId('imageable_id');
             $table->string('imageable_type');
+            $table->unique(['url' , 'imageable_id' , 'imageable_type']);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
             $table->softDeletes();

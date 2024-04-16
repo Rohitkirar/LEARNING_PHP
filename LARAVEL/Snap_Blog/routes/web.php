@@ -407,7 +407,18 @@ Route::get('/createstudentcourses' , function(){
 
     $student = Models\Student::find('9bc9a8ae-055f-4794-9fb5-d81d54acef42');
 
-    return $student->courses()->create( ['name' => 'biology' ]);
+    // return $student->courses()->create( ['name' => 'mathematics' ]);
+
+
+        // $student = Models\Student::create(['full_name'=>'Rk' , 'number'=> 11]);
+
+        // dump($student);
+
+        // $student->courses()->create(['name' => 'mathematics 2' ]);
+
+        // return $student;
+        
+    return $student->courses()->whereId('9bc9acc2-57f5-4c12-83fb-2941c18facee')->update(['name'=>'m2']);
 
 });
 
@@ -520,6 +531,344 @@ Route::get('/sync' , function(){
     // return $shop->products;
 
 });
+
+
+//! CRUD Operation PolyMorphism for morphOne And morphMany
+
+//! Create 
+Route::get('/postimagescreate' , function(){
+
+    $post = Models\Post::findorfail(119);
+    
+    $imageadded = $post->images()->create(['url' => 'pretty.png']);
+
+    return compact('post' , 'imageadded');
+
+});
+
+//! Read 
+
+Route::get('/postimagesread' , function(){
+
+    //? 1st Way 
+
+    $post = Models\Post::find(118);
+
+    foreach($post->images as $image)
+        echo $image . "<br>";
+
+    //? 2nd way
+
+    $post = Models\Post::with('images')->find(118);
+    dump($post);
+
+    
+    //? 3rd way
+
+    $user = Models\User::with('posts.images')->findOrFail(60);
+
+    foreach($user->posts as $post)
+        echo $post->images . "<br>";
+    
+    
+});
+
+//! Update '
+
+Route::get('/postimagesupdate' , function(){
+    
+    $post = Models\Post::find(119);
+
+    $imageboolean = $post->images()->whereId(214)->update(['url'=>'pretty2.png' , 'imageable_id' => 0 ]); // you can only update images that related to post
+    
+    dd($imageboolean);
+    
+});
+
+//! Delete
+
+Route::get('/postimagesdelete' , function(){
+
+    $post = Models\Post::find(119);
+
+    return $post->images()->whereId(214)->delete(); // to delte image by id
+
+    return $post->images()->delete();  // to delete all related images 
+    
+});
+
+Route::get('/assignimagestopost' , function(){
+
+    $post = Models\Post::find(119);
+
+    $image = Models\Image::find(204);
+
+    return $post->images()->save($image); // it update the imageable_id and imageable_type in image table doesn't create new relation
+
+});
+
+
+Route::get('/unassignimagespost'  , function(){
+
+    $post = Models\Post::find(119);
+
+    return $post->images()->whereId(204)->update(['imageable_id'=>0 , 'imageable_type'=>'']);
+
+});
+
+
+//! CRUD Operation Many To Many PolyMorphism
+
+//! Create
+
+Route::get('/createpostsvideofortags' , function(){
+
+    $post = Models\Post::create([
+        "title" => "The Wonderful Day" ,
+        "content" => "beautiful morning , afternoon , evening and night" , 
+        "user_id" => 60 , 
+        "category_id" => 14
+        ]);
+
+    $tag = Models\Tag::find(1);
+
+    dump( $post->tags()->save($tag) );
+
+    // to create a new tag by post or video
+
+    dump($post->tags()->create(['name' => "#work" ]));
+    
+});
+
+//! Read 
+
+Route::get('/readpostsvideobytags' , function(){
+
+    $tag = Models\Tag::find(2);
+
+    $posts = $tag->posts;
+
+    foreach($posts as $post){
+        echo $post . "<hr>";
+    }
+
+    $videos = $tag->videos ;
+
+    foreach($videos as $video){
+        echo $video . "<hr>";
+    }
+
+});
+
+//* read data by Post or Video with tag data
+
+Route::get("/readpostandvideowithtag" , function(){
+
+    $post = Models\Post::findorfail(58);
+    
+    dump( $post->tags ) ;
+
+    dump(Models\Post::with('tags')->find(58));
+
+    $video = Models\Video::findOrFail(4);
+
+    dump($video->tags);
+
+    dump(Models\Video::with('tags')->find(4));
+
+});
+
+//! Update
+
+Route::get("/updatepostvideowithtag" , function(){
+
+    $post = Models\Post::find(129);
+
+    echo "<HR>"  . $post->tags()->whereId(6)->update(['name'=>'TimetoWork']); 
+    
+
+    //* use where to update one tag otherwise it update all tag related to post
+
+
+
+
+    $video = Models\Video::find(3);
+
+    echo "<HR>" . $video->tags()->whereId(2)->update(['name' => 'DreamComesTrue2']);
+
+    //* use where to update one tag otherwise it update all tag related to video
+
+
+
+
+    $tag = Models\Tag::find(3);
+
+    echo "<HR>" . $tag->posts()->whereId(58)->update(['title' => "The Ramayana : Lord Ram" ]);
+
+    //* use where to update one post otherwise it update all post related to tag
+
+
+
+    $tag = Models\Tag::with('posts:title' , 'videos')->find(2);
+    
+    echo "<HR>" . $tag->name;
+
+    echo "<HR>" . $tag->posts()->whereId(27)->update( ['title' =>" Avengers:The Saviour"] );
+    
+    echo "<HR>" . $tag->posts;
+
+    //* use where to update one post otherwise it update all post related to tag
+
+
+
+
+
+    echo "<HR>" . $tag->videos()->whereId(3)->update(['url'=>"ROMAN_VS_CODY_Biggest_OF_ALL_TIME.mov"]);
+
+    echo "<HR>" . $tag->videos;
+
+    //* use where to update one video otherwise it update all video related to tag
+
+
+});
+
+
+Route::get('/deletepostvideotag' , function(){
+
+    $post = Models\Post::with('tags')->find(27);
+
+    echo "Title : " .$post->title . "<br> Tag : " . $post->tags[0]->name ;
+
+    // echo "<BR>Title Deleted : " . $post->tags()->whereId(2)->delete();
+
+
+
+    $video = Models\Video::with('tags')->find(4);
+
+    echo "<br>Url : ". $video->url . "<br> Tag : " . $video->tags[0]->name ;
+
+    // echo "<BR>Video Deleted : " . $video->tags()->whereId(3)->delete();
+
+
+
+    $tag = Models\Tag::with('posts' , 'videos')->find(2);
+    
+    // echo "<BR>post Delete : " . $tag->posts()->whereid(27)->delete();
+
+    // echo "<BR>Video Delete : " . $tag->videos()->whereid(3)->delete();   
+});
+
+
+//! attach() , detach() and sync()
+
+//! attach()
+
+Route::get('/polyattach' , function(){
+
+    //? attach() tags in post
+
+    $post = Models\Post::find(128);
+
+    // $post->tags()->attach(2);
+
+    // $post->tags()->attach([3 , 4, 5]);
+
+    
+    //? attach() tags in video
+
+    $video = Models\Video::find(4);
+
+    // $video->tags()->attach(2);
+
+    // $video->tags()->attach([3 , 4, 5]);
+
+
+    //? attach() posts and videos by tag
+
+    $tag = Models\Tag::find(6);
+
+    // $tag->videos()->attach(4);
+
+    // $tag->posts()->attach(58);
+
+});
+
+//! detach()
+
+Route::get('polydetach' , function(){
+
+    //? detach() tags from post
+
+    $post = Models\Post::find(128);
+
+    // $post->tags()->detach(2);
+
+    // $post->tags()->detach([2,3,4]);
+
+    //? detach() tags from video
+
+    $video = Models\Video::find(4);
+
+    // $video->tags()->detach(3);
+
+    // $video->tags()->detach([3 , 5]);
+
+    //? detach() tags from 
+
+    $tag = Models\Tag::find(6);
+
+    // $tag->posts()->detach(129);
+
+    // $tag->posts()->detach([129 , 128]);
+
+    // $tag->video()->detach(4);
+
+    // $tag->video()->detach([4 , 5 , 1]);
+
+});
+
+//! sync()
+
+Route::get('polysync' , function(){
+
+    //? sync() tags from post
+
+    $post = Models\Post::find(128);
+
+    // $post->tags()->sync(2);
+
+    $post->tags()->sync([2,3,4]);
+
+    //? sync() tags from video
+
+    $video = Models\Video::find(4);
+
+    // $video->tags()->sync(3);
+
+    // $video->tags()->sync([3 , 5]);
+
+    //? sync() tags from 
+
+    $tag = Models\Tag::find(6);
+
+    // $tag->posts()->sync(129);
+    
+    // $tag->posts()->sync([129 , 128]);
+
+    // $tag->video()->sync(4);
+
+    // $tag->video()->sync([4 , 5 , 1]);
+
+});
+
+//! associate and dissociate  (belongsTo , morphTo);
+
+Route::get('/associate' , function(){
+
+});
+
+
+
 
 
 ?>

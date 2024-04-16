@@ -10,6 +10,8 @@ class Tag extends Model
 {
     use HasFactory , SoftDeletes;
 
+    protected $guarded = ['id'];
+
     public function posts(){
     
         return $this->morphedByMany(Post::class , 'taggable');
