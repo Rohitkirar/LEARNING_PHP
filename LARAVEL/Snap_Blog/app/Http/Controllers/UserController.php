@@ -10,75 +10,77 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user.user');
+        return view('users.index');
     }
 
     public function create()
     {
 
-        return view('common.register');
+        return view('users.create');
     }
 
     public function store(Request $request)
     {
-        $userData = $request->all();
-        array_slice($userData, 1, -1);
 
-        $result = User::create($userData);
+        return $request;
+
+        $result = User::create([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'date_of_birth' => $request['date_of_birth'],
+            'gender' => $request['gender'],
+            'email' => $request['email'],
+            'number' => $request['number'],
+            'username' => $request['username'],
+            'password' => md5($request['password'])
+        ]);
 
         if ($result)
             return view('common.login');
         else
-            return view('common.register');
+            return view('users.register');
     }
 
     public function show($id)
     {
-        //hasMany() (with())
 
-        $user = User::with(['posts.comments', 'posts.category', 'posts.likes'])->find($id);
+        $user = User::with('posts.comments', 'posts.category', 'posts.likes')->find($id);
 
-        $user = $user->toJson();
-
-        return view('user.profile', compact('user'));
-
-
-        /*      
-        // hasOne() 
-        $postData = User::first()->posts;
-        return ($postData) ; 
- 
-        // hasMany() (only get post data) 
-        $postData = User::first()->posts()->get(); 
-        $postData = User::find($id)->posts;
-        return dd($postData) ; 
-        */
+        return view('users.show', compact('user'));
     }
 
     public function edit($id)
     {
-        $userData = User::find($id);
+        $user = User::find($id);
 
-        return view('user.editUserDetails', compact('userData'));
+        return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, $id)
     {
+        $user = User::find($id);
 
-        $userData =  $request->all();
+        if ($user->password == md5($request->password)) {
 
-        array_slice($userData, 2, -1);
+            $result = $user->update([
+                'first_name' => $request['first_name'],
+                'last_name' => $request['last_name'],
+                'date_of_birth' => $request['date_of_birth'],
+                'gender' => $request['gender'],
+                'email' => $request['email'],
+                'number' => $request['number']
+            ]);
 
-        $result = User::find($id)->update($userData);
+            if ($result)
+                return view('users.index');
+        }
 
-        if ($result)
-            return redirect('/user');
-        else
-            return redirect('/user/$id/edit');
+        return redirect(route('users.edit', $id));
     }
 
     public function destroy($id)
     {
-        //
+        if (User::destroy($id))
+            return redirect('/');
     }
 }

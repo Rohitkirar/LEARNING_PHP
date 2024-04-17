@@ -4,10 +4,10 @@
 
 @php
 
-    if(isset($storyData['images']))
-        $imageData = $storyData['images'];
+    if(isset($post['images']))
+        $images = $post['images'];
     else 
-        $imageData = 0 ;
+        $images = 0 ;
 
 @endphp
 
@@ -22,15 +22,15 @@
             <h4 class="mt-1 pb-1">Update Story</h4>         
         </div>
         
-        <form  action="{{ route( 'posts.update' , $storyData['id'] )}}" method="post" enctype="multipart/form-data" >
+        <form  action="{{ route( 'posts.update' , $post['id'] )}}" method="post" enctype="multipart/form-data" >
             @method('patch') @csrf
 
             <div class="form-outline mb-4">
                 <label class="form-label" for="category_title">Category Title:</label>
                 <select id="category_title" name='category_id' >
 
-                    @foreach($categoryData as $category)
-                        @if($category['id'] == $storyData['category']['id'])
+                    @foreach($categorys as $category)
+                        @if($category['id'] == $post['category']['id'])
                             <option value="{{ $category['id'] }}" selected> {{ $category['title'] }} </option>
                         @else
                             <option value="{{ $category['id'] }}"> {{ $category['title'] }} </option>
@@ -42,19 +42,19 @@
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="title">Story Title:</label>
-                <input class="form-control" type="text" name='title' id='title' value="{{ $storyData['title'] }}" required />
+                <input class="form-control" type="text" name='title' id='title' value="{{ $post['title'] }}" required />
             </div>
             
             <div class="form-outline mb-4">
                 <label class="form-label" for="content">Content:</label>
-                <textarea class="form-control" id="content" name="content" rows="10" required >{{ $storyData['content'] }}</textarea>
+                <textarea class="form-control" id="content" name="content" rows="10" required >{{ stripslashes($post['content']) }}</textarea>
             </div>
             
-            @if($imageData)
+            @if($images)
             <div style="display:grid; grid-template-columns: auto auto;">
-                @foreach($imageData as $image)
+                @foreach($images as $image)
 
-                    @if(count($imageData)==1)
+                    @if(count($images)==1)
                         <div class='card m-2 p-2'  >
                             <img src="../../upload/{{$image['url']}}" style="object-fit: contain" alt='image Not uploaded'/>
                         </div>

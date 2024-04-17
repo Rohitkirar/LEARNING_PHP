@@ -57,11 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(PostLike::class);
     }
 
-    // public function images(){
+    public function images(){
 
-    //     return $this->hasManyThrough(PostImage::class , Post::class);
+        return $this->hasManyThrough(PostImage::class , Post::class);
     
-    // }
+    }
 
     public function image(){
         

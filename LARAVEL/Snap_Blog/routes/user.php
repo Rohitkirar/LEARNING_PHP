@@ -11,7 +11,7 @@ Route::resource('/users', UserController::class);
 
 Route::resource('/posts', PostController::class);
 
-Route::view('/updatepassword', 'user.updatepassword');
+Route::view('/updatepassword', 'users.updatepassword');
 
 
 Route::get('user/image', function () {

@@ -12,8 +12,8 @@
 </head>
 <body>
         
-    @if(View::exists('user.navbar'))
-        @include('user.navbar')
+    @if(View::exists('users.navbar'))
+        @include('users.navbar')
     @endif
 
     <main>

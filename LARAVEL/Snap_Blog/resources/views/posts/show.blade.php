@@ -4,35 +4,29 @@
 
 @section('main')
 
-@php 
-  $postData = json_decode($postData , true);
-@endphp
-
 <div class="bg-light shadow-lg mt-3 " id="viewstorydiv" style="margin:0 auto; width:55% ; text-align:justify">
 
-@if($postData)
-
-  @foreach ($postData as $key=>$values)
+@if($post)
 
     @php 
-      $imageData = $values['images'];
-      $likeData = $values['likes'];
-      $commentData = $values['comments'];
-      $category = $values['category'];
+      $images = $post['images'];
+      $likes = $post['likes'];
+      $comments = $post['comments'];
+      $category = $post['category'];
     @endphp
 
     <div class="p-4">
       <div class="d-flex " style="justify-content: space-between">
         <div>
-          <h3>Title : {{$values['title']}}</h3>
+          <h3>Title : {{$post['title']}}</h3>
 
           <h4>Category : {{ $category['title'] }}</h4>
         </div>
         <div class="d-flex h-100" >
 
-          <a class="btn btn-primary" href="/posts/{{$values['id']}}/edit">update</a>
+          <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
 
-          <form method="POST" action="{{ route('posts.destroy' , $values['id'] ) }}">
+          <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
 
             @csrf @method('delete')
             
@@ -42,26 +36,26 @@
         </div>
       </div>
       
-      @if ($imageData)
+      @if ($images)
       <div>
-        @foreach($imageData as $image)
-          <img src="Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
+        @foreach($images as $image)
+          <img src="../../Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
         @endforeach
       </div>
       @endif
 
       <div>
-        <p>{{$values['content']}}</p>
+        <p>{{stripslashes($post['content']) }}</p>
       </div>
 
       <div>
         <h5>Comments</h5>
         <hr>
-        @if (count($commentData))
+        @if (count($comments))
           
-          @foreach($commentData as $commentvalues)
+          @foreach($comments as $comment)
 
-            <p>{{$commentvalues['content']}}</p>
+            <p>{{$comment['content']}}</p>
           
           @endforeach
 
@@ -71,8 +65,6 @@
       </div>
 
     </div>
-
-  @endforeach
 
 @else
   <p>No Post Available</p>    
@@ -91,5 +83,3 @@
 <script src="../../public/js/allstoryviewpage.js"></script>
 
 @endsection
-
-

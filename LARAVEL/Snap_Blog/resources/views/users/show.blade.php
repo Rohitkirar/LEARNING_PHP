@@ -1,14 +1,10 @@
 @extends('layouts.user')
 
 @section('title')
-    user profile
+    profile
 @endsection
 
 @section('main')
-
-@php
-    $user = json_decode($user , true);
-@endphp
 
 <div class="container shadow-lg mt-5 mb-5" style="margin: 0 auto ; width:70%">
     <div class="container p-4">

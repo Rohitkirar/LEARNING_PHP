@@ -10,58 +10,72 @@ class PostController extends Controller
     public function index()
     {
         
-        $postData = Post::with(['comments' , 'images' , 'likes' , 'category'])->get();
+        $posts = Post::with(['comments' , 'images' , 'likes' , 'category'])->get();
 
-        // $postData = $postData->toArray();
-
-        $postData = json_encode($postData);
-        
-        return view('user.allStoryView' , compact('postData') );
+        return view('posts.index' , compact('posts') );
 
     }
 
 
     public function create()
     {
+        $categorys = Category::all();
 
+        return view('posts.create' , compact('categorys'));
     }
 
 
     public function store(Request $request)
     {
-
+        
+        $post = Post::create([
+            'title' => $request['title'] ,
+            'category_id' => $request['category_id'] ,
+            'user_id' => 10 ,
+            'content' => addslashes($request['content'])
+        ]);
+        
+        if($post)
+            return redirect('/posts');
+        
     }
-
 
     public function show($id)
     {
-        return Post::find($id)->user;
+        $post = Post::with('category' , 'images' , 'comments' , 'likes')->find($id);
+
+        return view('posts.show' , compact('post'));
         
     }
 
     public function edit($id)
     {   
-        $storyData = Post::with('category' , 'images')->find($id);
+        $post = Post::with('category' , 'images')->find($id);
         
-        $categoryData = Category::all();
+        $categorys = Category::all();
 
-        return view('user.updateStoryForm' , compact('storyData' , 'categoryData') );
+        return view('posts.edit' , compact('post' , 'categorys') );
         
-    
     }
 
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        $post = Post::findorfail($id)->update([
+            'title' => $request['title'] ,
+            'category_id' => $request['category_id'] ,
+            'user_id' => 10 ,
+            'content' => addslashes($request['content'])
+        ]);
+        
+        if($post)
+            return redirect("/posts/$id");
     }
 
 
     public function destroy($id)
     {
         if(Post::destroy($id))
-            return redirect('posts');
-
-        abort(404 );
+            return redirect('/posts');
         
     }
 }

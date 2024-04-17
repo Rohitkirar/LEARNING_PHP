@@ -6,6 +6,23 @@
 
 @section('main')
 
+    <div class="container shadow-lg p-5" style="margin:0 auto ; width:30%">
+
+        {!! Form::open(['route'=>'users.store', 'method'=>'POST']) !!}
+            <div>
+                {!! Form::label('first_name') !!}
+                {!! Form::text('first_name' , 'john' , ['class'=>'form-control']) !!}
+            </div>
+            <div>
+                {!! Form::label('last_name') !!}
+                {!! Form::text('last_name' , 'doe' , ['class'=>'form-control']) !!}
+            </div>
+            {!! Form::submit('submit') !!}
+
+        {!! Form::close() !!}
+
+    </div>
+
     <div class="container shadow-lg mt-3 p-5 card" style="width:40%">
         <div class="text-center">
             <div>

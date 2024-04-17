@@ -85,7 +85,11 @@ Route::get('/shopproductdata' , function(){
 
 Route::get('/userimagedata'  , function(){
     
-    $userImageData = Models\User::with('images')->find(9);
+    // $userImageData = Models\User::with('images')->find(9);
+    
+    $userImageData = Models\User::find(9);
+
+    return $userImageData->images;
 
     dd($userImageData['images'][0]);
 });
@@ -526,7 +530,7 @@ Route::get('/sync' , function(){
 
     $shop = Models\Shop::find(1);
 
-    return $shop->products()->sync([1 , 2 , 3]);
+    return $shop->products()->sync([1 , 2 , 3 ]);
 
     // return $shop->products;
 
@@ -864,7 +868,7 @@ Route::get('polysync' , function(){
 //! associate and dissociate  (belongsTo , morphTo);
 
 Route::get('/associate' , function(){
-
+    
 });
 
 
