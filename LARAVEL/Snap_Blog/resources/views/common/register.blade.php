@@ -9,7 +9,7 @@
     <div class="container shadow-lg mt-3 p-5 card" style="width:40%">
         <div class="text-center">
             <div>
-                <img src="../upload/snapchat.png" alt="logo" style="width:10%">
+                <img src="{{asset('Upload/snapchat.png')}}" alt="logo" style="width:10%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </div>
 
@@ -17,7 +17,7 @@
 
             <p>Create Your Account</p>
         </div>
-        <form action="/users" method="post">
+        <form action="route('users.store')" method="post">
             @csrf
             <div class="form-outline mb-3">
                 <label class="form-label" for="first_name">Firstname </label>
@@ -66,10 +66,10 @@
 
             <div class="container signin">
                 <span>
-                    <a href="/" style="text-decoration: none;">Home</a>
+                    <a href="{{route('home')}}" style="text-decoration: none;">Home</a>
                 </span>
                 <span style="float:right;">Already have an account? 
-                    <a href="/login" style="text-decoration: none;">Sign in</a>
+                    <a href="{{route('users.login')}}" style="text-decoration: none;">Sign in</a>
                 </span>
             </div>
         </form>

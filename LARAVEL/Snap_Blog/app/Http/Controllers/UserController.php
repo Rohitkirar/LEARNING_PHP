@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -19,10 +20,8 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-
-        return $request;
 
         $result = User::create([
             'first_name' => $request['first_name'],
@@ -43,7 +42,6 @@ class UserController extends Controller
 
     public function show($id)
     {
-
         $user = User::with('posts.comments', 'posts.category', 'posts.likes')->find($id);
 
         return view('users.show', compact('user'));
@@ -56,11 +54,11 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProfileRequest $request, $id)
     {
         $user = User::find($id);
 
-        if ($user->password == md5($request->password)) {
+        if (true) {
 
             $result = $user->update([
                 'first_name' => $request['first_name'],

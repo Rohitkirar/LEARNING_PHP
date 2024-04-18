@@ -66,7 +66,31 @@ class User extends Authenticatable
     public function image(){
         
         return $this->morphOne(Image::class , 'imageable');
+    
+    }
 
+    //accessor
+    public function getFirstNameAttribute($first_name){
+        return ucfirst($first_name);
+    }
+
+    public function getLastNameAttribute($last_name){
+        return ucfirst($last_name);
+    }
+
+
+    //mutators
+
+    public function setFirstNameAttribute($first_name){
+        $this->attributes['first_name'] = strtolower($first_name);    
+    }
+
+    public function setLastNameAttribute($last_name){
+        $this->attributes['last_name'] = strtolower($last_name);
+    }
+    
+    public function setEmailAttribute($email){
+        $this->attributes['email'] = strtolower($email);
     }
 
 

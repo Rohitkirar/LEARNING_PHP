@@ -9,7 +9,7 @@
     <section class="container p-5 mt-3 card " style="width:30%">
         <div class="text-center">
             <div>
-                <img src="Upload/snapchat.png" alt="logo" style="width:15%">
+                <img src="{{asset('Upload/snapchat.png')}}" alt="logo" style="width:15%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </div>
             <h4 class="m-1 p-1">Welcome To Snap Blog</h4>
@@ -40,14 +40,11 @@
                     <span>
                         Don't have an account?
                     </span>
-                    <a href="/register" class="btn btn-outline-success">Create new</a>
+                    <a href="{{route('users.create')}}" class="btn btn-outline-success">Create new</a>
                 </span>
             </div>
         </form>
     </section>
 
-    @if(isset($_GET['success']))
-        <script> alert('user registered successfull') </script> 
-    @endif
 
 @endsection

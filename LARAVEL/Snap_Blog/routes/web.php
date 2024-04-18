@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Http\Controllers;
 use App\Models;
 
@@ -18,13 +19,13 @@ use App\Models;
 |
 */
 
-Route::view('/' ,  'home'); 
+Route::view('/' ,  'home')->name('home'); 
 
-Route::view('/about' ,  'about');
+Route::view('/about' ,  'about')->name('about');
 
 //* Route::get('/users/create' ,  [UserController::class , 'create']); //already created in resource route
 
-Route::view('/login' ,  'common.login');
+Route::view('/users/login' ,  'common.login')->name('users.login');
 
 //! inserting data by using create in student , course table
 
@@ -873,7 +874,20 @@ Route::get('/associate' , function(){
 
 
 
+Route::get('/sql' , function(){
 
+    DB::enableQueryLog();
+    
+    dump(Models\User::find(9)); 
+
+    dump(Models\User::with('posts')->find(9));
+
+    dump(DB::table('users')->join('posts' , 'posts.user_id' , '=' , 'users.id')->get());
+
+    // dump(Models\User::find(9));
+
+    dd(DB::getQueryLog());
+});
 
 ?>
 

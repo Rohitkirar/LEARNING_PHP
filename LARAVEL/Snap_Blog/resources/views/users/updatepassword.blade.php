@@ -12,7 +12,7 @@
                 <div class="card-body p-md-5 mx-md-4">
                     <div class="text-center">
                         <p>
-                            <img src="../../upload/snapchat.png" alt="logo" style="width:15%" />
+                            <img src="{{asset('Upload/snapchat.png')}}" alt="logo" style="width:15%" />
                             <span style="font-size:x-large">ɮʟօɢ</span>
                         </p>
                     </div>

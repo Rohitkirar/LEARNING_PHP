@@ -1,14 +1,129 @@
 @extends('layouts.user')
 
-@section('title') Edit Details @endsection
+@section('title')
+    Edit Details
+@endsection
 
 @section('main')
+    <div class="container shadow-lg p-5 mt-5 " , style="width:40% ; margin:0 auto ; border:1px solid lightgrey">
 
+        <div class="text-center">
+            <p>
+                <img src="{{ asset('Upload/snapchat.png') }}" alt="logo" style="width:10%">
+                <span style="font-size:x-large">ɮʟօɢ</span>
+            </p>
+
+            <p>Edit User Information</p>
+        </div>
+
+        <hr style="color:lightgrey">
+
+        {!! Form::model($user, ['method' => 'PATCH', 'route' => ['users.update', 9]]) !!}
+
+        <div class="container mb-3">
+            {!! Form::label('first_name', 'First Name', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('first_name'))
+                    {{ $errors->first('first_name') }}
+                @endif
+            </span>
+            {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('last_name', 'Last Name', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger" style="float: right">
+                @if ($errors->has('last_name'))
+                    {{ $errors->first('last_name') }}
+                @endif
+            </span>
+            {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('gender', 'Gender', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('gender'))
+                    {{ $errors->first('gender') }}
+                @endif
+            </span>
+            <div class="d-flex justify-content-between form-control">
+                <div>
+                    {!! Form::label('gender', 'Male') !!}
+                    {!! Form::radio('gender', 'male', ['class' => 'form-control']) !!}
+                </div>
+                <div>
+                    {!! Form::label('gender', 'Female') !!}
+                    {!! Form::radio('gender', 'female', ['class' => 'form-control']) !!}
+                </div>
+                <div>
+                    {!! Form::label('gender', 'Other') !!}
+                    {!! Form::radio('gender', 'other', ['class' => 'form-control']) !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('date_of_birth', 'Date_Of_Birth', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('date_of_birth'))
+                    {{ $errors->first('date_of_birth') }}
+                @endif
+            </span>
+            {!! Form::date('date_of_birth', null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('email', 'Email', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('email'))
+                    {{ $errors->first('email') }}
+                @endif
+            </span>
+            {!! Form::email('email', null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('number', 'Mobile', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('number'))
+                    {{ $errors->first('number') }}
+                @endif
+            </span>
+            {!! Form::number('number', null, ['class' => 'form-control ']) !!}
+        </div>
+
+        <div class="container mb-3">
+            {!! Form::label('password', 'Confirm Password', ['class' => 'form-label']) !!}
+            <span class="text-danger">*</span>
+            <span class="text-danger " style="float: right">
+                @if ($errors->has('password'))
+                    {{ $errors->first('password') }}
+                @endif
+            </span>
+            {!! Form::text('password', '', ['class' => 'form-control']) !!}
+        </div>
+
+
+        {!! Form::submit('Update', ['class' => 'w-100 btn btn-primary']) !!}
+
+        {!! Form::close() !!}
+
+
+    </div>
+    {{-- end form  --}}
+    {{-- 
     <div class="card shadow-lg p-5 mt-5 mb-5" style="width:40% ; margin:0 auto" >
 
         <div class="text-center">
             <p>
-                <img src="../../upload/snapchat.png" alt="logo" style="width:10%">
+                <img src="{{asset('Upload/snapchat.png')}}" alt="logo" style="width:10%">
                 <span style="font-size:x-large">ɮʟօɢ</span>
             </p>
             <h4 class="mt-1 mb-3 pb-1">Welcome To Snap Blog</h4>
@@ -62,6 +177,5 @@
             </div>
         </form>
 
-    </div>
-
+    </div> --}}
 @endsection

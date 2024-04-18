@@ -51,22 +51,22 @@
             </div>
             
             @if($images)
-            <div style="display:grid; grid-template-columns: auto auto;">
-                @foreach($images as $image)
+                <div style="display:grid; grid-template-columns: auto auto;">
+                    @foreach($images as $image)
 
-                    @if(count($images)==1)
-                        <div class='card m-2 p-2'  >
-                            <img src="../../upload/{{$image['url']}}" style="object-fit: contain" alt='image Not uploaded'/>
-                        </div>
-                    @else 
-                        <div class='card m-2 p-2'>
-                            <img src="../../upload/{{ $image['url'] }}" style="object-fit: contain" alt='image Not uploaded'/>
-                            <a href="#" class='btn btn-danger mt-2'>Delete</a>
-                        </div>
-                    @endif
+                        @if(count($images)==1)
+                            <div class='card m-2 p-2'  >
+                                <img src="../../upload/{{$image['url']}}" style="object-fit: contain" alt='image Not uploaded'/>
+                            </div>
+                        @else 
+                            <div class='card m-2 p-2'>
+                                <img src="../../upload/{{ $image['url'] }}" style="object-fit: contain" alt='image Not uploaded'/>
+                                <a href="#" class='btn btn-danger mt-2'>Delete</a>
+                            </div>
+                        @endif
 
-                @endforeach
-            </div>           
+                    @endforeach
+                </div>        
             @endif
 
  
