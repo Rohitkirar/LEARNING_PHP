@@ -12,11 +12,20 @@ class Image extends Model
 
     protected $guarded = [ 'id' ] ;
 
+    public $path = "Upload/"; 
+
     // get the parent imageable model (user or post);
     
     public function imageable(){
 
         return $this->morphTo();
     
+    }
+
+    
+    // accessor
+
+    public function getUrlAttribute($url){
+        return $this->path . $url;
     }
 }

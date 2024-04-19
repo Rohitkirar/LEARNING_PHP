@@ -41,13 +41,13 @@
       @if ($images)
       <div>
         @foreach($images as $image)
-          <img src="Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
+          <img src="{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
         @endforeach
       </div>
       @endif
 
       <div>
-        <p>{{$post['content']}}</p>
+        <p>{{ stripslashes($post['content']) }}</p>
       </div>
 
       <div>

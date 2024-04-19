@@ -30,6 +30,10 @@
                 <a class="nav-link"  style="color:white" href="{{route('users.show' , 9)}}">Profile</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link"  style="color:white" href="{{route('posts.create')}}">Create Post</a>
+            </li>
+
         </ul>
 
     </div>

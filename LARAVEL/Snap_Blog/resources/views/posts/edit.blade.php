@@ -12,7 +12,59 @@
 @endphp
 
 @section('main')
-    <div class="container p-5 shadow-lg p-3 mb-5 mt-5 bg-white rounded" style="width:45%">
+    <div class="container p-5 shadow-lg mb-5 mt-5 " style="width:45% ; border:1px solid lightgrey">
+
+        <div class="text-center m-3">
+            <img src="{{ asset('upload/snapchat.png')}}" alt="logo" style="width:10%">
+            <span style="font-size:x-large">ɮʟօɢ</span>
+        </div>
+
+        <h5 class="text-center">Edit Post</h5>
+
+        <hr style="color:lightgrey">
+
+        {!! Form::model($post , ['url'=>route('posts.update' , $post->id) , "method"=>"PUT" , "files"=>true ]) !!}
+
+            <div class="container mb-3">
+                {!! Form::label('title' , 'Post Title' , ['class'=>'form-label']) !!}
+                {!! Form::text('title' , null , ['class'=>'form-control']) !!}
+            </div>
+
+            <div class="container mb-3">
+                {!! Form::label('category_id' , 'Category Title' , ['class'=>'form-label'] ) !!}
+                {!! Form::select('category_id' , $categories , null , [ 'class'=>'form-control' ]) !!}
+            </div>
+
+            <div class="container mb-3">
+                {!! Form::label('content' , 'Content' , ['class'=>'form-label']) !!}
+                {!! Form::textarea('content' , null , ['class'=>'form-control' , 'placeholder'=>'Type here...']) !!}
+            </div>
+
+            <div class="mb-3" style="display:grid ; grid-template-columns: auto auto">
+                
+                @foreach($post->images as $image)
+                    <div class="container">
+
+                        <img src='{{asset("$image->url")}}' alt="image not available" class="w-100">
+                    
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="container mb-5">
+                {!! Form::label('images' , 'Image Upload' , ['class' => 'form-label'] ) !!}
+                {!! Form::file('images' , [ 'multiple'=>true , 'class'=>'form-control' ] ) !!}
+            </div>
+
+            <div class="container mb-3">
+                {!! Form::submit('Update Post' , ['class'=>'form-control btn btn-primary' ]) !!}
+            </div>
+
+        {!! Form::close() !!}
+
+    </div>
+
+    {{-- <div class="container p-5 shadow-lg p-3 mb-5 mt-5 bg-white rounded" style="width:45%">
         <div class="text-center">
             <p>
                 <img src="../../Upload/snapchat.png" alt="logo" style="width:10%">
@@ -86,7 +138,7 @@
                 <button class="form-control btn btn-primary" style="width:100%" type="submit" name='submit'>Submit</button>
             </div>
         </form>
-    </div>
+    </div> --}}
 
 
 @endsection

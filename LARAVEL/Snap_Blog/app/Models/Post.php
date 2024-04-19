@@ -42,4 +42,16 @@ class Post extends Model
         return $this->morphToMany(Tag::class , 'taggable');
 
     }
+
+
+    // queryScope
+
+    public static function scopeGetLatest($query){
+
+        return $query->orderBy('created_at', 'DESC')->limit(10)->get();
+
+    }
+
+    
+    
 }

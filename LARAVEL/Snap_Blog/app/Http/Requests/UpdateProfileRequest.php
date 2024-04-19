@@ -27,10 +27,10 @@ class UpdateProfileRequest extends FormRequest
             'first_name'=>'required|min:3|max:20',
             'last_name'=>'required|min:3|max:20',
             'gender'=>'required',
-            'date_of_birth'=>'required|before:01/01/2005',
+            'date_of_birth'=>'required|before: -13 years',
             'email'=>'required|email:rfc,dns',
-            'number'=>'required|max:10|min:10',
-            'password'=>'required|min:8|max:16'
+            'number'=>'required|regex:/^\\+?[1-9][0-9]{7,14}$/',
+            'password'=>'required'
         ];
     }
 }

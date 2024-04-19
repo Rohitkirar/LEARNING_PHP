@@ -1,11 +1,13 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Controllers;
 use App\Models;
+use Carbon\Carbon;
 
 
 /*
@@ -887,6 +889,32 @@ Route::get('/sql' , function(){
     // dump(Models\User::find(9));
 
     dd(DB::getQueryLog());
+});
+
+Route::get('/dates' , function(){
+    echo now() . "<BR>";
+
+    echo now()->format("Y-m-d") . "<BR>";
+
+    //Carbon is an api extension for DateTime that support 281 diff lang 
+
+    echo Carbon::now() . "<BR>";
+
+    echo Carbon::now()->subDays(20)->diffForHumans() . "<BR>";
+
+    echo Carbon::now()->addDays(20)->diffForHumans() . "<BR>";
+
+    echo Carbon::now()->subYear(2002)->format('y') . " Years Old<BR>";
+
+});
+
+
+// queryScope 
+
+Route::get("/queryScope" , function(){
+
+    return Models\Post::getLatest();
+
 });
 
 ?>
