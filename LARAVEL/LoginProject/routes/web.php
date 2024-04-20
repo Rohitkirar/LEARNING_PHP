@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use Doctrine\DBAL\Driver\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,21 +27,26 @@ Route::get('/role' , [ 'middleware'=>['role' , 'auth'] , function(){
 
 }]);
 
+Route::get('/userlogin' , function(){
+    session(['user_id'=> 9]);
+    return "you are loginned";
+});
 
-Route::get('/admin' , [ 'middleware'=>['auth'] ,  function(){
-    
-    $user = Auth::user();
+Route::get('/userlogout' , function(){
+    session()->forget('user_id');
+    return "please login first";
+});
 
-    if($user->role == 'admin'){
-        echo "<h1>Admin page</h1>";
-    }
-    else{
-        echo "<h1>User Login</h1>";
-    }
+Route::get('/adminpage' , function(){
+    return "You are login as Admin ";
+})->middleware('UserAuth');
 
-    dd($user);
+Route::get('/userpage' , function(){
+    return "you are login as user";
+})->middleware('UserAuth');
 
-}]);
+
+Route::get('/admin'  , [ AdminController::class , 'index' ]);
 
 Auth::routes();
 

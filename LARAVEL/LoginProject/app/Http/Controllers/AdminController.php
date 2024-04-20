@@ -14,6 +14,6 @@ class AdminController extends Controller
 
     public function index(){
 
-        return "I am admin Index";
+        return "<h1> Admin Page </h1>";
     }
 }

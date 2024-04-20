@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdmin
+class UserLogin
 {
     /**
      * Handle an incoming request.
@@ -18,7 +16,6 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-
         return $next($request);
     }
 }

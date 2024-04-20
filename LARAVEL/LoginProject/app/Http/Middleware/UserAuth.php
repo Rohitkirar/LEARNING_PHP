@@ -2,12 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class IsAdmin
+class UserAuth
 {
     /**
      * Handle an incoming request.
@@ -18,7 +16,11 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
+        if(session()->has('user_id'))
+            return $next($request);
+        else
+            return redirect('/userlogout');
 
-        return $next($request);
+
     }
 }
