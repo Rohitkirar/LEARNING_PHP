@@ -2,6 +2,7 @@
 
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -914,6 +915,75 @@ Route::get('/dates' , function(){
 Route::get("/queryScope" , function(){
 
     return Models\Post::getLatest();
+
+});
+
+
+//session
+
+Route::get('/sessionprint' , function(){
+
+    dump(session()->has('name'));
+
+    dump(session()->all());
+
+    session(['user_id'=>9]);
+    
+    echo "<br>user id " . session('user_id');
+
+    echo "<br>user id " . session()->get('user_id');
+
+    session(['username' => "Rohit Kirar" , 'city' => "sanchi"]);
+
+    echo "<br> City : " . session()->get('city') ;
+
+    echo "<br>";
+
+    print_r( session()->all() ) ; 
+
+    echo "<BR>";
+
+    session()->flash( "userlogin" , "you are successfully login" ); // temporary store property
+
+    // session()->forget('user_id'); // to remove session value
+
+    // session()->flush(); // to destroy session
+});
+
+
+
+
+Route::get('/sendmail' , function(){
+
+    $data = [
+        "title" => "Laravel Learning Progress" , 
+        "content" => "welldone you come to very far from where you start"
+    ];
+
+    Mail::send( 'mails.sendmail' , $data , function ($message){
+
+        $message->to('example@gmail.com' , 'Rohit Kirar')->subject("Learning Progress");
+
+    });
+
+});
+
+Route::get('/sendotp' , function(){
+
+    $otp = random_int(100000 , 999999);
+
+    $data = [
+        "content" => "Your One time Password (OTP) is ",
+        "otp" => $otp 
+    ];
+
+    $result = Mail::send('mails.sendotp' , $data , function($message){
+
+        $message->to('rohitkirar123@gmail.com' , 'Rohit Kirar')->subject("Otp for verification");
+    
+    });
+
+    dump($result);
 
 });
 

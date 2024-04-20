@@ -30,7 +30,7 @@ class CreatePostRequest extends FormRequest
             
             'images.*' => 'required|image|max:10240', //10MB for multiple file
             
-            // 'images' => 'required|mimes:jpg,jpeg,png|max:10240' //10MB for single file only
+            'images' => 'required' //10MB for single file only
             
         ];
     }

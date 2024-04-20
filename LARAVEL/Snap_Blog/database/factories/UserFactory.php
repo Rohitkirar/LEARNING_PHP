@@ -18,11 +18,14 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->name(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'number' => fake()->unique()->phoneNumber(),
+            'date_of_birth' => fake()->date('Y-m-d' , '2001-01-01' ),
+            'gender' => fake()->randomElement(['male' , 'female' , 'other']),
+            'password' => md5('12345678') , // password
+            'username' => fake()->userName(),
         ];
     }
 
