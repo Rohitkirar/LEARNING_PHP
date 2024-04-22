@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Http\Request;
@@ -8,6 +10,11 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware("auth")->except(["create" , "store"]);
+    }
 
     public function index()
     {
@@ -31,7 +38,7 @@ class UserController extends Controller
             'email' => $request['email'],
             'number' => $request['number'],
             'username' => $request['username'],
-            'password' => md5($request['password'])
+            'password' => Hash::make($request['password'])
         ]);
 
         if ($result)

@@ -7,7 +7,6 @@
 <div class="bg-light shadow-lg mt-3 " id="viewstorydiv" style="margin:0 auto; width:55% ; text-align:justify">
 
 @if($posts)
-
   @foreach ($posts as $key=>$post)
 
     @php 

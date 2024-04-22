@@ -1,18 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LoginController;
 use App\Models\User;
 use App\Models\PostImage;
 
 
+Route::view('/' ,  'home')->name('home'); 
+
+Route::view('/about' ,  'about')->name('about');
+
 Route::resource('/users', UserController::class);
 
-Route::resource('/posts', PostController::class);
+Route::resource('/posts', PostController::class)->middleware('auth');
+
+Route::get('/login' , [LoginController::class , "login"] )->name('login');
+
+Route::post("/login" , [LoginController::class , "authenticate"]);
+
+Route::get('/userslogout' , [LoginController::class , "logout"])->name('logout');
 
 Route::view('/updatepassword', 'users.updatepassword');
 
+// Route::get("/a" , function (){
+
+//     return Hash::make('12345678');
+
+// });
 
 Route::get('user/image', function () {
     $postImages = User::find(9)->postImages;

@@ -22,13 +22,11 @@ use Carbon\Carbon;
 |
 */
 
-Route::view('/' ,  'home')->name('home'); 
-
-Route::view('/about' ,  'about')->name('about');
 
 //* Route::get('/users/create' ,  [UserController::class , 'create']); //already created in resource route
 
-Route::view('/users/login' ,  'common.login')->name('users.login');
+
+
 
 //! inserting data by using create in student , course table
 

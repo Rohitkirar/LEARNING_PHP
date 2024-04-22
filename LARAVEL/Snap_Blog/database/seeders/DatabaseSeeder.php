@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
     {
 
         // FacadesSchema::disableForeignKeyConstraints();   // to disable foreign key checks
+
         Schema::enableForeignKeyConstraints();       // to enable foreign key checks
 
         
         // User::factory(10)->create();
+        
         // Post::factory(10)->create();
 
         $user = new UserSeeder();

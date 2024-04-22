@@ -18,7 +18,7 @@
                 <a class="nav-link"  style="color:white" href="{{route('users.create')}}">Register</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="{{route('users.login')}}">Login</a>
+                <a class="nav-link"  style="color:white" href="{{route('login')}}">Login</a>
             </li>
         </ul>
     </div>

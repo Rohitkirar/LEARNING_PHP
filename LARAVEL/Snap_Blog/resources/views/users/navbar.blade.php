@@ -19,7 +19,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="{{route('users.edit' , 9)}}">Edit Details</a>
+                <a class="nav-link"  style="color:white" href="{{route('users.edit' , Auth::user()->id)}}">Edit Details</a>
             </li>
 
             <li class="nav-item">
@@ -27,7 +27,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="{{route('users.show' , 9)}}">Profile</a>
+                <a class="nav-link"  style="color:white" href="{{route('users.show' , Auth::user()->id)}}">Profile</a>
             </li>
 
             <li class="nav-item">
@@ -36,6 +36,14 @@
 
         </ul>
 
+    </div>
+
+    <div class="d-flex" style="color:white">
+        
+        <div class="p-1">Welcome, {{ Auth::user()->first_name   . " " . Auth::user()->last_name}} </div>
+
+        <a class="my-2 my-sm-0" href="{{route('logout')}}"><img src="../../Upload/icons8-logout-32.png" style="height: 100% ; width:100%;" alt=""></a>
+    
     </div>
 
 </nav>    

@@ -14,7 +14,7 @@
                 here.
             </p>
             <p>
-                <a href="{{route('users.login')}}" class="btn btn-primary my-2">login here</a>
+                <a href="{{route('login')}}" class="btn btn-primary my-2">login here</a>
                 <a href="{{route('users.create')}}" class="btn btn-secondary my-2">Register</a>
             </p>
         </div>
