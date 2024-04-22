@@ -1,7 +1,59 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
+@section('main')
+
+<div class="container shadow-lg p-5 mt-5 mb-5" style="margin:0 auto; width:30%">
+
+    <div class="text-center">
+        <div class="mb-4">
+            <img src="{{asset('Upload/snapchat.png')}}" alt="logo" style="width:12.5%">
+            <span style="font-size:x-large">ɮʟօɢ</span>
+        </div>
+
+        <p>User Login</p>
+
+        <hr style="color:lightgrey">
+        
+        <span class="text-danger mb-5">
+            @if($errors->username) {{$errors->first("username")}} @endif 
+            <br>
+            @if($errors->password) {{$errors->first("password")}} @endif
+        </span>
+    </div>
+
+    {!! Form::open(['route'=>"login" , "method"=>"POST"]) !!}
+
+    <div class="mb-4">
+        {!! Form::label( "username" , "Username" ,[ "class" => "form-label " ] ) !!}
+
+        <span class="text-danger">*</span>        
+        {!! Form::text( "username" , null , [ "class" => "form-control" ]) !!}
+    </div>
+
+    <div class="mb-4">
+        {!! Form::label( "password" , "Password" , [ "class" => "form-label" ]) !!}
+        <span class="text-danger">*</span>        
+        {!! Form::text("password" , null , [ "class" => "form-control" ]) !!}
+    </div>
+
+    <div class="mb-4">
+        {!! Form::submit("Log In" , [ "class"=>"w-100 btn btn-primary" ]) !!}
+    </div>
+
+    {!! Form::close() !!}
+
+    <div class="mt-5 mb-5">
+        <span style="float:right">
+            <span>
+                Don't have an account?
+            </span>
+            <a href="{{route('users.create')}}" class="btn btn-outline-success p-1" style="font-size:12px">Create new</a>
+        </span>
+    </div>
+
+</div>
+
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +121,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
