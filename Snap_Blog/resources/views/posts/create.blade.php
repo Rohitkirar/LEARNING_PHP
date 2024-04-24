@@ -1,8 +1,8 @@
-@extends('layouts.user')
+@extends('layouts.app')
 
 @section('title') create post @endsection
 
-@section('main')
+@section('content')
 
     <div class="container shadow-lg p-5 mt-5"  style="width:45%; margin:0 auto; border:1px solid lightgrey">
         <div class="text-center m-3">

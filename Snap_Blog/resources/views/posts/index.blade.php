@@ -1,8 +1,8 @@
-@extends('layouts.user')
+@extends('layouts.app')
 
 @section('title') All Post @endsection
 
-@section('main')
+@section('content')
 
 <div class="bg-light shadow-lg mt-3 " id="viewstorydiv" style="margin:0 auto; width:55% ; text-align:justify">
 
@@ -23,21 +23,19 @@
 
           <h4>Category : {{ $category['title'] }}</h4>
         </div>
-        @if(Auth::user()->id == $post['user_id'])
-          <div class="d-flex h-100" >
+        <div class="d-flex h-100" >
 
-            <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
+          <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
 
-            <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
+          <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
 
-              @csrf @method('delete')
-              
-              <button type="submit" class="btn btn-danger">delete</button>
+            @csrf @method('delete')
             
-            </form>
-          </div>
-      @endif
-    </div>
+            <button type="submit" class="btn btn-danger">delete</button>
+          
+          </form>
+        </div>
+      </div>
       
       @if ($images)
       <div>

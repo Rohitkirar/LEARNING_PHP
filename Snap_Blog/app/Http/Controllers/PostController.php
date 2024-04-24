@@ -5,16 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Http\Requests\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;
-use Illuminate\Support\Facades\Auth;
-
 class PostController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
@@ -41,7 +33,7 @@ class PostController extends Controller
         $post = Post::create([
             'title' => $request['title'] ,
             'category_id' => $request['category_id'] ,
-            'user_id' => Auth::id() ,
+            'user_id' => 10 ,
             'content' => addslashes($request['content'])
         ]);
         
@@ -83,25 +75,22 @@ class PostController extends Controller
         
     }
 
-    public function update(UpdatePostRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $post = Post::findorfail($id)->update([
             'title' => $request['title'] ,
             'category_id' => $request['category_id'] ,
-            'user_id' => Auth::user()->id ,
+            'user_id' => 10 ,
             'content' => addslashes($request['content'])
         ]);
         
         if($post){
+            $image = $request->file('images');
             
-            $images = $request->file('images');
-            
-            if($images){
-                foreach($images as $image){
-                    $name = $image->getClientOriginalName();
-                    $image->move('Upload' , $name); // return path as string
-                    $post->images()->create(['url'=>$name]); //return obj of images
-                }
+            if($image){
+                $name = $image->getClientOriginalName();
+                $image->move('Upload' , $name);
+                Post::find($id)->images()->create(['url'=>$name]);
             }
 
             return redirect("/posts/$id");

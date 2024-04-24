@@ -905,6 +905,15 @@ Route::get('/dates' , function(){
 
     echo Carbon::now()->subYear(2002)->format('y') . " Years Old<BR>";
 
+    echo Carbon::now() . "<BR>" ;
+
+    echo " Today : " . Carbon::today() . "<BR> Tommorrow : " . Carbon::tomorrow() . "<BR> Yesterday : " . Carbon::yesterday();
+
+    echo "<BR> now() " . now() . "<BR> today() : " . today() . "<BR>";
+    
+    echo "<BR>isSaturday()" . Carbon::now()->isWednesday() ;
+
+    echo "<BR>isSaturday()" . Carbon::now()->isWednesday() ;
 });
 
 

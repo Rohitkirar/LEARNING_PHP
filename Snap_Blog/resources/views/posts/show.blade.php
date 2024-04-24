@@ -17,36 +17,31 @@
 
     <div class="p-4">
       <div class="d-flex " style="justify-content: space-between">
-        
         <div>
           <h3>Title : {{$post['title']}}</h3>
 
           <h4>Category : {{ $category['title'] }}</h4>
         </div>
+        <div class="d-flex h-100" >
 
-        @if(Auth::user()->id == $post['user_id'])
-          <div class="d-flex h-100" >
+          <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
 
-            <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
+          <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
 
-            <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
-
-              @csrf @method('delete')
-              
-              <button type="submit" class="btn btn-danger">delete</button>
+            @csrf @method('delete')
             
-            </form>
-          </div>
-      @endif
-
+            <button type="submit" class="btn btn-danger">delete</button>
+          
+          </form>
+        </div>
       </div>
       
       @if ($images)
-        <div>
-          @foreach($images as $image)
-            <img src="{{asset("$image->url")}}" class="card" style="width:100%" alt="image unavailable">
-          @endforeach
-        </div>
+      <div>
+        @foreach($images as $image)
+          <img src="../../Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
+        @endforeach
+      </div>
       @endif
 
       <div>
@@ -57,11 +52,13 @@
         <h5>Comments</h5>
         <hr>
         @if (count($comments))
+          
           @foreach($comments as $comment)
 
             <p>{{$comment['content']}}</p>
           
           @endforeach
+
         @else
           <p>No comments available</p>
         @endif

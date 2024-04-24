@@ -48,11 +48,9 @@ class Post extends Model
 
     public static function scopeGetLatest($query){
 
-        return $query->orderBy('created_at', 'DESC')->limit(10)->get(); // do not use get
+        return $query->orderBy('created_at', 'DESC')->limit(10)->get();
 
     }
-
-
 
     
     
