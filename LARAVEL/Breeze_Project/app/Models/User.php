@@ -49,6 +49,14 @@ class User extends Authenticatable
     ];
 
 
+    // relationship
+
+    public function posts(){
+
+        return $this->hasMany(Post::class);
+    
+    }
+
     // accessor and mutators
 
     public function firstName() : Attribute{

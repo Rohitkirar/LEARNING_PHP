@@ -48,7 +48,7 @@ class RegisterRequest extends FormRequest
         return [
 
             'first_name' => ['required', 'max:255'],
-            'last_name' => ['required', 'max:255'],
+            'last_name' => ['required' , 'unique:users' , 'max:255'],
             'date_of_birth' => ['required', 'date'],
             'gender' => ['required' , 'in:male,female,other'],
             'number' => ['required' , 'unique:'.User::class  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
@@ -59,3 +59,9 @@ class RegisterRequest extends FormRequest
         ];
     }
 }
+
+/*
+! 'unique : tablename'  or 'unique:'Model::class   //to validate the value is unique in the column of the table commonly used for email, mobile , username columns
+! 'before:value' or 'after:value'  // to validate value should be before or after the specify value in validation , also used for date column
+! 
+*/
