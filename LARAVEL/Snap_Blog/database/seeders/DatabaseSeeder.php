@@ -32,11 +32,36 @@ class DatabaseSeeder extends Seeder
         
         // Post::factory(10)->create();
 
-        // User::factory()->hasPosts()->has(Image::factory())->create();
+        User::factory(1)->has(
+            Post::factory(2)->has(PostImage::factory(2))
+            )->create();
 
-        Post::factory()->has(Image::factory())->create();
+
+        User::factory(1)->hasPosts(2)->hasImages(3)->create();
+
+
+        // Post::factory(2)->has(PostImage::factory(3))->create();
 
         // $user = new UserSeeder();
         // $user->run();
+
+        //! To store data in three related table USER->POST->POSTIMAGE
+
+        
+        // $users = User::factory(5)->create();
+
+        // $users->each(function($user){
+
+        //     $posts = Post::factory(5)->create([
+        //         'user_id' => $user->id 
+        //     ]);
+
+        //     $posts->each(function($post){
+        //         $image = PostImage::factory(5)->create([
+        //             'post_id' => $post->id
+        //         ]);
+        //     });
+        // });
+
     }
 }

@@ -20,7 +20,7 @@ class PostImageFactory extends Factory
             //
             
             "image" => fake()->randomElement(['817028.jpg' , '1263545.jpg' , '7902291.jpg' , '3111742.jpg' , '2302746.jpg' ]),
-            
+            // "post_id"=>fake()->numberBetween(100 ,200),
         ];
     }
 }
