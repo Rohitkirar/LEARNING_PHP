@@ -33,11 +33,11 @@ class DatabaseSeeder extends Seeder
         // Post::factory(10)->create();
 
         User::factory(1)->has(
-            Post::factory(2)->has(PostImage::factory(2))
+            Post::factory(2)->has(Image::factory(2))
             )->create();
 
 
-        User::factory(1)->hasPosts(2)->hasImages(3)->create();
+        // User::factory(1)->hasPosts(2)->hasImages(3)->create();
 
 
         // Post::factory(2)->has(PostImage::factory(3))->create();
