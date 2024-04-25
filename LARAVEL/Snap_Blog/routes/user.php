@@ -7,11 +7,15 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LoginController;
 use App\Models\User;
 use App\Models\PostImage;
-
+use Illuminate\Support\Facades\Request;
 
 Route::view('/' ,  'home')->name('home'); 
 
-Route::view('/about' ,  'about')->name('about');
+Route::get('/about' , function(Request $request ){
+    dump($request);
+})->name('about');
+
+// Route::view('/about' ,  'about')->name('about');
 
 Route::resource('/users', UserController::class);
 

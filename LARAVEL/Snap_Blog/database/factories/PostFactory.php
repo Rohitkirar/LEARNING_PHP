@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,14 +17,17 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+
         return [
             //
             
             "category_id" => fake()->numberBetween(1 , 12),
             "user_id" => fake()->numberBetween(9 , 100),
-            "title" => fake()->title(),
-            "content" =>fake()->text(1000)
+            "title" => fake()->text(30),
+            "content" =>fake()->text(1000),
             
+
         ];
+
     }
 }

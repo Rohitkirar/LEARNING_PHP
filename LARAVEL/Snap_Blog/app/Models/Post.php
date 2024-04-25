@@ -11,9 +11,9 @@ class Post extends Model
 
     protected $guarded = ['id'];
 
-    // public function images(){
-    //     return $this->hasMany(PostImage::class);
-    // }
+    public function images(){
+        return $this->hasMany(PostImage::class);
+    }
 
     public function likes(){
         return $this->hasMany(PostLike::class);
@@ -31,11 +31,11 @@ class Post extends Model
         return $this->belongsTo(Category::class );
     }
 
-    public function images(){
+    // public function images(){
 
-        return $this->morphMany(Image::class , 'imageable' );
+    //     return $this->morphMany(Image::class , 'imageable' );
     
-    }
+    // }
 
     public function tags(){
         

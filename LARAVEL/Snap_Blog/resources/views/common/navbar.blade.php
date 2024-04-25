@@ -12,7 +12,7 @@
                 <a class="nav-link"  style="color:white" href="{{route('home')}}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  style="color:white" href="{{route('about')}}">About</a>
+                <a class="nav-link"  style="color:white" href="{{route('about' ,'str_random()')}}">About</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  style="color:white" href="{{route('users.create')}}">Register</a>
