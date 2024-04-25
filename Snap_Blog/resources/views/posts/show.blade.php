@@ -1,8 +1,8 @@
-@extends('layouts.user')
+@extends('layouts.app')
 
 @section('title') Post @endsection
 
-@section('main')
+@section('content')
 
 <div class="bg-light shadow-lg mt-3 " id="viewstorydiv" style="margin:0 auto; width:55% ; text-align:justify">
 
@@ -18,15 +18,17 @@
     <div class="p-4">
       <div class="d-flex " style="justify-content: space-between">
         <div>
-          <h3>Title : {{$post['title']}}</h3>
+          <h3>Title : {{ $post->title }}</h3>
 
-          <h4>Category : {{ $category['title'] }}</h4>
+          @if($category)
+            <h4>Category : {{ $category->title  }}</h4>
+          @endif
         </div>
         <div class="d-flex h-100" >
 
-          <a class="btn btn-primary" href="/posts/{{$post['id']}}/edit">update</a>
+          <a class="btn btn-primary" href="{{ route('posts.edit' , $post->id ) }}/edit">update</a>
 
-          <form method="POST" action="{{ route('posts.destroy' , $post['id'] ) }}">
+          <form method="POST" action="{{ route('posts.destroy' , $post->id ) }}">
 
             @csrf @method('delete')
             
@@ -39,7 +41,7 @@
       @if ($images)
       <div>
         @foreach($images as $image)
-          <img src="../../Upload/{{$image['url']}}" class="card" style="width:100%" alt="image unavailable">
+          <img src='{{ asset($image->url) }}'  class="card" style="width:100%" alt="image unavailable">
         @endforeach
       </div>
       @endif
@@ -55,7 +57,7 @@
           
           @foreach($comments as $comment)
 
-            <p>{{$comment['content']}}</p>
+            <p>{{$comment->content}}</p>
           
           @endforeach
 

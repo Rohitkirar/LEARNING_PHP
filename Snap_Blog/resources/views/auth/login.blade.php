@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title')
     sign in
@@ -7,7 +7,10 @@
 @section('content')
     <div class="card p-5 mt-5" style="width:28%; margin:0 auto">
 
-        <h6 class="text-center">Login</h6>
+        <div class="text-center mb-3">
+            <img src="{{ asset('Upload/snapchat.png') }}" alt="logo" style="width:10%">
+            <span style="font-size:x-large">ɮʟօɢ</span>
+        </div>
 
         <hr style="color:lightgray">
 
@@ -35,7 +38,7 @@
             {!! Form::password('password' , [ "class" => "form-control" ] ) !!}
         </div>
         <div>
-            {!! Form::submit("Submit" , [ "class" => "btn btn-primary w-100"]) !!}
+            {!! Form::submit("Login" , [ "class" => "btn btn-primary w-100"]) !!}
         </div>
         {!! Form::close() !!}
     </div>

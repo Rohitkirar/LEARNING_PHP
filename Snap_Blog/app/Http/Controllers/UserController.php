@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        
+        $categorys = Category::limit(10)->get();
+
+        $posts = Post::with('images')->latest()->limit(10)->get();
+
+        return view('dashboard' , compact('categorys' , 'posts'));
     }
 
     /**

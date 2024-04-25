@@ -7,21 +7,26 @@
     </a>
 
     @guest
-        <div class="collapse navbar-collapse"  id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link"  style="color:white" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  style="color:white" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  style="color:white" href="{{route('register')}}">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"  style="color:white" href="{{route('login')}}">Login</a>
-                </li>
-            </ul>
+        <div class="container"  style="justify-content: space-between">
+            <div class="d-flex">
+                <a class="nav-link text-white"  href="/">Home</a>
+            
+                <a class="nav-link text-white" href="#">About</a>
+            </div>
+
+            @auth
+                <div class="d-flex">
+                    <a class="nav-link text-white"  href="{{route('dashboard')}}">Dashboard</a>
+                </div>
+            @endauth
+            
+            @guest
+                <div class="d-flex">
+                    <a class="nav-link text-white"  href="{{route('login')}}">Login</a>
+                
+                    <a class="nav-link text-white" href="{{route('register')}}">Register</a>
+                </div>
+            @endguest
         </div>
     @endguest
 

@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.app')
 
 @section('title') Edit Story @endsection
 
@@ -11,7 +11,7 @@
 
 @endphp
 
-@section('main')
+@section('content')
     <div class="container p-5 shadow-lg mb-5 mt-5 " style="width:45% ; border:1px solid lightgrey">
 
         <div class="text-center m-3">

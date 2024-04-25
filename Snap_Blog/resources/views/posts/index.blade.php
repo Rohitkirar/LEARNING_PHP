@@ -19,9 +19,13 @@
     <div class="p-4">
       <div class="d-flex " style="justify-content: space-between">
         <div>
-          <h3>Title : {{$post['title']}}</h3>
-
-          <h4>Category : {{ $category['title'] }}</h4>
+          
+          <h3>Title : {{$post->title}}</h3>
+          
+          @if($category)
+            <h4>Category : {{ $category->title }}</h4>
+          @endif
+          
         </div>
         <div class="d-flex h-100" >
 

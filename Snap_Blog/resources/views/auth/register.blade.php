@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title')
     Sign up
@@ -133,7 +133,7 @@
         </div>
 
         <div class="container">
-            {!! Form::submit('submit', ['class' => 'btn btn-primary w-100']) !!}
+            {!! Form::submit('Register', ['class' => 'btn btn-primary w-100']) !!}
         </div>
         
         {!! Form::close() !!}
