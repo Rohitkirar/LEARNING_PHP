@@ -9,20 +9,22 @@
         <title>
             @yield('title')
         </title>
+        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans text-gray-900 antialiased">
 
         <nav class="navbar navbar-expand-lg" style="background-color:grey ; max-height:3rem">  
 
-            <a class="navbar-brand" style="width:10% ; height:10%;" href="#">
-                <img src="{{asset('Upload/snapchat.png')}}" style="width:25% ; height:25%;" alt="logo">
-                <span  style="color:white">ɮʟօɢ</span>
+            <a class="d-flex" style="width:10%" href="#">
+                <img src="{{asset('Upload/snapchat.png')}}" style="width:24% ; height:24%;" alt="logo">
+                <span style="font-size:22px;color:white">ɮʟօɢ</span>
             </a>
 
             <div class="container"  style="justify-content: space-between">

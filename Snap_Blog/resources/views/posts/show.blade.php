@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(Auth::check() ? 'layouts.app' : 'layouts.guest')
 
 @section('title') Post @endsection
 
@@ -16,7 +16,9 @@
     @endphp
 
     <div class="p-4">
+      
       <div class="d-flex " style="justify-content: space-between">
+        
         <div>
           <h3>Title : {{ $post->title }}</h3>
 
@@ -24,26 +26,35 @@
             <h4>Category : {{ $category->title  }}</h4>
           @endif
         </div>
+
         <div class="d-flex h-100" >
+
+          @auth
 
           <a class="btn btn-primary" href="{{ route('posts.edit' , $post->id ) }}/edit">update</a>
 
           <form method="POST" action="{{ route('posts.destroy' , $post->id ) }}">
-
+            
             @csrf @method('delete')
             
             <button type="submit" class="btn btn-danger">delete</button>
           
           </form>
+
+          @endauth
         </div>
       </div>
       
       @if ($images)
-      <div>
-        @foreach($images as $image)
-          <img src='{{ asset($image->url) }}'  class="card" style="width:100%" alt="image unavailable">
-        @endforeach
-      </div>
+
+        <div>
+          
+          @foreach($images as $image)
+            <img src='{{ asset($image->url) }}'  class="card" style="width:100%" alt="image unavailable">
+          @endforeach
+
+        </div>
+
       @endif
 
       <div>
@@ -71,6 +82,7 @@
 @else
   <p>No Post Available</p>    
 @endif
+
 </div>
 
 

@@ -8,9 +8,14 @@ use App\Http\Requests\CreatePostRequest;
 class PostController extends Controller
 {
 
+    public function __construct(){
+
+        $this->middleware('auth')->except('index' , 'show');
+    
+    }
+
     public function index()
     {
-        
         $posts = Post::with(['comments' , 'images' , 'likes' , 'category'])->latest()->get();
         
         return view('posts.index' , compact('posts') );

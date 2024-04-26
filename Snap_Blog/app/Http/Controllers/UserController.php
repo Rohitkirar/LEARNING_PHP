@@ -16,11 +16,11 @@ class UserController extends Controller
     public function index()
     {
         
-        $categorys = Category::limit(10)->get();
+        $categories = Category::limit(10)->get();
 
         $posts = Post::with('images')->latest()->limit(10)->get();
 
-        return view('dashboard' , compact('categorys' , 'posts'));
+        return view('dashboard' , compact('categories' , 'posts'));
     }
 
     /**
