@@ -32,6 +32,15 @@ class LoginController extends Controller
      *
      * @return void
      */
+
+    # overriding username() fn to change login email -> username
+
+     public function username()
+    {
+        return 'username';
+    }
+
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');

@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 Auth::routes();
 
@@ -17,7 +18,11 @@ Route::middleware('auth')->group(function(){
 
     Route::get('admin' , [AdminController::class , 'index'])->name('admin.index');
 
-    
+    Route::get('admin/users/{user}/show' , [UserController::class , 'show'] )->name('admin.users.show');
+
+    Route::get('admin/users/{user}/edit' , [UserController::class , 'edit'])->name('admin.users.edit');
+
+    Route::patch('admin/users/{user}/update' , [UserController::class , 'update'])->name('admin.users.update');
     
     Route::get('posts' , [PostController::class , 'index'])->name('posts.index');   
 

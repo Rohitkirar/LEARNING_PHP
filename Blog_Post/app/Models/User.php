@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,11 +20,11 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    
+    protected $guarded = ['id'];
+
+    # avatar path seting
+    protected $path = "storage/images/";
 
     /**
      * The attributes that should be hidden for serialization.
@@ -55,6 +57,14 @@ class User extends Authenticatable
 
     public function permissions(){
         return $this->belongsToMany(Permission::class)->withTimestamps();
+    }
+
+    #accessor and mutators
+
+    public function avatar():Attribute{
+        return Attribute::make(
+            get: fn($avatar) => $this->path . $avatar
+        );
     }
 
     #custom function 

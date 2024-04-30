@@ -21,7 +21,9 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!-- Custom styles for this template-->
-    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet"> --}}
+    
+    @vite('resources/css/sb-admin-2.css')
 
 </head>
 
@@ -380,8 +382,7 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     {{-- page level scripts --}}
-
-
+    
     @yield('scripts')
 
 
