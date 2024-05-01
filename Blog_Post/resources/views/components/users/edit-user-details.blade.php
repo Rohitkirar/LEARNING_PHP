@@ -1,7 +1,7 @@
 @isset($user)
     <div class="container w-50 bg-white p-5">
 
-        <form action="{{ route('admin.users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('users.update', $user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="form-group">

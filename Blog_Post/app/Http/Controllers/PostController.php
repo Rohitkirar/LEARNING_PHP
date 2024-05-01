@@ -12,8 +12,8 @@ class PostController extends Controller
 {
     
     public function index(Request $request){
-
-        $posts = Post::query();
+        
+        $posts = Post::whereHas('user');
 
         if($request->has('search')){
             $search = $request->search;
@@ -21,7 +21,7 @@ class PostController extends Controller
         }
         
         
-        $posts = $posts->cursorPaginate(2); # it is secure as it passing hashed string in url for page num
+        $posts = $posts->cursorPaginate(10); # it is secure as it passing hashed string in url for page num
 
         // $posts = Post::latest()->paginate(2);
         // $posts = Post::latest()->simplePaginate(2);

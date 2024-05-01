@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
+@section('title', 'permissions')
+
 @section('content')
 
-    <x-users.edit-user-details :$user />
+    {{ dd($permissions) }}
 
 @endsection

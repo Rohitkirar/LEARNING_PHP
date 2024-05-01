@@ -3,7 +3,7 @@
 
     <hr>
     <div class="text-center mb-3 mt-3">
-        <img class="rounded-circle" height=100px width=100px src="{{asset($user->avatar)}}" alt="">
+        <img class="rounded-circle" height=100px width=100px src="{{ asset($user->avatar) }}" alt="">
     </div>
     <P>Name : {{ $user->name }} </P>
 
@@ -11,6 +11,6 @@
 
     <P>Phone : {{ $user->phone_number }} </P>
 
-    <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary float-right">Edit</a>
+    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary float-right">Edit</a>
 
 </div>

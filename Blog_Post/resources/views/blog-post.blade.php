@@ -1,31 +1,30 @@
-<x-home-master>
+@extends('layouts.home')
 
-    @section('content')
-
-    @if($post)
+@section('content')
+    @if ($post)
         <!-- Title -->
-        <h1 class="mt-4"> {{$post->title}} </h1>
+        <h1 class="mt-4"> {{ $post->title }} </h1>
 
         <!-- Author -->
         <p class="lead">
             by
-            <a href="#"> {{$post->user->name}} </a>
+            <a href="#"> {{ $post->user->name }} </a>
         </p>
 
         <hr>
 
         <!-- Date/Time -->
-        <p>Posted on {{$post->created_at->diffForHumans() }} </p>
+        <p>Posted on {{ $post->created_at->diffForHumans() }} </p>
 
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="{{asset($post->image)}}" alt="">
+        <img class="img-fluid rounded" src="{{ asset($post->image) }}" alt="">
 
         <hr>
 
         <!-- Post Content -->
-        <p class="lead"> {{$post->content}} </p>
+        <p class="lead"> {{ $post->content }} </p>
 
         <hr>
 
@@ -84,12 +83,7 @@
 
             </div>
         </div>
-            
-        @else
-            
+    @else
         <p>No Post Avaiable!</p>
-
-        @endif
-    @endsection
-
-</x-home-master>
+    @endif
+@endsection

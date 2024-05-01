@@ -18,7 +18,11 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-       
+        
+       if($user->roles()->pluck('slug')->contains('admin'))
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -66,7 +70,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return $user->id === $model->id;
     }
 
     /**
