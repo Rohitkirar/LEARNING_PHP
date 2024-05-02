@@ -20,8 +20,8 @@ class CreateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required" ,
-            "slug" => "required"
+            "name" => "required|string|max:255" ,
+            "slug" => "required|string|max:255|"
         ];
     }
 }

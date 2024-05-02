@@ -9,9 +9,9 @@ Route::get('/', [UserController::class, 'index'])->name('users.index');
 
 Route::get('/{user}/show', [UserController::class, 'show'])->name('users.show');
 
-Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware("can:update,".auth()->user());
 
-Route::patch('/{user}/update', [UserController::class, 'update'])->name('users.update');
+Route::patch('/{user}/update', [UserController::class, 'update'])->name('users.update')->middleware("can:update,".auth()->user());
 
 Route::delete('/{user}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
 

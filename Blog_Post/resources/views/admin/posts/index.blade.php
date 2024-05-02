@@ -43,6 +43,7 @@
                                 <th>created_at</th>
                                 <th>updated_at</th>
                                 <th>deleted_at</th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -55,6 +56,7 @@
                                 <th>created_at</th>
                                 <th>updated_at</th>
                                 <th>deleted_at</th>
+                                <th>Edit</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -63,8 +65,7 @@
                                     <td>{{ $post->id }}</td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>
-                                        <a
-                                            href="{{ route('posts.edit', $post->id) }}">{{ Str::limit($post->title, 20, '...') }}</a>
+                                        <a href="{{ route('post.show', $post->id) }} ">{{ Str::limit($post->title, 20, '...') }}</a>
                                     </td>
                                     <td>{{ Str::limit($post->content, 50, '...') }}</td>
                                     <td class="text-center"><img src="{{ asset($post->image) }}" height="50px"
@@ -72,7 +73,7 @@
                                     <td>{{ $post->created_at->diffForHumans() }}</td>
                                     <td>{{ $post->updated_at->diffForHumans() }}</td>
                                     <td>
-                                        @can(auth()->user(), $post)
+                                        @can("view" , $post)
                                             @if ($post->deleted_at)
                                                 {{ $post->deleted_at->diffForHumans() }}
                                             @else
@@ -82,6 +83,11 @@
                                                     <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             @endif
+                                        @endcan
+                                    </td>
+                                    <td>
+                                        @can("view" , $post) 
+                                            <a href="{{route('posts.edit' , $post->id)}} " class="btn btn-primary">Edit</a>
                                         @endcan
                                     </td>
                                 </tr>

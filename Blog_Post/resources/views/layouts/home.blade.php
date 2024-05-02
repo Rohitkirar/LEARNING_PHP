@@ -34,9 +34,11 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
+{{-- 
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
-          </li>
+          </li> 
+--}}
           @auth
             <li class="nav-item">
               <a class="nav-link" href="{{ route('admin.index') }}">Admin</a>
@@ -44,15 +46,20 @@
           @endauth
           @guest
             <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="{{route('login')}}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route("register")}}">Register</a>
             </li>
           @endguest
+{{-- 
           <li class="nav-item">
             <a class="nav-link" href="#">Services</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
-          </li>
+          </li> 
+--}}
         </ul>
       </div>
     </div>

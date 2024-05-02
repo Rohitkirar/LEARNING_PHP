@@ -4,6 +4,18 @@
 
 @section('content')
 
-    {{ dd($permissions) }}
+    <div class="d-flex">
+
+        {{-- create permission form --}}
+        
+        <x-permissions.admin-create-permission />
+        
+
+        {{-- all permissions table --}}
+
+        <x-permissions.admin-permissions-table :$permissions />
+
+
+    </div>
 
 @endsection

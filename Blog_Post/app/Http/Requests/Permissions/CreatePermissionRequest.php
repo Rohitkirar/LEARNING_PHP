@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Roles;
+namespace App\Http\Requests\Permissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoleRequest extends FormRequest
+class CreatePermissionRequest extends FormRequest
 {
-
     public function authorize()
     {
         if(auth()->check())
@@ -18,8 +17,8 @@ class UpdateRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|max:255" ,
-            "slug" => "required|max:255"
+            "name" => "required" ,
+            "slug" => "required"
         ];
     }
 }

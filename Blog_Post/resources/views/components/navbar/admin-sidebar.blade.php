@@ -42,6 +42,8 @@
         </div>
     </li>
 
+@can('viewAny' , auth()->user())
+
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
             aria-expanded="true" aria-controls="collapseUsers">
@@ -70,7 +72,9 @@
             </div>
         </div>
     </li>
+@endcan
 
+{{-- 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -138,6 +142,7 @@
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+    </div> 
+--}}
 
 </ul>

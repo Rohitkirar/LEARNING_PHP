@@ -27,26 +27,33 @@ class UserController extends Controller
         //
     }
 
-    public function show(User $user)
+    public function show($id)
     {
         // $this->authorize('view', $user);
 
+        $user = User::withTrashed()->findorFail($id);
+
         $roles = Role::all();
+
         return view('admin.users.show', compact('user', 'roles'));
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
         #UserPolicy use
+
+        $user = User::withTrashed()->findOrFail($id);
 
         $this->authorize('view', $user);
 
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $this->authorize('update', $user);
+        $user = User::withTrashed()->findOrFail($id);
+
+        // $this->authorize('update', $user); //use as middleware in route
 
         $user->name = $request->name;
         $user->email = $request->email;

@@ -31,6 +31,9 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
+        if($user->roles()->pluck('slug')->contains('admin'))
+            return true;
+
         return $user->id === $post->user_id 
                                 ? Response::allow() :
                                 Response::deny("You do not own this post !");    
