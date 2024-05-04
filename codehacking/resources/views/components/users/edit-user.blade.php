@@ -2,6 +2,15 @@
     <form action="{{ route('users.update' , $user->id) }}" method="POST">
         @csrf @method("PATCH")
 
+        <div style="text-align:center">
+            <img style="border-radius:100% ; max-height:10rem; " src="{{$user->getProfileImage($user->image)}}" id="profilePreview" >
+        </div>
+    
+        <div class="form-group">
+            <label for="profile" class="form-label">Profile Image</label>
+            <input type="file" id="profile" name="file" class="form-control">
+        </div>
+
         <div class="form-group">
             <label for="first_name" class="form-label">First Name</label>
             <input type="text" name="first_name" id="first_name" value="{{ old('first_name' , $user->first_name) }}" class="form-control @error('first_name') is-invalid @enderror " />
@@ -49,3 +58,18 @@
         </div>
     </form>
 @endisset
+
+
+
+<script>
+    document.getElementById('profile').addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

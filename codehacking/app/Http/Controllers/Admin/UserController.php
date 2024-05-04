@@ -6,79 +6,142 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UserCreateRequest;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
 
     public function index()
     {
-        $users = User::all();
-        return view("admin.users.index" , compact("users"));
+        try {
+            if(View::exists("admin.users.index")){
+
+                $users = User::with("Image")->get();
+
+                return view("admin.users.index", compact("users"));
+            
+            }
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+        }
     }
 
     public function create()
     {
-        return view("admin.users.create" );
+        try {
+            return view("admin.users.create");
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return redirect()->route("users.index");
+        }
     }
 
     public function store(UserCreateRequest $request)
     {
-        $user = User::create([
-            'first_name' => $request->first_name ,
-            'last_name' => $request->last_name ,
-            'date_of_birth' => $request->date_of_birth ,
-            'gender' => $request->gender ,
-            'email' => $request->email ,
-            'username' => $request->username ,
-            'phone_number' => $request->phone_number,
-            'password' => Hash::make($request->password)
-        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $user = User::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'date_of_birth' => $request->date_of_birth,
+                    'gender' => $request->gender,
+                    'email' => $request->email,
+                    'username' => $request->username,
+                    'phone_number' => $request->phone_number,
+                    'password' => Hash::make($request->password)
+                ]);
 
-        if($user)
-            toastr("User Created Successfully!");
-        else
-            toastr("Failed to Create User!" , "danger");
+                $file = $request->file('file');
+                if ($file) {
+                    $filename = $file->getClientOriginalName();
+                    $file->storeAs("images", $filename, "public");
+                    $user->image()->create(['image' => $filename]);
+                }
 
-        return redirect()->route("users.index");
+                toastr("User Created Successfully!");
+                return redirect()->route("users.index");
+            });
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return back();
+        }
     }
 
     public function show(User $user)
     {
-        return view("admin.users.show" , compact("user"));
+        try {
+            return view("admin.users.show", compact("user"));
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return redirect()->route("users.index");
+        }
     }
 
 
     public function edit(User $user)
     {
-        return view("admin.users.edit" , compact("user"));
+        try {
+        
+            return view("admin.users.edit", compact("user"));
+        
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return redirect()->route("users.index");
+        }
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->gender = $request->gender;
-        $user->date_of_birth = $request->date_of_birth;
-        $user->email = $request->email;
-        $user->phone_number = $request->phone_number;
+        try {
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->gender = $request->gender;
+            $user->date_of_birth = $request->date_of_birth;
+            $user->email = $request->email;
+            $user->phone_number = $request->phone_number;
 
-        if($user->isDirty()){
-            $user->save();
-            toastr("User Profile Update Successfully!");
+            $file = $request->file('file');
+
+            DB::transaction(function () use ($user, $file) {
+                if ($user->isDirty()) {
+                    $user->save();
+                    toastr("User Profile Updated Successfully!");
+                }
+                if ($file) {
+                    $filename = $file->getClientOriginalName();
+                    $file->storeAs("images", $filename, "public");
+                    $user->image = $filename ;
+                    $user->save();
+                    if ($user->isClean())
+                        toastr("User Profile Image Updated Successfully!");
+                }
+                if ($user->isDirty() || $file)
+                    return redirect()->route("users.index");
+                else {
+                    toastr("No Changes To Update!", "warning");
+                    return back();
+                }
+            });
+        } catch (Exception $e) {
+            toastr($e->getMessage(), 'error');
             return redirect()->route("users.index");
         }
-
-        toastr("No Changes To Update!" , "warning" );
-        return back();
     }
 
 
     public function destroy(User $user)
     {
-        $user->delete();
-        toastr("User Deleted Successfully");
-        return view("admin.users.index");
+        try {
+            $user->delete();
+            toastr("User Deleted Successfully");
+            return view("admin.users.index");
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return redirect()->route("users.index");
+        }
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -56,5 +57,26 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+
+    public function profileStore(Request $request)
+    {
+
+        $file = $request->file('file');
+        if ($file) {
+
+
+            $result = $file->storeAs("images" , $file->getClientOriginalName() , 'public');
+
+            if ($result) {
+                toastr("successfully uploaded profile");
+
+                return back();
+            }
+        }
+        toastr("failed", "danger");
+
+        return back();
     }
 }

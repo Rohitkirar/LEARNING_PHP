@@ -2,6 +2,7 @@
 
     <thead>
         <th>Id</th>
+        <th>Profile</th>
         <th>Name</th>
         <th>Gender</th>
         <th>Age</th>
@@ -15,6 +16,7 @@
             @foreach ($users as $user)
                 <tr>
                     <td>{{ $user->id }}</td>
+                    <td><img style="width:10rem" src="{{$user->getProfileImage($user->image)}}" alt=""></td>
                     <td>
                         <a href="{{route('users.edit' , $user->id)}}"> 
                             {{ $user->first_name ." " . $user->last_name }}

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->text('path');
+            $table->text('image');
             $table->foreignId('imageable_id');
             $table->string('imageable_type');
-            $table->unique(['path' , 'imageable_id' , 'imageable_type']);
+            $table->unique(['image' , 'imageable_id' , 'imageable_type']);
             $table->timestamps();
             $table->softDeletes();
         });
