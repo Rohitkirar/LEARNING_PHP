@@ -10,3 +10,4 @@ Route::get("/{post}/show" , [PostController::class , "show"])->name("posts.show"
 Route::get("/{post}/edit" , [PostController::class , "edit"])->name("posts.edit");
 Route::patch("/{post}/update" , [PostController::class , "update"])->name("posts.update");
 Route::delete("/{post}/destroy" , [PostController::class , "destroy"])->name("posts.destroy");
+Route::put("/{post}/restore" , [PostController::class , "restore"])->name("posts.restore");

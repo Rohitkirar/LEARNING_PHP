@@ -22,7 +22,7 @@ class UserController extends Controller
         try {
             if (View::exists("admin.users.index")) {
 
-                $users = User::with("Image")->get();
+                $users = User::with("Image")->withTrashed()->latest()->get();
 
                 return view("admin.users.index", compact("users"));
             }
@@ -38,6 +38,7 @@ class UserController extends Controller
         try {
 
             return view("admin.users.create");
+
         } catch (Exception $e) {
 
             toastr($e->getMessage(), "error");
@@ -70,6 +71,7 @@ class UserController extends Controller
 
             toastr("User Created Successfully!");
             return redirect()->route("users.index");
+
         } catch (Exception $e) {
 
             toastr($e->getMessage(), "error");
@@ -77,11 +79,13 @@ class UserController extends Controller
         }
     }
 
-    public function show(User $user)
+    public function show($id)
     {
         try {
 
+            $user = User::withTrashed()->find($id);
             return view("admin.users.show", compact("user"));
+
         } catch (Exception $e) {
 
             toastr($e->getMessage(), "error");
@@ -90,11 +94,13 @@ class UserController extends Controller
     }
 
 
-    public function edit(User $user)
+    public function edit($id)
     {
         try {
 
+            $user = User::withTrashed()->find($id);
             return view("admin.users.edit", compact("user"));
+        
         } catch (Exception $e) {
 
             toastr($e->getMessage(), "error");
@@ -130,7 +136,8 @@ class UserController extends Controller
             });
 
             ($userupdate || $file) ? toastr("User Profile Updated Successfully!") : toastr("No Changes To Update!", "warning");
-            return redirect()->route("users.index");
+            return redirect()->route("users.show" , $user->id);
+            
         } catch (Exception $e) {
 
             toastr($e->getMessage(), 'error');
@@ -145,11 +152,30 @@ class UserController extends Controller
 
             $user->delete();
             toastr("User Deleted Successfully");
-            return view("admin.users.index");
+            return redirect()->route("users.show" , $user->id);
+
         } catch (Exception $e) {
 
             toastr($e->getMessage(), "error");
             return redirect()->route("users.index");
+            
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+
+            $user = User::withTrashed()->find($id);
+            $user->update([ "deleted_at" => null ]);
+            toastr("User Data Restored Successfully");
+            return redirect()->route("users.show" , $user->id);
+
+        } catch (Exception $e) {
+
+            toastr($e->getMessage(), "error");
+            return redirect()->route("users.index");
+
         }
     }
 }

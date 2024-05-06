@@ -34,11 +34,19 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
     public function image(){
         return $this->morphOne(Image::class , "imageable");
     }
 
-    #accessor
+    #custom function 
+
+    public function getFullName(){
+        return $this->first_name . " " . $this->last_name ;
+    }
 
     public function getProfileImage($image){
         if(is_null($image))

@@ -8,12 +8,9 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('images', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->text('image');
-            $table->foreignId('imageable_id');
-            $table->string('imageable_type');
-            $table->unique(['image' , 'imageable_id' , 'imageable_type']);
+            $table->string("name");
             $table->timestamps();
             $table->softDeletes();
         });
@@ -21,6 +18,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('images');
+        Schema::dropIfExists('categories');
     }
 };

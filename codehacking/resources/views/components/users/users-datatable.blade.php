@@ -18,8 +18,8 @@
                     <td>{{ $user->id }}</td>
                     <td><img style="width:10rem" src="{{$user->getProfileImage($user->image)}}" alt=""></td>
                     <td>
-                        <a href="{{route('users.edit' , $user->id)}}"> 
-                            {{ $user->first_name ." " . $user->last_name }}
+                        <a href="{{route('users.show' , $user->id)}}"> 
+                            {{ $user->getfullName() }}
                         </a>
                     </td>
                     <td>{{ $user->gender }}</td>

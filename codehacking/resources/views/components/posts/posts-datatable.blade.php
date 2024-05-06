@@ -2,11 +2,14 @@
 
     <thead>
         <th>Id</th>
-        <th>Username</th>
+        <th>Owned By</th>
+        <th>Category</th>
         <th>Title</th>
         <th>Content</th>
         <th>Image</th>
         <th>Created_at</th>
+        <th>Updated_at</th>
+        <th>Deleted_at</th>
     </thead>
 
     <tbody>
@@ -14,11 +17,14 @@
             @foreach ($posts as $post)
                 <tr>
                     <td>{{ $post->id }}</td>
-                    <td>{{ $post->username }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->content }}</td>
+                    <td>{{ $post->user->getFullName() }}</td>
+                    <td>{{ $post->category->name }} </td>
+                    <td><a href="{{route("posts.show" , $post)}}">{{ Str::limit($post->title , 20 ) }}</a></td>
+                    <td>{{ Str::limit($post->content , 50 , "......") }}</td>
                     <td>{{ $post->image }}</td>
                     <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->updated_at }}</td>
+                    <td>{{ $post->deleted_at }}</td>
                 </tr>
             @endforeach
         @endisset

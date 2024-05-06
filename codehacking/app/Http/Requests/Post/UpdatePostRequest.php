@@ -4,9 +4,13 @@ namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
-
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
@@ -18,13 +22,12 @@ class CreatePostRequest extends FormRequest
             'id.required' => "The category field is required.",
         ];
     }
-
+    
     public function rules()
     {
         return [
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'file.*' => [ 'image', 'max:10240'],
             "id" => ['required' , 'exists:categories'], 
         ];
     }

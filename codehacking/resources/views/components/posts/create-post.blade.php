@@ -2,6 +2,21 @@
     @csrf
 
     <div class="form-group">
+        <label for="category" class="form-label">Category</label>
+        <span class="text-danger">*</span>
+        @error('id') <span class="text-danger float-right">{{ $errors->first('id') }}</span> @enderror
+        <select name="id"  id="category" class="form-control" >
+            <option value="">select</option>
+            @isset($categories)
+                @foreach($categories as $id => $value)
+                    <option value="{{$id}}" @if(old("id") == $id) selected @endif >{{$value}}</option>
+                @endforeach
+            @endisset
+        </select>
+    </div>
+
+
+    <div class="form-group">
         <label for="title" class="form-label">Title</label>
         <span class="text-danger">*</span>
         @error('title')
@@ -22,10 +37,11 @@
 
     <div class="form-group">
         <label for="image" class="form-label">Image</label>
-        @error('image')
-            <span class="text-danger float-right ">{{ $errors->first('image') }}</span>
+        <span>(optional)</span>
+        @error('file')
+            <span class="text-danger float-right ">{{ $errors->first('file') }}</span>
         @enderror
-        <input type="file" name="image" id="image" />
+        <input type="file" name="file[]" id="image" multiple />
     </div>
 
     <div>
