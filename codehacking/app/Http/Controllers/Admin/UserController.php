@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UserCreateRequest;
+use App\Models\Image;
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
+
+use function PHPUnit\Framework\fileExists;
 
 class UserController extends Controller
 {
@@ -18,23 +20,26 @@ class UserController extends Controller
     public function index()
     {
         try {
-            if(View::exists("admin.users.index")){
+            if (View::exists("admin.users.index")) {
 
                 $users = User::with("Image")->get();
 
                 return view("admin.users.index", compact("users"));
-            
             }
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
+            return redirect()->route("home");
         }
     }
 
     public function create()
     {
         try {
+
             return view("admin.users.create");
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
             return redirect()->route("users.index");
         }
@@ -44,6 +49,7 @@ class UserController extends Controller
     {
         try {
             DB::transaction(function () use ($request) {
+
                 $user = User::create([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
@@ -56,16 +62,16 @@ class UserController extends Controller
                 ]);
 
                 $file = $request->file('file');
-                if ($file) {
-                    $filename = $file->getClientOriginalName();
-                    $file->storeAs("images", $filename, "public");
-                    $user->image()->create(['image' => $filename]);
-                }
 
-                toastr("User Created Successfully!");
-                return redirect()->route("users.index");
+                if ($file) {
+                    $user->image()->create(['image' => basename($file->store("images", "public"))]);
+                }
             });
+
+            toastr("User Created Successfully!");
+            return redirect()->route("users.index");
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
             return back();
         }
@@ -74,8 +80,10 @@ class UserController extends Controller
     public function show(User $user)
     {
         try {
+
             return view("admin.users.show", compact("user"));
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
             return redirect()->route("users.index");
         }
@@ -85,10 +93,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         try {
-        
+
             return view("admin.users.edit", compact("user"));
-        
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
             return redirect()->route("users.index");
         }
@@ -103,30 +111,28 @@ class UserController extends Controller
             $user->date_of_birth = $request->date_of_birth;
             $user->email = $request->email;
             $user->phone_number = $request->phone_number;
+            $user->is_active = $request->is_active;
+            $file = $request->file("file");
+            $userupdate = false;
+            if ($user->isDirty()) $userupdate = true;
 
-            $file = $request->file('file');
+            DB::transaction(function () use ($user, $file, $userupdate) {
 
-            DB::transaction(function () use ($user, $file) {
-                if ($user->isDirty()) {
-                    $user->save();
-                    toastr("User Profile Updated Successfully!");
-                }
+                if ($userupdate) $user->save();
+
                 if ($file) {
-                    $filename = $file->getClientOriginalName();
-                    $file->storeAs("images", $filename, "public");
-                    $user->image = $filename ;
-                    $user->save();
-                    if ($user->isClean())
-                        toastr("User Profile Image Updated Successfully!");
-                }
-                if ($user->isDirty() || $file)
-                    return redirect()->route("users.index");
-                else {
-                    toastr("No Changes To Update!", "warning");
-                    return back();
+                    if ($image = $user->image) {
+                        if (file_exists(public_path() . $user->image->image)) unlink(public_path() . $user->image->image);
+                    } else $image = new Image();
+                    $image->image =  basename($file->store("images", "public"));
+                    $user->image()->save($image);
                 }
             });
+
+            ($userupdate || $file) ? toastr("User Profile Updated Successfully!") : toastr("No Changes To Update!", "warning");
+            return redirect()->route("users.index");
         } catch (Exception $e) {
+
             toastr($e->getMessage(), 'error');
             return redirect()->route("users.index");
         }
@@ -136,10 +142,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
+
             $user->delete();
             toastr("User Deleted Successfully");
             return view("admin.users.index");
         } catch (Exception $e) {
+
             toastr($e->getMessage(), "error");
             return redirect()->route("users.index");
         }

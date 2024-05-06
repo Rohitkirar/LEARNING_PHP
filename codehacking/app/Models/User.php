@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
-    protected $path = "storage/images/";
+    protected $path = "/storage/images/";
 
     protected $hidden = [
         'password',
@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     public function getProfileImage($image){
         if(is_null($image))
-            return asset($this->path."userProfile.png");
+            return $this->path."userProfile.png";
         
         return $image->image;
     }

@@ -11,13 +11,13 @@ class Image extends Model
 
     protected $guarded = ['id'];
 
-    protected $path = "storage/images/";
+    protected $path = "/storage/images/";
 
     #accessor
 
     public function getImageAttribute($image){
         if(isset($image))
-            return asset($this->path.$image);
-        return asset($this->path."demo.jpg");
+            return $this->path.$image;
+        return $this->path."demo.jpg";
     }
 }

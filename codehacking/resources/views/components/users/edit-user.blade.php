@@ -1,6 +1,8 @@
 @isset($user)
-    <form action="{{ route('users.update' , $user->id) }}" method="POST">
+    <form action="{{ route('users.update' , $user->id) }}" method="POST" enctype=multipart/form-data>
         @csrf @method("PATCH")
+
+        <input type="hidden" value="{{$user->id}}" name="id" >
 
         <div style="text-align:center">
             <img style="border-radius:100% ; max-height:10rem; " src="{{$user->getProfileImage($user->image)}}" id="profilePreview" >
@@ -9,6 +11,15 @@
         <div class="form-group">
             <label for="profile" class="form-label">Profile Image</label>
             <input type="file" id="profile" name="file" class="form-control">
+        </div>
+    
+        <div class="form-group">
+            <label for="status" class="form-label">Status</label>
+            <select name="is_active" id="status" class="form-control">
+                <option value="0">InActive</option>
+                <option value="1" selected>Active</option>
+            </select>
+            @error("is_active") <span class="text-danger">{{ $errors->first('is_active') }}</span> @enderror
         </div>
 
         <div class="form-group">
@@ -54,7 +65,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Create User</button>
+            <button type="submit" class="btn btn-primary btn-block">Update User</button>
         </div>
     </form>
 @endisset
