@@ -35,7 +35,7 @@ class PostController extends Controller
 
                 $post = Post::create([
                     "user_id" => Auth::id(),
-                    "category_id" => $request->id,
+                    "category_id" => $request->category_id,
                     "title" => $request->title,
                     "content" => $request->content,
                 ]);
@@ -81,7 +81,7 @@ class PostController extends Controller
         try {
             $post->title = $request->title;
             $post->content = $request->content;
-            $post->category_id = $request->id;
+            $post->category_id = $request->category_id;
 
             if ($post->isDirty()) {
                 $post->save();

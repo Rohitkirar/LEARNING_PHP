@@ -94,7 +94,7 @@
 </fieldset>
 
     </form>
-
+    @if(Auth::id() != $user->id)
     @if (is_null($user->deleted_at))
         <form action="{{ route('users.destroy', $user->id) }}" method="POST">
             @csrf @method('DELETE')
@@ -105,6 +105,7 @@
             @csrf @method('PUT')
             <button type="submit" name="submit" class="btn btn-success form-control">Restore Post</button>
         </form>
+    @endif
     @endif
 
 

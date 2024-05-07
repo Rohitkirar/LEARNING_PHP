@@ -10,7 +10,9 @@
 
     <title> @yield('title') </title>
 
-    @vite(['resources/css/libs.css' , 'resources/js/libs.js']);
+    @vite(['resources/css/libs.css' , 'resources/js/libs.js'])
+
+    @yield("styles")
 
 </head>
 
@@ -68,7 +70,7 @@
 
     @yield('footer')
 
-    @yield('script')
+    @yield('scripts')
     
 </body>
 

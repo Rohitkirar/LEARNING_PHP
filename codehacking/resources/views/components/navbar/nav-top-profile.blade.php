@@ -5,10 +5,9 @@
             <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu">
-            <li><a href="#"><i class="fa fa-user fa-fw dropdown-item"></i> User Profile</a>
+            <li><a href="{{route("users.show" , Auth::id())}}"><i class="fa fa-user fa-fw dropdown-item"></i> User Profile</a>
             </li>
-            <li><a href="#"><i class="fa fa-gear fa-fw dropdown-item"></i> Settings</a>
-            </li>
+            {{-- <li><a href="#"><i class="fa fa-gear fa-fw dropdown-item"></i> Settings</a></li> --}}
             <li class="divider"></li>
             
             <li style="padding-left: 2rem">

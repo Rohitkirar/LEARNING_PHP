@@ -4,8 +4,8 @@
     <div class="form-group">
         <label for="category" class="form-label">Category</label>
         <span class="text-danger">*</span>
-        @error('id') <span class="text-danger float-right">{{ $errors->first('id') }}</span> @enderror
-        <select name="id"  id="category" class="form-control" >
+        @error('category_id') <span class="text-danger float-right">{{ $errors->first('category_id') }}</span> @enderror
+        <select name="category_id"  id="category" class="form-control" >
             <option value="">select</option>
             @isset($categories)
                 @foreach($categories as $id => $value)
