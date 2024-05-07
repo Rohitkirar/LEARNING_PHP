@@ -45,7 +45,7 @@
                 <div style="display:grid; grid-template-columns:50% 50%;">
                     @foreach ($post->images as $image)
                         <div>
-                            <img class="p-3" style="object-fit: contain ; height:10%rem" src="{{ asset($image->image) }}" alt="">
+                            <img class="p-3 card" style="object-fit: contain ; width:90%" src="{{ asset($image->image) }}" alt="">
                         </div>
                     @endforeach
                 </div>

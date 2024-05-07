@@ -14,19 +14,18 @@
         <!-- UserName -->
         <div>
             <x-input-label for="username" class="form-label" :value="__('Username')" />
-            <span class="text-danger" style="font-size: small ; float:right"> {{$errors->first('username')}} </span>
             <x-text-input id="username" class="form-control" type="text" name="username" :value="old('username')" autofocus autocomplete="username" />
-            
+            <span class="text-danger" style="font-size: small ;"> {{$errors->first('username')}} </span>
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
+        <div class="mt-2">
             <x-input-label for="password" class="form-label" :value="__('Password')" />
-            <span class="text-danger" style="font-size: small ; float:right"> {{$errors->first('password')}} </span>
             <x-text-input id="password" class="form-control"
                             type="password"
                             name="password"
                             autocomplete="current-password" />
+            <span class="text-danger" style="font-size: small ;"> {{$errors->first('password')}} </span>
         </div>
 
         <!-- Remember Me -->

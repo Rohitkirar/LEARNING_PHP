@@ -4,9 +4,17 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+@import url('bootstrap.min.css');
+/* @import url('styles.css');
+@import url("sb-admin-2.css");
+@import url('font-awesome.css');
+@import url('blog-post.css');
+@import url('metisMenu.css'); */
+
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-}
+    padding-top: 0px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    margin:0;
+  }
 
 footer {
     margin: 50px 0;

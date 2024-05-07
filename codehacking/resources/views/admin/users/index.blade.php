@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1 class="page-header">User Dashboard</h1>
+    <h4 class="page-header">User Dashboard</h4>
 
     <div>
         <x-users.users-datatable :$users />

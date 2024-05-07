@@ -22,9 +22,9 @@
                     <td><a href="{{route("posts.show" , $post)}}">{{ Str::limit($post->title , 20 ) }}</a></td>
                     <td>{{ Str::limit($post->content , 50 , "......") }}</td>
                     <td>{{ $post->image }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>{{ $post->updated_at }}</td>
-                    <td>{{ $post->deleted_at }}</td>
+                    <td>{{ $post->created_at->diffForHumans() }}</td>
+                    <td>{{ $post->updated_at->diffForHumans() }}</td>
+                    <td>@if($post->deleted_at) {{$post->deleted_at->diffForHumans()}} @endif</td>
                 </tr>
             @endforeach
         @endisset

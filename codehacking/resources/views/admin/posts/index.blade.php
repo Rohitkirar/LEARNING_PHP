@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <h1 class="page-header">All Posts</h1>
+    <h4 class="page-header">All Posts</h4>
 
     <div>
         <x-posts.posts-datatable :$posts />

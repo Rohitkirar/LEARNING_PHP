@@ -31,7 +31,7 @@
             <div>
                 @foreach ($post->images as $image)
                     <div>
-                        <img class="p-3" style="object-fit: contain ; height:10%rem" src="{{ asset($image->image) }}"
+                        <img class="p-3" style="object-fit: contain ; width:100%" src="{{ asset($image->image) }}"
                             alt="">
                     </div>
                 @endforeach

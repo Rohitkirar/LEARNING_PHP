@@ -1,17 +1,6 @@
-@import url('bootstrap.min.css');
-@import url('styles.css');
-@import url("sb-admin-2.css");
-@import url('font-awesome.css');
-@import url('blog-post.css');
-@import url('metisMenu.css');
-/* @import url('bootstrap.css'); */
-/*@import url('bootstrap.css');
-@import url('bootstrap.min.css');
-@import url('font-awesome.css');
-@import url('metisMenu.css');
-@import url("sb-admin-2.css");
-@import url('styles.css'); */
-/* @import url('libs.css'); */
+
+
+/* @import 'node_modules\bootstrap\dist\css\bootstrap.min.css' ; */
 
 @tailwind base;
 @tailwind components;
