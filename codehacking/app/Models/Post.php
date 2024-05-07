@@ -26,4 +26,14 @@ class Post extends Model
         return $this->morphMany(Image::class , "imageable");
     }
 
+    # accessor
+
+    #user defined function
+
+    public function getCategoryName($category){
+        if(is_null($category))
+            return "uncategorized";
+        return $category->name;
+    }
+
 }

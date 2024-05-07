@@ -14,7 +14,7 @@
 </div>
 <div class="p-3">
     <div>
-        <p class="h4"> Category : {{ $post->category->name }}</p>
+        <p class="h4"> Category : {{ $post->getCategoryName($post->category) }}</p>
     </div>
 
     <div>

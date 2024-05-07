@@ -18,7 +18,7 @@
                 <tr>
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->user->getFullName() }}</td>
-                    <td>{{ $post->category->name }} </td>
+                    <td>{{ $post->getCategoryName($post->category) }} </td>
                     <td><a href="{{route("posts.show" , $post)}}">{{ Str::limit($post->title , 20 ) }}</a></td>
                     <td>{{ Str::limit($post->content , 50 , "......") }}</td>
                     <td>{{ $post->image }}</td>

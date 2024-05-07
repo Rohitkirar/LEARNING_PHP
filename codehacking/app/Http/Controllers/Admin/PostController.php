@@ -17,6 +17,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with("user", "images")->withTrashed()->wherehas('user')->latest()->get();
+
         return view("admin.posts.index", compact("posts"));
     }
 
