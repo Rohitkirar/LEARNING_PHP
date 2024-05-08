@@ -1,0 +1,1 @@
+<a href="{{route('posts.index')}}">{{$email}}</a>
