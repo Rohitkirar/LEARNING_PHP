@@ -5,7 +5,6 @@
         <th>Id</th>
         <th>Name</th>
         <th>Slug</th>
-        <th>Attach</th>
         <th>Detach</th>
     </thead>
     <tbody>
@@ -15,15 +14,6 @@
                 <td>{{$permission->name}}</td>
                 <td>{{$permission->slug}}</td>
                 <td>
-                    @if(!$role->permissions->contains($permission))
-                    <form action="{{route('roles.attachPermission' , $role->id)}}" method="POST">
-                        @csrf @method("PUT")
-                        <input type="hidden" name="permission" value="{{$permission->id}}">
-                        <button class="btn btn-primary" type="submit">Attach</button>
-                    </form>
-                    @endif
-                </td>
-                <td>
                     @if($role->permissions->contains($permission))
                         <form action="{{route('roles.detachPermission' , $role->id)}}" method="POST">
                             @csrf @method("PUT")
@@ -31,9 +21,6 @@
                             <button class="btn btn-danger" type="submit">Detach</button>
                         </form>
                     @endif
-                </td>
-                <td>
-
                 </td>
             </tr>
         @endforeach

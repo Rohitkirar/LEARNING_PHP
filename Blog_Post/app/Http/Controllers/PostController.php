@@ -22,6 +22,7 @@ class PostController extends Controller
         
         
         $posts = $posts->cursorPaginate(10); # it is secure as it passing hashed string in url for page num
+        // $posts = $posts->paginate(10); # it is secure as it passing hashed string in url for page num
 
         // $posts = Post::latest()->paginate(2);
         // $posts = Post::latest()->simplePaginate(2);
