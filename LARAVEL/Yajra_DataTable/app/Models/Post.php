@@ -11,4 +11,24 @@ class Post extends Model
     use HasFactory , SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments(){
+
+        return $this->hasMany(PostComment::class);
+    
+    }
+    
+    public function likes(){
+        
+        return $this->hasMany(PostLike::class);
+
+    }
 }

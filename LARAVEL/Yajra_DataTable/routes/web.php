@@ -3,7 +3,10 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Image;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\DataTables;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +30,19 @@ Route::get("posts" , [PostController::class , "index"])->name("posts.index");
 Route::delete("posts/{post}/destroy" , [PostController::class , "destroy"])->name("posts.destroy");
 
 Route::patch("posts/{post}/restore" , [PostController::class , "restore"])->name("posts.restore");
+
+//  medias 
+Route::get("/medias" , function(){
+    return view("mediaIndex");
+});
+
+Route::get("/getMediaData" , function(){
+
+    $datatable = DataTables::of(Image::query());
+    $datatable->editColumn("imageable_type" , '{{ basename($imageable_type) }}');
+    return $datatable->make();
+
+})->name("getMediaData");
 
 
 Route::middleware('auth')->group(function () {

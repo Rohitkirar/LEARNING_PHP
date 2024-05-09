@@ -17,15 +17,11 @@ class ProfileController extends Controller
 
 
     public function index(){
-
         return view("profileIndex");
-
     }
 
     public function getDataTable(){
-
         return DataTables::of(User::query())->make(true);
-
     }
 
 
