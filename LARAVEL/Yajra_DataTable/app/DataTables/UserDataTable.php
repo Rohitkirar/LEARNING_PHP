@@ -14,38 +14,23 @@ use Yajra\DataTables\Services\DataTable;
 
 class UserDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
+
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->editColumn("email", function($user){
-                return view("datatables.anchortag" , ["email" => $user->email]);
-            })
+            ->editColumn("email", '{{view("datatables.anchortag" , ["email" => $email])}}' )
+            ->rawColumns(['email'])
             ;
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\User $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+ 
     public function query(User $model): QueryBuilder
     {
         return $model->newQuery();
     }
 
-    /**
-     * Optional method if you want to use html builder.
-     *
-     * @return \Yajra\DataTables\Html\Builder
-     */
+  
     public function html(): HtmlBuilder
     {
         return $this->builder()
@@ -65,11 +50,7 @@ class UserDataTable extends DataTable
                     ]);
     }
 
-    /**
-     * Get the dataTable columns definition.
-     *
-     * @return array
-     */
+  
     public function getColumns(): array
     {
         return [
@@ -84,11 +65,7 @@ class UserDataTable extends DataTable
         ];
     }
 
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
+    
     protected function filename(): string
     {
         return 'User_' . date('YmdHis');

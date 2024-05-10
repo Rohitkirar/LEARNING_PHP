@@ -52,7 +52,7 @@
                 serverSide : true,
                 ajax : '{{ route("posts.index")}}' ,
                 columns : [
-                    { data : "DT_RowIndex" , name : "DT_RowIndex" , orderable:false , searchable:false},
+                    { data : "DT_RowIndex" , name : "DT_RowIndex" },
                     { data : 'id' , name : 'id' },
                     { data : 'category_id' , name : 'category_id' },
                     { data : 'title' , name : 'title' },
@@ -62,6 +62,11 @@
                     { data : 'deleted_at' , name : 'deleted_at' },
                     { data : 'even' , name : 'even' },
                 ],
+                "columnDefs": [{
+                    "targets": [0], // Target the second column (index 1)
+                    "orderable": false, // Disable sorting for this column
+                    "searchable": false // Disable searchable for this column
+                }]
             });
         })
 
