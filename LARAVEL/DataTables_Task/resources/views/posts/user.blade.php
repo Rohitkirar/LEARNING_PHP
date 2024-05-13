@@ -14,17 +14,16 @@
 </head>
 
 <body>
-    <div>
-        <button class="btn btn-secondary m-3" onclick="backbtn()">Back</button>
+    <div class="d-flex m-3">
+        <button class="btn btn-secondary " onclick="backbtn()">Back</button>
     </div>
     <div class="container">
         <table class="table" id="post-table">
-
-            <h4 class="bg-grey p-4 border">Posts Data</h4>
+            
+            <h4 class="bg-grey p-4 border">Post Data</h4>
 
             <thead>
                 <th>Id</th>
-                <th>Name</th>
                 <th>Title</th>
                 <th>content</th>
                 <th>view Comments</th>
@@ -40,14 +39,10 @@
             $('#post-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('posts.index') }}',
+                ajax: '{{ route('posts.user' , $user_id ) }}',
                 columns: [{
                         data: 'id',
                         name: 'id'
-                    },
-                    {
-                        data: 'user.first_name',
-                        name: 'user.first_name'
                     },
                     {
                         data: 'title',
