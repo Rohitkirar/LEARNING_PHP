@@ -15,30 +15,23 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
+
     public function create(): View
     {
         return view('auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(RegisterRequest $request): RedirectResponse
     {
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'date_of_birth' => $request->date_of_birth,
+            'birth_date' => $request->birth_date,
             'gender' => $request->gender,
             'email' => $request->email,
-            'number' => $request->number,
+            'phone_number' => $request->phone_number,
             'username' => $request->username,
-            'password' => Hash::make($request->password),
+            'password' => $request->password,
         ]);
 
         event(new Registered($user));

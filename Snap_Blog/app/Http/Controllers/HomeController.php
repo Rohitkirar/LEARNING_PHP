@@ -8,14 +8,35 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    //
 
-    public function index(Request $request){
+    public function index(){
 
-        $posts = Post::latest()->limit(10)->get();
+        return view('welcome');
+    }
 
-        $categories = Category::latest()->limit(10)->get();
+    public function create()
+    {
+    }
 
-        return view('welcome' , compact( "posts" , "categories"));
+
+    public function store()
+    {
+    }
+
+    public function show()
+    {
+    }
+
+    public function edit()
+    {
+    }
+
+    public function update()
+    {
+    }
+
+
+    public function destroy()
+    {
     }
 }

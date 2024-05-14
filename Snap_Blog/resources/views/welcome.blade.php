@@ -9,7 +9,7 @@
 <section class="jumbotron text-center ">
     <div class="border mt-5 m-5 p-3 mb-5 bg-white rounded " style="height:25rem ; ">
         <strong style="font-size:25px">Join millions of others</strong>
-        <hr class="mt-3 mb-3">
+
         <p class="lead text-muted text-justify">
             A Snap blog is an online journal that displays information on a variety of topics.
             The blog is a shortened version of “ weblog ” which means web blog.
@@ -27,6 +27,6 @@
 
 </section>
 
-<x-home-content :$posts :$categories />
+{{-- <x-home-content :$posts :$categories /> --}}
 
 @endsection

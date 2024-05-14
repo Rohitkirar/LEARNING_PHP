@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    <div class="card p-5 mt-5" style="width:38% ; margin:0 auto ; ">
+    <div class="border p-5 mt-5" style="width:38% ; margin:0 auto ; ">
 
         <div class="text-center mb-3">
-            <img src="{{ asset('Upload/snapchat.png') }}" alt="logo" style="width:10%">
+            <img src="{{ asset('storage/uploads/snapchat.png') }}" alt="logo" style="width:10%">
             <span style="font-size:x-large">ɮʟօɢ</span>
         </div>
 
@@ -67,25 +67,25 @@
         </div>
 
         <div class="container mb-3">
-            {!! Form::label('date_of_birth', 'Date Of Birth', ['class' => 'form-label']) !!}
+            {!! Form::label('birth_date', 'Date Of Birth', ['class' => 'form-label']) !!}
             <span class="text-danger">*</span>
             <span class="text-danger" style="float: right">
-                @error('date_of_birth')
-                    {{ $errors->first('date_of_birth') }}
+                @error('birth_date')
+                    {{ $errors->first('birth_date') }}
                 @enderror
             </span>
-            {!! Form::date('date_of_birth', '', ['class' => 'form-control']) !!}
+            {!! Form::date('birth_date', '', ['class' => 'form-control']) !!}
         </div>
 
         <div class="container mb-3">
-            {!! Form::label('number', 'Mobile', ['class' => 'form-label']) !!}
+            {!! Form::label('phone_number', 'Mobile', ['class' => 'form-label']) !!}
             <span class="text-danger">*</span>
             <span class="text-danger" style="float: right">
-                @error('number')
-                    {{ $errors->first('number') }}
+                @error('phone_number')
+                    {{ $errors->first('phone_number') }}
                 @enderror
             </span>
-            {!! Form::number('number', '', ['class' => 'form-control']) !!}
+            {!! Form::number('phone_number', '', ['class' => 'form-control']) !!}
         </div>
 
         <div class="container mb-3">

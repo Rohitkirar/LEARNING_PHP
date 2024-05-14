@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-    <div class="card p-5 mt-5" style="width:28%; margin:0 auto">
+    <div class="border p-5 mt-5" style="width:28%; margin:0 auto">
 
         <div class="text-center mb-3">
-            <img src="{{ asset('Upload/snapchat.png') }}" alt="logo" style="width:10%">
+            <img src="{{ asset('storage/uploads/snapchat.png') }}" alt="logo" style="width:10%">
             <span style="font-size:x-large">ɮʟօɢ</span>
         </div>
 

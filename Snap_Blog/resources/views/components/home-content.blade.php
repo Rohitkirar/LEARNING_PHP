@@ -1,41 +1,74 @@
-
 <div class="mt-5 p-5 pt-0" style="margin:0 auto">
 
-    @if ($posts)
-        <div class="mt-5 mb-5 pb-5 pt-0">
-            <h4 class="m-3">Top Posts</h4>
-            <div style="display: grid; grid-template-columns:20% 20% 20% 20% 20%">
-                @foreach ($posts as $post)
-                    <div class="card m-2 p-3">
-                        <a class="mb-2" style="color:black; text-decoration:none" href="{{route('posts.show' , $post->id)}}">{{ $post->title }}</a>
-                        <img class="border mt-3" style="height:12rem" @if(count($post->images)>0) src='{{$post->images[0]->url}}' @endif style="height:10rem"
-                            alt="image not available">   
-                    </div>      
-                @endforeach
+    @isset($posts)
+
+        <div class="album p-3 mb-4 bg-light">
+
+            <h4 class="p-2">Top Posts</h4>
+
+            <div class="d-flex p-2 flex-wrap">
+
+                <div class="row">
+
+                    @foreach ($posts as $post)
+                        <div class="my-3" style="width:20%;">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" height="150rem"
+                                    @if (count($post->images) > 0) src='{{ $post->images[0]->url }}' @endif
+                                    alt="Card image cap" />
+                                <div class="card-body">
+                                    <p class="card-text">{{ $post->title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                            {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> --}}
+                                        </div>
+                                        <small class="text-muted">9 mins</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+
             </div>
-            <a href="#" class="btn btn-primary mb-5" style="float:right">View More</a>
+
         </div>
-    @endif
-    
-    <hr class="">
+    @endisset
 
-    @if ($categories)
-        <div class="mt-5 mb-5 ">
-            <h4 class="m-3">Top Categories</h4>
+    @isset($categories)
 
-            <div style="display: grid; grid-template-columns:20% 20% 20% 20% 20%">
-                @foreach ($categories as $category)
-                    <div class="card m-2 p-3 " style="height:18rem;" >
-                        <a class="mb-2 " style="color:black; text-decoration:none" href="{{route('posts.show' , $category->id)}}" >{{ $category->title }}</a>
+        <div class="album p-3 mt-2 bg-light">
 
-                        <img class="border mt-3" style="height:12rem"  src='{{ asset("Upload/$category->image") }}' alt="image not available">
-                    </div>
-                @endforeach
+            <h4 class="p-2">Top Categories</h4>
+
+            <div class="d-flex p-2">
+
+                <div class="row">
+
+                    @foreach ($categories as $category)
+                        <div class="my-3" style="width:20%">
+                            <div class="card mb-4 box-shadow">
+                                <img class="card-img-top" height="200rem" src="{{ asset("$category->image->url") }}"
+                                    alt="image">
+                                <div class="card-body">
+                                    <p class="card-text">{{ $category->title }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                            {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> --}}
+                                        </div>
+                                        {{-- <small class="text-muted">9 mins</small> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+
             </div>
 
-            <a href="#" class="btn btn-primary m-2" style="float:right">View More</a>
         </div>
-
-    @endif
-
-</div>
+    @endisset

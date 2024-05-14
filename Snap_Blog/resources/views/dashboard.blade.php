@@ -1,11 +1,9 @@
 @extends('layouts.app')
 
-@section('title')
-    dashboard
-@endsection
+@section('title' , 'dashboard')  
 
 @section('content')
 
-    <x-home-content :$posts :$categories />
+    {{-- <x-home-content :$posts :$categories /> --}}
 
 @endsection

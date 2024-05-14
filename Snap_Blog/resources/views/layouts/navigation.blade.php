@@ -1,8 +1,8 @@
 
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">  
+<nav class="navbar navbar-expand-lg bg-secondary">  
 
-    <a class="navbar-brand" style="width:10% ; height:10%;" href="#">
-        <img src="{{asset('Upload/snapchat.png')}}" style="width:25% ; height:25%;" alt="logo">
+    <a class="navbar-brand p-0 m-0" style="width:10% ;" href="{{route("home")}}">
+        <img src="{{asset('Upload/snapchat.png')}}" style="width:24% ;" alt="logo">
         <span  style="color:white">ɮʟօɢ</span>
     </a>
 
@@ -14,20 +14,21 @@
                 <a class="nav-link text-white" href="#">About</a>
             </div>
 
+            <div class="d-flex">
+                <a class="nav-link text-white"  href="{{route('login')}}">Login</a>
+            
+                <a class="nav-link text-white" href="{{route('register')}}">Register</a>
+            </div>
+
+
             @auth
                 <div class="d-flex">
-                    <a class="nav-link text-white"  href="{{route('dashboard')}}">Dashboard</a>
+                    <a class="nav-link text-white"  href="{{route('users.index')}}">Dashboard</a>
                 </div>
             @endauth
             
-            @guest
-                <div class="d-flex">
-                    <a class="nav-link text-white"  href="{{route('login')}}">Login</a>
-                
-                    <a class="nav-link text-white" href="{{route('register')}}">Register</a>
-                </div>
-            @endguest
-        </div>
+
+       </div>
     @endguest
 
     @auth  
@@ -64,18 +65,25 @@
 
         </div>
 
-        <div class="d-flex" style="color:white">
-            
-            <p class="p-1">Welcome, {{ Auth::user()->first_name   . " " . Auth::user()->last_name}} </p>
-            <div>
-                {!! Form::open(['route'=>'logout' , 'method'=>'post']) !!}
-
-                {!! Form::submit('logout' , [ 'class'=>"btn btn-danger p-1  " ]) !!}
-
-                {!! Form::close() !!}
+        <div class="d-flex " style="color:white ; margin-right:1rem ;">
+            <div class="btn-group">
+                <p>
+                    Welcome, {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
+                </p>
+                <p type="button" class=" dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"></p>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="nav-link" style="color:black" href="{{ route('profile.edit') }}">Profile</a>
+                    </li>
+                    <li>
+                        {!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
+                        {!! Form::submit('logout', [ 'class' => 'nav-link text-danger' , 'style' => 'border:none; background-color:transparent']) !!}
+                        {!! Form::close() !!}
+                    </li>
+                </ul>
             </div>
-        
         </div>
     @endauth
     
 </nav>    
+
