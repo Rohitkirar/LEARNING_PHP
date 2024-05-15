@@ -24,13 +24,12 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:50',
-            "category_id" => 'required' ,
-            'content' => 'required|min:100', 
+
+            "caption" => "required" ,
             
-            'images.*' => 'required|image|max:10240', //10MB for multiple file
+            'file.*' => 'required|image|max:10240', //10MB for multiple file
             
-            'images' => 'required' //10MB for single file only
+            'file' => 'required' //10MB for single file only
             
         ];
     }

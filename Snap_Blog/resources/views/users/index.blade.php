@@ -2,29 +2,37 @@
 
 @section('title', 'users')
 
+{{-- 
+@section('sidebar')
+    <div class="p-3 pt-2">
+        @isset($users)
+            <x-users.friend-suggestion :$users />
+        @endisset
+    </div>
+@endsection 
+--}}
+
 @section('content')
 
-    <div class="d-flex justify-space-between mt-5" style="justify-content: space-between ;">
-
-        <div class="col-lg-2 ">
-            <h1>users</h1>
-        </div>
-
-        <div class="col-lg-6">
-
+    <div style="display:grid; grid-template-columns:70% 30%">
+        <div class="pt-3">
             @isset($posts)
-                <x-posts.index-post :$posts />
+                @foreach($posts as $post)
+                    <x-posts.show-post :$post />
+                @endforeach
             @endisset
-
         </div>
 
-        <div class="col-lg-2">
+        <div>
+            <div class="p-3 pb-0">
+                <x-users.index-profile : />
+            </div>
 
-            <h1>profile</h1>
-
+            {{-- 
+            <div class="p-3 pt-2">
+                <x-users.friend-request />
+            </div> 
+            --}}
         </div>
-
-
     </div>
-
 @endsection

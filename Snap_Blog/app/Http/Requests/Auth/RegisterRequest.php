@@ -51,9 +51,9 @@ class RegisterRequest extends FormRequest
             'last_name' => ['required' , 'max:255'],
             'birth_date' => ['required', 'date'],
             'gender' => ['required' , 'in:male,female,other'],
-            'phone_number' => ['required' , 'unique:'.User::class  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'username' => ['required', 'string', 'max:20', 'unique:'.User::class],
+            'phone_number' => ['required' , 'unique:users'  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:20', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ];

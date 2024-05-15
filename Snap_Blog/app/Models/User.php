@@ -19,6 +19,8 @@ class User extends Authenticatable
 
     protected $guarded = ['id'];
 
+    protected $path = "/storage/uploads/";
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -84,7 +86,7 @@ class User extends Authenticatable
     public function password(): Attribute
     {
         return Attribute::make(
-            set: fn () => Hash::make($this->password)
+            set: fn ($password) => Hash::make($password)
         );
     }
 
@@ -100,6 +102,6 @@ class User extends Authenticatable
     }
 
     public function profileImage(){
-        return $this->image? $this->image->url : "storage\uploads\profiledemo.png" ;
+        return $this->image? $this->image->url : $this->path . "profiledemo.png" ;
     }
 }
