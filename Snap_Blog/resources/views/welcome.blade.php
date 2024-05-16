@@ -21,7 +21,7 @@
         </p>
         <p class="mt-2">
             <a href="{{route('login')}}" class="btn btn-primary my-2">login here</a>
-            <a href="{{route('users.create')}}" class="btn btn-secondary my-2">Register</a>
+            <a href="{{route('register')}}" class="btn btn-secondary my-2">Register</a>
         </p>
     </div>
 

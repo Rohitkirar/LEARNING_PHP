@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests\CreatePostRequest;
@@ -15,8 +16,8 @@ class PostController extends Controller
     public function index()
     {
         try {
-            $posts = Post::limit(10)->latest()->get();
-            return view("posts.index", compact("posts"));
+            $posts = Post::whereHas('user')->limit(10)->latest()->get();
+            return view("user.posts.index", compact("posts"));
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
@@ -27,7 +28,7 @@ class PostController extends Controller
     public function create()
     {
         try {
-            return view("posts.create");
+            return view("user.posts.create");
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
@@ -63,7 +64,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         try {
-            return view("posts.show", compact("post"));
+            return view("user.posts.show", compact("post"));
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
@@ -73,7 +74,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         try {
-            return view("posts.edit", compact('post'));
+            return view("user.posts.edit", compact('post'));
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");

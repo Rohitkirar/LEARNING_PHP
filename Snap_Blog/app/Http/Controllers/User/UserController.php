@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use Exception;
@@ -13,16 +13,43 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function index()
+    public function dashboard()
     {
         try {
-            $users = User::limit(10)->get();
-            $posts = Post::with("images")->latest()->limit(10)->get();
-            return view("users.index", compact("users", "posts"));
+
+            $posts = Post::whereHas("user")
+                ->with([
+                    "likes"=>function ($query) {
+                        return $query->where("user_id" , "=", Auth::id());
+                    },
+                    "images" => function ($query) {
+                        return $query->latest();
+                    }
+                ])
+                ->withCount("likes")
+                ->latest()->limit(10)->get();
+
+
+
+            return view("user.users.index", compact("posts"));
         } catch (Exception $e) {
             toastr($e->getMessage(), "error");
             return redirect()->route("home");
         }
+    }
+
+    public function index()
+    {
+        // try {
+        //     $users = User::limit(10)->get();
+
+        //     $posts = Post::with("images")->latest()->limit(1)->get();
+
+        //     return view("user.users.index", compact("users", "posts"));
+        // } catch (Exception $e) {
+        //     toastr($e->getMessage(), "error");
+        //     return redirect()->route("home");
+        // }
     }
 
 
@@ -38,8 +65,10 @@ class UserController extends Controller
     public function show($id)
     {
         try {
+
             $user = User::with("posts")->first();
-            return view("users.show" , compact('user'));
+
+            return view("user.users.show", compact('user'));
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
@@ -47,16 +76,16 @@ class UserController extends Controller
     }
 
     public function edit(User $user)
-    {   
+    {
         try {
-            return view("users.edit", compact('user'));
+            return view("user.users.edit", compact('user'));
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
         }
     }
 
-    public function update(UpdateUserRequest $request , User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         try {
             $user->first_name = $request->first_name;
@@ -66,13 +95,13 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->phone_number = $request->phone_number;
 
-            if($user->isDirty()){
+            if ($user->isDirty()) {
                 $user->save();
                 toastr("User updated successfully");
-            }else
-                toastr("No changes to Update " , "warning");
-                
-            return redirect()->route("users.show" , $user->id);
+            } else
+                toastr("No changes to Update ", "warning");
+
+            return redirect()->route("users.show", $user->id);
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");
@@ -86,7 +115,7 @@ class UserController extends Controller
             $user->delete();
             toastr("User deleted successfully");
             return redirect()->route("home");
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("home");
         }

@@ -24,7 +24,7 @@
 
         @auth
             <div class="d-flex">
-                <a class="nav-link" style="color:black"  href="{{route('users.index')}}">Dashboard</a>
+                <a class="nav-link" style="color:black"  href="{{route('users.dashboard')}}">Dashboard</a>
             </div>
         @endauth
         

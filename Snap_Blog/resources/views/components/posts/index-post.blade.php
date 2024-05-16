@@ -36,7 +36,7 @@
             </div>
             <div class="card-footer d-flex justify-content-between align-items-center">
                 <div class="align-items-center">
-                    <button class="bg-transparent p-0 border-0"><i class="bi bi-heart fs-2"></i></button>
+                    <button class="bg-transparent p-0 border-0" id="like_btn" value="{{$post->id}}"><i class="bi bi-heart fs-2"></i></button>
                     <button class="bg-transparent p-0 border-0"><i class="bi bi-chat fs-2 mx-3"></i></button>
                     <button class="bg-transparent p-0 border-0"><i class="bi bi-send fs-2"></i></button>
                 </div>
@@ -47,3 +47,27 @@
 
 
 </div>
+
+@section('scripts')
+
+    <script>
+        $(document).ready(function () {
+            $("#like_btn").click(function () {
+                console.log("function called");
+                $.ajax({
+                    url: "{{ route('likes.store', $post->id) }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        post_id: $("#like_btn").val(),
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+                $("#like_btn").toggleClass("bi-heart-fill");
+            });
+        });
+    </script>
+
+@endsection

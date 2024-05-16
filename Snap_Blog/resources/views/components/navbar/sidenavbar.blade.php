@@ -5,9 +5,16 @@
     
     <div class="d-grid mx-3 ">
 
-        <a href="{{route("users.index")}}" class="text-dark mt-2" style="text-decoration: none"><i class="bi bi-house fs-5"></i> Home</a>
+        <a href="{{route("users.dashboard")}}" class="text-dark mt-2" style="text-decoration: none"><i class="bi bi-house fs-5"></i> Home</a>
                 
         <a href="{{route("posts.create")}}" class="text-dark mt-2" style="text-decoration: none"><i class="bi bi-plus-square fs-5"></i> Create Post</a>
+
+        @if(Auth::user()->is_admin) 
+        
+        <a href="{{route("admin.dashboard")}}" class="text-dark mt-2" style="text-decoration: none"><i class="bi bi-person-check fs-5"></i> Admin Dashboard</a>
+
+        @endif
+
 {{-- 
         <a href="" class="text-dark mt-2" style="text-decoration: none"><i class="bi bi-plus-square fs-5"></i> Explore</a>
 
