@@ -16,11 +16,10 @@ class UserController extends Controller
     public function dashboard()
     {
         try {
-
             $posts = Post::whereHas("user")
                 ->with([
                     "likes"=>function ($query) {
-                        return $query->where("user_id" , "=", Auth::id());
+                        return $query->withTrashed()->where("user_id" , "=", Auth::id());
                     },
                     "images" => function ($query) {
                         return $query->latest();
@@ -28,9 +27,6 @@ class UserController extends Controller
                 ])
                 ->withCount("likes")
                 ->latest()->limit(10)->get();
-
-
-
             return view("user.users.index", compact("posts"));
         } catch (Exception $e) {
             toastr($e->getMessage(), "error");
@@ -38,37 +34,11 @@ class UserController extends Controller
         }
     }
 
-    public function index()
-    {
-        // try {
-        //     $users = User::limit(10)->get();
-
-        //     $posts = Post::with("images")->latest()->limit(1)->get();
-
-        //     return view("user.users.index", compact("users", "posts"));
-        // } catch (Exception $e) {
-        //     toastr($e->getMessage(), "error");
-        //     return redirect()->route("home");
-        // }
-    }
-
-
-    public function create()
-    {
-    }
-
-
-    public function store()
-    {
-    }
-
     public function show($id)
     {
         try {
-
-            $user = User::with("posts")->first();
-
-            return view("user.users.show", compact('user'));
+            $user = User::with("posts")->find($id);
+            return view("user.users.show", compact('user'));   
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.index");

@@ -17,10 +17,10 @@ class PostController extends Controller
     {
         try {
             $posts = Post::whereHas('user')->limit(10)->latest()->get();
-            return view("user.posts.index", compact("posts"));
+            return view("user.posts.index", compact("posts"));  
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -31,7 +31,7 @@ class PostController extends Controller
             return view("user.posts.create");
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -54,10 +54,10 @@ class PostController extends Controller
                 }
             });
             toastr("Post created successfully");
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -67,17 +67,18 @@ class PostController extends Controller
             return view("user.posts.show", compact("post"));
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
     public function edit(Post $post)
     {
         try {
+            $post = $post->with('images')->first();
             return view("user.posts.edit", compact('post'));
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -100,10 +101,10 @@ class PostController extends Controller
                 }
             });
             toastr("Post updated successfully");
-            return redirect()->route("users.index");
+            return redirect()->back();
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -112,6 +113,6 @@ class PostController extends Controller
     {
         $post->delete();
         toastr("Post deleted successfully");
-        return redirect()->route("users.index");
+        return redirect()->route("users.dashboard");
     }
 }

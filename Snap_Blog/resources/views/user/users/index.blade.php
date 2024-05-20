@@ -3,13 +3,13 @@
 @section('title', 'users')
 
 {{-- 
-@section('sidebar')
-    <div class="p-3 pt-2">
-        @isset($users)
-            <x-users.friend-suggestion :$users />
-        @endisset
-    </div>
-@endsection 
+    @section('sidebar')
+        <div class="p-3 pt-2">
+            @isset($users)
+                <x-users.friend-suggestion :$users />
+            @endisset
+        </div>
+    @endsection 
 --}}
 
 @section('content')

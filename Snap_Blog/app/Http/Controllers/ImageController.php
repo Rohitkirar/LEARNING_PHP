@@ -2,39 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    
-    public function index()
+
+    public function destroy(Image $image)
     {
-    }
-
-
-    public function create()
-    {
-    }
-
-
-    public function store()
-    {
-    }
-
-    public function show()
-    {
-    }
-
-    public function edit()
-    {
-    }
-
-    public function update()
-    {
-    }
-
-
-    public function destroy()
-    {
+        if (request()->ajax()) {
+            if ($image->delete()) {
+                toastr("image deleted successfully");
+                return 1;
+            } else {
+                toastr("image not deleted successfully");
+                return 0;
+            }
+        }
     }
 }

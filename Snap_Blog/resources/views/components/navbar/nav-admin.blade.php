@@ -10,6 +10,7 @@
             <a href="{{route("admin.dashboard")}}" class="mx-1 text-dark text-decoration-none"><i class="bi bi-house-door fs-5"></i> Home</a>
             <a href="{{route("admin.users.index")}}" class="mx-1 text-dark text-decoration-none"><i class="bi bi-people fs-5"></i> Users</a>
             <a href="{{route("admin.posts.index")}}" class="mx-1 text-dark text-decoration-none"><i class="bi bi-file-post-fill fs-5"></i> Posts</a>
+            <a href="{{route("admin.comments.index")}}" class="mx-1 text-dark text-decoration-none"><i class="bi bi-file-post-fill fs-5"></i> Comments</a>
         </div>
     </div>
 

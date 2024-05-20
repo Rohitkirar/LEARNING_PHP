@@ -7,6 +7,8 @@ use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Comment;
+use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
 use Exception;
@@ -19,15 +21,17 @@ class UserController extends Controller
     {
         $users = User::count();
         $posts = Post::count();
+        $comments = Comment::count();
+        $likes = Like::count();
 
-        return view("admin.index" , compact('users', 'posts'));
+        return view("admin.index" , compact('users', 'posts' , 'comments' , 'likes'));
     }
 
     public function index()
     {
         try {
             if (request()->ajax()) {
-                return DataTables::of(User::withTrashed()->latest())
+                return DataTables::of(User::withTrashed())
                     ->addIndexColumn()
                     ->setRowClass("text-justify")
                     ->editColumn("created_at", function ($user) {
@@ -39,14 +43,17 @@ class UserController extends Controller
                     ->editColumn("deleted_at", function ($user) {
                         return $user->deleted_at ? $user->deleted_at->diffForHumans() : null;
                     })
+                    ->editColumn("username" , function ($user){
+                        return '<a href="'. route('admin.users.show' , $user->id) .'">'.$user->username.'</a>';
+                    })
                     ->editColumn("id"  , function ($id){
-                        return '<a href="'. route('admin.users.edit' , $id) .'" class="btn btn-primary">Edit</a>';
+                        return view('buttons.edit' , ['route' => route("admin.users.edit" , $id)]);
                     })
                     ->editColumn("deleted_at"  , function ($user){
-                        return $user->deleted_at ? '<a href="'. route('admin.users.restore' , $user->id) .'" class="btn btn-success">Restore</a>' :  
-                        '<a href="'. route('admin.users.destroy' , $user->id) .'" class="btn btn-danger">Delete</a>' ;
+                        return $user->deleted_at ? view("buttons.restore" , ["route" => route('admin.users.restore' , $user->id) ]) :  
+                        view("buttons.delete" , ["route" => route('admin.users.destroy' , $user->id) ]);
                     })
-                    ->rawColumns(['id' , 'deleted_at'])
+                    ->rawColumns(['id' , 'deleted_at' , 'username'])
                     ->make();
             }
             return view("admin.users.index");
@@ -88,7 +95,7 @@ class UserController extends Controller
     public function show($id)
     {
         try {
-            $user = User::with("posts")->first();
+            $user = User::with("posts")->withTrashed()->find($id);
             return view("admin.users.show", compact('user'));
         } catch (Exception $e) {
             toastr($e->getMessage());

@@ -6,17 +6,14 @@
 @endsection
 {{-- <button class="btn btn-secondary" onclick="backbtn()">Back</button> --}}
 
-<table class="table" id="post-table" style="width:100% ; ">
+
+<table class="table" id="comment-table" style="width:100% ; ">
 
     <thead>
         <th>#</th>
-        <th>Username</th>
-        <th>caption</th>
-        <th>Image</th>
+        <th>Comment</th>
         <th>created_at</th>
         <th>updated_at</th>
-        <th>Edit</th>
-        <th>Comments</th>
         <th>Action</th>
     </thead>
 
@@ -29,29 +26,19 @@
 
     <script>
         $(document).ready(function() {
-            $("#post-table").DataTable({
+            $("#comment-table").DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.posts.index') }}',
+                ajax: '{{route('admin.comments.post' , $post_id)}}',
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
                     },
                     {
-                        data: 'user.username',
-                        name: 'user.username',
+                        data: 'body',
+                        name: 'body',
                     },
-                    {
-                        data: 'caption',
-                        name: 'caption'
-                    },
-
-                    {
-                        data: 'images.url',
-                        name: 'images.url',
-                    },
-
                     {
                         data: 'created_at',
                         name: 'created_at'
@@ -59,15 +46,6 @@
                     {
                         data: 'updated_at',
                         name: 'updated_at'
-                    },
-                    {
-                        data: 'id',
-                        name: 'id' , searchable: false , orderable: false
-                    },
-                    
-                    {
-                        data: 'comment',
-                        name: 'comment' , searchable: false , orderable: false
                     },
 
                     {

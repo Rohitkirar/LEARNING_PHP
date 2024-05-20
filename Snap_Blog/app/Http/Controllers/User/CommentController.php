@@ -11,58 +11,47 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    
     public function index()
     {
-    }
+        if (request()->ajax()) {
+            $comments = Comment::with(['user'])
+                ->whereHas('user')
+                ->where('post_id', request('post_id'))
+                ->latest()->limit(20)->get();
 
-    public function create()
-    {
+            return $comments->toJson();
+        }
     }
 
     public function store()
     {
-        try{
-            Comment::create([
-                "user_id" => Auth::id(),
-                "post_id" => request("post_id"),
-                "body" => request("body")
-            ]);
-            toastr("Comment added successfully");
-            return redirect()->back();
-        }
-        catch(Exception $e){
+        try {
+            if (request()->ajax()) {
+
+                Comment::create([
+                    "user_id" => Auth::id(),
+                    "post_id" => request("post_id"),
+                    "body" => request("body")
+                ]);
+                return 1;
+            }
+        } catch (Exception $e) {
             toastr($e->getMessage(), 'error');
             return redirect()->back();
         }
     }
 
-    public function show($post_id)
-    {
-        $comments = Comment::where("post_id" , "=" , $post_id)->latest()->limit(10)->get();
-        return $comments->toJson();
-    }
-
-    public function edit()
-    {
-    }
-
-    public function update()
-    {
-    }
 
 
     public function destroy(Comment $comment)
     {
-        try{
+        try {
             $comment->delete();
             toastr("Comment deleted successfully");
             return redirect()->back();
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             toastr($e->getMessage(), 'error');
             return redirect()->back();
         }
-
     }
 }

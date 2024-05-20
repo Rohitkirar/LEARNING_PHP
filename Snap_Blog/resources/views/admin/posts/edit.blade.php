@@ -24,6 +24,22 @@
             </div>
 
             <div class="form-group mt-3">
+
+                @if($post->images)
+                    <div class="d-flex flex-wrap">
+                        @foreach($post->images as $image)
+                            <div class="d-grid col-sm-4 m-2" >
+                                <img src="{{$image->url}}"  width=100% alt="postimage" />
+                                <p onclick="imageDeleteFun('{{$image->id}}')" class="btn btn-danger my-2 py-0">delete</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+        
+            </div>
+        
+
+            <div class="form-group mt-3">
                 <label for="caption" class="form-label">Add caption</label>
                 @error('caption')
                     <span class="text-danger" style="float:right">{{ $errors->first('caption') }}</span>
@@ -37,4 +53,29 @@
 
         </form>
     </div>
+@endsection
+
+
+@section('scripts')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+    <script>
+
+        function imageDeleteFun(image_id) {
+            console.log("function called");
+            console.log(image_id);
+            $.ajax({
+                url: "/images/" + image_id + "/destroy",  
+                type: "DELETE",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    if(data)
+                        location.reload();
+                }
+            });
+        }
+    </script>
 @endsection

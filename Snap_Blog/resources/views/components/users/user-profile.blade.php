@@ -14,11 +14,11 @@
                 <i class="bi bi-three-dots-vertical fs-5"></i>
             </button>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                 @if(Auth::id() == $user->id) <a class="dropdown-item" href="{{route("users.edit" , $user->id)}}">Edit Profile</a> @endif
-                <a class="dropdown-item" href="#">Save Post</a>
+                {{-- <a class="dropdown-item" href="#">Save Post</a>
                 <a class="dropdown-item" href="#">Hide Post</a>
-                <a class="dropdown-item" href="#">Report</a>
+                <a class="dropdown-item" href="#">Report</a> --}}
             </div>
         </div>
     </div>
