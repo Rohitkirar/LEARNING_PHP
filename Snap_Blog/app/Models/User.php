@@ -90,6 +90,12 @@ class User extends Authenticatable
         );
     }
 
+    public function url() : Attribute{
+        return Attribute::make(
+            set: fn($url) => basename($url)
+        );
+    }
+
     #---------------------------ScopeFunctions-------------------------------------
 
 
@@ -102,6 +108,6 @@ class User extends Authenticatable
     }
 
     public function profileImage(){
-        return $this->image? $this->image->url : $this->path . "profiledemo.png" ;
+        return $this->image ? $this->image->url : $this->path . "profiledemo.png" ;
     }
 }

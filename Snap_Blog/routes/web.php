@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/posts/{post}' , [User\PostController::class, 'update'])->name("posts.update");
     Route::delete('/posts/{post}' , [User\PostController::class, 'destroy'])->name("posts.destroy");
 
-    Route::get("/comments" , [User\CommentController::class, 'index'] )->name("comments.index");
+    Route::get("/comments/index" , [User\CommentController::class , 'index'])->name('comments.index');
+
     Route::post("/comments" , [User\CommentController::class, 'store'] )->name("comments.store");
 
     Route::post("/likes" , [User\LikeController::class , 'store'])->name("likes.store");

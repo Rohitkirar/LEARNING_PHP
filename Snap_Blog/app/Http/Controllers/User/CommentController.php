@@ -14,20 +14,17 @@ class CommentController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $comments = Comment::with(['user'])
-                ->whereHas('user')
-                ->where('post_id', request('post_id'))
-                ->latest()->limit(20)->get();
-
-            return $comments->toJson();
+            return Comment::with(['user'])
+                    ->whereHas('user')
+                    ->where('post_id', request('post_id'))
+                    ->latest()->limit(10)->get()->toJson();
         }
     }
-
+    
     public function store()
     {
         try {
             if (request()->ajax()) {
-
                 Comment::create([
                     "user_id" => Auth::id(),
                     "post_id" => request("post_id"),
@@ -40,8 +37,6 @@ class CommentController extends Controller
             return redirect()->back();
         }
     }
-
-
 
     public function destroy(Comment $comment)
     {

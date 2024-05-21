@@ -1,6 +1,6 @@
-<div class="border py-3 bg-white rounded text-center">
+<div class="border py-3 bg-white rounded text-center position-fixed" style="width:21%">
     <div>
-        <img src="{{ Auth::user()->profileImage() }}" width="25%" alt="profile">
+        <img class="rounded-circle" src="{{ Auth::user()->profileImage() }}" height="90" width="90" alt="profile">
         <p class="mt-1 mb-0">{{ Auth::user()->fullName() }}</p>
     </div>
     

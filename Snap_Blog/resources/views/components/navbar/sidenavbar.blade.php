@@ -1,4 +1,4 @@
-<div>
+<div class="position-fixed" style="width:20%">
     <button class="bg-transparent" style="border:none"><i class="bi bi-list fs-2"></i></button>
 
     <p class="border-top m-0"></p>

@@ -24,7 +24,7 @@ class UserController extends Controller
         $comments = Comment::count();
         $likes = Like::count();
 
-        return view("admin.index" , compact('users', 'posts' , 'comments' , 'likes'));
+        return view("admin.index", compact('users', 'posts', 'comments', 'likes'));
     }
 
     public function index()
@@ -43,17 +43,18 @@ class UserController extends Controller
                     ->editColumn("deleted_at", function ($user) {
                         return $user->deleted_at ? $user->deleted_at->diffForHumans() : null;
                     })
-                    ->editColumn("username" , function ($user){
-                        return '<a href="'. route('admin.users.show' , $user->id) .'">'.$user->username.'</a>';
+                    ->editColumn("username", function ($user) {
+                        return '<a href="' . route('admin.users.show', $user->id) . '">' . $user->username . '</a>';
                     })
-                    ->editColumn("id"  , function ($id){
-                        return view('buttons.edit' , ['route' => route("admin.users.edit" , $id)]);
+                    ->editColumn("id", function ($id) {
+                        return view('buttons.edit', ['route' => route("admin.users.edit", $id)]);
                     })
-                    ->editColumn("deleted_at"  , function ($user){
-                        return $user->deleted_at ? view("buttons.restore" , ["route" => route('admin.users.restore' , $user->id) ]) :  
-                        view("buttons.delete" , ["route" => route('admin.users.destroy' , $user->id) ]);
+                    ->editColumn("deleted_at", function ($user) {
+                        return $user->deleted_at ?
+                            view("buttons.restore", ["route" => route('admin.users.restore', $user->id)]) :
+                            view("buttons.delete", ["route" => route('admin.users.destroy', $user->id)]);
                     })
-                    ->rawColumns(['id' , 'deleted_at' , 'username'])
+                    ->rawColumns(['id', 'deleted_at', 'username'])
                     ->make();
             }
             return view("admin.users.index");
@@ -148,7 +149,7 @@ class UserController extends Controller
             return redirect()->route("home");
         }
     }
-    
+
     public function restore($id)
     {
         try {

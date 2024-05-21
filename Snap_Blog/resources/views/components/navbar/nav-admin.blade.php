@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg p-1 card-header bg-light border w-100 justify-content-between" style=" top:0">
+<nav class="navbar navbar-expand-lg p-1 card-header bg-light border fixed-top w-100 justify-content-between" style=" top:0">
 
     <div class="d-flex align-items-center">
         <a class="navbar-brand" style="width:14% ;" href="{{ route('home') }}">

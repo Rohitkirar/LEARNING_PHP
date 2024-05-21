@@ -11,7 +11,17 @@
 
     <hr style="color:lightgrey;">
 
-    {!! Form::model($user , ['route' => ['users.update' , $user->id], 'method' => 'PATCH']) !!}
+    {!! Form::model($user , ['route' => ['users.update' , $user->id], 'method' => 'PATCH' , 'enctype'=>"multipart/form-data"]) !!}
+
+    <div class="container mb-3">
+        {!! Form::label('profile', 'Add Profile Image', ['class' => 'form-label']) !!}
+        <span class="text-danger " style="float: right">
+            @error('profile')
+                {{ $errors->first('profile') }}
+            @enderror
+        </span>
+        {!! Form::file('profile', ['class' => 'form-control']) !!}
+    </div>
 
     <div class="container mb-3">
         {!! Form::label('first_name', '', ['class' => 'form-label']) !!}

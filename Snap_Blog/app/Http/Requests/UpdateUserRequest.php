@@ -33,6 +33,7 @@ class UpdateUserRequest extends FormRequest
             'phone_number' => ['required' , 'unique:users,phone_number,'.Auth::id()  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::id()],
             'password' => ['required'],
+            'profile' => ["mimes:jpg,jpeg,png" , "max:1024"],
         ];
     }
 }

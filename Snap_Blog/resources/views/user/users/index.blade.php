@@ -16,11 +16,14 @@
 
     <div style="display:grid; grid-template-columns:70% 30%">
         <div class="pt-3">
-            @isset($posts)
-                @foreach($posts as $post)
-                    <x-posts.show-post :$post />
-                @endforeach
-            @endisset
+            <div>
+                @isset($posts)
+                    @foreach($posts as $post)
+                        <x-posts.show-post :$post />
+                    @endforeach
+                @endisset
+            </div>
+            <div class="d-flex">{{$posts->links()}}</div>
         </div>
 
         <div>

@@ -1,10 +1,10 @@
 <div class="border py-3 bg-white rounded text-center">
 
-    <div class="d-flex m-3">
+    <div class="d-flex m-3 justify-content-between">
         <div class="d-flex m-3">
-            <img src="{{ $user->profileImage() }}" width="15%" alt="profile">
+            <img class="rounded-circle" src="{{ $user->profileImage() }}" height="100" width="100" alt="profile">
             <div>
-                <p class="mx-5 mt-4 mb-1 fs-4">{{ $user->fullName() }}</p>
+                <p class="mx-5 mt-2 mb-1 fs-4">{{ $user->fullName() }}</p>
                 <p class="mx-4 mt-0">Add Your Bio</p>
             </div>
         </div>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg p-1 card-header bg-light border position-fixed w-100" style=" top:0">  
+<nav class="navbar navbar-expand-lg p-1 card-header bg-light border fixed-top w-100" style=" top:0">  
 
     <a class="navbar-brand p-0 m-0" style="width:10% ;" href="{{route("home")}}">
         <img src="{{asset('storage/uploads/snapchat.png')}}" style="width:20% ;" alt="logo">

@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="font-sans antialiased bg-light">
+<body class="font-sans antialiased bg-light" style="margin-top:60px">
 
 
     <x-navbar.nav-admin />

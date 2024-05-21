@@ -64,6 +64,14 @@ class PostController extends Controller
     public function show(Post $post)
     {
         try {
+            $post = $post->load([
+                        "user",
+                        "images" , 
+                        "likes"=>function($query){
+                            return $query->where("likes.user_id" , "=" , Auth::id());
+                        }])
+                        ;
+            debugbar()->addMessage($post);
             return view("user.posts.show", compact("post"));
         } catch (Exception $e) {
             toastr($e->getMessage());
@@ -71,10 +79,10 @@ class PostController extends Controller
         }
     }
 
-    public function edit(Post $post)
+    public function edit($id)
     {
         try {
-            $post = $post->with('images')->first();
+            $post = Post::with('images')->find($id);
             return view("user.posts.edit", compact('post'));
         } catch (Exception $e) {
             toastr($e->getMessage());

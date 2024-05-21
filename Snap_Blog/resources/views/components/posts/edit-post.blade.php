@@ -36,3 +36,27 @@
     </div>
 
 </form>
+
+
+@section('scripts')
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+    <script>
+
+        function imageDeleteFun(image_id) {
+
+            $.ajax({
+                url: "/images/" + image_id,  
+                type: "DELETE",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(data) {
+                    if(data)
+                        location.reload();
+                }
+            });
+        }
+    </script>
+@endsection
