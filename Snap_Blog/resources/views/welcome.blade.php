@@ -1,8 +1,6 @@
 @extends('layouts.guest')
 
-@section('title')
-    Home
-@endsection
+@section('title' , 'Home')
 
 @section('content')
 
@@ -19,9 +17,9 @@
             you’re in good company on Blogger. Sign up to discover why millions of people have published their passions
             here.
         </p>
-        <p class="mt-2">
-            <a href="{{route('login')}}" class="btn btn-primary my-2">login here</a>
-            <a href="{{route('register')}}" class="btn btn-secondary my-2">Register</a>
+        <p class="mt-2 my-2">
+            <a href="{{route('login')}}" class="btn btn-primary">login here</a>
+            <a href="{{route('register')}}" class="btn btn-secondary">Register</a>
         </p>
     </div>
 

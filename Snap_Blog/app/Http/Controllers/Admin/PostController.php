@@ -32,7 +32,7 @@ class PostController extends Controller
                     })
                     ->editColumn("images.url", function ($post) {
                         if ($post->images->first())
-                            return "<img src='{$post->images->first()->url}' width='80rem' alt='image' />";
+                            return "<img src='{$post->images->first()->url}' height='60' width='100%' alt='image' />";
                         else
                             return "<img src='' alt='image' />";
                     })

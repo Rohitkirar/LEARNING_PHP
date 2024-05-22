@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Follower;
 use App\Models\Image;
 use App\Models\Post;
 use App\Models\User;
@@ -11,7 +12,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Exception;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;    
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -19,37 +20,49 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        // try {
+        try {
             $posts = Post::whereHas("user")
-                ->with([
-                    "user",
-                    "likes" => function ($query) {
-                        return $query->withTrashed()->where("user_id", "=", Auth::id());
-                    },
-                    "images"
-                ])
-                ->withCount(["likes", "comments"])
-                ->latest()->simplePaginate(10);
+                    ->with([
+                        "user",
+                        "user.image",
+                        "likes" => function ($query) {
+                            return $query->withTrashed()->where("user_id", "=", Auth::id());
+                        },
+                        "images"
+                    ])
+                    ->withCount(["likes", "comments"])
+                    ->latest()->simplePaginate(10);
 
             Debugbar::addMessage($posts);
             debugbar()->addMessage($posts);
             debugbar()->error(Auth()->user());
 
             return view("user.users.index", compact("posts"));
-        // } catch (Exception $e) {
-        //     toastr($e->getMessage(), "error");
-        //     return redirect()->route("home");
-        // }
+        } catch (Exception $e) {
+            toastr($e->getMessage(), "error");
+            return redirect()->route("home");
+        }
     }
 
-    public function show($id)
+    public function show(User $user)
     {
         try {
-            $user = User::with("posts")->find($id);
+
+            $user = $user->load(["image" , "posts" , "posts.images"])
+                        ->loadCount([
+                            "followers"=>function($query){
+                                return $query->where("type" , "follower");
+                            }, 
+                            "posts"
+                        ]);
+
+            debugbar()->addMessage($user);
+
             return view("user.users.show", compact('user'));
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
-            return redirect()->route("users.index");
+            return redirect()->route("users.dashboard");
         }
     }
 
@@ -85,6 +98,7 @@ class UserController extends Controller
             });
             toastr("User updated successfully");
             return redirect()->route("users.show", $user->id);
+
         } catch (Exception $e) {
             toastr($e->getMessage() , 'error');
             return redirect()->route("users.index");
@@ -103,4 +117,20 @@ class UserController extends Controller
             return redirect()->route("home");
         }
     }
+
+    // public function addfollowing(){
+    //     $following = new Follower();
+    //     $following->user_id =  Auth::id();
+    //     $following->follower_id = request('user_id');
+    //     $following->type = "following" ;
+    //     if($following->first())
+    //         $following->save();
+
+    //     debugbar()->addMessage($following->first());
+    
+    // }
+
+    // public function removefollowing(){
+
+    // }
 }

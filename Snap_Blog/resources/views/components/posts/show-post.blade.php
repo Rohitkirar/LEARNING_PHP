@@ -5,7 +5,8 @@
             <img src="{{ $post->user->profileImage() }}" class="rounded-circle" height="55" width="55"
                 alt="profile" />
             <div class="mx-3">
-                <p class="h6 p-0 m-0">{{ $post->user->fullName() }}</p>
+                <p class="h6 p-0 m-0"><a class="text-dark text-decoration-none"
+                        href="{{ route('users.show', $post->user->id) }}">{{ $post->user->fullName() }}</a></p>
                 <p class="m-0">India</p>
             </div>
         </div>
@@ -17,6 +18,10 @@
             </button>
 
             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                <a class="dropdown-item" href="{{ route('users.show', $post->user->id) }}">View Profile</a>
+                <a class="dropdown-item" href="{{ route('posts.show', $post->id) }}">View Post</a>
+
                 @if (Auth::id() == $post->user_id)
                     <a class="dropdown-item" href="{{ route('posts.edit', $post->id) }}">Edit Post</a>
                     <form action="{{ route('posts.destroy', $post->id) }}" method="post">
@@ -25,8 +30,8 @@
                     </form>
 
                 @endif
+
                 {{-- <a class="dropdown-item" href="#">Save Post</a>
-                <a class="dropdown-item" href="#">Hide Post</a>
                 <a class="dropdown-item" href="#">Report</a> --}}
             </div>
         </div>
@@ -45,22 +50,19 @@
         <div class="align-items-center">
             <button class="bg-transparent p-0 border-0" id="{{ $post->id }}"
                 value="
-                @if ($post->likes->first() && $post->likes->first()->id) 
-                    {{ $post->likes->first()->id }}
+                @if ($post->likes->first() && $post->likes->first()->id) {{ $post->likes->first()->id }}
                 @else
-                    '' 
-                @endif
+                    '' @endif
                 "
                 onclick="like('{{ $post->id }}')">
                 <i
                     class="
-                    @if ($post->likes->first()) 
-                        @if ($post->likes->first()->deleted_at) 
+                    @if ($post->likes->first()) @if ($post->likes->first()->deleted_at) 
                             bi bi-heart fs-2 
                         @else 
                             bi-heart-fill fs-2 text-danger @endif
-                    @else
-                        bi bi-heart fs-2 
+@else
+bi bi-heart fs-2 
                     @endif
                     "></i>
             </button>
@@ -142,6 +144,7 @@
                 }
             });
         }
+
 
         function commentData(post_id) {
             globalPostId = post_id;

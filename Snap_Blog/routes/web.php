@@ -23,6 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}/update' , [User\UserController::class, 'update'])->name("users.update");
     Route::delete('/users/{user}' , [User\UserController::class, 'destroy'])->name("users.destroy");
 
+    // Route::post("/users/addfollowing" , [User\UserController::class, 'addfollowing'])->name("users.addfollowing");
+    // Route::post("/users/removefollowing" , [User\UserController::class, 'removefollowing'])->name("users.removefollowing");
+
     Route::get('/posts' , [User\PostController::class, 'index'])->name("posts.index");
     Route::get('/posts/create' , [User\PostController::class, 'create'])->name("posts.create");
     Route::post('/posts' , [User\PostController::class, 'store'])->name("posts.store");

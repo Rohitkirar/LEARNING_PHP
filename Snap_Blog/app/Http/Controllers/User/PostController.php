@@ -16,8 +16,10 @@ class PostController extends Controller
     public function index()
     {
         try {
+
             $posts = Post::whereHas('user')->limit(10)->latest()->get();
             return view("user.posts.index", compact("posts"));  
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
@@ -28,7 +30,9 @@ class PostController extends Controller
     public function create()
     {
         try {
+
             return view("user.posts.create");
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
@@ -53,8 +57,10 @@ class PostController extends Controller
                     $post->images()->createMany($images);
                 }
             });
+            
             toastr("Post created successfully");
             return redirect()->route("users.dashboard");
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
@@ -69,21 +75,25 @@ class PostController extends Controller
                         "images" , 
                         "likes"=>function($query){
                             return $query->where("likes.user_id" , "=" , Auth::id());
-                        }])
-                        ;
+                        }])->loadCount(['likes' , 'comments']);
+
             debugbar()->addMessage($post);
+
             return view("user.posts.show", compact("post"));
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
         }
     }
 
-    public function edit($id)
+    public function edit(Post $post)
     {
         try {
-            $post = Post::with('images')->find($id);
+        
+            $post = $post->load(['images']);
             return view("user.posts.edit", compact('post'));
+        
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
@@ -93,6 +103,7 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         try {
+
             $post->caption = $request->caption;
             $files = $request->file("file");
 
@@ -110,6 +121,7 @@ class PostController extends Controller
             });
             toastr("Post updated successfully");
             return redirect()->back();
+
         } catch (Exception $e) {
             toastr($e->getMessage());
             return redirect()->route("users.dashboard");
@@ -118,9 +130,15 @@ class PostController extends Controller
 
 
     public function destroy(Post $post)
-    {
-        $post->delete();
-        toastr("Post deleted successfully");
-        return redirect()->route("users.dashboard");
+    {   try{
+            
+            $post->delete();
+            toastr("Post deleted successfully");
+            return redirect()->route("users.dashboard");
+
+        }catch(Exception $e){
+            toastr($e->getMessage());
+            return redirect()->route("users.dashboard");
+        }
     }
 }
