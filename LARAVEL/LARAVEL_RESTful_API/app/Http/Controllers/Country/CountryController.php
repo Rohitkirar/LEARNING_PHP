@@ -39,19 +39,19 @@ class CountryController extends Controller
         }
     }
 
-    //! public function createCountry(CreateCountryRequest $request){ //request not working
-    public function createCountry(Request $request){
+    public function createCountry(CreateCountryRequest $request){ //request not working
+    // public function createCountry(Request $request){
         try{
             
-            $rules = [
-                "name" => "required|min:3",
-                "dname" => "required|min:3"
-            ];
+            // $rules = [
+            //     "name" => "required|min:3",
+            //     "dname" => "required|min:3"
+            // ];
 
-            $validator = Validator::make($request->all() , $rules);
+            // $validator = Validator::make($request->all() , $rules);
 
-            if($validator->fails())
-                return response()->json( $validator->errors() , 400);
+            // if($validator->fails())
+            //     return response()->json( $validator->errors() , 400);
 
             $country = Country::create($request->all());
             

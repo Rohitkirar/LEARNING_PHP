@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Country\CountryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +31,11 @@ Route::put("/country/{country}", [CountryController::class , 'updateCountry']);
 Route::delete("/country/{country}", [CountryController::class , 'deleteCountry']);
 
 Route::apiResource("countrys" , CountryController::class);
+
+
+
+
+Route::post("/login" , [AuthController::class , "login"]);
+
+Route::post("/register" , [AuthController::class , "register"]);
+
