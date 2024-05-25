@@ -23,10 +23,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        //
-        Passport::tokensExpireIn(now()->addDays(10));
-        Passport::personalAccessTokensExpireIn(now()->addHours(24));
-        Passport::refreshTokensExpireIn(now()->addDays(10));
+    {     
+
     }
 }

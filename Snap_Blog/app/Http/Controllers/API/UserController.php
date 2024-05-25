@@ -11,16 +11,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-
         try{
-
             $users = User::simplePaginate(10);
 
             return response()->json([
@@ -105,13 +99,16 @@ class UserController extends Controller
             $user = User::find($id);
             
             if($user){
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->birth_date = $request->birth_date;
-                $user->gender = $request->gender;
-                $user->email = $request->email;
-                $user->phone_number = $request->phone_number;
-                $user->save();
+                
+                $user->update([
+                    "first_name" => $request->first_name ,
+                    "last_name" => $request->last_name ,
+                    "birth_date" => $request->birth_date ,
+                    "gender" => $request->gender ,
+                    "email" => $request->email ,
+                    "phone_number" => $request->phone_number ,
+                ]);
+
                 return response()->json([
                     "status"=>true ,
                     "message"=>"User Record Updated Successfully",

@@ -21,7 +21,41 @@ class AuthController extends Controller
                     "password"=>$request->password
                 ])){
                     $user = $request->user();
-                    $user->access_token = $user->createToken("AcessToken")->accessToken;
+                    $user->access_token = $user->createToken("Access_Token")->accessToken;
+
+                    return response()->json([
+                        "status"=>true ,
+                        "data"=>$user ,
+                        "message"=>"User Login Successfully",
+                        "status_code"=> 200
+                    ] , 200);
+                }
+            return response()->json([
+                "status"=>false ,
+                "message"=>"Invalid Credentials",
+                "status_code"=> 401
+            ] , 401);
+
+
+        }catch(Exception $e){
+            return response()->json([
+                "status"=>false ,
+                "message"=>$e->getMessage(),
+                "status_code"=> 404
+            ] , 404);
+        }
+
+    }
+    public function loginSanctum(LoginRequest $request){
+
+        try{
+            
+            if(Auth::attempt([
+                    "username"=>$request->username , 
+                    "password"=>$request->password
+                ])){
+                    $user = $request->user();
+                    $user->access_token = $user->createToken("Access_Token")->plainTextToken;
 
                     return response()->json([
                         "status"=>true ,
