@@ -26,14 +26,15 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         $userId = $this->route("user");
-
+        // dd($userId->id);
+        
         return [
             'first_name' => ['required', 'max:255'],
             'last_name' => ['required' , 'max:255'],
             'birth_date' => ['required', 'date'],
             'gender' => ['required' , 'in:male,female,other'],
-            'phone_number' => ['required' , 'unique:users,phone_number,'.$userId  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$userId],
+            'phone_number' => ['required' , 'unique:users,phone_number,'.$userId->id  ,'regex:/^((?:[1-9][0-9 ().-]{5,28}[0-9])|(?:(00|0)( ){0,1}[1-9][0-9 ().-]{3,26}[0-9])|(?:(\+)( ){0,1}[1-9][0-9 ().-]{4,27}[0-9]))$/'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$userId->id],
             'password' => ['required'],
             'profile' => ["mimes:jpg,jpeg,png" , "max:1024"],
         ];

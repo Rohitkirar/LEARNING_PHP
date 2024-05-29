@@ -114,13 +114,20 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
-
-        $request->user()->token()->revoke();
-        return response()->json([
-            "status"=>true ,
-            "message"=>"User Logged Out Successfully",
-            "status_code"=> 200
-        ] , 200);
+        try{
+            $request->user()->token()->revoke();
+            return response()->json([
+                "status"=>true ,
+                "message"=>"User Logged Out Successfully",
+                "status_code"=> 200
+            ] , 200);
+        }catch(Exception $e){
+            return response()->json([
+                "status"=>false ,
+                "message"=>$e->getMessage(),
+                "status_code"=> 404
+            ] , 404);
+        }
 
     }
 }

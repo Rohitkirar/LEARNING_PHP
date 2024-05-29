@@ -26,7 +26,7 @@ class Image extends Model
 
     public function url():Attribute{
         return Attribute::make(
-            get:fn($url) => str_contains($url , "http") ? $url : $this->path . $url,
+            get:fn($url) => str_contains($url , "http") ? $url : asset($this->path . $url) ,
             set:fn($url) => str_contains($url , "http") ? $url : basename($url)
         );
     }

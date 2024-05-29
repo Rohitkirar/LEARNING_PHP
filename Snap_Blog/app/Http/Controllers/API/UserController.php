@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         try{
-            $users = User::simplePaginate(10);
+            $users = User::with("image")->simplePaginate(10);
 
             return response()->json([
                 "status"=>true ,
@@ -67,7 +67,7 @@ class UserController extends Controller
     public function show($id)
     {
         try{
-            $user = User::find($id);
+            $user = User::with("image")->find($id);
             
             if($user)
                 return response()->json([

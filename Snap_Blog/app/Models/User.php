@@ -112,6 +112,6 @@ class User extends Authenticatable
     }
 
     public function profileImage(){
-        return $this->image ? $this->image->url : $this->path . "profiledemo.png" ;
+        return $this->image ? $this->image->url : asset($this->path . "profiledemo.png") ;
     }
 }

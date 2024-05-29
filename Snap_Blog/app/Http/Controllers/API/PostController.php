@@ -15,7 +15,9 @@ class PostController extends Controller
 {
     public function index(){
         try{
-            $posts = Post::simplePaginate(10);
+            $posts = Post::with("images" , "user")
+                            ->withCount("likes" , "comments")
+                            ->simplePaginate(10);
 
             return response()->json([
                 "status"=>true ,
@@ -71,7 +73,9 @@ class PostController extends Controller
 
     public function show($id){
         try{
-            $post = Post::find($id);
+            $post = Post::with("images" , "user")
+                        ->withCount("likes" , "comments")
+                        ->find($id);
             
             if($post)
                 return response()->json([
