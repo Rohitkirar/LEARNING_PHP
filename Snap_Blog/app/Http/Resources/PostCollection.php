@@ -6,14 +6,20 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class PostCollection extends ResourceCollection
 {
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
+
+
+    // public $collects = PostResource::class; //default
+
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return  
+        [
+           "data" => $this->collection,
+           "links" => [
+                'self' => url()->current(),
+                'prev' => $this->previousPageUrl(),
+                'next' => $this->nextPageUrl(),
+            ]
+        ];
     }
 }

@@ -23,7 +23,7 @@ class PostResource extends JsonResource
             "likes_count" => $this->whenCounted("likes_count"),
             "comments_count" => $this->whenCounted("comments_count"),
             "images" => $this->whenLoaded("images"),
-            "user" => new UserResource($this->whenLoaded("user")),
+            "user" => UserResource::make($this->whenLoaded("user")),
         ];
     }
 }

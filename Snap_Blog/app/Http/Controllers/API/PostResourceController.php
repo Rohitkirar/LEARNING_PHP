@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class PostResourceController extends Controller
 {
     public function index(){
+        
         $posts = Post::with(["images" , "user"=>function($query){
                             return $query->with("image");
                         }])
@@ -20,7 +21,8 @@ class PostResourceController extends Controller
         return response()->json([
             "success" => true,
             "message" => "posts record fetched successfully" ,
-            "data" => PostResource::collection($posts)->response()->getData(),
+            // "data" => PostResource::collection($posts)->response()->getData(),
+            "payload" => PostCollection::make($posts),
             "status_code" => 200,
         ], 200);
     }
@@ -37,7 +39,7 @@ class PostResourceController extends Controller
         return response()->json([ 
                 "success" => true,
                 "message" => "post record fetched successfully" ,
-                "data" => new PostResource($post),
+                "data" => PostResource::make($post),
                 "status_code" => 200,
             ]);
     }

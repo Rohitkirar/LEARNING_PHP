@@ -96,6 +96,8 @@ class AuthController extends Controller
             ]);
 
             if($user){
+                $user->access_token = $user->createToken("Access Token")->accessToken;
+                
                 return response()->json([
                     "status"=>true ,
                     "data"=>$user ,
