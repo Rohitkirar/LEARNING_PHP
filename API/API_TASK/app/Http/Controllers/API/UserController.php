@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\PasswordUpdateRequest;
 use App\Http\Requests\API\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,26 @@ class UserController extends Controller
                 "message" => $e->getMessage(),
                 "data" => [],
                 "status" => 404
+            ] , 404);
+        }
+    }
+
+    public function profile(){
+        try{
+            $user = Auth::user();
+            
+            return response()->json([
+                "success" => true,
+                "message" => "User Data Fetched Successfully",
+                "data" => UserResource::make($user),
+                "status" => 200
+            ] , 200);
+
+        }catch(Exception $e){
+            return response()->json([
+                "success" => false,
+                "message" => $e->getMessage(),
+                "status" => 404,
             ] , 404);
         }
     }

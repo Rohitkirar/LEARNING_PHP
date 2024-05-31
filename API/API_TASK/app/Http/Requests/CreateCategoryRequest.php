@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class CreateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            "username" => ["required" , "string"] , 
-            "password" => ["required" , "string"] ,
+            "name" => "required|max:50|min:3|unique:categories",
+            "file" => "required|image|max:2048"
         ];
     }
 }

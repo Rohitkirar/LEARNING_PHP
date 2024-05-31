@@ -30,6 +30,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    #---------------------------Relationships-------------------------------------
+
+    public function giftCards(){
+        return $this->hasMany(GiftCard::class);
+    }
+
+    public function cashbacks(){
+        return $this->hasManyThrough(Cashback::class , GiftCard::class);
+    }
+
+
     #----------------------------Accessor&Mutators------------------------------------
 
     public function password():Attribute{

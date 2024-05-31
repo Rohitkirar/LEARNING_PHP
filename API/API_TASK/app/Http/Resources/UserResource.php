@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             "username" => $this->username,
             "email" => $this->email,
             "profile_image" => $this->profile_image,
-            "access_token" => $this->whenHas("access_token")
+            "created_at" => $this->created_at,
         ];
     }
 }

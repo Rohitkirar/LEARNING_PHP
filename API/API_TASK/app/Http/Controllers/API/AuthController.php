@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\LoginRequest;
 use App\Http\Requests\API\RegisterRequest;
+use App\Http\Resources\UserLoginResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
@@ -38,7 +39,7 @@ class AuthController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "User Registeration Successfully",
-                "data" => UserResource::make($user),
+                "data" => UserLoginResource::make($user),
                 "status" => 200
             ] , 200 ); 
 
@@ -55,14 +56,14 @@ class AuthController extends Controller
     public function login(LoginRequest $request){
         
         try{
-            if(Auth::attempt([ "email"=>$request->email , "password"=>$request->password ])){
+            if(Auth::attempt([ "username"=>$request->username , "password"=>$request->password ])){
                 $user = Auth::user();
                 $user->access_token = $user->createToken("Access Token")->accessToken;
 
                 return response()->json([
                     "success" => true,
                     "message" => "User Login Successfully",
-                    "data" => UserResource::make($user),
+                    "payload" => UserLoginResource::make($user),
                     "status" => 200
                 ] , 200);   
             }
