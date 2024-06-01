@@ -42,10 +42,11 @@
             "pagelength" : 10 ,
             processing : true,
             serverSide : true,
+            order :[] ,
             ajax : '{{ route("post1")}}' ,
             columns : [
-                { data : 'id'  , searchable:true , orderable:true },
-                { data : 'name' , name : 'name' },
+                { data : 'id' , name : 'id' },
+                { data : 'name' , name : 'name' , orderable:false , searchable:false },
                 { data : 'title' , name : 'title' },
                 { data : 'content' , name : 'content' },
                 { data : 'created_at' , name : 'created_at' },
@@ -53,10 +54,10 @@
                 { data : 'view' , name : 'view' , orderable:false , searchable:false},
                 { data : 'deleted_at' , name : 'deleted_at' },
             ],
-            "columnDefs": [{
-                "targets": [0], // Target the second column (index 1)
-                "orderable": false // Disable sorting for this column
-            }]
+            // "columnDefs": [{
+            //     "targets": [0], // Target the second column (index 1)
+            //     "orderable": false // Disable sorting for this column
+            // }]
         });
     });
 

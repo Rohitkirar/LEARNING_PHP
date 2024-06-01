@@ -19,20 +19,21 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Route::middleware("auth:api")->group(function(){
 
-Route::get("/country" , [CountryController::class , 'country'] );
+    Route::get("/country" , [CountryController::class , 'country'] );
 
-Route::get("/country/{country}" , [CountryController::class , 'countryById'] );
+    Route::get("/country/{country}" , [CountryController::class , 'countryById'] );
 
-Route::post("/country" , [CountryController::class , 'createCountry'] );
+    Route::post("/country" , [CountryController::class , 'createCountry'] );
 
-Route::put("/country/{country}", [CountryController::class , 'updateCountry']);
+    Route::put("/country/{country}", [CountryController::class , 'updateCountry']);
 
-Route::delete("/country/{country}", [CountryController::class , 'deleteCountry']);
+    Route::delete("/country/{country}", [CountryController::class , 'deleteCountry']);
 
-Route::apiResource("countrys" , CountryController::class);
+    Route::apiResource("countrys" , CountryController::class);
 
-
+// });
 
 
 Route::post("/login" , [AuthController::class , "login"]);
