@@ -4,19 +4,22 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class GiftCardResource extends JsonResource
 {
-
     public function toArray($request)
     {
+        
         // return parent::toArray($request);
-
+        
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "image" => $this->image,
+            "gift_card_product_id" => $this->gift_card_product_id,
+            "purchase_amount" => $this->purchase_amount,
+            "is_claimed" => $this->is_claimed,
+            "expires_at" => $this->expires_at,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-        ];
+         ];
+
     }
 }

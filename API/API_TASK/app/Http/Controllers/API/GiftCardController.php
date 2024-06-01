@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateGiftCardRequest;
+use App\Http\Requests\API\CreateGiftCardRequest;
 use App\Models\GiftCard;
 use App\Models\GiftCardProduct;
 use Exception;
