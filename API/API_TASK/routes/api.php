@@ -60,10 +60,15 @@ Route::middleware("auth:api")->group(function(){
     Route::get("gift_card_products/{product}", [GiftCardProductController::class , "show"]);
 
     Route::post("gift_cards/{card}" , [GiftCardController::class , "store"]);
-
+    
     Route::get("user/gift_cards" , [UserGiftCardController::class , "index"]);
+    Route::post("user/gift_cards/{card}/destroy" , [GiftCardController::class , "destroy"]);
+    Route::match(['put' , 'patch'] , "user/gift_cards/{card}" , [GiftCardController::class , "update"]);
 
     Route::get("user/cashbacks" , [UserCashbackController::class , "index"]);
+
+
+    
     
 
 });
