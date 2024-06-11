@@ -24,7 +24,6 @@ class GiftCardProductResource extends JsonResource
             "min_price" => $this->min_price,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-            "deleted_at" => $this->deleted_at,
         ];  
 
     }

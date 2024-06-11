@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
@@ -14,19 +15,43 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
      */
     public function register(): void
     {
-        // Telescope::night();
+        Telescope::night();
 
         $this->hideSensitiveRequestDetails();
 
         $isLocal = $this->app->environment('local');
 
+         
+    Telescope::tag(function (IncomingEntry $entry) {
+        return $entry->type === 'request'
+                    ? ['status:'.$entry->content['response_status']]
+                    : [];
+    });
+
         Telescope::filter(function (IncomingEntry $entry) use ($isLocal) {
-            return $isLocal ||
-                   $entry->isReportableException() ||
-                   $entry->isFailedRequest() ||
-                   $entry->isFailedJob() ||
-                   $entry->isScheduledTask() ||
-                   $entry->hasMonitoredTag();
+
+            if($entry->type == "request"){
+                
+                // dd($entry->content["response"]["payload"]);
+                
+                if(array_key_exists("payload" ,$entry->content['response'] ))
+                    $entry->content["response"]["payload"]['data'] = array_slice($entry->content["response"]["payload"]['data'] , 0 , 5);
+                
+                return $isLocal ||
+                    $entry->isReportableException() ||
+                    $entry->isFailedRequest() ||
+                    $entry->isFailedJob() ||
+                    $entry->isScheduledTask() ||
+                    $entry->hasMonitoredTag() ;
+            }
+            else if($entry->type == "query"){
+                return $isLocal ||
+                    $entry->isReportableException() ||
+                    $entry->isFailedRequest() ||
+                    $entry->isFailedJob() ||
+                    $entry->isScheduledTask() ||
+                    $entry->hasMonitoredTag() ;
+            }
         });
     }
 

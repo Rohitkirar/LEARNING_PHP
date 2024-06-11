@@ -83,7 +83,7 @@ class GiftCardProductController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "Gift Card Record Fetched Successfully",
-                "data" => new GiftCardProductResource($product),
+                "payload" => [ "data" => new GiftCardProductResource($product) ],
                 "status" => 200
             ], 200);
         } catch (Exception $e) {

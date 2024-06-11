@@ -17,4 +17,8 @@ class GiftCardProduct extends Model
     public function categories(){
         return $this->belongsToMany(Category::class);
     }
+
+    public function giftCards(){
+        return $this->hasMany(GiftCard::class);
+    }
 }

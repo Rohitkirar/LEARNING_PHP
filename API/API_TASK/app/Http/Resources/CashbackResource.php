@@ -23,6 +23,7 @@ class CashbackResource extends JsonResource
             "amount" => $this->amount,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
+            "giftCard" => GiftCardResource::make($this->whenLoaded("giftCard")),
         ];
     }
 }

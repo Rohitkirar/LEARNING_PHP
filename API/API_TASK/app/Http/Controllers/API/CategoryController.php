@@ -45,7 +45,6 @@ class CategoryController extends Controller
             return response()->json([
                 "success"=>true,
                 "message" => "Category Created Successfully",
-                "data" => CategoryResource::make($category),
                 "status"=>201
             ] , 201);
 
@@ -65,7 +64,7 @@ class CategoryController extends Controller
                 return response()->json([
                     "success"=>true,
                     "message" => "Category Fetched Successfully",
-                    "data" => new CategoryResource($category),
+                    "payload" => [ "data" => CategoryResource::make($category) ],
                     "status"=>200
                 ] , 200);
 

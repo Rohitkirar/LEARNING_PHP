@@ -39,7 +39,7 @@ class AuthController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "User Registeration Successfully",
-                "data" => UserLoginResource::make($user),
+                "payload" => ["data" => UserLoginResource::make($user)],
                 "status" => 200
             ] , 200 ); 
 
@@ -91,7 +91,7 @@ class AuthController extends Controller
                 return response()->json([
                     "success" => true,
                     "message" => "User Logged Out Successfully",
-                    "data" => [],
+                    "payload" =>   [ "data" => [] ] ,
                     "status" => 200
                 ] , 200);
             }

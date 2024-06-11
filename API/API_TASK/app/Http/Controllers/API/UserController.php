@@ -35,7 +35,6 @@ class UserController extends Controller
             return response()->json([
                 "success" => false,
                 "message" => $e->getMessage(),
-                "data" => [],
                 "status" => 404
             ] , 404);
         }
@@ -48,7 +47,7 @@ class UserController extends Controller
             return response()->json([
                 "success" => true,
                 "message" => "User Data Fetched Successfully",
-                "data" => UserResource::make($user),
+                "payload" => ["data" => UserResource::make($user) ],
                 "status" => 200
             ] , 200);
 
@@ -84,7 +83,6 @@ class UserController extends Controller
             return response()->json([
                 "success" => false,
                 "message" => $e->getMessage(),
-                "data" => [],
                 "status" => 404
             ]);
         }

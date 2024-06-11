@@ -14,5 +14,7 @@ class Cashback extends Model
 
     #----------------------------Relationship------------------------------------
 
-    
+    public function giftCard(){
+        return $this->belongsTo(GiftCard::class);
+    }
 }
