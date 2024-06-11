@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.5",
         "spatie/laravel-html": "^3.5",
+        "yajra/laravel-datatables": "^9.0",
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\API\CreateCategoryRequest;
+use App\Http\Requests\API\UpdateCategoryRequest;
+use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Exception;
@@ -15,14 +16,15 @@ class CategoryController extends Controller
 {
     public function index(){
         try{
-            $categories = Category::all();
+            $categories = Category::paginate(10);
 
             return response()->json([
                 "success"=>true,
                 "message" => "Category List Fetched Successfully",
-               "data" => CategoryResource::collection($categories),
+                "payload" => CategoryCollection::make($categories),
                 "status"=>200
             ] , 200);
+            
         }catch(Exception $e){
             return response()->json([
                 "success" => false,

@@ -24,7 +24,7 @@
             
             <thead>
                 <th>Id</th>
-                <th>content</th>
+                <th>Comment</th>
                 <th>post Id</th>
                 <th>created_at</th>
                 <th>updated_at</th>
@@ -42,7 +42,7 @@
                 serverSide: true,
                 ajax: '{{route("comments.post" ,$post_id)}}',
                 columns: [
-                    {data: 'id', name: 'id'},
+                    {data: 'id', name: 'id' , orderable:false},
                     {data: 'content', name: 'content'},
                     {data: 'post_id', name: 'post_id'},
                     {data: 'created_at', name: 'created_at'},

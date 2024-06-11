@@ -42,18 +42,14 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            
             // \App\HTTP\Middleware\AuthKey::class,
-            \App\HTTP\Middleware\AuthBasic::class,
+            // \App\HTTP\Middleware\AuthBasic::class,
+
         ],
     ];
 
-    /**
-     * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array<string, class-string|string>
-     */
+
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

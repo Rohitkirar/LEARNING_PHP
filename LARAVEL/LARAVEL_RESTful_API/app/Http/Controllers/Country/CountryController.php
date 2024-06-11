@@ -16,7 +16,7 @@ class CountryController extends Controller
             $country = Country::get();
             
             if($country)
-                return response()->json(Country::get() , 200);
+                return response()->json(["message"=>"Records fetch successfully" , "data"=>$country] , 200);
             
             return response()->json(["message" => "Records not found"] , 404);
         }

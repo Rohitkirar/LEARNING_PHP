@@ -18,7 +18,7 @@ class AuthKey
     {   
         $token = $request->header('APP_KEY');
         
-        if($token != "ABCDEFGHIJK")
+        if($token != "ABCDEFGHIJK" )
             return response()->json(["message" => "Invalid Token"], 401);
 
         return $next($request);

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->foreignId("gift_card_product_id");
             $table->foreignId("user_id");
             $table->integer("purchase_amount");
+            $table->integer("amount_left");
             $table->boolean("is_claimed")->default(false);
             $table->date("expires_at")->default(now()->addYear());
             $table->timestamps();

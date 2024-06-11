@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthBasic
+class RoleMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,13 @@ class AuthBasic
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::onceBasic())
-            return response()->json([ "message" => "Auth Failed" ] , 401);
-        else
+        if(Auth::user()->is_admin)
             return $next($request);
-        
+
+        return response()->json([
+            "success" => false,
+            "message" => "Unauthenticated Request",
+            "status" => 401,
+        ] , 401);
     }
 }
