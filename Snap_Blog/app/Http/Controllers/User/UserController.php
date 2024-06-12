@@ -33,11 +33,22 @@ class UserController extends Controller
                     ->withCount(["likes", "comments"])
                     ->latest()->simplePaginate(10);
 
+            $users = User::where("id" , "!=" , Auth::id())->limit(5)->get();
+
+            // $friendRequests =  Follower::create([
+            //     "user_id" => "9c2014c3-6c80-42ba-9a50-d32788d9cd75"  , 
+            //     "follower_id" =>  "9c20148a-9e97-417b-8ab7-48c20f034ca6" ,  
+            //     "type"=>"follower" 
+            // ]);
+
+            $friendRequests = Follower::with("user")->where("type" , "follower")->where("is_accepted" , false)->where("user_id" , Auth::id())->get();
+
             Debugbar::addMessage($posts);
             debugbar()->addMessage($posts);
             debugbar()->error(Auth()->user());
 
-            return view("user.users.index", compact("posts"));
+            return view("user.dashboard", compact("posts" , "users" , "friendRequests"));
+
         } catch (Exception $e) {
             toastr($e->getMessage(), "error");
             return redirect()->route("home");

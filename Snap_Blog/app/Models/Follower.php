@@ -18,4 +18,11 @@ class Follower extends Model
         "updated_at" => "datetime",
         "deleted_at" => "datetime",
     ];
+
+    #----------------------------Relationships------------------------------------
+
+    public function user(){
+        return $this->belongsTo(User::class , "follower_id" , "id" );
+    }
+
 }

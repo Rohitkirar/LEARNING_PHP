@@ -1,4 +1,4 @@
-<div class="border py-3 bg-white rounded text-center position-fixed" style="width:21%">
+<div class="border py-3 bg-white rounded text-center" style="width:21%">
     <div>
         <img class="rounded-circle" src="{{ Auth::user()->profileImage() }}" height="90" width="90" alt="profile">
         <p class="mt-1 mb-0">{{ Auth::user()->fullName() }}</p>

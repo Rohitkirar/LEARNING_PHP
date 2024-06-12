@@ -2,15 +2,15 @@
 
 @section('title', 'users')
 
-{{-- 
+
 @section('sidebar')
-    <div class="p-3 pt-2">
+    <div class="pt-2">
         @isset($users)
             <x-users.friend-suggestion :$users />
         @endisset
     </div>
 @endsection 
---}}
+
 
 @section('content')
 
@@ -24,15 +24,20 @@
         </div>
 
         <div>
-            <div class="p-3 pb-0">
-                <x-users.index-profile : />
-            </div>
+            <div class=" w-100 position-fixed">
+                
+                <div class="p-3 pb-0">
+                    <x-users.index-profile : />
+                </div>
 
-            {{-- 
-            <div class="p-3 pt-2">
-                <x-users.friend-request />
-            </div> 
-            --}}
+                
+                <div class="p-3 pt-2">
+                    @isset($friendRequests)
+                        <x-users.friend-request :$friendRequests />
+                    @endisset
+                </div> 
+            
+            </div>
         </div>
     </div>
 @endsection

@@ -1,6 +1,8 @@
-<div class="" style="min-height: 21rem ; ">
+<div class="" style="min-height: 21rem ; margin-left:10px">
 
-    <h6 class="py-3 border-bottom"><i class="bi bi-arrow-down-right-square fs-5"></i> Friend Suggestion</h6>
+    <h6 class="py-3 border-bottom">
+        <i class="bi bi-arrow-down-right-square fs-5"></i> Friend Suggestion
+    </h6>
 
     <ul class="list-unstyled ">
         @foreach ($users as $user)
@@ -9,11 +11,11 @@
             @endif
             <div class="d-flex align-items-center ">
                 <div class="d-flex">
-                    <img src="{{ $user->profileImage() }}" width="10%" alt="">
+                    <img src="{{ $user->profileImage() }}" width="12%" alt="">
                     <li class="mx-2">{{ $user->fullName() }}</li>
                 </div>
 
-                <button class="btn btn-outline-success p-1" style="border:none"><i class="bi bi-plus fs-5"></i></button>
+                <button class="btn btn-outline-success" style="border:none"><i class="bi bi-plus fs-5"></i></button>
             </div>
         @endforeach
     </ul>

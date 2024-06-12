@@ -36,12 +36,13 @@
         style="display:grid ; grid-template-columns:24% 76% ; justify-content: space-between ;">
 
         <div>
-            <div>
-                <x-navbar.sidenavbar />
-            </div>
+            <div class="position-fixed" style="width:23%">
+                <div>
+                    <x-navbar.sidenavbar />
+                </div>
 
-            @yield("sidebar")
-        
+                @yield("sidebar")
+            </div>
         </div>
         
         <div >
