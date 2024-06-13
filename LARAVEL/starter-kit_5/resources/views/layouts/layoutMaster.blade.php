@@ -1,11 +1,18 @@
 @isset($pageConfigs)
-{!! Helper::updatePageConfig($pageConfigs) !!}
+
+    {!! App\Helpers\Helpers::updatePageConfig($pageConfigs) !!}
+
 @endisset
+
 @php
-$configData = Helper::appClasses();
+
+    $configData = App\Helpers\Helpers::appClasses();
+
 @endphp
 
 @isset($configData["layout"])
-@include((( $configData["layout"] === 'horizontal') ? 'layouts.horizontalLayout' :
-(( $configData["layout"] === 'blank') ? 'layouts.blankLayout' : 'layouts.contentNavbarLayout') ))
+
+    @include((( $configData["layout"] === 'horizontal') ? 'layouts.horizontalLayout' :
+    (( $configData["layout"] === 'blank') ? 'layouts.blankLayout' : 'layouts.contentNavbarLayout') ))
+
 @endisset

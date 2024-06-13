@@ -1,5 +1,5 @@
 @php
-$configData = Helper::appClasses();
+$configData =  App\Helpers\Helpers::appClasses();
 @endphp
 <!-- Horizontal Menu -->
 <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal  menu bg-menu-theme flex-grow-0">

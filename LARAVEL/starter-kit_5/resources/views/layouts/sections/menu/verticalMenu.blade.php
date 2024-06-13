@@ -1,5 +1,5 @@
 @php
-$configData = Helper::appClasses();
+$configData =  App\Helpers\Helpers::appClasses();
 @endphp
 
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">

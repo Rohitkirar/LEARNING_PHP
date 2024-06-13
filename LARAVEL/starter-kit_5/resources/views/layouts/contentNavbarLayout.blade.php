@@ -1,8 +1,9 @@
 @isset($pageConfigs)
-{!! Helper::updatePageConfig($pageConfigs) !!}
+{!!  App\Helpers\Helpers::updatePageConfig($pageConfigs) !!}
 @endisset
 @php
-$configData = Helper::appClasses();
+$configData =  App\Helpers\Helpers::appClasses();
+
 @endphp
 @extends('layouts/commonMaster' )
 
@@ -34,15 +35,15 @@ $container = ($container ?? 'container-xxl');
   <div class="layout-container">
 
     @if ($isMenu)
-    @include('layouts/sections/menu/verticalMenu')
+      @include('layouts/sections/menu/verticalMenu')
     @endif
 
 
     <!-- Layout page -->
     <div class="layout-page">
-      <!-- BEGIN: Navbar-->
+      <!-- BEGIN: Navbar (top navbar)-->
       @if ($isNavbar)
-      @include('layouts/sections/navbar/navbar')
+        @include('layouts/sections/navbar/navbar')
       @endif
       <!-- END: Navbar-->
 
@@ -61,7 +62,7 @@ $container = ($container ?? 'container-xxl');
 
             <!-- pricingModal -->
             @if ($pricingModal)
-            @include('_partials/_modals/modal-pricing')
+              @include('_partials/_modals/modal-pricing')
             @endif
             <!--/ pricingModal -->
 
@@ -70,7 +71,7 @@ $container = ($container ?? 'container-xxl');
 
           <!-- Footer -->
           @if ($isFooter)
-          @include('layouts/sections/footer/footer')
+            @include('layouts/sections/footer/footer')
           @endif
           <!-- / Footer -->
           <div class="content-backdrop fade"></div>

@@ -14,23 +14,23 @@ $navbarDetached = ($navbarDetached ?? '');
 
       <!--  Brand demo (display only for navbar-full and hide on below xl) -->
       @if(isset($navbarFull))
-      <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-        <a href="{{url('/')}}" class="app-brand-link gap-2">
-          <span class="app-brand-logo demo">
-            @include('_partials.macros',["height"=>20])
-          </span>
-          <span class="app-brand-text demo menu-text fw-bold">{{config('variables.templateName')}}</span>
-        </a>
-      </div>
+        <div class="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
+          <a href="{{url('/')}}" class="app-brand-link gap-2">
+            <span class="app-brand-logo demo">
+              @include('_partials.macros',["height"=>20])
+            </span>
+            <span class="app-brand-text demo menu-text fw-bold">{{config('variables.templateName')}}</span>
+          </a>
+        </div>
       @endif
 
       <!-- ! Not required for layout-without-menu -->
       @if(!isset($navbarHideToggle))
-      <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ?' d-xl-none ' : '' }}">
-        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-          <i class="ti ti-menu-2 ti-sm"></i>
-        </a>
-      </div>
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0{{ isset($menuHorizontal) ? ' d-xl-none ' : '' }} {{ isset($contentNavbar) ?' d-xl-none ' : '' }}">
+          <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+            <i class="ti ti-menu-2 ti-sm"></i>
+          </a>
+        </div>
       @endif
 
       <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
@@ -49,7 +49,7 @@ $navbarDetached = ($navbarDetached ?? '');
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
-                <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                <img src="{{asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
               </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -58,15 +58,15 @@ $navbarDetached = ($navbarDetached ?? '');
                   <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
-                        <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
                       </div>
                     </div>
                     <div class="flex-grow-1">
                       <span class="fw-semibold d-block">
                         @if (Auth::check())
-                        {{ Auth::user()->name }}
+                          {{ Auth::user()->name }}
                         @else
-                        John Doe
+                          John Doe
                         @endif
                       </span>
                       <small class="text-muted">Admin</small>
@@ -83,9 +83,9 @@ $navbarDetached = ($navbarDetached ?? '');
                   <span class="align-middle">My Profile</span>
                 </a>
               </li>
-              @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
+              @if (Auth::check())
               <li>
-                <a class="dropdown-item" href="{{ route('api-tokens.index') }}">
+                <a class="dropdown-item" href="">
                   <i class='ti ti-key me-2 ti-sm'></i>
                   <span class="align-middle">API Tokens</span>
                 </a>
@@ -100,7 +100,7 @@ $navbarDetached = ($navbarDetached ?? '');
                   </span>
                 </a>
               </li>
-              @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
+              @if (Auth::User())
               <li>
                 <div class="dropdown-divider"></div>
               </li>
@@ -111,12 +111,12 @@ $navbarDetached = ($navbarDetached ?? '');
                 <div class="dropdown-divider"></div>
               </li>
               <li>
-                <a class="dropdown-item" href="{{ Auth::user() ? route('teams.show', Auth::user()->currentTeam->id) : 'javascript:void(0)' }}">
+                {{-- <a class="dropdown-item" href="{{ Auth::user() ? route('teams.show', Auth::user()->currentTeam->id) : 'javascript:void(0)' }}">
                   <i class='ti ti-settings me-2'></i>
                   <span class="align-middle">Team Settings</span>
-                </a>
+                </a> --}}
               </li>
-              @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
+              @can('create')
               <li>
                 <a class="dropdown-item" href="{{ route('teams.create') }}">
                   <i class='ti ti-user me-2'></i>
@@ -134,11 +134,11 @@ $navbarDetached = ($navbarDetached ?? '');
                 <div class="dropdown-divider"></div>
               </li>
               @if (Auth::user())
-              @foreach (Auth::user()->allTeams() as $team)
-              {{-- Below commented code read by artisan command while installing jetstream. !! Do not remove if you want to use jetstream. --}}
+              {{-- @foreach (Auth::user()->allTeams() as $team)
+              Below commented code read by artisan command while installing jetstream. !! Do not remove if you want to use jetstream.
 
-              {{-- <x-jet-switchable-team :team="$team" /> --}}
-              @endforeach
+              <x-jet-switchable-team :team="$team" />
+              @endforeach --}}
               @endif
               @endif
               <li>
