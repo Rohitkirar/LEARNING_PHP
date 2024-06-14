@@ -37,21 +37,25 @@
         </div> --}}
         <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
           <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-            <img src="{{ asset('assets/img/avatars/14.png') }}" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded user-profile-img">
+            <img src="{{ $user->avatar ? $user->avatar : asset('assets/img/avatars/14.png') }}" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded user-profile-img">
           </div>
           <div class="flex-grow-1 mt-3 mt-sm-5">
             <div class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
               <div class="user-profile-info">
-                <h4>{{$user->name}}</h4>
+                <h4>{{$user->fullName()}}</h4>
                 <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                   <li class="list-inline-item">
+                    <i class='ti ti-color-swatch'></i> {{$user->bio}}
+                  </li>                  
+                  {{-- <li class="list-inline-item">
                     <i class='ti ti-color-swatch'></i> UX Designer
                   </li>
                   <li class="list-inline-item">
                     <i class='ti ti-map-pin'></i> Vatican City
                   </li>
                   <li class="list-inline-item">
-                    <i class='ti ti-calendar'></i> Joined April 2021</li>
+                    <i class='ti ti-calendar'></i> Joined April 2021
+                  </li> --}}
                 </ul>
               </div>
                 <a href="javascript:void(0)" class="btn btn-primary">
@@ -86,19 +90,18 @@
         <div class="card-body">
           <small class="card-text text-uppercase">About</small>
           <ul class="list-unstyled mb-4 mt-3">
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-user"></i><span class="fw-bold mx-2">Full Name:</span> <span>{{$user->name}}</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-check"></i><span class="fw-bold mx-2">Status:</span> <span>Active</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-crown"></i><span class="fw-bold mx-2">Role:</span> <span>Developer</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-flag"></i><span class="fw-bold mx-2">Country:</span> <span>USA</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-file-description"></i><span class="fw-bold mx-2">Languages:</span> <span>English</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-user"></i><span class="fw-bold mx-2">First Name:</span> <span>{{$user->first_name}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-user"></i><span class="fw-bold mx-2">Last Name:</span> <span>{{$user->last_name}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-check"></i><span class="fw-bold mx-2">gender:</span> <span>{{$user->gender}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-crown"></i><span class="fw-bold mx-2">Date Of Birth:</span> <span>{{$user->birth_date}}</span></li>
           </ul>
           <small class="card-text text-uppercase">Contacts</small>
           <ul class="list-unstyled mb-4 mt-3">
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-phone-call"></i><span class="fw-bold mx-2">Contact:</span> <span>(123) 456-7890</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-brand-skype"></i><span class="fw-bold mx-2">Skype:</span> <span>john.doe</span></li>
-            <li class="d-flex align-items-center mb-3"><i class="ti ti-mail"></i><span class="fw-bold mx-2">Email:</span> <span>john.doe@example.com</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-phone-call"></i><span class="fw-bold mx-2">Contact:</span> <span>{{$user->phone_number}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-brand-skype"></i><span class="fw-bold mx-2">Username:</span> <span>{{$user->username}}</span></li>
+            <li class="d-flex align-items-center mb-3"><i class="ti ti-mail"></i><span class="fw-bold mx-2">Email:</span> <span>{{$user->email}}</span></li>
           </ul>
-          <small class="card-text text-uppercase">Teams</small>
+          {{-- <small class="card-text text-uppercase">Teams</small>
           <ul class="list-unstyled mb-0 mt-3">
             <li class="d-flex align-items-center mb-3"><i class="ti ti-brand-angular text-danger me-2"></i>
               <div class="d-flex flex-wrap"><span class="fw-bold me-2">Backend Developer</span><span>(126 Members)</span></div>
@@ -106,7 +109,7 @@
             <li class="d-flex align-items-center"><i class="ti ti-brand-react-native text-info me-2"></i>
               <div class="d-flex flex-wrap"><span class="fw-bold me-2">React Developer</span><span>(98 Members)</span></div>
             </li>
-          </ul>
+          </ul> --}}
         </div>
       </div>
       <!--/ About User -->

@@ -3,7 +3,6 @@
 @endisset
 @php
 $configData =  App\Helpers\Helpers::appClasses();
-
 @endphp
 @extends('layouts/commonMaster' )
 

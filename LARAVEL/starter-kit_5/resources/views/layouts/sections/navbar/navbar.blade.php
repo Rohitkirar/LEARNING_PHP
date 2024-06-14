@@ -46,10 +46,11 @@ $navbarDetached = ($navbarDetached ?? '');
         <ul class="navbar-nav flex-row align-items-center ms-auto">
 
           <!-- User -->
+          @if($user_profile = Auth::user())
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
-                <img src="{{asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                <img src="{{$user_profile->avatar ? $user_profile->avatar : asset('assets/img/avatars/14.png') }}" alt class="w-px-40 h-auto rounded-circle">
               </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
@@ -58,93 +59,30 @@ $navbarDetached = ($navbarDetached ?? '');
                   <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
-                        <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle">
+                        <img src="{{$user_profile->avatar ? $user_profile->avatar : asset('assets/img/avatars/14.png') }}" alt class="w-px-40 h-auto rounded-circle">
                       </div>
                     </div>
                     <div class="flex-grow-1">
                       <span class="fw-semibold d-block">
-                        @if (Auth::check())
-                          {{ Auth::user()->name }}
-                        @else
-                          John Doe
-                        @endif
+                        {{Auth::user()->fullName()}}
                       </span>
-                      <small class="text-muted">Admin</small>
+                      <small class="text-muted">@if($user_profile->is_admin) Admin @else User @endif</small>
                     </div>
                   </div>
                 </a>
               </li>
+
               <li>
                 <div class="dropdown-divider"></div>
               </li>
+
               <li>
                 <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
                   <i class="ti ti-user-check me-2 ti-sm"></i>
                   <span class="align-middle">My Profile</span>
                 </a>
               </li>
-              @if (Auth::check())
-              <li>
-                <a class="dropdown-item" href="">
-                  <i class='ti ti-key me-2 ti-sm'></i>
-                  <span class="align-middle">API Tokens</span>
-                </a>
-              </li>
-              @endif
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <span class="d-flex align-items-center align-middle">
-                    <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                    <span class="flex-grow-1 align-middle">Billing</span>
-                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                  </span>
-                </a>
-              </li>
-              @if (Auth::User())
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              <li>
-                <h6 class="dropdown-header">Manage Team</h6>
-              </li>
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              <li>
-                {{-- <a class="dropdown-item" href="{{ Auth::user() ? route('teams.show', Auth::user()->currentTeam->id) : 'javascript:void(0)' }}">
-                  <i class='ti ti-settings me-2'></i>
-                  <span class="align-middle">Team Settings</span>
-                </a> --}}
-              </li>
-              @can('create')
-              <li>
-                <a class="dropdown-item" href="{{ route('teams.create') }}">
-                  <i class='ti ti-user me-2'></i>
-                  <span class="align-middle">Create New Team</span>
-                </a>
-              </li>
-              @endcan
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              <lI>
-                <h6 class="dropdown-header">Switch Teams</h6>
-              </lI>
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              @if (Auth::user())
-              {{-- @foreach (Auth::user()->allTeams() as $team)
-              Below commented code read by artisan command while installing jetstream. !! Do not remove if you want to use jetstream.
 
-              <x-jet-switchable-team :team="$team" />
-              @endforeach --}}
-              @endif
-              @endif
-              <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              @if (Auth::check())
               <li>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class='ti ti-logout me-2'></i>
@@ -154,22 +92,13 @@ $navbarDetached = ($navbarDetached ?? '');
               <form method="POST" id="logout-form" action="{{ route('logout') }}">
                 @csrf
               </form>
-              @else
-              <li>
-                <a class="dropdown-item" href="{{ Route::has('login') ? route('login') : 'javascript:void(0)' }}">
-                  <i class='ti ti-login me-2'></i>
-                  <span class="align-middle">Login</span>
-                </a>
-              </li>
-              @endif
+
             </ul>
           </li>
           <!--/ User -->
+          @endif
         </ul>
       </div>
 
-      @if(!isset($navbarDetached))
-    </div>
-    @endif
   </nav>
   <!-- / Navbar -->

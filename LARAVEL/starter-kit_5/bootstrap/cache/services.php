@@ -28,17 +28,23 @@
     24 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     25 => 'Laravel\\Tinker\\TinkerServiceProvider',
     26 => 'Laravel\\Ui\\UiServiceProvider',
-    27 => 'Carbon\\Laravel\\ServiceProvider',
-    28 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    29 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    30 => 'Flasher\\Laravel\\FlasherServiceProvider',
-    31 => 'Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider',
-    32 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    33 => 'App\\Providers\\AppServiceProvider',
-    34 => 'App\\Providers\\AuthServiceProvider',
-    35 => 'App\\Providers\\EventServiceProvider',
-    36 => 'App\\Providers\\RouteServiceProvider',
-    37 => 'App\\Providers\\MenuServiceProvider',
+    27 => 'Collective\\Html\\HtmlServiceProvider',
+    28 => 'Carbon\\Laravel\\ServiceProvider',
+    29 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+    30 => 'Termwind\\Laravel\\TermwindServiceProvider',
+    31 => 'Flasher\\Laravel\\FlasherServiceProvider',
+    32 => 'Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider',
+    33 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
+    34 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    35 => 'Yajra\\DataTables\\EditorServiceProvider',
+    36 => 'Yajra\\DataTables\\FractalServiceProvider',
+    37 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    38 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    39 => 'App\\Providers\\AppServiceProvider',
+    40 => 'App\\Providers\\AuthServiceProvider',
+    41 => 'App\\Providers\\EventServiceProvider',
+    42 => 'App\\Providers\\RouteServiceProvider',
+    43 => 'App\\Providers\\MenuServiceProvider',
   ),
   'eager' => 
   array (
@@ -61,11 +67,16 @@
     16 => 'Flasher\\Laravel\\FlasherServiceProvider',
     17 => 'Flasher\\Toastr\\Laravel\\FlasherToastrServiceProvider',
     18 => 'Spatie\\LaravelIgnition\\IgnitionServiceProvider',
-    19 => 'App\\Providers\\AppServiceProvider',
-    20 => 'App\\Providers\\AuthServiceProvider',
-    21 => 'App\\Providers\\EventServiceProvider',
-    22 => 'App\\Providers\\RouteServiceProvider',
-    23 => 'App\\Providers\\MenuServiceProvider',
+    19 => 'Yajra\\DataTables\\ButtonsServiceProvider',
+    20 => 'Yajra\\DataTables\\EditorServiceProvider',
+    21 => 'Yajra\\DataTables\\FractalServiceProvider',
+    22 => 'Yajra\\DataTables\\HtmlServiceProvider',
+    23 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+    24 => 'App\\Providers\\AppServiceProvider',
+    25 => 'App\\Providers\\AuthServiceProvider',
+    26 => 'App\\Providers\\EventServiceProvider',
+    27 => 'App\\Providers\\RouteServiceProvider',
+    28 => 'App\\Providers\\MenuServiceProvider',
   ),
   'deferred' => 
   array (
@@ -202,6 +213,10 @@
     'Laravel\\Sail\\Console\\InstallCommand' => 'Laravel\\Sail\\SailServiceProvider',
     'Laravel\\Sail\\Console\\PublishCommand' => 'Laravel\\Sail\\SailServiceProvider',
     'command.tinker' => 'Laravel\\Tinker\\TinkerServiceProvider',
+    'html' => 'Collective\\Html\\HtmlServiceProvider',
+    'form' => 'Collective\\Html\\HtmlServiceProvider',
+    'Collective\\Html\\HtmlBuilder' => 'Collective\\Html\\HtmlServiceProvider',
+    'Collective\\Html\\FormBuilder' => 'Collective\\Html\\HtmlServiceProvider',
   ),
   'when' => 
   array (
@@ -245,6 +260,9 @@
     array (
     ),
     'Laravel\\Tinker\\TinkerServiceProvider' => 
+    array (
+    ),
+    'Collective\\Html\\HtmlServiceProvider' => 
     array (
     ),
   ),
