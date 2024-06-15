@@ -7,18 +7,15 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 
-class UserRestoreController extends Controller
+class UserShowController extends Controller
 {
     public function __invoke($id){
         try{
-            User::onlyTrashed()->find($id)->restore();
-            toastr("User restored successfully");
-            return redirect()->back();
-        }
-        catch(Exception $e){
+            $user = User::withTrashed()->findOrFail($id);
+            return view('admin.users.show' , compact("user"));
+        }catch(Exception $e){
             toastr("Something went wrong" , "error");
             return redirect()->route("admin.dashboard");
         }
-
     }
 }

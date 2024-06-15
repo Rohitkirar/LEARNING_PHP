@@ -27,14 +27,27 @@
     <span class="text-muted fw-light">User Profile /</span> Profile
   </h4>
 
+  
+  <!-- Navbar pills -->
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
+        <li class="nav-item"><a class="nav-link active" href="{{route('user.profile.show')}}"><i class='ti-xs ti ti-user-check me-1'></i> Profile</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{route('user.profile.edit')}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
+        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
+      </ul>
+    </div>
+  </div>
+  <!--/ Navbar pills -->
 
   <!-- Header -->
   <div class="row">
     <div class="col-12">
       <div class="card mb-4">
-        {{-- <div class="user-profile-header-banner">
-          <img src="{{ asset('assets/img/pages/profile-banner.png') }}" alt="Banner image" class="rounded-top">
-        </div> --}}
+        <div class="user-profile-header-banner">
+          <img src="{{ asset('assets/img/pages/header.png') }}" alt="Banner image" class="rounded-top " style="height:150px">
+        </div>
         <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
           <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
             <img src="{{ $user->avatar ? $user->avatar : asset('assets/img/avatars/14.png') }}" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded user-profile-img">
@@ -68,19 +81,6 @@
     </div>
   </div>
   <!--/ Header -->
-
-  <!-- Navbar pills -->
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class='ti-xs ti ti-user-check me-1'></i> Profile</a></li>
-        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-teams')}}"><i class='ti-xs ti ti-users me-1'></i> Teams</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
-      </ul>
-    </div>
-  </div>
-  <!--/ Navbar pills -->
 
   <!-- User Profile Content -->
   <div class="row">

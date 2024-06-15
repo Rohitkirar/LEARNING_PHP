@@ -1,28 +1,34 @@
 {
     "menu" : [
-        {
-          "url": "/admin/dashboard",
-          "name": "Home",
-          "icon": "menu-icon tf-icons ti ti-smart-home",
-          "slug": "admin-dashboard"
-        },
-        {
-          "url": "/admin/users",
-          "name": "Users",
-          "icon": "menu-icon tf-icons ti ti-smart-users",
-          "slug": "admin-users"
-        },
-        {
-          "url": "/admin/posts",
-          "name": "Posts",
-          "icon": "menu-icon tf-icons ti ti-smart-post",
-          "slug": "admin-posts"
-        },
-        {
-          "url": "/admin/categories",
-          "name": "Categories",
-          "icon": "menu-icon tf-icons ti ti-smart-category",
-          "slug": "admin-categories"
-        }
+      {
+        "url": "/",
+        "name": "Home",
+        "icon": "menu-icon tf-icons ti ti-smart-home",
+        "slug": "home"
+      },
+      {
+        "url": "/admin/dashboard",
+        "name": "Admin Dashboard",
+        "icon": "menu-icon tf-icons ti ti-user",
+        "slug": "admin-dashboard"
+      },
+      {
+        "url": "/admin/users",
+        "name": "Users",
+        "icon": "menu-icon tf-icons ti ti-users",
+        "slug": "admin-users"
+      },
+      {
+        "url": "/admin/posts",
+        "name": "Posts",
+        "icon": "menu-icon tf-icons ti ti-credit-card",
+        "slug": "admin-posts"
+      },
+      {
+        "url": "/admin/categories",
+        "name": "Categories",
+        "icon": "menu-icon tf-icons ti ti-category",
+        "slug": "admin-categories"
+      }
     ]
 }

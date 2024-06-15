@@ -6,17 +6,17 @@
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="MonthlyCampaign">     
 
-                <a class="dropdown-item text-outline-primary" href="{{route('admin.users.show' , $user->id)}}"><i class="fa-solid fa-eye"></i> View</a>
+                <a class="dropdown-item text-outline-primary" href="{{route('admin.categories.show' , $category->id)}}"><i class="fa-solid fa-eye"></i> View</a>
                 
-                <a class="dropdown-item text-outline-primary" href="{{route('admin.users.edit' , $user->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                <a class="dropdown-item text-outline-primary" href="{{route('admin.categories.edit' , $category->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                 
-                @if($user->deleted_at)
-                    <form action="{{route('admin.users.restore' , $user->id)}}" method="POST">
+                @if($category->deleted_at)
+                    <form action="{{route('admin.categories.restore' , $category->id)}}" method="POST">
                         @csrf
                         <button type="submit" class="border-0 bg-transparent text-success dropdown-item"><i class="fa-solid fa-redo"></i> Restore</button>
                     </form>
                 @else
-                    <form action="{{route('admin.users.destroy' , $user->id)}}" method="POST">
+                    <form action="{{route('admin.categories.destroy' , $category->id)}}" method="POST">
                         @csrf @method("delete")
                         <button type="submit" class="border-0 bg-transparent text-danger dropdown-item"><i class="fa-solid fa-trash"></i> Delete</button>
                     </form>

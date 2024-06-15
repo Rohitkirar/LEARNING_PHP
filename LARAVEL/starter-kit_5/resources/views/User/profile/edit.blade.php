@@ -1,28 +1,26 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'Analytics')
+@section('title', 'Account settings - Account')
 
 @section('vendor-style')
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/apex-charts/apex-charts.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/swiper/swiper.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css')}}" />
-@endsection
-
-@section('page-style')
-<!-- Page -->
-<link rel="stylesheet" href="{{asset('assets/vendor/css/pages/cards-advance.css')}}">
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/formvalidation/dist/css/formValidation.min.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/animate-css/animate.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.css')}}" />
 @endsection
 
 @section('vendor-script')
-    <script src="{{asset('assets/vendor/libs/swiper/swiper.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
-    <script src="{{asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
+<script src="{{asset('assets/vendor/libs/sweetalert2/sweetalert2.js')}}"></script>
 @endsection
 
 @section('page-script')
-    <script src="{{asset('assets/js/dashboards-analytics.js')}}"></script>
+<script src="{{asset('assets/js/pages-account-settings-account.js')}}"></script>
 @endsection
 
 @section('content')
@@ -33,15 +31,15 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-pills flex-column flex-md-row mb-4">
-      <li class="nav-item"><a class="nav-link" href="{{route('admin.users.show' , $user->id)}}"><i class="ti-xs ti ti-users me-1"></i> Profile</a></li>
-      <li class="nav-item"><a class="nav-link active" href="{{route('admin.users.edit' , $user->id)}}"><i class="ti-xs ti ti-lock me-1"></i> Edit</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{route('user.profile.show')}}"><i class="ti-xs ti ti-users me-1"></i> Profile</a></li>
+      <li class="nav-item"><a class="nav-link active" href="{{route('user.profile.edit')}}"><i class="ti-xs ti ti-lock me-1"></i> Edit</a></li>
     </ul>
     <div class="card mb-4">
       <h5 class="card-header">Profile Details</h5>
       <!-- Account -->
       <div class="card-body"> 
 
-        <form  method="POST" action="{{route("admin.users.update" , $user->id)}}" enctype="multipart/form-data">
+        <form  method="POST" action="{{route("user.profile.update")}}" enctype="multipart/form-data">
             @csrf @method("put")
             <div class="d-flex align-items-start align-items-sm-center gap-4">
                 
@@ -135,43 +133,25 @@
       <!-- /Account -->
     </div>
 
-    @if($user->deleted_at)
+    @if(!Auth::user()->is_admin)
         <div class="card">
-            <h5 class="card-header">Restore Account</h5>
-            <div class="card-body">
-                <div class="mb-3 col-12 mb-0">
-                <div class="alert alert-warning">
-                    <h5 class="alert-heading mb-1">Restore user account?</h5>
-                </div>
-                </div>
-                <form  action="{{route("admin.users.restore" , $user->id)}}" method="post">
-                    @csrf
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />
-                        <label class="form-check-label" for="accountActivation">Confirm account activation</label>
-                    </div>
-                    <button type="submit" class="btn btn-success deactivate-account">Activate Account</button>
-                </form>
+        <h5 class="card-header">Delete Account</h5>
+        <div class="card-body">
+            <div class="mb-3 col-12 mb-0">
+            <div class="alert alert-warning">
+                <h5 class="alert-heading mb-1">Are you sure you want to delete your account?</h5>
+                <p class="mb-0">Once you delete your account, there is no going back. Please be certain.</p>
             </div>
+            </div>
+            <form  action="{{route("user.profile.destroy")}}" method="post">
+                @csrf @method("DELETE")
+            <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />
+                <label class="form-check-label" for="accountActivation">I confirm my account deactivation</label>
+            </div>
+            <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
+            </form>
         </div>
-    @else
-        <div class="card">
-            <h5 class="card-header">Delete Account</h5>
-            <div class="card-body">
-                <div class="mb-3 col-12 mb-0">
-                <div class="alert alert-warning">
-                    <h5 class="alert-heading mb-1">Delete user account?</h5>
-                </div>
-                </div>
-                <form  action="{{route("admin.users.destroy" , $user->id)}}" method="post">
-                    @csrf @method("DELETE")
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />
-                        <label class="form-check-label" for="accountActivation">Confirm account deactivation</label>
-                    </div>
-                    <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
-                </form>
-            </div>
         </div>
     @endif
   </div>

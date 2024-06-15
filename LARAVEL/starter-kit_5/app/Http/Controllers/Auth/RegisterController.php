@@ -59,7 +59,7 @@ class RegisterController extends Controller
                 'username' => $data['username'],
                 'password' => $data['password'],
                 'bio' => $data['bio'] , 
-                'avatar' => $data['avatar'] ? $data['avatar']->store("uploads/profile" , 'public') : null,
+                'avatar' => $data['avatar'] ? $data['avatar']->store("uploads/profile" , "public") : null,
             ]);
         }
         catch(Exception $e){

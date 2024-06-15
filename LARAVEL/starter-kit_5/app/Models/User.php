@@ -16,7 +16,7 @@ class User extends Authenticatable
 
      protected $guarded = ['id'];
 
-     protected $path = "storage/uploads/profile/" ;
+     public $path = "storage/uploads/profile/" ;
      protected $demoAvatar = "assets/img/avatars/14.png";
     protected $hidden = [
         'password',
@@ -29,6 +29,12 @@ class User extends Authenticatable
         'updated_at'=> 'datetime' ,
         'deleted_at'=> 'datetime',
     ];
+
+    #-----------------------------Relationships--------------------------------------
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+    
 
     #-----------------------------Accessor&Mutators-----------------------------------
 

@@ -17,6 +17,7 @@ class UserListController extends Controller
             $users = User::where("is_admin" , "!=" , 1)->withTrashed();
             
             return DataTables::of($users)
+            ->setRowClass("align-center")
             ->editColumn("avatar" , function($user){
                 return view('datatables.views.avatar' , ["avatar"  => $user->avatar]);
             })

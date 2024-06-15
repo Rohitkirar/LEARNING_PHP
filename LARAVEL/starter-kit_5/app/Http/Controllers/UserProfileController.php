@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class UserProfileController extends Controller
 {
-    public function show(){
+    public function __invoke(){
         try{
             $user = Auth::user();
-            return view('user.user_profile' , compact("user"));
+            return view('user.profile.show' , compact("user"));
         }
         catch(Exception $e){
             toastr("Please try Again later" , "error");

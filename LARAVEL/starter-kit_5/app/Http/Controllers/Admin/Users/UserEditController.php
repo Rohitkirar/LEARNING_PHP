@@ -14,7 +14,7 @@ class UserEditController extends Controller
             $user = User::withTrashed()->find($id);
             return view('admin.users.edit' , compact("user"));
         }catch(Exception $e){
-            toastr("Something went wrong");
+            toastr("Something went wrong" , "error");
             return redirect()->route("admin.dashboard");
         }
     }

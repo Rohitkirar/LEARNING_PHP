@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserDashBoardController extends Controller
 {
-    public function index(){
+    public function __invoke(){
         return view("user.dashboard");
     }
 }

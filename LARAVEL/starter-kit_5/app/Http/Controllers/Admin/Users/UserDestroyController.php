@@ -15,7 +15,7 @@ class UserDestroyController extends Controller
             toastr("User deleted successfully");
             return redirect()->back();
         }catch(Exception $e){
-            toastr("Something went wrong");
+            toastr("Something went wrong" , "error");
             return redirect()->route("admin.dashboard");
         }
     }
