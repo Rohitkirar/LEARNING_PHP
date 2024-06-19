@@ -23,16 +23,17 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" ></script>
     <script>
         $(document).ready(function(){
-            $("#category_table").DataTable({
+            $("#post-table").DataTable({
                 processing:true,
                 serverSide: true,
-                ajax: "{{route('admin.categories')}}",
+                ajax: "{{route('admin.posts')}}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , searchable:false , orderable:false },
-                    { data: 'image', name: 'image' },
-                    { data: 'name', name: 'name' },
-                    { data: 'created_at', name: 'created_at' },
-                    { data: 'deleted_at', name:'deleted_at' },
+                    { data: 'title', name: 'title' },
+                    { data: 'category.name', name: 'category.name' },
+                    { data: 'description', name: 'description' },
+                    { data: 'moral', name:'moral' },
+                    { data: 'created_at', name:'created_at' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
@@ -56,13 +57,14 @@
     </div>
 
     <div class="card-datatable text-nowrap">
-        <table id="category_table"  class="table">
+        <table id="post-table"  class="table">
             <thead>
                 <th>S.No</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th>Description</th>
+                <th>Moral</th>
                 <th>Created_at</th>
-                <th>Status</th>
                 <th>Action</th>
             </thead>
         </table>

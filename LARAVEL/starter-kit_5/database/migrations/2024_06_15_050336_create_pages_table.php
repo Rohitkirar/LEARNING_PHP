@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId("post_id");
             $table->string("title");
             $table->text("description");
+            $table->text("moral");
             $table->timestamps();
             $table->softDeletes();
         });

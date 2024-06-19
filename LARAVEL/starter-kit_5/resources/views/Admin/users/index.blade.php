@@ -36,6 +36,10 @@
                     },
                     {
                         data:'avatar',
+                    },                    
+                    {
+                        data:'name',
+                        name:"first_name"
                     },
                     {
                         data:'username',
@@ -77,6 +81,7 @@
             <tr>
                 <th>S.No</th>
                 <th>Profile</th>
+                <th>Name</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Mobile</th>

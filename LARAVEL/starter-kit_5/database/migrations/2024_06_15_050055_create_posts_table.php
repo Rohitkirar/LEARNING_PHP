@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId("user_id");
             $table->foreignId('category_id');
             $table->string('title');
+            $table->text("description");
+            $table->text("moral");
             $table->timestamps();
             $table->softDeletes();
         });

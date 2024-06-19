@@ -1,36 +1,66 @@
 @extends('layouts/layoutMaster')
 
-@section('title', ' Horizontal Layouts - Forms')
+@section('title', 'User Profile - Profile')
 
 @section('vendor-style')
-  <link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
-  <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
-  <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/dropzone/dropzone.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/flatpickr/flatpickr.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/select2/select2.css')}}" />
 @endsection
 
+<!-- Page -->
+@section('page-style')
+  <link rel="stylesheet" href="{{asset('assets/vendor/css/pages/page-profile.css')}}" />
+@endsection
+
+
 @section('vendor-script')
-  <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
-  <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
-  <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
-  <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
-  <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
-  <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
+  <script src="{{asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/dropzone/dropzone.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/cleavejs/cleave.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/cleavejs/cleave-phone.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/flatpickr/flatpickr.js')}}"></script>
+    <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
 @endsection
 
 @section('page-script')
+    <script src="{{asset('assets/js/pages-profile.js')}}"></script>
     <script src="{{asset('assets/js/forms-file-upload.js')}}"></script>
     <script src="{{asset('assets/js/form-layouts.js')}}"></script>
 @endsection
-
 @section('content')
- 
+  <h4 class="fw-bold py-3 mb-4">
+    <span class="text-muted fw-light">Post /</span> Edit
+  </h4>
+
+  
+  <!-- Navbar pills -->
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
+        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.show' , $post->id)}}"><i class='ti-xs ti ti-user-check me-1'></i> Post</a></li>
+        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.edit' , $post->id)}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
+        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.pages' , $post->id )}}"><i class='ti-xs ti ti-layout-grid me-1'></i> View Pages</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{{route('admin.pages.create' , $post->id )}}"><i class='ti-xs ti ti-link me-1'></i> Create Page</a></li>
+        
+        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
+      </ul>
+    </div>
+  </div>
+  <!--/ Navbar pills -->
+
  <!-- Form Separator -->
   <div class="col-xxl">
     <div class="card mb-4">
-      <h5 class="card-header">Create Post</h5>
-      <form class="card-body" action="{{route("admin.posts.store")}}" enctype="multipart/form-data" method="POST">
+      <h5 class="card-header">Create Page</h5>
+      <form class="card-body" action="{{route("admin.pages.store" , $post->id)}}" enctype="multipart/form-data" method="POST">
         @csrf
-        <h6 class="mb-b fw-semibold">1. Post Details</h6>
+        <h6 class="mb-b fw-semibold">Page Details</h6>
         <div class="row mb-3">
           <label class="col-sm-3 col-form-label" for="multicol-username">Title</label>
           <div class="col-sm-9">
@@ -41,7 +71,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        {{-- <div class="row mb-3">
           <label class="col-sm-3 col-form-label" for="multicol-category">Category</label>
           <div class="col-sm-9">
             <select id="multicol-category"  name="category_id" class="select2 form-select" data-allow-clear="true">
@@ -54,7 +84,7 @@
               <p class="text-danger">{{ $errors->first('category_id')}}</p>
             @enderror
           </div>
-        </div>
+        </div> --}}
         <div class="row mb-3">
           <label class="col-sm-3 col-form-label" for="multicol-description">Description</label>
           <div class="col-sm-9">
@@ -111,7 +141,4 @@
       </form>
     </div>
   </div>
-
 @endsection
-
-

@@ -14,7 +14,7 @@ class UserListController extends Controller
         
         if(request()->ajax()){
 
-            $users = User::where("is_admin" , "!=" , 1)->withTrashed();
+            $users = User::select("*")->selectRaw('Concat(first_name ," " , last_name) as name ')->where("is_admin" , "!=" , 1)->withTrashed();
             
             return DataTables::of($users)
             ->setRowClass("align-center")

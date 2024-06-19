@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\Categories\CategoryRestoreController;
 use App\Http\Controllers\Admin\Categories\CategoryShowController;
 use App\Http\Controllers\Admin\Categories\CategoryStoreController;
 use App\Http\Controllers\Admin\Categories\CategoryUpdateController;
+use App\Http\Controllers\Admin\Pages\PageCreateController;
+use App\Http\Controllers\Admin\Pages\PageStoreController;
+use App\Http\Controllers\Admin\Pages\ShowPagesByPostController;
 use App\Http\Controllers\Admin\Posts\PostRestoreController;
 use App\Http\Controllers\Admin\Posts\PostCreateController;
 use App\Http\Controllers\Admin\Posts\PostDestroyController;
@@ -48,8 +51,6 @@ Route::middleware("auth")->group(function () {
 
 });
 
-
-
 Route::prefix("/admin")->middleware(["auth" , 'isAdmin'])->group(function(){
   
   Route::get("/dashboard" , AdminDashboardController::class)->name("admin.dashboard");
@@ -78,6 +79,9 @@ Route::prefix("/admin")->middleware(["auth" , 'isAdmin'])->group(function(){
   Route::delete("/posts/{post}" , PostDestroyController::class)->name("admin.posts.destroy");
   Route::post("/posts/{post}/restore" , PostRestoreController::class)->name("admin.posts.restore");
 
+  Route::get("/posts/{post}/pages" , ShowPagesByPostController::class)->name("admin.posts.pages");
+  Route::get("/posts/{post}/pages/create" , PageCreateController::class) ->name("admin.pages.create");
+  Route::post("/posts/{post}/pages" , PageStoreController::class)->name("admin.pages.store");
 
   
 
