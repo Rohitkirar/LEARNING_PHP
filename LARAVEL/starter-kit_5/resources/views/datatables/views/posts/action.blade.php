@@ -6,19 +6,19 @@
 
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="MonthlyCampaign">     
 
-                <a class="dropdown-item text-outline-primary" href="{{route('admin.posts.show' , $post->id)}}"><i class="fa-solid fa-eye"></i> View</a>
+                <a class="dropdown-item text-outline-primary" href="{{route('posts.show' , $post->id)}}"><i class="fa-solid fa-eye"></i> View</a>
                 
-                <a class="dropdown-item text-outline-primary" href="{{route('admin.posts.pages' , $post->id)}}"><i class="fa-solid fa-eye"></i> View Pages</a>
+                <a class="dropdown-item text-outline-primary" href="{{route('posts.pages' , $post->id)}}"><i class="fa-solid fa-eye"></i> View Pages</a>
                 
-                <a class="dropdown-item text-outline-primary" href="{{route('admin.posts.edit' , $post->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                <a class="dropdown-item text-outline-primary" href="{{route('posts.edit' , $post->id)}}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                 
                 @if($post->deleted_at)
-                    <form action="{{route('admin.posts.restore' , $post->id)}}" method="POST">
+                    <form action="{{route('posts.restore' , $post->id)}}" method="POST">
                         @csrf
                         <button type="submit" class="border-0 bg-transparent text-success dropdown-item"><i class="fa-solid fa-redo"></i> Restore</button>
                     </form>
                 @else
-                    <form action="{{route('admin.posts.destroy' , $post->id)}}" method="POST">
+                    <form action="{{route('posts.destroy' , $post->id)}}" method="POST">
                         @csrf @method("delete")
                         <button type="submit" class="border-0 bg-transparent text-danger dropdown-item"><i class="fa-solid fa-trash"></i> Delete</button>
                     </form>

@@ -4,31 +4,31 @@
         "url": "/",
         "name": "Home",
         "icon": "menu-icon tf-icons ti ti-smart-home",
-        "slug": "home"
-      },
-      {
-        "url": "/admin/dashboard",
-        "name": "Admin Dashboard",
-        "icon": "menu-icon tf-icons ti ti-user",
-        "slug": "admin-dashboard"
+        "slug": "dashboard"
       },
       {
         "url": "/admin/users",
         "name": "Users",
         "icon": "menu-icon tf-icons ti ti-users",
-        "slug": "admin-users"
+        "slug": "users"
       },
       {
         "url": "/admin/posts",
         "name": "Posts",
         "icon": "menu-icon tf-icons ti ti-credit-card",
-        "slug": "admin-posts"
+        "slug": "posts"
+      },
+      {
+        "url": "/admin/pages",
+        "name": "Pages",
+        "icon": "menu-icon tf-icons ti ti-menu",
+        "slug": "pages"
       },
       {
         "url": "/admin/categories",
         "name": "Categories",
         "icon": "menu-icon tf-icons ti ti-category",
-        "slug": "admin-categories"
+        "slug": "categories"
       }
     ]
 }

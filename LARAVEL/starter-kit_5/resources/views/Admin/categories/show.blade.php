@@ -27,18 +27,7 @@
   </h4>
 
   
-  <!-- Navbar pills -->
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li class="nav-item"><a class="nav-link active" href="{{route('admin.categories.show' , $category->id)}}"><i class='ti-xs ti ti-user-check me-1'></i> Category</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{route('admin.categories.edit' , $category->id)}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
-        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
-      </ul>
-    </div>
-  </div>
-  <!--/ Navbar pills -->
+<x-category-nav :$category  />
 
   <div class="container mx-5">
     <div class="col-md-6 col-lg-4 mb-3">
@@ -50,7 +39,7 @@
             <img class="img-fluid" src="{{$category->image}}" alt="Card image cap" />
             <div class="card-body">
                 {{-- <p class="card-text">Bear claw sesame snaps gummies chocolate.</p> --}}
-                <a href="{{route("admin.categories.edit" , $category->id)}}" class="card-link">Edit</a>
+                <a href="{{route("categories.edit" , $category->id)}}" class="card-link">Edit</a>
                 {{-- <a href="javascript:void(0);" class="card-link">Another link</a> --}}
             </div>
         </div>

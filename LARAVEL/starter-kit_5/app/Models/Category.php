@@ -28,7 +28,7 @@ class Category extends Model
 
     public function name():Attribute{
         return new Attribute(
-            get: fn($name) => ucfirst($name),
+            get: fn($name) => $name ? ucfirst($name) : null,
             set: fn($name) => strtolower($name)
         );
     }

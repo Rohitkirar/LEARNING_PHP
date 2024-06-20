@@ -27,21 +27,7 @@
   </h4>
 
   
-  <!-- Navbar pills -->
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.show' , $post->id)}}"><i class='ti-xs ti ti-user-check me-1'></i> Post</a></li>
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.edit' , $post->id)}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
-        <li class="nav-item"><a class="nav-link active" href="{{route('admin.posts.pages' , $post->id )}}"><i class='ti-xs ti ti-layout-grid me-1'></i> View Pages</a></li>
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.pages.create' , $post->id )}}"><i class='ti-xs ti ti-link me-1'></i> Create Page</a></li>
-        
-        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
-      </ul>
-    </div>
-  </div>
-  <!--/ Navbar pills -->
+<x-post-nav :$post />
 
   <div class="col-md">
     <div class="card mb-3">
@@ -49,7 +35,7 @@
             <div class="d-flex justify-content-between">
                 <h5 class="card-header">Pages</h5>
                 <!-- Form with Image Modal -->
-                <a href="{{route("admin.pages.create" , $post->id)}}" class="btn btn-primary align-center m-4"  >
+                <a href="{{route("pages.create" , $post->id)}}" class="btn btn-primary align-center m-4"  >
                     <i class="fa-solid fa-plus mx-1"></i> New Page
                 </a>
                 <!--/ Form with Image Modal -->

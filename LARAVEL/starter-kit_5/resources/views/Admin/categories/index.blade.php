@@ -26,7 +26,7 @@
             $("#category_table").DataTable({
                 processing:true,
                 serverSide: true,
-                ajax: "{{route('admin.categories')}}",
+                ajax: "{{route('categories.index')}}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , searchable:false , orderable:false },
                     { data: 'image', name: 'image' },
@@ -78,7 +78,7 @@
             <div class="modal-header border-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{route("admin.categories.store")}}" enctype="multipart/form-data" method="POST">
+            <form action="{{route("categories.store")}}" enctype="multipart/form-data" method="POST">
             @csrf
                 <div class="modal-body p-0">
                     <div class="onboarding-content mb-0">                   

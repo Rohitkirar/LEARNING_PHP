@@ -38,29 +38,25 @@
   </h4>
 
   
-  <!-- Navbar pills -->
-  <div class="row">
-    <div class="col-md-12">
-      <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.show' , $post->id)}}"><i class='ti-xs ti ti-user-check me-1'></i> Post</a></li>
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.edit' , $post->id)}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
-        <li class="nav-item"><a class="nav-link " href="{{route('admin.posts.pages' , $post->id )}}"><i class='ti-xs ti ti-layout-grid me-1'></i> View Pages</a></li>
-        <li class="nav-item"><a class="nav-link active" href="{{route('admin.pages.create' , $post->id )}}"><i class='ti-xs ti ti-link me-1'></i> Create Page</a></li>
-        
-        {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-projects')}}"><i class='ti-xs ti ti-layout-grid me-1'></i> Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{url('pages/profile-connections')}}"><i class='ti-xs ti ti-link me-1'></i> Connections</a></li> --}}
-      </ul>
-    </div>
-  </div>
-  <!--/ Navbar pills -->
+<x-post-nav :$post />
 
  <!-- Form Separator -->
   <div class="col-xxl">
     <div class="card mb-4">
       <h5 class="card-header">Create Page</h5>
-      <form class="card-body" action="{{route("admin.pages.store" , $post->id)}}" enctype="multipart/form-data" method="POST">
+      <form class="card-body" action="{{route("pages.store")}}" enctype="multipart/form-data" method="POST">
         @csrf
         <h6 class="mb-b fw-semibold">Page Details</h6>
+
+        <div class="row mb-3">
+          <div class="col-sm-9">
+            <input type="hidden" value="{{old("post_id" , $post->id)}}" name="post_id" />
+            @error("post_id")
+              <p class="text-danger">{{ $errors->first('post_id')}}</p>
+            @enderror
+          </div>
+        </div>
+        
         <div class="row mb-3">
           <label class="col-sm-3 col-form-label" for="multicol-username">Title</label>
           <div class="col-sm-9">

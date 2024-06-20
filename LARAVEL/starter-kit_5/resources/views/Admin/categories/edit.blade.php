@@ -28,19 +28,10 @@
   </h4>
 
   
-  <!-- Navbar pills -->
-  <div class="row">
-    <div class="col-md-12">
-        <ul class="nav nav-pills flex-column flex-sm-row mb-4">
-            <li class="nav-item"><a class="nav-link " href="{{route('admin.categories.show' , $category->id)}}"><i class='ti-xs ti ti-user-check me-1'></i> Category</a></li>
-            <li class="nav-item"><a class="nav-link active" href="{{route('admin.categories.edit' , $category->id)}}"><i class='ti-xs ti ti-users me-1'></i> Edit</a></li>
-        </ul>
-    </div>
-  </div>
-  <!--/ Navbar pills -->
+<x-category-nav :$category  />
 
   <div class="container mx-5">
-    <form action="{{route("admin.categories.update" , $category->id)}}" enctype="multipart/form-data" method="POST" >
+    <form action="{{route("categories.update" , $category->id)}}" enctype="multipart/form-data" method="POST" >
         @method("put") @csrf
 
         <div class="col-md-6 col-lg-4 mb-3">
@@ -80,7 +71,7 @@
                     <h5 class="alert-heading mb-1">Restore category Data?</h5>
                 </div>
                 </div>
-                <form  action="{{route("admin.categories.restore" , $category->id)}}" method="post">
+                <form  action="{{route("categories.restore" , $category->id)}}" method="post">
                     @csrf
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />
@@ -99,7 +90,7 @@
                     <h5 class="alert-heading mb-1">Delete category data ?</h5>
                 </div>
                 </div>
-                <form  action="{{route("admin.categories.destroy" , $category->id)}}" method="post">
+                <form  action="{{route("categories.destroy" , $category->id)}}" method="post">
                     @csrf @method("DELETE")
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />

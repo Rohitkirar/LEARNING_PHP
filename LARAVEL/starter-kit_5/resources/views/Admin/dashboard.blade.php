@@ -35,7 +35,7 @@
         <div class="swiper-slide">
           <div class="row">
             <div class="col-12">
-                <a href="{{route('admin.users')}}">
+                <a href="{{route('users.index')}}">
                     <h5 class="text-white mb-0 mt-2">User Analytics</h5>
                 </a>
               {{-- <small>Total 28.5% Conversion Rate</small> --}}

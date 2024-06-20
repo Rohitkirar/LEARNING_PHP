@@ -28,7 +28,7 @@
   <div class="col-xxl">
     <div class="card mb-4">
       <h5 class="card-header">Create Post</h5>
-      <form class="card-body" action="{{route("admin.posts.store")}}" enctype="multipart/form-data" method="POST">
+      <form class="card-body" action="{{route("posts.store")}}" enctype="multipart/form-data" method="POST">
         @csrf
         <h6 class="mb-b fw-semibold">1. Post Details</h6>
         <div class="row mb-3">

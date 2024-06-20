@@ -26,7 +26,7 @@
             $("#user_table").DataTable({
                 processing:true,
                 serverSide:true,
-                ajax: "{{route('admin.users')}}" ,
+                ajax: "{{route('users.index')}}" ,
                 columns: [
                     {
                         data: 'DT_RowIndex' ,
@@ -36,6 +36,8 @@
                     },
                     {
                         data:'avatar',
+                        searchable:false,
+                        orderable:false
                     },                    
                     {
                         data:'name',

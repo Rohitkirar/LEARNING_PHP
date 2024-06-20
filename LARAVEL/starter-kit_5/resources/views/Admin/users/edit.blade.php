@@ -30,18 +30,17 @@
   <span class="text-muted fw-light">User Profile /</span> Edit
 </h4>
 
+ <x-user-nav :$user />
+
 <div class="row">
   <div class="col-md-12">
-    <ul class="nav nav-pills flex-column flex-md-row mb-4">
-      <li class="nav-item"><a class="nav-link" href="{{route('admin.users.show' , $user->id)}}"><i class="ti-xs ti ti-users me-1"></i> Profile</a></li>
-      <li class="nav-item"><a class="nav-link active" href="{{route('admin.users.edit' , $user->id)}}"><i class="ti-xs ti ti-lock me-1"></i> Edit</a></li>
-    </ul>
+
     <div class="card mb-4">
       <h5 class="card-header">Profile Details</h5>
       <!-- Account -->
       <div class="card-body"> 
 
-        <form  method="POST" action="{{route("admin.users.update" , $user->id)}}" enctype="multipart/form-data">
+        <form  method="POST" action="{{route("users.update" , $user->id)}}" enctype="multipart/form-data">
             @csrf @method("put")
             <div class="d-flex align-items-start align-items-sm-center gap-4">
                 
@@ -144,7 +143,7 @@
                     <h5 class="alert-heading mb-1">Restore user account?</h5>
                 </div>
                 </div>
-                <form  action="{{route("admin.users.restore" , $user->id)}}" method="post">
+                <form  action="{{route("users.restore" , $user->id)}}" method="post">
                     @csrf
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />
@@ -163,7 +162,7 @@
                     <h5 class="alert-heading mb-1">Delete user account?</h5>
                 </div>
                 </div>
-                <form  action="{{route("admin.users.destroy" , $user->id)}}" method="post">
+                <form  action="{{route("users.destroy" , $user->id)}}" method="post">
                     @csrf @method("DELETE")
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" name="accountActivation" required id="accountActivation" />

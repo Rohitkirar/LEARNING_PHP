@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Users;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,14 +10,12 @@ class UserRestoreController extends Controller
 {
     public function __invoke($id){
         try{
-            User::onlyTrashed()->find($id)->restore();
-            toastr("User restored successfully");
+            User::onlyTrashed()->findorFail($id)->restore();
+            toastr("User restored successfully", "success");
             return redirect()->back();
-        }
-        catch(Exception $e){
-            toastr("Something went wrong" , "error");
+        }catch(Exception $e){
+            toastr("Something went wrong, please try again" , "error");
             return redirect()->route("admin.dashboard");
         }
-
     }
 }

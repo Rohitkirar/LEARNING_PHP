@@ -23,17 +23,17 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" ></script>
     <script>
         $(document).ready(function(){
-            $("#post-table").DataTable({
+            $("#page_table").DataTable({
                 processing:true,
                 serverSide: true,
-                ajax: "{{route('posts.index')}}",
+                ajax: "{{route('pages.index')}}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' , searchable:false , orderable:false },
+                    { data: 'images.path', name: 'images.path' , searchable:false , orderable:false},
                     { data: 'title', name: 'title' },
-                    { data: 'category.name', name: 'category.name' },
                     { data: 'description', name: 'description' },
-                    { data: 'moral', name:'moral' },
-                    { data: 'created_at', name:'created_at' },
+                    { data: 'moral', name: 'moral' },
+                    { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
@@ -48,20 +48,16 @@
 <div class="card p-2">
 
     <div class="d-flex justify-content-between">
-        <h5 class="card-header">Posts</h5>
-        <!-- Form with Image Modal -->
-        <a href="{{route("posts.create")}}" class="btn btn-primary align-center m-4" style="height:1%" >
-            <i class="fa-solid fa-plus mx-1"></i> Create Post
-        </a>
-        <!--/ Form with Image Modal -->
+        <h5 class="card-header">Pages</h5>
+
     </div>
 
-    <div class="card-datatable text-nowrap">
-        <table id="post-table"  class="table">
+    <div class="card-body text-wrap">
+        <table id="page_table"  class="table">
             <thead>
                 <th>S.No</th>
-                <th>Title</th>
-                <th>Category</th>
+                <th>Image</th>
+                <th>Page Title</th>
                 <th>Description</th>
                 <th>Moral</th>
                 <th>Created_at</th>
